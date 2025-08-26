@@ -12,9 +12,8 @@ public class SecureInputFactoryExample {
         // 恶意 XML 字符串，尝试通过外部实体引用加载 /etc/passwd 文件
         String xml = ReadXML.readXML();
 
-        // 创建一个默认的 XMLInputFactory 实例
-        // 默认配置通常是易受攻击的，因为它允许解析外部实体
-        XMLInputFactory factory = XMLInputFactory.newInstance();
+        // 修改为DocumentBuilderFactory
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 
         System.out.println("使用默认配置的 XMLInputFactory 实例...");
