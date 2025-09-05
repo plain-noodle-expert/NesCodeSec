@@ -275,9 +275,9 @@ def prepare_XXE_input(base_file: str, xml_factory: str, comment: str) -> tuple[s
         f.write(event)
         
     return event, input_code
-    
-    
-    
+
+
+
 if __name__ == "__main__":
     base_dir = "NesCodeSecExamples/src/main/java/com/XXE"
     prepare_XXE_input(os.path.join(base_dir, "base/DocumentBuilder.java"), "SAXBuilder", "使用安全配置的 SAXBuilder 实例（禁用外部实体等）")

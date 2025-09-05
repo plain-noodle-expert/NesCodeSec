@@ -30,7 +30,7 @@ def generate_response(base_file:str, xml_factory:str, comment:str) -> None:
         {}
 
         ### Response:
-        
+
     """
     try:
         logger.info("===== Build prompt =====")
