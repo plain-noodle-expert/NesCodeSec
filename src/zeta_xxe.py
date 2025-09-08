@@ -4,7 +4,8 @@ import difflib
 import os
 from pathlib import Path
 from loguru import logger
-from prepare_input import prepare_XXE_input
+from preprocess import prepare_XXE_input
+from prompt import PROMPT
 
 
 # model = transformers.AutoModelForCausalLM.from_pretrained("zed-industries/zeta")
@@ -15,27 +16,12 @@ def get_response_content(response: str) -> str:
 
 
 
-def generate_response(base_file:str, xml_factory:str, comment:str) -> None:
-    client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
-    prompt = """
-        ### Instruction:
-        You are a code completion assistant and your task is to analyze user edits and then rewrite an excerpt that the user provides, suggesting the appropriate edits within the excerpt, taking into account the cursor location.
-
-        ### User Edits:
-
-        {}
-
-        ### User Excerpt:
-
-        {}
-
-        ### Response:
-
-    """
+def generate_xxe_response(base_file:str, xml_factory:str, comment:str) -> None:
+    
     try:
         logger.info("===== Build prompt =====")
         event, input = prepare_XXE_input(base_file, xml_factory, comment)
-        prompt = prompt.format(event, input)
+        prompt = PROMPT.format(event, input)
         logger.info("===== Send Request =====")
         resp = client.completions.create(
             model="zeta",
@@ -67,6 +53,7 @@ def generate_response(base_file:str, xml_factory:str, comment:str) -> None:
 
 
 if __name__ == "__main__":
+    client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
     base_dir = "NesCodeSecExamples/src/main/java/com/XXE/base"
     base_files = ["Digester.java", "InputFactory.java", "DocumentBuilder.java", "SAXParserFactory.java", "SAXBuilder.java", "SAXReader.java"]
     xml_factories = ["Digester", "XMLInputFactory", "DocumentBuilderFactory", "SAXParserFactory", "SAXBuilder", "SAXReader"]
@@ -74,4 +61,4 @@ if __name__ == "__main__":
         for j, xml in enumerate(xml_factories):
             if i==j:
                 continue
-            generate_response(os.path.join(base_dir, base_file), xml_factory=xml, comment=f"Disgard {base_file.split('.')[0]} and use {xml} to parse XML")
+            generate_xxe_response(os.path.join(base_dir, base_file), xml_factory=xml, comment=f"Disgard {base_file.split('.')[0]} and use {xml} to parse XML")
