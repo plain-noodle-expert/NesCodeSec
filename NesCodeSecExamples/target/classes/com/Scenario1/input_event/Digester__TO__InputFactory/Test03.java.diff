@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/Test03.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__InputFactory/Test03.java
+@@ -1,6 +1,5 @@
+-Test03.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package src.cxs15.pyrmont.digestertest;
+ 
+ import java.io.File;
+@@ -13,7 +12,8 @@
+   public static void main(String[] args) {
+     String path = System.getProperty("user.dir") + File.separator  + "etc";
+     File file = new File(path, "employee2.xml");
+-    Digester digester = new Digester();
++    javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
++    
+     digester.addRuleSet(new EmployeeRuleSet());
+     try {
+       Employee employee = (Employee) digester.parse(file);
+@@ -37,5 +37,5 @@
+ }
+   
+ 
+-<|editable_region_end|>
++
+ ```

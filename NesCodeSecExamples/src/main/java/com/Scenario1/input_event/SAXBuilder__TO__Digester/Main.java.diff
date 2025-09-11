@@ -1,0 +1,18 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/Main.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__Digester/Main.java
+@@ -1,6 +1,5 @@
+-Main.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package com.company;
+ import java.util.*;
+ public class Main {
+@@ -32,5 +31,5 @@
+ }
+ 
+ 
+-<|editable_region_end|>
++
+ ```

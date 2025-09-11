@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ContactData.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXBuilder/ContactData.java
+@@ -1,6 +1,5 @@
+-ContactData.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package sample.datamodel;
+ 
+ import javafx.collections.FXCollections;
+@@ -60,7 +59,8 @@
+     public void loadContacts() {
+         try {
+             // First, create a new XMLInputFactory
+-            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
++            
+             // Setup a new eventReader
+             InputStream in = new FileInputStream(CONTACTS_FILE);
+             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+@@ -205,5 +205,5 @@
+     }
+ 
+ }
+-<|editable_region_end|>
++
+ ```

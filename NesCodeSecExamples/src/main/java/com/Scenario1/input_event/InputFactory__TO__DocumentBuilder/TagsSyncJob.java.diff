@@ -1,0 +1,39 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/TagsSyncJob.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__DocumentBuilder/TagsSyncJob.java
+@@ -1,6 +1,5 @@
+-TagsSyncJob.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ /**********************************************************************************
+  * $URL$
+  * $Id$
+@@ -112,7 +111,9 @@
+ 		}
+ 
+ 		try{
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			
++			javax.xml.parsers.DocumentBuilder factory = dbf.newDocumentBuilder();
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+@@ -147,7 +148,8 @@
+ 		}
+ 
+ 		try{
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			javax.xml.parsers.DocumentBuilder factory = dbf.newDocumentBuilder();
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+@@ -259,5 +261,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```

@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/GoogleGeocoderImpl.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__InputFactory/GoogleGeocoderImpl.java
+@@ -1,6 +1,5 @@
+-GoogleGeocoderImpl.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ /**
+  * Copyright (C) 2011 Brian Ferris <bdferris@onebusaway.org>
+  *
+@@ -78,7 +77,8 @@
+ 
+   private Digester createDigester() {
+ 
+-    Digester digester = new Digester();
++    javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
++
+ 
+     Class<?>[] dType = {Double.class};
+ 
+@@ -115,5 +115,5 @@
+   }
+ }
+ 
+-<|editable_region_end|>
++
+ ```

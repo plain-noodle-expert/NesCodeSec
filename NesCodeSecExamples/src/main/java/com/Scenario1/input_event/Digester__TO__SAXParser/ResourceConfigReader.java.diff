@@ -1,0 +1,18 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ResourceConfigReader.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__SAXParser/ResourceConfigReader.java
+@@ -1,6 +1,5 @@
+-ResourceConfigReader.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ /*
+  * Licensed to the Apache Software Foundation (ASF) under one or more
+  * contributor license agreements.  See the NOTICE file distributed with
+@@ -145,5 +144,5 @@
+ }
+ 
+ 
+-<|editable_region_end|>
++
+ ```

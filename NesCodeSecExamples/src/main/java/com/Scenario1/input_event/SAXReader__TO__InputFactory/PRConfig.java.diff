@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/PRConfig.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXReader__TO__InputFactory/PRConfig.java
+@@ -1,6 +1,5 @@
+-PRConfig.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ 
+ package com.pega.gcs.logviewer.systemstate.model;
+ 
+@@ -103,7 +102,8 @@
+ 
+         if (xmlContent != null) {
+ 
+-            SAXReader saxReader = new SAXReader();
++            javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
++
+ 
+             StringReader stringReader = new StringReader(xmlContent);
+ 
+@@ -130,5 +130,5 @@
+     }
+ }
+ 
+-<|editable_region_end|>
++
+ ```

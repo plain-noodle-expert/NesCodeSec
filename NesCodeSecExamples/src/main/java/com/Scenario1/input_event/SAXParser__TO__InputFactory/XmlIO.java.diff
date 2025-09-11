@@ -1,0 +1,29 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/XmlIO.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXParser__TO__InputFactory/XmlIO.java
+@@ -1,6 +1,5 @@
+-XmlIO.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package com.duke.phonescreenmatch_test.dp;
+ 
+ import org.xml.sax.helpers.AttributesImpl;
+@@ -32,8 +31,8 @@
+     public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
+         ArrayList<DimenItem> list = null;
+         try {
+-            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+-            SAXParser saxparser = saxParserFactory.newSAXParser();
++            javax.xml.stream.XMLInputFactory saxparser = javax.xml.stream.XMLInputFactory.newFactory();
++            
+             InputStream inputStream = new FileInputStream(baseDimenFilePath);
+             SAXReadHandler saxReadHandler = new SAXReadHandler();
+             saxparser.parse(inputStream, saxReadHandler);
+@@ -114,5 +113,5 @@
+     }
+ }
+ 
+-<|editable_region_end|>
++
+ ```

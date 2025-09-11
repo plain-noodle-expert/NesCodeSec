@@ -1,0 +1,71 @@
+{
+  "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader": [
+    "src/main/java/com/emc/object/s3/jersey/ErrorFilter.java",
+    "src/main/java/com/thinkdifferent/convertpreview/service/impl/x2x/ConvertXml2PdfServiceImpl.java",
+    "src/main/java/com/pega/gcs/logviewer/systemstate/model/PRConfig.java",
+    "src/main/java/com/thinkdifferent/convertpreview/utils/LineMaker.java",
+    "src/edu/nwpu/store/utils/BeanFactory.java",
+    "core/src/main/java/com/bytedance/android/aabresguard/parser/FileFilterXmlParser.java",
+    "application/manage/applications/party/src/com/qihua/ofbiz/weixin/util/MessageUtil.java",
+    "level-rule/src/main/java/com/rule/graph/service/XmlParseService.java",
+    "Platform/src/main/java/net/sf/anathema/lib/xml/DocumentUtilities.java"
+  ],
+  "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory": [
+    "XxeInputFactory.java",
+    "notifications/java/src/egroupwaretray/hwxml.java",
+    "tags/tags-impl/impl/src/java/org/sakaiproject/tags/impl/job/TagsSyncJob.java",
+    "myperf/src/main/java/com/yahoo/dba/perf/myperf/common/StatDefManager.java",
+    "JavaFXChallenge/src/sample/datamodel/ContactData.java",
+    "api/src/main/java/org/openmrs/module/dhisreport/api/syncmodel/StaXParser.java",
+    "XxeInputFactory.java",
+    "myperf/src/main/java/com/yahoo/dba/perf/myperf/common/MetricsDefManager.java",
+    "dsm/src/main/java/com/github/mfatihercik/dsb/xml/StaxParser.java",
+    "src/main/java/edu/harvard/iq/dataverse/metadataimport/ForeignMetadataImportServiceBean.java"
+  ],
+  "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser": [
+    "src/main/java/com/itextpdf/samples/book/part4/chapter15/Listing_15_16_StructuredContent.java",
+    "L6.3 XML/src/main/java/sax/ReadXMLFileSAX.java",
+    "src/main/java/osm/surveyor/tools/CitygmlPackFile.java",
+    "src/se/treplex/sketchytruck/PhysicsEditorShapeLibrary.java",
+    "pdt.connector/src/org/cs3/pdt/connector/registry/DefaultSAXPrologProcessRegistry.java",
+    "app/src/main/java/com/duke/phonescreenmatch_test/dp/XmlIO.java",
+    "corax-config-tests/normal/src/main/java/testcode/xxe/SaxParserSafeProperty.java",
+    "labsdb-worker/src/main/java/com/vmware/flowgate/labsdb/job/LabsdbService.java"
+  ],
+  "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder": [
+    "web/src/main/java/org/akaza/openclinica/controller/openrosa/processor/ItemProcessor.java",
+    "sdk-common/src/main/java/com/android/ide/common/vectordrawable/VdPreview.java",
+    "subprojects/groovy-xml/src/main/java/org/codehaus/groovy/tools/xml/DomToGroovy.java",
+    "Earthquake_ch19_Part2/Earthquake/app/src/main/java/com/professionalandroid/apps/earthquake/EarthquakeUpdateJobService.java",
+    "src/main/java/com/lc/spring/xml/XmlBeanDefinitionReader.java",
+    "XxeDocumentBuilderFactory.java",
+    "src/main/resources/evaluation/LocalEntityDemo.java",
+    "XxeDocumentBuilderFactory.java",
+    "Ch05/DOMSearch/DOMSearch.java",
+    "src/main/java/de/hu/berlin/wbi/process/osiris/EvaluateOsiris.java"
+  ],
+  "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester": [
+    "curso-spring/curso-spring-security/capa-web/src/main/java/com/indizen/cursoSpring/web/gui/importer/ParseImporterXML.java",
+    "core/src/main/java/com/ocpsoft/pretty/faces/config/servlet/WebXmlParser.java",
+    "onebusaway-geocoder/src/main/java/org/onebusaway/geocoder/impl/GoogleGeocoderImpl.java",
+    "AlchemyAPIAnnotator/src/main/java/org/apache/uima/alchemy/digester/concept/XMLTextConceptDigester.java",
+    "src/cxs15/pyrmont/digestertest/Test03.java",
+    "XxeDigester.java",
+    "extras/regression-tester/src/main/java/org/sipfoundry/siptester/ItspAccounts.java",
+    "sipXconfig/neoconf/src/org/sipfoundry/sipxconfig/setting/XmlModelBuilder.java",
+    "plugins/pluto/geronimo-pluto/src/main/java/org/apache/geronimo/pluto/impl/ResourceConfigReader.java",
+    "plugins/myfaces/geronimo-myfaces/src/main/java/org/apache/geronimo/myfaces/FacesConfigDigester.java"
+  ],
+  "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder": [
+    "XxeSaxBuilder",
+    "main/src/net/sourceforge/cruisecontrol/util/Util.java",
+    "main.java",
+    "xml/src/main/java/com/baeldung/xml/JDomParser.java",
+    "it.uniba.di.socialCDEforEclipse/unittest/login/UnitTestLogin.java",
+    "it.uniba.di.socialCDEforEclipse/plugintest/registration/plugintest/PluginTestUsername.java",
+    "src/main/java/org/apache/maven/plugins/shade/resource/XmlAppendingTransformer.java",
+    "projects/jdom/SAXBuilderFuzzer.java",
+    "src/husacct/control/task/resources/HusacctResource.java",
+    "modules/org.pathvisio.core/src/org/pathvisio/core/model/GpmlFormat.java"
+  ]
+}

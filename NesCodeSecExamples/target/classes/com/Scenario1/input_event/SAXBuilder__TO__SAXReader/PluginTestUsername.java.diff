@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/PluginTestUsername.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__SAXReader/PluginTestUsername.java
+@@ -1,6 +1,5 @@
+-PluginTestUsername.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package registration.plugintest;
+ 
+ import static org.junit.Assert.*;
+@@ -50,7 +49,8 @@
+ 	@Before
+ 	public void setUp() throws Exception {
+ 
+-		SAXBuilder builder = new SAXBuilder();
++		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
++
+ 		try {
+ 			document = builder.build(new File("./testData.xml")
+ 					.getCanonicalPath());
+@@ -198,5 +198,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```

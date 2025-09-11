@@ -1,0 +1,29 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/DefaultSAXPrologProcessRegistry.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXParser__TO__DocumentBuilder/DefaultSAXPrologProcessRegistry.java
+@@ -1,6 +1,5 @@
+-DefaultSAXPrologProcessRegistry.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ /*****************************************************************************
+  * This file is part of the Prolog Development Tool (PDT)
+  * 
+@@ -45,7 +44,9 @@
+ 		//Element cpElement;
+ 
+ 		try {
+-			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			
++			javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
+ 			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
+ 			//boolean b = parser.isNamespaceAware();
+ 			parser.parse(new InputSource(reader),new RegistryHandler());
+@@ -148,5 +149,5 @@
+ 
+ 
+ 
+-<|editable_region_end|>
++
+ ```

@@ -1,0 +1,30 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/Listing_15_16_StructuredContent.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXParser__TO__DocumentBuilder/Listing_15_16_StructuredContent.java
+@@ -1,6 +1,5 @@
+-Listing_15_16_StructuredContent.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package com.itextpdf.samples.book.part4.chapter15;
+ 
+ import com.itextpdf.kernel.geom.PageSize;
+@@ -55,7 +54,10 @@
+         // create a new tag, which will be a kid of the root element, and move to it
+         autoTaggingPointer.addTag("chapter");
+ 
+-        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
++        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++
++
++        javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
+         List<String> roles = new ArrayList<String>();
+         parser.parse(
+                 new InputSource(new FileInputStream(RESOURCE)),
+@@ -67,5 +69,5 @@
+     }
+ }
+ 
+-<|editable_region_end|>
++
+ ```

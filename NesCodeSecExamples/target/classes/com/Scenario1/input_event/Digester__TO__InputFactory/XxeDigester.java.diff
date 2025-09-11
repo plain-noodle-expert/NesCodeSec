@@ -1,0 +1,25 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XxeDigester.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__InputFactory/XxeDigester.java
+@@ -1,6 +1,5 @@
+-XxeDigester.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ <filename>XxeDigester.java<fim_prefix>
+ 
+ package examples;
+@@ -9,10 +8,11 @@
+ 
+ public class XxeDigester {
+     public void negative() throws Exception {
+-        Digester digester = new Digester();
++        javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
++        
+         <fim_suffix>
+     }
+ }
+ <fim_middle>
+-<|editable_region_end|>
++
+ ```

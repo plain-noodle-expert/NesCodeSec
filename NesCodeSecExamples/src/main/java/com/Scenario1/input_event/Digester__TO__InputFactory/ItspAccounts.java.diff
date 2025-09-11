@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ItspAccounts.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__InputFactory/ItspAccounts.java
+@@ -1,6 +1,5 @@
+-ItspAccounts.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ /*
+  * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
+  * Contributors retain copyright to elements licensed under a Contributor Agreement.
+@@ -64,7 +63,8 @@
+   
+     public  static ItspAccounts createItspAccounts(String url) throws Exception {
+     	System.out.println("create ITSP accounts " + url);
+-        Digester digester = new Digester();
++        javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
++        
+         addRules(digester);
+         digester.parse(new InputSource(url));
+         return (ItspAccounts) digester.getRoot();
+@@ -83,5 +83,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```

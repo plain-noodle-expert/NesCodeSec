@@ -1,0 +1,30 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ParseImporterXML.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__DocumentBuilder/ParseImporterXML.java
+@@ -1,6 +1,5 @@
+-ParseImporterXML.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package com.indizen.cursoSpring.web.gui.importer;
+ import java.io.File;
+ import java.io.IOException;
+@@ -18,7 +17,10 @@
+ 
+ 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
+ 
+-		Digester digester = new Digester();
++		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++
++
++		javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+ 		digester.setValidating(false);
+ 
+ 		digester.addObjectCreate("importer", Importer.class);
+@@ -42,5 +44,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```

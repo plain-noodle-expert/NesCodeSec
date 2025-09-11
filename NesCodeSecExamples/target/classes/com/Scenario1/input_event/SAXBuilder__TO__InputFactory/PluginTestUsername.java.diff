@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/PluginTestUsername.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__InputFactory/PluginTestUsername.java
+@@ -1,6 +1,5 @@
+-PluginTestUsername.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package registration.plugintest;
+ 
+ import static org.junit.Assert.*;
+@@ -50,7 +49,8 @@
+ 	@Before
+ 	public void setUp() throws Exception {
+ 
+-		SAXBuilder builder = new SAXBuilder();
++		javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++
+ 		try {
+ 			document = builder.build(new File("./testData.xml")
+ 					.getCanonicalPath());
+@@ -198,5 +198,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```

@@ -1,0 +1,39 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/ConvertXml2PdfServiceImpl.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXReader__TO__SAXParser/ConvertXml2PdfServiceImpl.java
+@@ -1,6 +1,5 @@
+-ConvertXml2PdfServiceImpl.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package com.thinkdifferent.convertpreview.service.impl.x2x;
+ 
+ import cn.hutool.core.io.FileUtil;
+@@ -48,7 +47,9 @@
+     @SneakyThrows
+     @Override
+     public File convert0(File inputFile, String targetDir) {
+-        SAXReader reader = new SAXReader();
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++        
++        javax.xml.parsers.SAXParser reader = spf.newSAXParser();
+         Document document = reader.read(inputFile);
+         Element elmRoot = document.getRootElement();
+ 
+@@ -77,7 +78,8 @@
+ 
+         String strSetPath = SystemUtil.beautifulPath(System.getProperty("user.dir")) + "conf/";
+         File fileXmlReportSet = new File(strSetPath + "XmlReport.xml");
+-        SAXReader reader = new SAXReader();
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++        javax.xml.parsers.SAXParser reader = spf.newSAXParser();
+         Document document = reader.read(fileXmlReportSet);
+         Element elmRootSet = document.getRootElement();
+         List<Element> listSetElements = elmRootSet.elements();
+@@ -158,5 +160,5 @@
+     }
+ }
+ 
+-<|editable_region_end|>
++
+ ```

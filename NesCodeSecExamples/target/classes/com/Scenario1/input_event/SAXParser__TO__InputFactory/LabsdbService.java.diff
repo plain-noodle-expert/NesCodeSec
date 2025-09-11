@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/LabsdbService.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXParser__TO__InputFactory/LabsdbService.java
+@@ -1,6 +1,5 @@
+-LabsdbService.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ /**
+  * Copyright 2019 VMware, Inc.
+  * SPDX-License-Identifier: BSD-2-Clause
+@@ -202,7 +201,8 @@
+          }
+        }
+       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
+-      SAXParserFactory spf = SAXParserFactory.newInstance();
++      javax.xml.stream.XMLInputFactory spf = javax.xml.stream.XMLInputFactory.newFactory();
++      
+       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
+       SAXParser parser = null;
+       try {
+@@ -340,5 +340,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```

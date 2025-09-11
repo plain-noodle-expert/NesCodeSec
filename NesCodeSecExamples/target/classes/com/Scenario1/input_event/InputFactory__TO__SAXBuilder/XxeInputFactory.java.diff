@@ -1,0 +1,23 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/XxeInputFactory.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXBuilder/XxeInputFactory.java
+@@ -1,6 +1,5 @@
+-XxeInputFactory.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ 
+ package examples;
+ 
+@@ -15,8 +14,9 @@
+ public class XxeInputFactory {
+ 
+     public void negative(InputStream is) throws SAXException, IOException, XMLStreamException {
+-        XMLInputFactory factory = XMLInputFactory.newInstance();
++        org.jdom2.input.SAXBuilder factory = new org.jdom2.input.SAXBuilder();
++        
+     }
+ }
+-<|editable_region_end|>
++
+ ```

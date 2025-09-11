@@ -1,0 +1,34 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EvaluateOsiris.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__SAXReader/EvaluateOsiris.java
+@@ -1,6 +1,5 @@
+-EvaluateOsiris.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ package de.hu.berlin.wbi.process.osiris;
+ 
+ import java.io.File;
+@@ -71,13 +70,8 @@
+ 		dbSNP.init(mysql, property.getProperty("database.PSM"), property.getProperty("database.hgvs_view"));
+ 		UniprotFeature.init(mysql, property.getProperty("database.uniprot"));
+ 
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-		factory.setFeature("http://xml.org/sax/features/namespaces", false);
+-		factory.setNamespaceAware(true);
+-		factory.setFeature("http://xml.org/sax/features/validation", false);
+-		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+-		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+-		DocumentBuilder builder = factory.newDocumentBuilder();
++		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
++
+ 
+ 		XPath xPath = XPathFactory.newInstance().newXPath();
+ 		XPathExpression documentExp = xPath.compile("/Articles/Article");
+@@ -204,5 +198,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```

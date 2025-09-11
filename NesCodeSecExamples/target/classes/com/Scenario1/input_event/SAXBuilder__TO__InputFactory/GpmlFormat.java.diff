@@ -1,0 +1,18 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/GpmlFormat.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__InputFactory/GpmlFormat.java
+@@ -1,6 +1,5 @@
+-GpmlFormat.java
+-```<|start_of_file|>
+-<|editable_region_start|>
++```
++
+ /*******************************************************************************
+  * PathVisio, a tool for data visualization and analysis using biological pathways
+  * Copyright 2006-2024 PathVisio
+@@ -234,5 +233,5 @@
+ 
+ }
+ 
+-<|editable_region_end|>
++
+ ```
