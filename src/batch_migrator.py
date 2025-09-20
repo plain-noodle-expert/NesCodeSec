@@ -9,6 +9,7 @@ import sys
 import difflib
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
+from loguru import logger
 
 # 依赖你的迁移引擎（需要 xml_any2any_migrator.py 与之同目录或在 PYTHONPATH 中）
 try:
@@ -44,7 +45,8 @@ def strip_marker(code: str) -> str:
         return code.replace("<|user_cursor_is_here|>", "")\
                 .replace("<|editable_region_start|>", "")\
                 .replace("<|editable_region_end|>", "")\
-                .replace("<|start_of_file|>", "")
+                .replace("<|start_of_file|>", "")\
+                .replace("```", "").strip()
 
 def run_batch_migrate(
     *,
@@ -57,6 +59,7 @@ def run_batch_migrate(
     env: Optional[Dict[str, str]] = None,        # 模板变量（默认包含 root_tag/list_tag）
     pair_dirs: bool = True,                      # True: 输出到 <Src>__TO__<Dst> 目录；False: 输出到 <Dst> 目录
 ) -> Tuple[int, int]:
+    logger.info("===== Start Batch Migration =====")
     """
     可导入调用的批量迁移函数。
 
@@ -89,7 +92,7 @@ def run_batch_migrate(
 
         src_dir = base_root / src_dir_name
         if not src_dir.exists():
-            print(f"[WARN] missing dir: {src_dir}")
+            logger.warning(f"missing dir: {src_dir}")
             continue
 
         # 目标 key 集合：默认五个（排除自身）
@@ -100,7 +103,7 @@ def run_batch_migrate(
 
             recipe = cfg.get("migrations", {}).get(f"{src_key}->{dst_key}")
             if not recipe:
-                print(f"[WARN] No recipe for {src_key}->{dst_key}, skip {src_dir_name} -> {KEY_TO_DIR[dst_key]}")
+                logger.warning(f"No recipe for {src_key}->{dst_key}, skip {src_dir_name} -> {KEY_TO_DIR[dst_key]}")
                 continue
 
             # 输出目录
@@ -118,7 +121,7 @@ def run_batch_migrate(
                 try:
                     src_text = src_path.read_text(encoding="utf-8", errors="ignore")
                 except Exception as e:
-                    print(f"[ERR] Read {src_path}: {e}")
+                    logger.error(f"[ERR] Read {src_path}: {e}")
                     continue
 
                 out_text = run_recipe(src_text, recipe, merged_env)
@@ -131,13 +134,13 @@ def run_batch_migrate(
                     else:
                         dst_path.parent.mkdir(parents=True, exist_ok=True)
                         try:
-                            dst_path.write_text(out_text, encoding="utf-8")
-                            print(f"[OK] {src_path.name}: {src_dir_name}({src_key})->{KEY_TO_DIR[dst_key]}({dst_key}) => {dst_path}")
+                            dst_path.write_text(f"{dst_path.name}\n```<|start_of_file|>\n<|editable_region_start|>\n"+out_text+"\n<|editable_region_end|>\n```", encoding="utf-8")
+                            logger.debug(f"[OK] {src_path.name}: {src_dir_name}({src_key})->{KEY_TO_DIR[dst_key]}({dst_key}) => {dst_path}")
                         except Exception as e:
-                            print(f"[ERR] Write {dst_path}: {e}")
+                            logger.error(f"[ERR] Write {dst_path}: {e}")
                 else:
                     if dry_run:
-                        print(f"[SKIP no-change] {src_path} -> {dst_path}")
+                        logger.info(f"[SKIP no-change] {src_path} -> {dst_path}")
 
     return processed, changed
 
@@ -170,11 +173,11 @@ def run_one_pair(
         pair_dirs=pair_dirs,
     )
 
-def diff_pairs_against_base(
+def generate_event(
     *,
     base_root: str | Path,
     # 这是你的“生成物根目录”（包含 <SrcTop>__TO__<DstTop> 子目录）
-    event_root: str | Path,
+    excerpt_root: str | Path,
     # 这是“diff 输出根目录”，默认与你要求的一致；可改为任意路径
     diff_output_root: str | Path = "NesCodeSecExamples/src/main/java/com/Scenario1/input_event",
     pair_names: Optional[List[str]] = None,
@@ -182,26 +185,26 @@ def diff_pairs_against_base(
     encoding: str = "utf-8",
 ) -> Dict[str, Dict[str, int]]:
     """
-    将 event_root 下的 <SrcTop>__TO__<DstTop>/*.java 与 base_root/<SrcTop>/*.java 做 diff，
+    将 excerpt_root 下的 <SrcTop>__TO__<DstTop>/*.java 与 base_root/<SrcTop>/*.java 做 diff，
     并把 diff 写入 diff_output_root/<SrcTop>__TO__<DstTop>/<相对路径>.diff（结构与生成物一致）。
 
     返回：每个 pair 的统计 {"total": X, "changed": Y, "nochange": Z, "missing_base": K}
     """
     base_root = Path(base_root)
-    event_root = Path(event_root)
+    excerpt_root = Path(excerpt_root)
     diff_output_root = Path(diff_output_root)
     diff_output_root.mkdir(parents=True, exist_ok=True)
 
     stats_all: Dict[str, Dict[str, int]] = {}
 
-    if not event_root.exists():
-        print(f"[WARN] event_root not found: {event_root}")
+    if not excerpt_root.exists():
+        print(f"[WARN] excerpt_root not found: {excerpt_root}")
         return stats_all
 
     # 自动发现 pair 目录（<SrcTop>__TO__<DstTop>）
     if pair_names is None:
         pairs: List[str] = []
-        for p in event_root.iterdir():
+        for p in excerpt_root.iterdir():
             if not p.is_dir():
                 continue
             name = p.name
@@ -211,10 +214,10 @@ def diff_pairs_against_base(
                     pairs.append(name)
         pair_names = sorted(pairs)
     else:
-        pair_names = [n for n in pair_names if (event_root / n).is_dir()]
+        pair_names = [n for n in pair_names if (excerpt_root / n).is_dir()]
 
     for pair in pair_names:
-        gen_pair_dir = event_root / pair
+        gen_pair_dir = excerpt_root / pair
         try:
             src_top, dst_top = pair.split("__TO__", 1)
         except ValueError:
@@ -284,7 +287,7 @@ def main():
     ap = argparse.ArgumentParser(description="Batch XML parser migrator (function-first).")
     ap.add_argument("--config", required=True, help="绝对路径：migrations_compilable.json")
     ap.add_argument("--base-root", required=True, help="绝对路径：.../base")
-    ap.add_argument("--output-root", required=True, help="绝对路径：.../input_event")
+    ap.add_argument("--output-root", required=True, help="绝对路径：.../input_excerpt")
     ap.add_argument("--dry-run", action="store_true", help="仅打印 diff，不写文件")
     ap.add_argument("--only-src-dirs", help="逗号分隔：仅处理这些源顶层目录，如 SAXReader,SAXParser")
     ap.add_argument("--dst-keys", help="逗号分隔：限定目标库 key，如 sax,stax,jdom2,dom4j,digester,jaxp_dom")

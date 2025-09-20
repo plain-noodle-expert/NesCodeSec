@@ -1,6 +1,3 @@
-PRConfig.java
-```<|start_of_file|>
-<|editable_region_start|>
 
 package com.pega.gcs.logviewer.systemstate.model;
 
@@ -129,6 +126,3 @@ public class PRConfig implements Comparable<PRConfig> {
 
     }
 }
-
-<|editable_region_end|>
-```

@@ -1,6 +1,3 @@
-SAXBuilderFuzzer.java
-```<|start_of_file|>
-<|editable_region_start|>
 // Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,6 +41,3 @@ public class SAXBuilderFuzzer {
     }
   }
 }
-
-<|editable_region_end|>
-```

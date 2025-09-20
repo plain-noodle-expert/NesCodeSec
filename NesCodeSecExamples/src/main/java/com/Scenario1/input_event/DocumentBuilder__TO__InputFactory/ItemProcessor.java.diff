@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/ItemProcessor.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__InputFactory/ItemProcessor.java
-@@ -1,6 +1,5 @@
--ItemProcessor.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package org.akaza.openclinica.controller.openrosa.processor;
- 
- import java.io.StringReader;
-@@ -102,8 +101,8 @@
+@@ -99,8 +99,8 @@
          logger.info("Executing Item Processor.");
          ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
  
@@ -20,10 +11,9 @@
          InputSource is = new InputSource();
          is.setCharacterStream(new StringReader(container.getRequestBody()));
          Document doc = db.parse(is);
-@@ -426,5 +425,5 @@
+@@ -421,4 +421,4 @@
+             dnItemDataMapDao.saveOrUpdate(mapping);
+         }
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

@@ -1,6 +1,3 @@
-XmlParseService.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.rule.graph.service;
 
 import com.rule.graph.mybatis.dao.XmlContentMapper;
@@ -185,6 +182,3 @@ public class XmlParseService {
 }
 
     
-
-<|editable_region_end|>
-```

@@ -1,6 +1,3 @@
-ContactData.java
-```<|start_of_file|>
-<|editable_region_start|>
 package sample.datamodel;
 
 import javafx.collections.FXCollections;
@@ -205,5 +202,3 @@ public class ContactData {
     }
 
 }
-<|editable_region_end|>
-```

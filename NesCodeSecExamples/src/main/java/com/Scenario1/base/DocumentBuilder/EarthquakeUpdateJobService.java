@@ -1,6 +1,3 @@
-EarthquakeUpdateJobService.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  * Professional Android, 4th Edition
  * Reto Meier and Ian Lake
@@ -325,5 +322,3 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
     return largestNewEarthquake;
   }
 }
-<|editable_region_end|>
-```

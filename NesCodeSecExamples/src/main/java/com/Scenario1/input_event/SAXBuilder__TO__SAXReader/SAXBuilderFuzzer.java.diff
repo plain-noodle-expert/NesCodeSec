@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/SAXBuilderFuzzer.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__SAXReader/SAXBuilderFuzzer.java
-@@ -1,6 +1,5 @@
--SAXBuilderFuzzer.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- // Copyright 2023 Google LLC
- //
- // Licensed under the Apache License, Version 2.0 (the "License");
-@@ -30,7 +29,8 @@
+@@ -27,7 +27,8 @@
  public class SAXBuilderFuzzer {
    public static void fuzzerTestOneInput(FuzzedDataProvider data) {
      
@@ -19,10 +10,9 @@
      sax.setValidation(data.consumeBoolean());
      sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
      sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
-@@ -45,5 +45,5 @@
+@@ -40,4 +41,4 @@
+       return;
+     }
    }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

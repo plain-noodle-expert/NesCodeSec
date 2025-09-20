@@ -1,6 +1,3 @@
-ConvertXml2PdfServiceImpl.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.thinkdifferent.convertpreview.service.impl.x2x;
 
 import cn.hutool.core.io.FileUtil;
@@ -157,6 +154,3 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
         return null;
     }
 }
-
-<|editable_region_end|>
-```

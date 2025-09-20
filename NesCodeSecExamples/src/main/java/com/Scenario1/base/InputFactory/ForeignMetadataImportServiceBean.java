@@ -1,6 +1,3 @@
-ForeignMetadataImportServiceBean.java
-```<|start_of_file|>
-<|editable_region_start|>
 
 package edu.harvard.iq.dataverse.metadataimport;
 
@@ -347,6 +344,3 @@ public class ForeignMetadataImportServiceBean {
 
     
 }
-
-<|editable_region_end|>
-```

@@ -1,6 +1,7 @@
 XxeInputFactory.java
 ```<|start_of_file|>
 <|editable_region_start|>
+<filename>XxeInputFactory.java<fim_prefix>
 
 package examples;
 
@@ -17,7 +18,9 @@ public class XxeInputFactory {
     public void negative(InputStream is) throws SAXException, IOException, XMLStreamException {
         org.apache.commons.digester3.Digester factory = new org.apache.commons.digester3.Digester();
         <|user_cursor_is_here|>
+        <fim_suffix>
     }
 }
+<fim_middle>
 <|editable_region_end|>
 ```

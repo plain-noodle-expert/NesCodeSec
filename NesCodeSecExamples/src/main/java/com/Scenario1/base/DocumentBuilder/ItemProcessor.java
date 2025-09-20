@@ -1,6 +1,3 @@
-ItemProcessor.java
-```<|start_of_file|>
-<|editable_region_start|>
 package org.akaza.openclinica.controller.openrosa.processor;
 
 import java.io.StringReader;
@@ -425,6 +422,3 @@ public class ItemProcessor implements Processor, Ordered {
         }
     }
 }
-
-<|editable_region_end|>
-```

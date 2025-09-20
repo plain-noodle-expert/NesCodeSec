@@ -1,6 +1,3 @@
-LabsdbService.java
-```<|start_of_file|>
-<|editable_region_start|>
 /**
  * Copyright 2019 VMware, Inc.
  * SPDX-License-Identifier: BSD-2-Clause
@@ -339,6 +336,3 @@ public class LabsdbService implements AsyncService{
    }
 
 }
-
-<|editable_region_end|>
-```

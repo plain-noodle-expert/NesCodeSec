@@ -1,6 +1,3 @@
-DefaultSAXPrologProcessRegistry.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*****************************************************************************
  * This file is part of the Prolog Development Tool (PDT)
  * 
@@ -147,6 +144,3 @@ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistr
 }
 
 
-
-<|editable_region_end|>
-```

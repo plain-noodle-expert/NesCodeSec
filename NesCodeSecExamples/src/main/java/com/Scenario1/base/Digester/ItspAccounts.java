@@ -1,6 +1,3 @@
-ItspAccounts.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
  * Contributors retain copyright to elements licensed under a Contributor Agreement.
@@ -82,6 +79,3 @@ public class ItspAccounts  {
    
 
 }
-
-<|editable_region_end|>
-```

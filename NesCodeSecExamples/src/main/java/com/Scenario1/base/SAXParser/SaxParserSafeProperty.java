@@ -1,6 +1,3 @@
-SaxParserSafeProperty.java
-```<|start_of_file|>
-<|editable_region_start|>
 package testcode.xxe;
 
 import org.w3c.dom.Document;
@@ -65,6 +62,3 @@ public class SaxParserSafeProperty {
         //safeManualConfiguration();
     }
 }
-
-<|editable_region_end|>
-```

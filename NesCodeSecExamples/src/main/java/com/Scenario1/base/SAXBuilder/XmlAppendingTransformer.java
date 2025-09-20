@@ -1,6 +1,3 @@
-XmlAppendingTransformer.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -127,6 +124,3 @@ public class XmlAppendingTransformer extends AbstractCompatibilityTransformer {
         doc = null;
     }
 }
-
-<|editable_region_end|>
-```

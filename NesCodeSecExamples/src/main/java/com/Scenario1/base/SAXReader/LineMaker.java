@@ -1,6 +1,3 @@
-LineMaker.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.thinkdifferent.convertpreview.utils;
 
 import cn.hutool.core.io.FileUtil;
@@ -268,6 +265,3 @@ public class LineMaker {
     }
 
 }
-
-<|editable_region_end|>
-```

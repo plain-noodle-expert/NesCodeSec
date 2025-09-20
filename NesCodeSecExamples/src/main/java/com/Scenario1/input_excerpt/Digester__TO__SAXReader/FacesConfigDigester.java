@@ -64,7 +64,8 @@ public class FacesConfigDigester {
     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
 
     public FacesConfigDigester() {
-        digester = new Digester();
+        org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
+        <|user_cursor_is_here|>
         // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);

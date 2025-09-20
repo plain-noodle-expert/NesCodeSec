@@ -1,6 +1,3 @@
-ReadXMLFileSAX.java
-```<|start_of_file|>
-<|editable_region_start|>
 package sax;
 
 import javax.xml.parsers.SAXParser;
@@ -34,6 +31,3 @@ public class ReadXMLFileSAX {
 
 
 }
-
-<|editable_region_end|>
-```

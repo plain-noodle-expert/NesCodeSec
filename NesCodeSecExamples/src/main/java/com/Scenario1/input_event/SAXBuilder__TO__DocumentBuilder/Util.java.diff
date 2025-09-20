@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/Util.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__DocumentBuilder/Util.java
-@@ -1,6 +1,5 @@
--Util.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /********************************************************************************
-  * CruiseControl, a Continuous Integration Toolkit
-  * Copyright (c) 2001-2003, ThoughtWorks, Inc.
-@@ -65,7 +64,9 @@
+@@ -62,7 +62,9 @@
  
      public static Element loadRootElement(File configFile) throws CruiseControlException {
          try {
@@ -20,7 +11,7 @@
              builder.setFeature("http://apache.org/xml/features/xinclude", true);
              return builder.build(configFile).getRootElement();
          } catch (Exception e) {
-@@ -79,7 +80,8 @@
+@@ -76,7 +78,8 @@
  
      public static Element loadRootElement(InputStream in) throws CruiseControlException {
          try {
@@ -30,10 +21,9 @@
              return builder.build(in).getRootElement();
          } catch (Exception e) {
              throw new CruiseControlException("failed to parse configuration", e);
-@@ -306,5 +308,5 @@
+@@ -301,4 +304,4 @@
+         }
+         return string;
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

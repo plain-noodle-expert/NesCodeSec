@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XmlModelBuilder.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__SAXBuilder/XmlModelBuilder.java
-@@ -1,6 +1,5 @@
--XmlModelBuilder.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /*
-  *
-  *
-@@ -87,7 +86,8 @@
+@@ -84,7 +84,8 @@
      }
  
      private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
@@ -19,10 +10,9 @@
  
          // setting classloader ensures classes are searched for in this classloader
          // instead of parent's classloader is digister was loaded there.
-@@ -480,5 +480,5 @@
+@@ -475,4 +476,4 @@
+             return null;
+         }
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

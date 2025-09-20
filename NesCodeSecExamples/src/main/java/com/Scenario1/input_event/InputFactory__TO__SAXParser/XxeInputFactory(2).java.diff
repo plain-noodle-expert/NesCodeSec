@@ -1,0 +1,13 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/XxeInputFactory(2).java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXParser/XxeInputFactory(2).java
+@@ -13,7 +13,9 @@
+ public class XxeInputFactory {
+ 
+     public void negative(InputStream is) throws SAXException, IOException, XMLStreamException {
+-        XMLInputFactory factory = XMLInputFactory.newInstance();
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++        
++        javax.xml.parsers.SAXParser factory = spf.newSAXParser();
+         <fim_suffix>
+     }
+ }

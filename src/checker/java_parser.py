@@ -64,6 +64,7 @@ class JavaParserManager:
         jar_paths = []
         for jar_name in core_jars.values():
             jar_path = jar_package_path / jar_name
+            logger.debug(f"Loading core JAR: {jar_path}")
             if not jar_path.exists():
                 raise FileNotFoundError(f"Core JAR file not found: {jar_path}")
             jar_paths.append(str(jar_path))

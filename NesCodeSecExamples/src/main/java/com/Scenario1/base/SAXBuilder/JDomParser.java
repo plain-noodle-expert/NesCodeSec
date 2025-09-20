@@ -1,6 +1,3 @@
-JDomParser.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.baeldung.xml;
 
 import java.io.File;
@@ -62,6 +59,3 @@ public class JDomParser {
     }
 
 }
-
-<|editable_region_end|>
-```

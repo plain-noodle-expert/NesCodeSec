@@ -1,6 +1,3 @@
-hwxml.java
-```<|start_of_file|>
-<|editable_region_start|>
 /**
  * EGroupware - Notifications Java Desktop App
  *
@@ -177,6 +174,3 @@ public class hwxml
         return eventFactory.createCharacters(value);
     }
 }
-
-<|editable_region_end|>
-```

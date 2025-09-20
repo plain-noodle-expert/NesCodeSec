@@ -1,18 +1,8 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/XmlAppendingTransformer.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__InputFactory/XmlAppendingTransformer.java
-@@ -1,6 +1,5 @@
--XmlAppendingTransformer.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /*
-  * Licensed to the Apache Software Foundation (ASF) under one
-  * or more contributor license agreements.  See the NOTICE file
-@@ -128,5 +127,5 @@
-     }
- }
+@@ -123,4 +123,4 @@
  
--<|editable_region_end|>
-+
- ```
+         doc = null;
+     }
+-}
++}

@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/DocumentUtilities.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXReader__TO__SAXParser/DocumentUtilities.java
-@@ -1,6 +1,5 @@
--DocumentUtilities.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package net.sf.anathema.lib.xml;
- 
- import net.sf.anathema.lib.exception.AnathemaException;
-@@ -52,7 +51,9 @@
+@@ -49,7 +49,9 @@
  
    public static Document read(String source) throws AnathemaException {
      try {
@@ -20,7 +11,7 @@
        return saxReader.read(new StringReader(source));
      } catch (DocumentException exception) {
        throw new AnathemaException(exception);
-@@ -69,7 +70,8 @@
+@@ -66,7 +68,8 @@
  
    public static Document read(InputStream in) throws PersistenceException {
      try {
@@ -30,10 +21,3 @@
        return saxReader.read(in, null);
      } catch (DocumentException exception) {
        throw new PersistenceException(exception);
-@@ -93,5 +95,5 @@
-     return (Element) result;
-   }
- }
--<|editable_region_end|>
-+
- ```

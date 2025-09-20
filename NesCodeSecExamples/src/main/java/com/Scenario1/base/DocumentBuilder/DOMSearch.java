@@ -1,6 +1,3 @@
-DOMSearch.java
-```<|start_of_file|>
-<|editable_region_start|>
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -79,5 +76,3 @@ public class DOMSearch
       }
    }
 }
-<|editable_region_end|>
-```

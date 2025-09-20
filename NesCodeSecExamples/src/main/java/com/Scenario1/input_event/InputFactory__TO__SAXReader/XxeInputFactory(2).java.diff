@@ -1,0 +1,12 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/XxeInputFactory(2).java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXReader/XxeInputFactory(2).java
+@@ -13,7 +13,8 @@
+ public class XxeInputFactory {
+ 
+     public void negative(InputStream is) throws SAXException, IOException, XMLStreamException {
+-        XMLInputFactory factory = XMLInputFactory.newInstance();
++        org.dom4j.io.SAXReader factory = new org.dom4j.io.SAXReader();
++        
+         <fim_suffix>
+     }
+ }

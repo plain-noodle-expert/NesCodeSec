@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EarthquakeUpdateJobService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__SAXParser/EarthquakeUpdateJobService.java
-@@ -1,6 +1,5 @@
--EarthquakeUpdateJobService.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /*
-  * Professional Android, 4th Edition
-  * Reto Meier and Ian Lake
-@@ -105,9 +104,9 @@
+@@ -102,9 +102,9 @@
        int responseCode = httpConnection.getResponseCode();
        if (responseCode == HttpURLConnection.HTTP_OK) {
          InputStream in = httpConnection.getInputStream();
@@ -22,10 +13,3 @@
  
          // Parse the earthquake feed.
          Document dom = db.parse(in);
-@@ -325,5 +324,5 @@
-     return largestNewEarthquake;
-   }
- }
--<|editable_region_end|>
-+
- ```

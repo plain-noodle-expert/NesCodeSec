@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXReader/StaXParser.java
-@@ -1,6 +1,5 @@
--StaXParser.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package org.openmrs.module.dhisreport.api.syncmodel;
- 
- import java.io.ByteArrayInputStream;
-@@ -38,7 +37,8 @@
+@@ -35,7 +35,8 @@
  		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
  		try {
  			// First create a new XMLInputFactory
@@ -19,7 +10,7 @@
  			// Setup a new eventReader
  			// InputStream in = new FileInputStream(configFile);
  			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
-@@ -98,7 +98,7 @@
+@@ -95,7 +96,7 @@
  		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
  		try {
  			// First create a new XMLInputFactory
@@ -28,7 +19,7 @@
  			// Setup a new eventReader
  			InputStream stream = new ByteArrayInputStream(html
  					.getBytes("UTF-8"));
-@@ -166,7 +166,7 @@
+@@ -163,7 +164,7 @@
  		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
  		try {
  			// First create a new XMLInputFactory
@@ -37,7 +28,7 @@
  			// Setup a new eventReader
  			InputStream stream = new ByteArrayInputStream(html
  					.getBytes("UTF-8"));
-@@ -233,7 +233,7 @@
+@@ -230,7 +231,7 @@
  		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
  		try {
  			// First create a new XMLInputFactory
@@ -46,7 +37,7 @@
  			// Setup a new eventReader
  			InputStream stream = new ByteArrayInputStream(html
  					.getBytes("UTF-8"));
-@@ -303,7 +303,7 @@
+@@ -300,7 +301,7 @@
  		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
  		try {
  			// First create a new XMLInputFactory
@@ -55,7 +46,7 @@
  			// Setup a new eventReader
  			InputStream stream = new ByteArrayInputStream(html
  					.getBytes("UTF-8"));
-@@ -372,7 +372,7 @@
+@@ -369,7 +370,7 @@
  		String periodType = new String();
  		try {
  			// First create a new XMLInputFactory
@@ -64,10 +55,3 @@
  			// Setup a new eventReader
  			InputStream stream = new ByteArrayInputStream(html
  					.getBytes("UTF-8"));
-@@ -401,5 +401,5 @@
- 		return periodType;
- 	}
- }
--<|editable_region_end|>
-+
- ```

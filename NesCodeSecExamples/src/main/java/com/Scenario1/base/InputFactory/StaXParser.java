@@ -1,6 +1,3 @@
-StaXParser.java
-```<|start_of_file|>
-<|editable_region_start|>
 package org.openmrs.module.dhisreport.api.syncmodel;
 
 import java.io.ByteArrayInputStream;
@@ -401,5 +398,3 @@ public class StaXParser {
 		return periodType;
 	}
 }
-<|editable_region_end|>
-```

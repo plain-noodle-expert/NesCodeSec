@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XxeDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__SAXParser/XxeDigester.java
-@@ -1,6 +1,5 @@
--XxeDigester.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- <filename>XxeDigester.java<fim_prefix>
- 
- package examples;
-@@ -9,10 +8,12 @@
+@@ -6,7 +6,9 @@
  
  public class XxeDigester {
      public void negative() throws Exception {
@@ -20,7 +11,3 @@
          <fim_suffix>
      }
  }
- <fim_middle>
--<|editable_region_end|>
-+
- ```

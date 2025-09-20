@@ -1,6 +1,3 @@
-UnitTestLogin.java
-```<|start_of_file|>
-<|editable_region_start|>
 package login;
 
 import java.io.File;
@@ -80,6 +77,3 @@ public class UnitTestLogin extends TestCase {
 	}
 
 }
-
-<|editable_region_end|>
-```

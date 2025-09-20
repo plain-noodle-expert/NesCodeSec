@@ -1,25 +1,12 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/XxeDocumentBuilderFactory.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__Digester/XxeDocumentBuilderFactory.java
-@@ -1,6 +1,5 @@
--XxeDocumentBuilderFactory.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- 
- package examples;
- 
-@@ -19,10 +18,11 @@
+@@ -17,7 +17,8 @@
  public class XxeDocumentBuilderFactory {
  
      public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
 -        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 +        org.apache.commons.digester3.Digester factory = new org.apache.commons.digester3.Digester();
 +        
-         
+         <fim_suffix>
          Document document = builder.parse(in);
      }
- }
--<|editable_region_end|>
-+
- ```

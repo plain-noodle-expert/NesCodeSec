@@ -1,6 +1,3 @@
-MetricsDefManager.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  * Copyright 2015, Yahoo Inc.
  * Copyrights licensed under the Apache License.
@@ -338,6 +335,3 @@ public class MetricsDefManager implements java.io.Serializable
 	}
 
 }
-
-<|editable_region_end|>
-```

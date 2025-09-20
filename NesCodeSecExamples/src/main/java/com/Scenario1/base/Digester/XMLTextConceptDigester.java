@@ -1,6 +1,3 @@
-XMLTextConceptDigester.java
-```<|start_of_file|>
-<|editable_region_start|>
 /**
  *  Licensed to the Apache Software Foundation (ASF) under one
  *  or more contributor license agreements.  See the NOTICE file
@@ -68,6 +65,3 @@ public class XMLTextConceptDigester implements OutputDigester {
     return (Results) digester.parse(xmlReader);
   }
 }
-
-<|editable_region_end|>
-```

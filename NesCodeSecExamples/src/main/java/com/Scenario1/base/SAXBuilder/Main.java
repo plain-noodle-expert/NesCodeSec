@@ -1,6 +1,3 @@
-Main.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.company;
 import java.util.*;
 public class Main {
@@ -31,6 +28,3 @@ public class Main {
     }
 }
 
-
-<|editable_region_end|>
-```

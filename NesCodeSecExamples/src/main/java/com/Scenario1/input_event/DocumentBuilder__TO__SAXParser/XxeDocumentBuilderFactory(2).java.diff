@@ -1,0 +1,13 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/XxeDocumentBuilderFactory(2).java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__SAXParser/XxeDocumentBuilderFactory(2).java
+@@ -17,7 +17,9 @@
+ public class XxeDocumentBuilderFactory {
+ 
+     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++        
++        javax.xml.parsers.SAXParser factory = spf.newSAXParser();
+         <fim_suffix>
+         Document document = builder.parse(in);
+     }

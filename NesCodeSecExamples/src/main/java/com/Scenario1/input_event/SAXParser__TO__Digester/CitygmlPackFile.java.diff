@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/CitygmlPackFile.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXParser__TO__Digester/CitygmlPackFile.java
-@@ -1,6 +1,5 @@
--CitygmlPackFile.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package osm.surveyor.tools;
- 
- import java.io.File;
-@@ -31,15 +30,13 @@
+@@ -28,12 +28,10 @@
       * 
       */
      public void parse() throws ParserConfigurationException, SAXException, IOException {
@@ -22,8 +13,5 @@
  			parser.parse(this, gml);
  		} catch (SAXParseException e) {}
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

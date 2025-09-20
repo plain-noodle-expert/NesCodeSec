@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__DocumentBuilder/HusacctResource.java
-@@ -1,6 +1,5 @@
--HusacctResource.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package husacct.control.task.resources;
- 
- import java.io.File;
-@@ -20,7 +19,9 @@
+@@ -17,7 +17,9 @@
  	@Override
  	public Document load(HashMap<String, Object> dataValues) {
  		File file = (File) dataValues.get("file");
@@ -20,10 +11,9 @@
  		Document doc = new Document();
  		try {
  			doc = sax.build(file);
-@@ -57,5 +58,5 @@
+@@ -52,4 +54,4 @@
+ 		return false;
+ 	}
  
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

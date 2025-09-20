@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EvaluateOsiris.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__SAXReader/EvaluateOsiris.java
-@@ -1,6 +1,5 @@
--EvaluateOsiris.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package de.hu.berlin.wbi.process.osiris;
- 
- import java.io.File;
-@@ -71,13 +70,8 @@
+@@ -68,13 +68,8 @@
  		dbSNP.init(mysql, property.getProperty("database.PSM"), property.getProperty("database.hgvs_view"));
  		UniprotFeature.init(mysql, property.getProperty("database.uniprot"));
  
@@ -25,10 +16,9 @@
  
  		XPath xPath = XPathFactory.newInstance().newXPath();
  		XPathExpression documentExp = xPath.compile("/Articles/Article");
-@@ -204,5 +198,5 @@
+@@ -199,4 +194,4 @@
+ 		System.err.println("F1 " +df.format(f1));
+ 	}
  
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

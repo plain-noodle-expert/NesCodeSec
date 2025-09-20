@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/UnitTestLogin.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__SAXParser/UnitTestLogin.java
-@@ -1,6 +1,5 @@
--UnitTestLogin.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package login;
- 
- import java.io.File;
-@@ -32,7 +31,10 @@
+@@ -29,7 +29,10 @@
  	public void setUp() {
  		pw = new ProxyWrapper();
  
@@ -21,10 +12,9 @@
  		try {
  			document = builder.build(new File("./testData.xml")
  					.getCanonicalPath());
-@@ -81,5 +83,5 @@
+@@ -76,4 +79,4 @@
  
- }
+ 	}
  
--<|editable_region_end|>
-+
- ```
+-}
++}

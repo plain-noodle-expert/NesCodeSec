@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/hwxml.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__Digester/hwxml.java
-@@ -1,6 +1,5 @@
--hwxml.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /**
-  * EGroupware - Notifications Java Desktop App
-  *
-@@ -86,7 +85,8 @@
+@@ -83,7 +83,8 @@
      {
          if( !this.newfile )
          {
@@ -19,10 +10,9 @@
  			
  			InputStream in = null;
  			
-@@ -178,5 +178,5 @@
+@@ -173,4 +174,4 @@
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

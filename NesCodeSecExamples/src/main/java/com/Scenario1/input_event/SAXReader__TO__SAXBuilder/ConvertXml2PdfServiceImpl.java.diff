@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/ConvertXml2PdfServiceImpl.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXReader__TO__SAXBuilder/ConvertXml2PdfServiceImpl.java
-@@ -1,6 +1,5 @@
--ConvertXml2PdfServiceImpl.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package com.thinkdifferent.convertpreview.service.impl.x2x;
- 
- import cn.hutool.core.io.FileUtil;
-@@ -48,7 +47,8 @@
+@@ -45,7 +45,8 @@
      @SneakyThrows
      @Override
      public File convert0(File inputFile, String targetDir) {
@@ -19,7 +10,7 @@
          Document document = reader.read(inputFile);
          Element elmRoot = document.getRootElement();
  
-@@ -77,7 +77,7 @@
+@@ -74,7 +75,7 @@
  
          String strSetPath = SystemUtil.beautifulPath(System.getProperty("user.dir")) + "conf/";
          File fileXmlReportSet = new File(strSetPath + "XmlReport.xml");
@@ -28,10 +19,9 @@
          Document document = reader.read(fileXmlReportSet);
          Element elmRootSet = document.getRootElement();
          List<Element> listSetElements = elmRootSet.elements();
-@@ -158,5 +158,5 @@
+@@ -153,4 +154,4 @@
+         }
+         return null;
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

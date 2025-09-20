@@ -1,6 +1,3 @@
-ParseImporterXML.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.indizen.cursoSpring.web.gui.importer;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +38,3 @@ public class ParseImporterXML {
 	}
 
 }
-
-<|editable_region_end|>
-```

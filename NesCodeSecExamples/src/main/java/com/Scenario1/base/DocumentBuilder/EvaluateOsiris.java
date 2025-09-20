@@ -1,6 +1,3 @@
-EvaluateOsiris.java
-```<|start_of_file|>
-<|editable_region_start|>
 package de.hu.berlin.wbi.process.osiris;
 
 import java.io.File;
@@ -203,6 +200,3 @@ public class EvaluateOsiris {
 	}
 
 }
-
-<|editable_region_end|>
-```

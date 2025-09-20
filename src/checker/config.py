@@ -65,7 +65,7 @@ complete_prompt_fpath = f"datasets/static/prompts/complete_prompt.{_get_config_v
 
 
 # JavaParser JAR package paths
-jar_package_dir = "datasets/static/jar_package"
+jar_package_dir = "NesCodeSec/src/checker/jar_package"
 to_resolve_dir = os.path.join(jar_package_dir, "to_resolve")
 
 # Core JAR files for JavaParser

@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XMLTextConceptDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__SAXReader/XMLTextConceptDigester.java
-@@ -1,6 +1,5 @@
--XMLTextConceptDigester.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /**
-  *  Licensed to the Apache Software Foundation (ASF) under one
-  *  or more contributor license agreements.  See the NOTICE file
-@@ -37,7 +36,8 @@
+@@ -34,7 +34,8 @@
    public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
            URISyntaxException {
  
@@ -19,10 +10,9 @@
      digester.setValidating(false);
  
      digester.addObjectCreate("results", ConceptResults.class);
-@@ -69,5 +69,5 @@
-   }
- }
+@@ -64,4 +65,4 @@
  
--<|editable_region_end|>
-+
- ```
+     return (Results) digester.parse(xmlReader);
+   }
+-}
++}

@@ -1,6 +1,3 @@
-BeanFactory.java
-```<|start_of_file|>
-<|editable_region_start|>
 package edu.nwpu.store.utils;
 
 import java.io.InputStream;
@@ -51,6 +48,3 @@ public class BeanFactory {
 	}
 
 }
-
-<|editable_region_end|>
-```

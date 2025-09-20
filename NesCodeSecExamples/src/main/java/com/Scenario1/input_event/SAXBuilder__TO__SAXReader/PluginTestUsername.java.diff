@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/PluginTestUsername.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__SAXReader/PluginTestUsername.java
-@@ -1,6 +1,5 @@
--PluginTestUsername.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package registration.plugintest;
- 
- import static org.junit.Assert.*;
-@@ -50,7 +49,8 @@
+@@ -47,7 +47,8 @@
  	@Before
  	public void setUp() throws Exception {
  
@@ -19,10 +10,9 @@
  		try {
  			document = builder.build(new File("./testData.xml")
  					.getCanonicalPath());
-@@ -198,5 +198,5 @@
+@@ -193,4 +194,4 @@
+ 										mainViewId));
+ 	}
  
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

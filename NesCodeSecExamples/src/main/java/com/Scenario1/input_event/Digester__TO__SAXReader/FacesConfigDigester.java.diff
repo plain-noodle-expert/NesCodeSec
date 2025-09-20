@@ -1,18 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/FacesConfigDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__SAXReader/FacesConfigDigester.java
-@@ -1,6 +1,5 @@
--FacesConfigDigester.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /**
-  *  Licensed to the Apache Software Foundation (ASF) under one or more
-  *  contributor license agreements.  See the NOTICE file distributed with
-@@ -324,5 +323,5 @@
+@@ -61,7 +61,8 @@
+     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
  
- }
+     public FacesConfigDigester() {
+-        Digester digester = new Digester();
++        org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
++        
+         // TODO: validation set to false during implementation of 1.2
+         digester.setValidating(false);
+         digester.setNamespaceAware(true);
+@@ -319,4 +320,4 @@
+         return config;
+     }
  
--<|editable_region_end|>
-+
- ```
+-}
++}

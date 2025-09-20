@@ -1,6 +1,3 @@
-Test03.java
-```<|start_of_file|>
-<|editable_region_start|>
 package src.cxs15.pyrmont.digestertest;
 
 import java.io.File;
@@ -36,6 +33,3 @@ public class Test03 {
   }
 }
   
-
-<|editable_region_end|>
-```

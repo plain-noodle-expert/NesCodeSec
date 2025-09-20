@@ -1,6 +1,3 @@
-XxeDigester.java
-```<|start_of_file|>
-<|editable_region_start|>
 <filename>XxeDigester.java<fim_prefix>
 
 package examples;
@@ -14,5 +11,3 @@ public class XxeDigester {
     }
 }
 <fim_middle>
-<|editable_region_end|>
-```

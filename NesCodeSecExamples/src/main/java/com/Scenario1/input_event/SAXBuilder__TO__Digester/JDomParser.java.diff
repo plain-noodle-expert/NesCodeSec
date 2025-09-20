@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/JDomParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__Digester/JDomParser.java
-@@ -1,6 +1,5 @@
--JDomParser.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package com.baeldung.xml;
- 
- import java.io.File;
-@@ -25,7 +24,8 @@
+@@ -22,7 +22,8 @@
  
      public List<Element> getAllTitles() {
          try {
@@ -19,7 +10,7 @@
              Document doc = builder.build(this.getFile());
              Element tutorials = doc.getRootElement();
              List<Element> titles = tutorials.getChildren("tutorial");
-@@ -39,7 +39,7 @@
+@@ -36,7 +37,7 @@
  
      public Element getNodeById(String id) {
          try {
@@ -28,10 +19,9 @@
              Document document = (Document) builder.build(file);
              String filter = "//*[@tutId='" + id + "']";
              XPathFactory xFactory = XPathFactory.instance();
-@@ -63,5 +63,5 @@
+@@ -58,4 +59,4 @@
+         this.file = file;
+     }
  
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

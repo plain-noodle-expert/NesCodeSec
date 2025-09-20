@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/WebXmlParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__SAXBuilder/WebXmlParser.java
-@@ -1,6 +1,5 @@
--WebXmlParser.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /*
-  * Copyright 2010 Lincoln Baxter, III
-  * 
-@@ -140,7 +139,8 @@
+@@ -137,7 +137,8 @@
  
     private Digester getConfiguredDigester()
     {
@@ -19,10 +10,9 @@
  
        /*
         * We use the context class loader to resolve classes. This fixes
-@@ -179,5 +179,5 @@
+@@ -174,4 +175,4 @@
+       }
+       return "";
     }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

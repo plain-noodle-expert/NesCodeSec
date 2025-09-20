@@ -1,6 +1,7 @@
 XxeDocumentBuilderFactory.java
 ```<|start_of_file|>
 <|editable_region_start|>
+<filename>XxeDocumentBuilderFactory.java<fim_prefix>
 
 package examples;
 
@@ -21,9 +22,10 @@ public class XxeDocumentBuilderFactory {
     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
         javax.xml.stream.XMLInputFactory factory = javax.xml.stream.XMLInputFactory.newFactory();
         <|user_cursor_is_here|>
-        
+        <fim_suffix>
         Document document = builder.parse(in);
     }
 }
+<fim_middle>
 <|editable_region_end|>
 ```

@@ -1,6 +1,3 @@
-VdPreview.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  * Copyright (C) 2015 The Android Open Source Project
  *
@@ -297,5 +294,3 @@ public class VdPreview {
         System.out.println("Hello from sdk-common-lib.");
     }
 }
-<|editable_region_end|>
-```

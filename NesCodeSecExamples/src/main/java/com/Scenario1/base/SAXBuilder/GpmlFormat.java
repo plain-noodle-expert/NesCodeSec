@@ -1,6 +1,3 @@
-GpmlFormat.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*******************************************************************************
  * PathVisio, a tool for data visualization and analysis using biological pathways
  * Copyright 2006-2024 PathVisio
@@ -233,6 +230,3 @@ public class GpmlFormat extends AbstractPathwayFormat
 	}
 
 }
-
-<|editable_region_end|>
-```

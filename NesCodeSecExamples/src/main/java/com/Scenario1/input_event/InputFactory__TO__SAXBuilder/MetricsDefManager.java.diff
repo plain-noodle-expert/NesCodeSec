@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/MetricsDefManager.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXBuilder/MetricsDefManager.java
-@@ -1,6 +1,5 @@
--MetricsDefManager.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /*
-  * Copyright 2015, Yahoo Inc.
-  * Copyrights licensed under the Apache License.
-@@ -150,7 +149,9 @@
+@@ -147,7 +147,9 @@
  		if (in == null)return groups;
  		
  	    XMLStreamReader reader = null;
@@ -20,10 +11,9 @@
  		try
  		{
  		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));
-@@ -339,5 +340,5 @@
+@@ -334,4 +336,4 @@
+ 		return mg;
+ 	}
  
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

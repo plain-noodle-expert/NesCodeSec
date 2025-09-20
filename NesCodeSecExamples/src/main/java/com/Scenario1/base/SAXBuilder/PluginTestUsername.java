@@ -1,6 +1,3 @@
-PluginTestUsername.java
-```<|start_of_file|>
-<|editable_region_start|>
 package registration.plugintest;
 
 import static org.junit.Assert.*;
@@ -197,6 +194,3 @@ public class PluginTestUsername extends TestCase {
 	}
 
 }
-
-<|editable_region_end|>
-```

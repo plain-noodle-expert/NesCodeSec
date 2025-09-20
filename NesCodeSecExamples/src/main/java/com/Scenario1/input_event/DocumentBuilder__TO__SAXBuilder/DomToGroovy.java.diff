@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DomToGroovy.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__SAXBuilder/DomToGroovy.java
-@@ -1,6 +1,5 @@
--DomToGroovy.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /**
-  *  Licensed to the Apache Software Foundation (ASF) under one
-  *  or more contributor license agreements.  See the NOTICE file
-@@ -112,16 +111,13 @@
+@@ -109,16 +109,13 @@
      }
  
      public static Document parse(final Reader input) throws Exception {
@@ -29,10 +20,9 @@
          return builder.parse(new InputSource(input));
      }
  
-@@ -401,5 +397,5 @@
+@@ -396,4 +393,4 @@
+     protected void printIndent() {
+         out.printIndent();
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

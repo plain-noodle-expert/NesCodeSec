@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/XmlParseService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXReader__TO__Digester/XmlParseService.java
-@@ -1,6 +1,5 @@
--XmlParseService.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package com.rule.graph.service;
- 
- import com.rule.graph.mybatis.dao.XmlContentMapper;
-@@ -68,7 +67,8 @@
+@@ -65,7 +65,8 @@
  
      public void doXMLParse(String xml,String pageType) throws Exception {
  
@@ -19,10 +10,11 @@
          Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
          Element element = document.getRootElement();
  
-@@ -186,5 +186,5 @@
+@@ -179,6 +180,4 @@
+         }
+     }
  
-     
- 
--<|editable_region_end|>
-+
- ```
+-}
+-
+-    
++}

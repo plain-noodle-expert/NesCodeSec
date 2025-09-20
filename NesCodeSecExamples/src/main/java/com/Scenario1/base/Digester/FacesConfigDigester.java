@@ -1,6 +1,3 @@
-FacesConfigDigester.java
-```<|start_of_file|>
-<|editable_region_start|>
 /**
  *  Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
@@ -64,7 +61,7 @@ public class FacesConfigDigester {
     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
 
     public FacesConfigDigester() {
-        digester = new Digester();
+        Digester digester = new Digester();
         // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);
@@ -323,6 +320,3 @@ public class FacesConfigDigester {
     }
 
 }
-
-<|editable_region_end|>
-```

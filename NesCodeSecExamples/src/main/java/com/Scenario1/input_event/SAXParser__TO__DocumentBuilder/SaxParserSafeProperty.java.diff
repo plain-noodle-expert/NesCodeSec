@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/SaxParserSafeProperty.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXParser__TO__DocumentBuilder/SaxParserSafeProperty.java
-@@ -1,6 +1,5 @@
--SaxParserSafeProperty.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package testcode.xxe;
- 
- import org.w3c.dom.Document;
-@@ -25,35 +24,31 @@
+@@ -22,35 +22,31 @@
      }
  
      public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
@@ -54,10 +45,9 @@
  
          parser.parse(getInputFile(), new PrintHandler());
      }
-@@ -66,5 +61,5 @@
+@@ -61,4 +57,4 @@
+         //safeSecureProcessing();
+         //safeManualConfiguration();
      }
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

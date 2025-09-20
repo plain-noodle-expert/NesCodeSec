@@ -1,6 +1,3 @@
-XmlBeanDefinitionReader.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.lc.spring.xml;
 
 import java.io.InputStream;
@@ -100,6 +97,3 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	
 	
 }
-
-<|editable_region_end|>
-```

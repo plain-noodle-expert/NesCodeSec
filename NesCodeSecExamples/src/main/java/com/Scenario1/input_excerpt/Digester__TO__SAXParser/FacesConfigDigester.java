@@ -64,7 +64,9 @@ public class FacesConfigDigester {
     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
 
     public FacesConfigDigester() {
-        digester = new Digester();
+        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+        <|user_cursor_is_here|>
+        javax.xml.parsers.SAXParser digester = spf.newSAXParser();
         // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);

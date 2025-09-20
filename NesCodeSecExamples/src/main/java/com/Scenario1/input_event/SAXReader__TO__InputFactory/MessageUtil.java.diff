@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/MessageUtil.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXReader__TO__InputFactory/MessageUtil.java
-@@ -1,6 +1,5 @@
--MessageUtil.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package com.qihua.ofbiz.weixin.util;
- 
- /**
-@@ -114,7 +113,8 @@
+@@ -111,7 +111,8 @@
          // 从request中取得输入流
          InputStream inputStream = request.getInputStream();
          // 读取输入流
@@ -19,10 +10,9 @@
          Document document = reader.read(inputStream);
          // 得到xml根元素
          Element root = document.getRootElement();
-@@ -197,5 +197,5 @@
+@@ -192,4 +193,4 @@
+             };
+         }
      });
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

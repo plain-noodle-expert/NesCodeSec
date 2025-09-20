@@ -1,6 +1,3 @@
-MessageUtil.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.qihua.ofbiz.weixin.util;
 
 /**
@@ -196,6 +193,3 @@ public class MessageUtil {
         }
     });
 }
-
-<|editable_region_end|>
-```

@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/ReadXMLFileSAX.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXParser__TO__DocumentBuilder/ReadXMLFileSAX.java
-@@ -1,6 +1,5 @@
--ReadXMLFileSAX.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package sax;
- 
- import javax.xml.parsers.SAXParser;
-@@ -16,8 +15,9 @@
+@@ -13,8 +13,9 @@
  public class ReadXMLFileSAX {
      public static Object readXML(String xmlFile) {
          try {
@@ -21,10 +12,9 @@
  
              //LogSaxHandler handler = new LogSaxHandler();
              SaxHandler handler = new SaxHandler();
-@@ -35,5 +35,5 @@
+@@ -30,4 +31,4 @@
+     }
  
- }
  
--<|editable_region_end|>
-+
- ```
+-}
++}

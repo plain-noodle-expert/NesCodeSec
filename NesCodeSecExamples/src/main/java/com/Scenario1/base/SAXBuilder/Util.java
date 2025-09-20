@@ -1,6 +1,3 @@
-Util.java
-```<|start_of_file|>
-<|editable_region_start|>
 /********************************************************************************
  * CruiseControl, a Continuous Integration Toolkit
  * Copyright (c) 2001-2003, ThoughtWorks, Inc.
@@ -305,6 +302,3 @@ public final class Util {
         return string;
     }
 }
-
-<|editable_region_end|>
-```

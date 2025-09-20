@@ -1,6 +1,3 @@
-CitygmlPackFile.java
-```<|start_of_file|>
-<|editable_region_start|>
 package osm.surveyor.tools;
 
 import java.io.File;
@@ -40,6 +37,3 @@ public class CitygmlPackFile extends File {
 		} catch (SAXParseException e) {}
     }
 }
-
-<|editable_region_end|>
-```

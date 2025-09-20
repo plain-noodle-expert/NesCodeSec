@@ -1,15 +1,6 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/LineMaker.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXReader__TO__DocumentBuilder/LineMaker.java
-@@ -1,6 +1,5 @@
--LineMaker.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- package com.thinkdifferent.convertpreview.utils;
- 
- import cn.hutool.core.io.FileUtil;
-@@ -74,7 +73,10 @@
+@@ -71,7 +71,10 @@
              strRoot = strRoot.replaceAll("\\\\", "/");
              String strPath = strRoot + "/conf/";
  
@@ -21,10 +12,9 @@
              Document document = reader.read(new File(strPath + "CustomLine.xml"));
              Element elmRoot = document.getRootElement();
              Element elmField = elmRoot.element(strName);
-@@ -269,5 +271,5 @@
+@@ -264,4 +267,4 @@
+         listCommand.add(strOutputFile);
+     }
  
- }
- 
--<|editable_region_end|>
-+
- ```
+-}
++}

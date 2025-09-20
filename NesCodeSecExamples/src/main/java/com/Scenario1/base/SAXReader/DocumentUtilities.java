@@ -1,6 +1,3 @@
-DocumentUtilities.java
-```<|start_of_file|>
-<|editable_region_start|>
 package net.sf.anathema.lib.xml;
 
 import net.sf.anathema.lib.exception.AnathemaException;
@@ -93,5 +90,3 @@ public class DocumentUtilities {
     return (Element) result;
   }
 }
-<|editable_region_end|>
-```

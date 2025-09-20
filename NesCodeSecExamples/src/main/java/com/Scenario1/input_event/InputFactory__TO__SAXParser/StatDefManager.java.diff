@@ -1,18 +1,8 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StatDefManager.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXParser/StatDefManager.java
-@@ -1,6 +1,5 @@
--StatDefManager.java
--```<|start_of_file|>
--<|editable_region_start|>
-+```
-+
- /*
-  * Copyright 2015, Yahoo Inc.
-  * Copyrights licensed under the Apache License.
-@@ -130,5 +129,5 @@
- 	
- }
+@@ -125,4 +125,4 @@
+ 	}
  
--<|editable_region_end|>
-+
- ```
+ 	
+-}
++}

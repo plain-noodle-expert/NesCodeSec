@@ -1,6 +1,3 @@
-GoogleGeocoderImpl.java
-```<|start_of_file|>
-<|editable_region_start|>
 /**
  * Copyright (C) 2011 Brian Ferris <bdferris@onebusaway.org>
  *
@@ -114,6 +111,3 @@ public class GoogleGeocoderImpl implements GeocoderService {
     }
   }
 }
-
-<|editable_region_end|>
-```

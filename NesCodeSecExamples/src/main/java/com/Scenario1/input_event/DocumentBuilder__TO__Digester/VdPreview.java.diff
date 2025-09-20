@@ -1,18 +1,15 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/VdPreview.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/DocumentBuilder__TO__Digester/VdPreview.java
-@@ -1,6 +1,5 @@
--VdPreview.java
--```<|start_of_file|>
--<|editable_region_start|>
+@@ -1,3 +1,5 @@
 +```
 +
  /*
   * Copyright (C) 2015 The Android Open Source Project
   *
-@@ -297,5 +296,5 @@
+@@ -293,4 +295,6 @@
+     public static void main(String[] args) {
          System.out.println("Hello from sdk-common-lib.");
      }
- }
--<|editable_region_end|>
+-}+}
 +
- ```
++```

@@ -1,6 +1,3 @@
-HusacctResource.java
-```<|start_of_file|>
-<|editable_region_start|>
 package husacct.control.task.resources;
 
 import java.io.File;
@@ -56,6 +53,3 @@ public class HusacctResource implements IResource{
 	}
 
 }
-
-<|editable_region_end|>
-```

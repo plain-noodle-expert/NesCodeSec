@@ -1,6 +1,3 @@
-WebXmlParser.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  * Copyright 2010 Lincoln Baxter, III
  * 
@@ -178,6 +175,3 @@ public class WebXmlParser
       return "";
    }
 }
-
-<|editable_region_end|>
-```

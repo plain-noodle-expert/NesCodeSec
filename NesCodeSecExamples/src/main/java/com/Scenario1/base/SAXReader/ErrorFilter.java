@@ -1,6 +1,3 @@
-ErrorFilter.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  * Copyright (c) 2015-2016, EMC Corporation.
  * Redistribution and use in source and binary forms, with or without modification,
@@ -137,6 +134,3 @@ public class ErrorFilter extends ClientFilter {
         return new S3Exception(message, statusCode, code, requestId);
     }
 }
-
-<|editable_region_end|>
-```

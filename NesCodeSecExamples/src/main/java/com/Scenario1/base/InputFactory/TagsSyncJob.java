@@ -1,6 +1,3 @@
-TagsSyncJob.java
-```<|start_of_file|>
-<|editable_region_start|>
 /**********************************************************************************
  * $URL$
  * $Id$
@@ -258,6 +255,3 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 	}
 
 }
-
-<|editable_region_end|>
-```

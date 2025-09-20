@@ -1,6 +1,3 @@
-PhysicsEditorShapeLibrary.java
-```<|start_of_file|>
-<|editable_region_start|>
 package se.treplex.sketchytruck;
 
 /**
@@ -232,6 +229,3 @@ public class PhysicsEditorShapeLibrary {
     }
 }
 
-
-<|editable_region_end|>
-```

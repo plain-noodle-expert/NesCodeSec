@@ -1,6 +1,3 @@
-Listing_15_16_StructuredContent.java
-```<|start_of_file|>
-<|editable_region_start|>
 package com.itextpdf.samples.book.part4.chapter15;
 
 import com.itextpdf.kernel.geom.PageSize;
@@ -66,6 +63,3 @@ public class Listing_15_16_StructuredContent {
         doc.close();
     }
 }
-
-<|editable_region_end|>
-```

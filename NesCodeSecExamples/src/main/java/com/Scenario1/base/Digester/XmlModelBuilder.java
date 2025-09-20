@@ -1,6 +1,3 @@
-XmlModelBuilder.java
-```<|start_of_file|>
-<|editable_region_start|>
 /*
  *
  *
@@ -479,6 +476,3 @@ public class XmlModelBuilder implements ModelBuilder {
         }
     }
 }
-
-<|editable_region_end|>
-```
