@@ -1,0 +1,21 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/StaXParser.java
+@@ -38 +38,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
++			
+@@ -98 +99 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+@@ -166 +167 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+@@ -233 +234 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+@@ -303 +304 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+@@ -372 +373 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();

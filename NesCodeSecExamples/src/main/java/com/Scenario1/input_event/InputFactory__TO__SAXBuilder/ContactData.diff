@@ -1,0 +1,6 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ContactData.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/ContactData.java
+@@ -60 +60,2 @@
+-            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
++            

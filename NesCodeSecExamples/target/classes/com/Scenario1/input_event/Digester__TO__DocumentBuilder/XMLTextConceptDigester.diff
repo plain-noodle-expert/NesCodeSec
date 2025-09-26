@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XMLTextConceptDigester.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__DocumentBuilder/XMLTextConceptDigester.java
+@@ -37 +37,4 @@
+-    Digester digester = new Digester();
++    javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++
++
++    javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+@@ -67 +70 @@
+-}
++}

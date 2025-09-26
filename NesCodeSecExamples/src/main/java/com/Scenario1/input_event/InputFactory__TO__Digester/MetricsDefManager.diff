@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/MetricsDefManager.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/MetricsDefManager.java
+@@ -150 +150,3 @@
+-	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();//will be used only once at startup time
++	    org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
++	    
++//will be used only once at startup time
+@@ -337 +339 @@
+-}
++}

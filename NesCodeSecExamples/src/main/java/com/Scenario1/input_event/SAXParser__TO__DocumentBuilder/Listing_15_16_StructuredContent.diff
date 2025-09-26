@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/Listing_15_16_StructuredContent.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__DocumentBuilder/Listing_15_16_StructuredContent.java
+@@ -55 +55,4 @@
+-        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
++        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++
++
++        javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
+@@ -65 +68 @@
+-}
++}

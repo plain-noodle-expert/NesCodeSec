@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/BeanFactory.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__InputFactory/BeanFactory.java
+@@ -22 +22,2 @@
+-			SAXReader reader = new SAXReader();
++			javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
++			
+@@ -50 +51 @@
+-}
++}

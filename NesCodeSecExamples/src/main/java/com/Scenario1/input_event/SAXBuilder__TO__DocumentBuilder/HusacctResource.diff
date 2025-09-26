@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__DocumentBuilder/HusacctResource.java
+@@ -20 +20,3 @@
+-		SAXBuilder sax = new SAXBuilder();
++		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++		
++		javax.xml.parsers.DocumentBuilder sax = dbf.newDocumentBuilder();
+@@ -55 +57 @@
+-}
++}

@@ -1,0 +1,15 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EvaluateOsiris.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXBuilder/EvaluateOsiris.java
+@@ -71,7 +71,2 @@
+-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-		factory.setFeature("http://xml.org/sax/features/namespaces", false);
+-		factory.setNamespaceAware(true);
+-		factory.setFeature("http://xml.org/sax/features/validation", false);
+-		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+-		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+-		DocumentBuilder builder = factory.newDocumentBuilder();
++		org.jdom2.input.SAXBuilder builder = new org.jdom2.input.SAXBuilder();
++
+@@ -202 +197 @@
+-}
++}

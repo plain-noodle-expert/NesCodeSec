@@ -1,0 +1,14 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ForeignMetadataImportServiceBean.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/ForeignMetadataImportServiceBean.java
+@@ -1 +0,0 @@
+-
+@@ -73 +72,2 @@
+-            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
++            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
++            
+@@ -100 +100 @@
+-            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
++            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
+@@ -346 +346 @@
+-}
++}

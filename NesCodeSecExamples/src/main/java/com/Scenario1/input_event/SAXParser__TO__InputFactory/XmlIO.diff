@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/XmlIO.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__InputFactory/XmlIO.java
+@@ -32,2 +32,2 @@
+-            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+-            SAXParser saxparser = saxParserFactory.newSAXParser();
++            javax.xml.stream.XMLInputFactory saxparser = javax.xml.stream.XMLInputFactory.newFactory();
++            
+@@ -112 +112 @@
+-}
++}

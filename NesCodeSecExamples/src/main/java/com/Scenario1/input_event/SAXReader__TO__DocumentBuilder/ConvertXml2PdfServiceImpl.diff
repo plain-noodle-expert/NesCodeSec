@@ -1,0 +1,14 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/ConvertXml2PdfServiceImpl.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__DocumentBuilder/ConvertXml2PdfServiceImpl.java
+@@ -48 +48,3 @@
+-        SAXReader reader = new SAXReader();
++        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++        
++        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
+@@ -77 +79,2 @@
+-        SAXReader reader = new SAXReader();
++        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
+@@ -156 +159 @@
+-}
++}

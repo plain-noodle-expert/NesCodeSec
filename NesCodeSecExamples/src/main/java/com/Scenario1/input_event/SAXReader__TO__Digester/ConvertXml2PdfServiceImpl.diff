@@ -1,0 +1,12 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/ConvertXml2PdfServiceImpl.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/ConvertXml2PdfServiceImpl.java
+@@ -48 +48,2 @@
+-        SAXReader reader = new SAXReader();
++        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
++        
+@@ -77 +78 @@
+-        SAXReader reader = new SAXReader();
++        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
+@@ -156 +157 @@
+-}
++}

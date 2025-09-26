@@ -1,71 +1,6 @@
 XmlParseService.java
-```<|start_of_file|>
+```
 <|editable_region_start|>
-package com.rule.graph.service;
-
-import com.rule.graph.mybatis.dao.XmlContentMapper;
-import com.rule.graph.mybatis.dao.ext.DisProfitParamExtMapper;
-import com.rule.graph.mybatis.dao.ext.XmlContentExtMapper;
-import com.rule.graph.mybatis.domain.DisProfitParam;
-import com.rule.graph.mybatis.domain.XmlContent;
-import com.rule.graph.utils.DateUtils;
-import com.rule.graph.utils.ParseXML;
-import com.rule.graph.vo.*;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import javax.annotation.Resource;
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-/**
- * @ClassName XmlParseService
- * @autor Hickey
- * @DATE 2020/7/10
- *
- * parse XML file.
- **/
-@Service
-public class XmlParseService {
-
-
-    private final static Logger logger = LoggerFactory.getLogger(XmlParseService.class);
-
-    private final static int deaultDeep = 2;
-
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-
-    @Resource
-    XmlContentMapper xmlContentMapper;
-
-    @Resource
-    XmlContentExtMapper xmlContentExtMapper;
-
-    @Resource
-    DisProfitParamExtMapper disProfitParamExtMapper;
-
-
-    public String findProfitParamXML(){
-        XmlContent content = xmlContentExtMapper.selectByType("profit_param");
-        if(content==null){
-            return "";
-        }else{
-            return content.getContent();
-        }
-    }
-
     public void doXMLParse(String xml,String pageType) throws Exception {
 
         org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
@@ -141,51 +76,5 @@ public class XmlParseService {
 
         disProfitParamExtMapper.insertBatch(disProfitParams);
     }
-
-    private void parseNode(XMLNode  nextNode,String plat
-            ,String accountType,String pageType,String nowTime,List<DisProfitParam> disProfitParams){
-
-        for(XMLNode node:nextNode.getNext()){
-            // 获取node节点 存储到实体类中
-
-//            System.out.println(node);
-            //根据深度来确认等级
-            // 1 为总代理
-            // 2 为平台商
-            // 3 为一级账户  (深度+1)-3
-
-            if(node.getDeep()==2){
-                plat = node.getProperties().getPlantFormId();
-            }
-            if(node.getDeep()>deaultDeep){
-                PropertiesVO propertie = node.getProperties();
-                if(node.getDeep()==3){
-                    accountType = propertie.getAccountType();
-                }
-
-                DisProfitParam param = new DisProfitParam();
-                param.setIdentityType(pageType);
-                param.setDisPlatformId(plat);
-                param.setAccountType(accountType);
-                param.setDisProLevel(String.valueOf(node.getDeep()- deaultDeep));
-                param.setDisUserRank(propertie.getDisUserRank());
-                param.setDisUserType(propertie.getDisUserType());
-                param.setCalModel(propertie.getCalModel());
-                param.setDisProValue(propertie.getParamValue());
-                param.setAddTime(nowTime);
-                param.setUpdateTime(nowTime);
-                param.setDistTradeMode("0");
-                param.setIsDelete("N");
-                disProfitParams.add(param);
-            }
-
-            parseNode(node,plat,accountType,pageType,nowTime,disProfitParams);
-        }
-    }
-
-}
-
-    
-
 <|editable_region_end|>
 ```

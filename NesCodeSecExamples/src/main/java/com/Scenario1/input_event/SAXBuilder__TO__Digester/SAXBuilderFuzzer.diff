@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/SAXBuilderFuzzer.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__Digester/SAXBuilderFuzzer.java
+@@ -30 +30,2 @@
+-    SAXBuilder sax = new SAXBuilder();
++    org.apache.commons.digester3.Digester sax = new org.apache.commons.digester3.Digester();
++    
+@@ -43 +44 @@
+-}
++}

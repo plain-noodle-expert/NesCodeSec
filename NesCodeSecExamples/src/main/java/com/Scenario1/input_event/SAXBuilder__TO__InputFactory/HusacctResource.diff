@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__InputFactory/HusacctResource.java
+@@ -20 +20,2 @@
+-		SAXBuilder sax = new SAXBuilder();
++		javax.xml.stream.XMLInputFactory sax = javax.xml.stream.XMLInputFactory.newFactory();
++		
+@@ -55 +56 @@
+-}
++}

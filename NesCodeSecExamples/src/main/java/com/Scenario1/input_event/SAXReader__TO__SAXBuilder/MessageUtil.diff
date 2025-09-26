@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/MessageUtil.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXBuilder/MessageUtil.java
+@@ -114 +114,2 @@
+-        SAXReader reader = new SAXReader();
++        org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
++        
+@@ -195 +196 @@
+-}
++}

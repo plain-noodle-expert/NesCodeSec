@@ -1,0 +1,12 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/JDomParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__InputFactory/JDomParser.java
+@@ -25 +25,2 @@
+-            SAXBuilder builder = new SAXBuilder();
++            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++            
+@@ -39 +40 @@
+-            SAXBuilder builder = new SAXBuilder();
++            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
+@@ -61 +62 @@
+-}
++}

@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/PRConfig.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXBuilder/PRConfig.java
+@@ -1 +0,0 @@
+-
+@@ -103 +102,2 @@
+-            SAXReader saxReader = new SAXReader();
++            org.jdom2.input.SAXBuilder saxReader = new org.jdom2.input.SAXBuilder();
++
+@@ -128 +128 @@
+-}
++}

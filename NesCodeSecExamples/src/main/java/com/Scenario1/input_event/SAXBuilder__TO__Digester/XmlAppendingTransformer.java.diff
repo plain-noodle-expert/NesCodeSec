@@ -1,8 +1,0 @@
---- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/XmlAppendingTransformer.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__Digester/XmlAppendingTransformer.java
-@@ -123,4 +123,4 @@
- 
-         doc = null;
-     }
--}
-+}

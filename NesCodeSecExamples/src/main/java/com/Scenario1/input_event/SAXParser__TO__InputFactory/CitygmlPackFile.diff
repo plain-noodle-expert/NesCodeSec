@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/CitygmlPackFile.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__InputFactory/CitygmlPackFile.java
+@@ -31,2 +31 @@
+-        SAXParserFactory factory = SAXParserFactory.newInstance();
+-        factory.setValidating(false);
++        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
+@@ -34 +32,0 @@
+-        SAXParser parser = factory.newSAXParser();
+@@ -39 +37 @@
+-}
++}

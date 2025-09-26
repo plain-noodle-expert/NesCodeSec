@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/Test03.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/Test03.java
+@@ -13 +13,2 @@
+-    Digester digester = new Digester();
++    org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
++    
+@@ -34,2 +35 @@
+-}
+-  
++}

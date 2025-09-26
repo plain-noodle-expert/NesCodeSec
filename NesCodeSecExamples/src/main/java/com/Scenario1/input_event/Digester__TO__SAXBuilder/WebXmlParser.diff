@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/WebXmlParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/WebXmlParser.java
+@@ -140 +140,2 @@
+-      final Digester digester = new Digester();
++      org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
++      
+@@ -177 +178 @@
+-}
++}

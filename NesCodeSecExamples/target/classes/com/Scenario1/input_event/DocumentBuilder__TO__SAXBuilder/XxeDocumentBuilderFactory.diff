@@ -1,0 +1,7 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/XxeDocumentBuilderFactory.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXBuilder/XxeDocumentBuilderFactory.java
+@@ -18,2 +18,2 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        org.jdom2.input.SAXBuilder builder = new org.jdom2.input.SAXBuilder();
++        

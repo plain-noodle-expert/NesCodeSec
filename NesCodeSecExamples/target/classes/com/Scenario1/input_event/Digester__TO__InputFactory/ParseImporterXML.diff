@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ParseImporterXML.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__InputFactory/ParseImporterXML.java
+@@ -18 +18,2 @@
+-		Digester digester = new Digester();
++		javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
++
+@@ -40 +41 @@
+-}
++}

@@ -9,6 +9,12 @@ from prompt import PROMPT
 from checker.java_parser import JavaSyntaxChecker
 from batch_migrator import _udiff, strip_marker
 
+SCENARIO1_DIR = Path("NesCodeSecExamples/src/main/java/com/Scenario1")
+BASE_DIR = SCENARIO1_DIR / "base"
+EVENT_DIR = SCENARIO1_DIR / "input_event"
+MIGRATE_DIR = SCENARIO1_DIR / "migrate_full" # migrated full code
+EXCERPT_DIR = SCENARIO1_DIR / "input_excerpt" # input excerpt to be completed
+OUTPUT_DIR = SCENARIO1_DIR / "output"
 
 # model = transformers.AutoModelForCausalLM.from_pretrained("zed-industries/zeta")
 # tokenizer = transformers.AutoTokenizer.from_pretrained("zed-industries/zeta")
@@ -22,17 +28,14 @@ def generate_xxe_response() -> None:
     client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
     try:
         logger.info("===== Build prompt =====")
-        # event, input = prepare_XXE_input(base_file, xml_factory, comment)
-        event_dir = Path("NesCodeSecExamples/src/main/java/com/Scenario1/input_event")
-        excerpt_dir = Path("NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt")
-        for dir in event_dir.iterdir():
+        for dir in EVENT_DIR.iterdir():
             for file in dir.iterdir():
-                with open(event_dir / dir.name / file.name, "r") as f:
+                with open(EVENT_DIR / dir.name / file.name, "r") as f:
                     input_event = f.read()
-                with open(excerpt_dir / dir.name / file.stem, "r") as f:
+                with open(EXCERPT_DIR / dir.name / f"{file.stem}.java", "r") as f:
                     input_excerpt = f.read()
                 prompt = PROMPT.format(input_event, input_excerpt)
-                print("[以下Prompt]\n",prompt)
+                print("[PROMPT]\n",prompt)
                 logger.info("===== Send Request =====")
                 resp = client.completions.create(
                         model="zeta",
@@ -40,7 +43,7 @@ def generate_xxe_response() -> None:
                         max_tokens=8000,
                         temperature=0.2,
                     )
-                print(_udiff(input_excerpt, resp.choices[0].text, "Input_excerpt", "Response"))
+                print("[RESPONSE]", _udiff(input_excerpt, resp.choices[0].text, "Input_excerpt", "Response"))
                 response = strip_marker(resp.choices[0].text)
                 checker = JavaSyntaxChecker()
                 TRY = 5
@@ -66,22 +69,17 @@ def generate_xxe_response() -> None:
         raise
 
 def main(request_only:bool=True):
-    from batch_migrator import run_batch_migrate, generate_event
-    if not request_only: 
-        processed, changed = run_batch_migrate(
+    from batch_migrator import full_pipeline
+    if not request_only:
+        # full pipeline to prepare input_event and input_excerpt
+        full_pipeline(
             config_path="src/migrations_compilable.json",
-            base_root="NesCodeSecExamples/src/main/java/com/Scenario1/base",
-            output_root="NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt",
-            dry_run=False,                     # 先 dry-run=True 预览
-            pair_dirs=True                     # 生成 <Src>__TO__<Dst> 目录结构
+            base_root=BASE_DIR,
+            migrate_root=MIGRATE_DIR,
+            event_root=EVENT_DIR,
+            excerpt_root=EXCERPT_DIR
         )
-        # 生成完直接做 diff（对所有 pair 或指定某些 pair）
-        generate_event(
-            base_root="NesCodeSecExamples/src/main/java/com/Scenario1/base",
-            excerpt_root="NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt",
-            diff_output_root="NesCodeSecExamples/src/main/java/com/Scenario1/input_event"
-        )
-    
+
     generate_xxe_response()
 
 # inputs = tokenizer(prompt, return_tensors="pt")
@@ -93,4 +91,4 @@ def main(request_only:bool=True):
 
 if __name__ == "__main__":
 
-    main()
+    main(False)

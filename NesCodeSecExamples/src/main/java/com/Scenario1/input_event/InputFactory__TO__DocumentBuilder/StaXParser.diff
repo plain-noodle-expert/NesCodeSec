@@ -1,0 +1,27 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__DocumentBuilder/StaXParser.java
+@@ -38 +38,3 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			
++			javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
+@@ -98 +100,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
+@@ -166 +169,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
+@@ -233 +237,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
+@@ -303 +308,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
+@@ -372 +378,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++			javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();

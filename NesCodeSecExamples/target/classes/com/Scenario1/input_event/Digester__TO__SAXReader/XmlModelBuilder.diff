@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XmlModelBuilder.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXReader/XmlModelBuilder.java
+@@ -87 +87,2 @@
+-        Digester digester = new Digester();
++        org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
++        
+@@ -478 +479 @@
+-}
++}

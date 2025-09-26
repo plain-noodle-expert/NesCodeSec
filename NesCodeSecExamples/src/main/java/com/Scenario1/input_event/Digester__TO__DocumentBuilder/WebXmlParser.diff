@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/WebXmlParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__DocumentBuilder/WebXmlParser.java
+@@ -140 +140,3 @@
+-      final Digester digester = new Digester();
++      javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++      
++      javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+@@ -177 +179 @@
+-}
++}

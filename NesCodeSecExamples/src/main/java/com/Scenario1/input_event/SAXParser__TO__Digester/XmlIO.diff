@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/XmlIO.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__Digester/XmlIO.java
+@@ -32,2 +32,2 @@
+-            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+-            SAXParser saxparser = saxParserFactory.newSAXParser();
++            org.apache.commons.digester3.Digester saxparser = new org.apache.commons.digester3.Digester();
++            
+@@ -112 +112 @@
+-}
++}

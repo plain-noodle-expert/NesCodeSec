@@ -1,0 +1,14 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/Util.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__DocumentBuilder/Util.java
+@@ -65 +65,3 @@
+-            SAXBuilder builder = new SAXBuilder();
++            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++            
++            javax.xml.parsers.DocumentBuilder builder = dbf.newDocumentBuilder();
+@@ -79 +81,2 @@
+-            SAXBuilder builder = new SAXBuilder();
++            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++            javax.xml.parsers.DocumentBuilder builder = dbf.newDocumentBuilder();
+@@ -304 +307 @@
+-}
++}

@@ -1,0 +1,27 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXParser/StaXParser.java
+@@ -38 +38,3 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			
++			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+@@ -98 +100,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+@@ -166 +169,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+@@ -233 +237,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+@@ -303 +308,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+@@ -372 +378,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();

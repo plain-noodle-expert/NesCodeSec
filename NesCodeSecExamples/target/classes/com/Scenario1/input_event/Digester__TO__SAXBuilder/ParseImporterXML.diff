@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ParseImporterXML.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/ParseImporterXML.java
+@@ -18 +18,2 @@
+-		Digester digester = new Digester();
++		org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
++
+@@ -40 +41 @@
+-}
++}

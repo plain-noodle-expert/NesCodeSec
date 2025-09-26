@@ -1,0 +1,21 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXReader/StaXParser.java
+@@ -38 +38,2 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
++			
+@@ -98 +99 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+@@ -166 +167 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+@@ -233 +234 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+@@ -303 +304 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+@@ -372 +373 @@
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();

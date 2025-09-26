@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/MetricsDefManager.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/MetricsDefManager.java
+@@ -150 +150,3 @@
+-	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();//will be used only once at startup time
++	    org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
++	    
++//will be used only once at startup time
+@@ -337 +339 @@
+-}
++}

@@ -1,0 +1,18 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DomToGroovy.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXParser/DomToGroovy.java
+@@ -112,3 +112,3 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        factory.setNamespaceAware(true);
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++        
++        javax.xml.parsers.SAXParser builder = spf.newSAXParser();
+@@ -119,3 +119,2 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        factory.setNamespaceAware(true);
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++        javax.xml.parsers.SAXParser builder = spf.newSAXParser();
+@@ -399 +398 @@
+-}
++}

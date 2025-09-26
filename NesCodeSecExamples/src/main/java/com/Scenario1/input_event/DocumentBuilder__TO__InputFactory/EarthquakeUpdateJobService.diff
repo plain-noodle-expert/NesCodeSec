@@ -1,0 +1,8 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EarthquakeUpdateJobService.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__InputFactory/EarthquakeUpdateJobService.java
+@@ -105,3 +105,2 @@
+-        DocumentBuilderFactory dbf =
+-          DocumentBuilderFactory.newInstance();
+-        DocumentBuilder db = dbf.newDocumentBuilder();
++        javax.xml.stream.XMLInputFactory db = javax.xml.stream.XMLInputFactory.newFactory();
++        

@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/MessageUtil.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/MessageUtil.java
+@@ -114 +114,2 @@
+-        SAXReader reader = new SAXReader();
++        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
++        
+@@ -195 +196 @@
+-}
++}

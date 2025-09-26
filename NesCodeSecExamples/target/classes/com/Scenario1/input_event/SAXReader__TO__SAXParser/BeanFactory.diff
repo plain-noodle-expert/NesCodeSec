@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/BeanFactory.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXParser/BeanFactory.java
+@@ -22 +22,3 @@
+-			SAXReader reader = new SAXReader();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			
++			javax.xml.parsers.SAXParser reader = spf.newSAXParser();
+@@ -50 +52 @@
+-}
++}

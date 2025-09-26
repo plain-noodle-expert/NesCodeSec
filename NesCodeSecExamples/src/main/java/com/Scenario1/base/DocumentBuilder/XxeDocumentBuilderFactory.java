@@ -1,5 +1,3 @@
-<filename>XxeDocumentBuilderFactory.java<fim_prefix>
-
 package examples;
 
 import org.dom4j.DocumentException;
@@ -18,8 +16,7 @@ public class XxeDocumentBuilderFactory {
 
     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        <fim_suffix>
+        DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(in);
     }
 }
-<fim_middle>

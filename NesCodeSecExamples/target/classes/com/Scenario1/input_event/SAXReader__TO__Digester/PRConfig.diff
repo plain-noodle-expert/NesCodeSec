@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/PRConfig.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/PRConfig.java
+@@ -1 +0,0 @@
+-
+@@ -103 +102,2 @@
+-            SAXReader saxReader = new SAXReader();
++            org.apache.commons.digester3.Digester saxReader = new org.apache.commons.digester3.Digester();
++
+@@ -128 +128 @@
+-}
++}

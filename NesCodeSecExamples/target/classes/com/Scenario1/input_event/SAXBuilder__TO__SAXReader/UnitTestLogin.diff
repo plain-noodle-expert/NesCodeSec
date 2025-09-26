@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/UnitTestLogin.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/UnitTestLogin.java
+@@ -32 +32,2 @@
+-		SAXBuilder builder = new SAXBuilder();
++		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
++
+@@ -79 +80 @@
+-}
++}

@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/HusacctResource.java
+@@ -20 +20,2 @@
+-		SAXBuilder sax = new SAXBuilder();
++		org.dom4j.io.SAXReader sax = new org.dom4j.io.SAXReader();
++		
+@@ -55 +56 @@
+-}
++}

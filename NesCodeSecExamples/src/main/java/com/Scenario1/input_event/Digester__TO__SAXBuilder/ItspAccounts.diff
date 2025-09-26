@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ItspAccounts.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/ItspAccounts.java
+@@ -64 +64,2 @@
+-        Digester digester = new Digester();
++        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
++        
+@@ -81 +82 @@
+-}
++}

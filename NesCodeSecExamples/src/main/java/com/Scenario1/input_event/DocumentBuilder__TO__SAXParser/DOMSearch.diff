@@ -1,0 +1,8 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DOMSearch.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXParser/DOMSearch.java
+@@ -24,2 +24,3 @@
+-         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+-         DocumentBuilder db = dbf.newDocumentBuilder();
++         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++         
++         javax.xml.parsers.SAXParser db = spf.newSAXParser();

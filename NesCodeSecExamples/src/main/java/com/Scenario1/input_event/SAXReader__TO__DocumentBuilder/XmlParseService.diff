@@ -1,0 +1,13 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/XmlParseService.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__DocumentBuilder/XmlParseService.java
+@@ -68 +68,4 @@
+-        SAXReader reader = new SAXReader();
++        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++
++
++        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
+@@ -182,3 +185 @@
+-}
+-
+-    
++}

@@ -1,0 +1,16 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DomToGroovy.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__Digester/DomToGroovy.java
+@@ -112,3 +112,2 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        factory.setNamespaceAware(true);
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
++        
+@@ -119,3 +118 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        factory.setNamespaceAware(true);
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
+@@ -399 +396 @@
+-}
++}

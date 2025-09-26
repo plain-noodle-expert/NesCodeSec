@@ -1,59 +1,6 @@
 EvaluateOsiris.java
-```<|start_of_file|>
+```
 <|editable_region_start|>
-package de.hu.berlin.wbi.process.osiris;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import de.hu.berlin.wbi.objects.DatabaseConnection;
-import de.hu.berlin.wbi.objects.MutationMention;
-import de.hu.berlin.wbi.objects.UniprotFeature;
-import de.hu.berlin.wbi.objects.dbSNP;
-import de.hu.berlin.wbi.objects.dbSNPNormalized;
-
-
-public class EvaluateOsiris {
-
-	/**
-	 * Evaluate our normalization procedure on the Osiris corpus.
-	 * 
-	 * @param args  Property XML and Osiris-corpus as parameters
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
-	 * @throws XPathExpressionException 
-	 * @throws TransformerFactoryConfigurationError 
-	 * @throws TransformerException 
-	 * @throws SQLException
-	 */
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformerFactoryConfigurationError, TransformerException,  SQLException {
 
 		String propertyFile = args[0];
@@ -196,8 +143,5 @@ public class EvaluateOsiris {
 		System.err.println("Recall " +df.format(recall));
 		System.err.println("F1 " +df.format(f1));
 	}
-
-}
-
 <|editable_region_end|>
 ```

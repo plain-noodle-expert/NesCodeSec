@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/DefaultSAXPrologProcessRegistry.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXBuilder/DefaultSAXPrologProcessRegistry.java
+@@ -45 +45,2 @@
+-			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
++			org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
++			
+@@ -144,3 +145 @@
+-}
+-
+-
++}

@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/hwxml.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXReader/hwxml.java
+@@ -86 +86,2 @@
+-            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
++            
+@@ -176 +177 @@
+-}
++}

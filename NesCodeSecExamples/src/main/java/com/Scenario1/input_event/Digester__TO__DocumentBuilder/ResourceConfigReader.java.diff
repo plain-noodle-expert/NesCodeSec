@@ -1,9 +1,0 @@
---- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ResourceConfigReader.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__DocumentBuilder/ResourceConfigReader.java
-@@ -139,5 +139,4 @@
-         );
-     }
- 
--}
--
-+}

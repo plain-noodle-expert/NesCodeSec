@@ -1,0 +1,7 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ContactData.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__DocumentBuilder/ContactData.java
+@@ -60 +60,3 @@
+-            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++            
++            javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();

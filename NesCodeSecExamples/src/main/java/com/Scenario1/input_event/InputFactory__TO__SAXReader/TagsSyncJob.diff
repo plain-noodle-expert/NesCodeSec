@@ -1,0 +1,12 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/TagsSyncJob.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXReader/TagsSyncJob.java
+@@ -112 +112,2 @@
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader factory = new org.dom4j.io.SAXReader();
++			
+@@ -147 +148 @@
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader factory = new org.dom4j.io.SAXReader();
+@@ -257 +258 @@
+-}
++}

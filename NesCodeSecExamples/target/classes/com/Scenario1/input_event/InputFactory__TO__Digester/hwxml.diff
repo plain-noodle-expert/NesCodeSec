@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/hwxml.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/hwxml.java
+@@ -86 +86,2 @@
+-            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
++            
+@@ -176 +177 @@
+-}
++}

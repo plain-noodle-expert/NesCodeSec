@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/Listing_15_16_StructuredContent.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXReader/Listing_15_16_StructuredContent.java
+@@ -55 +55,2 @@
+-        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
++        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++
+@@ -65 +66 @@
+-}
++}

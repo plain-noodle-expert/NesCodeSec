@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/XmlIO.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXReader/XmlIO.java
+@@ -32,2 +32,2 @@
+-            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+-            SAXParser saxparser = saxParserFactory.newSAXParser();
++            org.dom4j.io.SAXReader saxparser = new org.dom4j.io.SAXReader();
++            
+@@ -112 +112 @@
+-}
++}

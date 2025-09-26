@@ -1,0 +1,7 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/XxeDocumentBuilderFactory.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__InputFactory/XxeDocumentBuilderFactory.java
+@@ -18,2 +18,2 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++        

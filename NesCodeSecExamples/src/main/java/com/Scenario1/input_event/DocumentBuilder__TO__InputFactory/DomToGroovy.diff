@@ -1,0 +1,16 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DomToGroovy.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__InputFactory/DomToGroovy.java
+@@ -112,3 +112,2 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        factory.setNamespaceAware(true);
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++        
+@@ -119,3 +118 @@
+-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+-        factory.setNamespaceAware(true);
+-        DocumentBuilder builder = factory.newDocumentBuilder();
++        javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
+@@ -399 +396 @@
+-}
++}

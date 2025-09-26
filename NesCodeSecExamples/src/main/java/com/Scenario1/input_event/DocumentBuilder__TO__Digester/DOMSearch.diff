@@ -1,0 +1,7 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DOMSearch.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__Digester/DOMSearch.java
+@@ -24,2 +24,2 @@
+-         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+-         DocumentBuilder db = dbf.newDocumentBuilder();
++         org.apache.commons.digester3.Digester db = new org.apache.commons.digester3.Digester();
++         

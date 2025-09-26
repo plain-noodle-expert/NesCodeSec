@@ -1,0 +1,14 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/TagsSyncJob.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXParser/TagsSyncJob.java
+@@ -112 +112,3 @@
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			
++			javax.xml.parsers.SAXParser factory = spf.newSAXParser();
+@@ -147 +149,2 @@
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++			javax.xml.parsers.SAXParser factory = spf.newSAXParser();
+@@ -257 +260 @@
+-}
++}

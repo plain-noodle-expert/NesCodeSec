@@ -1,8 +1,0 @@
---- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StatDefManager.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/InputFactory__TO__SAXBuilder/StatDefManager.java
-@@ -125,4 +125,4 @@
- 	}
- 
- 	
--}
-+}

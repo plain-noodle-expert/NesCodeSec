@@ -1,211 +1,400 @@
-package com.github.mfatihercik.dsb.xml;
+package org.openmrs.module.dhisreport.api.syncmodel;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mfatihercik.dsb.PathInfo;
-import com.github.mfatihercik.dsb.StreamParser;
-import com.github.mfatihercik.dsb.expression.ExpressionResolver;
-import com.github.mfatihercik.dsb.function.FunctionFactory;
-import com.github.mfatihercik.dsb.model.ParsingElement;
-import com.github.mfatihercik.dsb.typeadapter.TypeAdaptor;
-import com.github.mfatihercik.dsb.typeconverter.TypeConverterFactory;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.util.HashMap;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-public class StaxParser extends StreamParser {
-    protected final Map<String, List<ParsingElement>> cacheStartEventConfigMaps = new HashMap<>();
-    protected final Map<String, List<ParsingElement>> cacheEndObjectEventConfigMaps = new HashMap<>();
-    protected final Map<String, List<ParsingElement>> cacheEndValueEventConfigMaps = new HashMap<>();
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
 
-    public StaxParser(FunctionFactory functionFactory, ExpressionResolver expressionResolver, ObjectMapper objectMapper, Class<?> resultType, TypeConverterFactory typeConverterFactory) {
-        super(functionFactory, expressionResolver, new AbsoluteXmlPathGenerator(), objectMapper, resultType, typeConverterFactory);
-    }
+public class StaXParser {
+	static final String DATE = "date";
 
-    @Override
-    protected void parseInputStream(Reader reader) {
-        XMLInputFactory factory = XMLInputFactory.newInstance();
-        try {
-            XMLStreamReader streamReader = factory.createXMLStreamReader(reader);
-            processReader(streamReader);
+	static final String ITEM = "item";
 
-        } catch (XMLStreamException e) {
-            throw new RuntimeException(e);
-        }
+	static final String MODE = "mode";
 
-    }
+	static final String UNIT = "unit";
 
-    @Override
-    protected void parseInputStream(InputStream inputStream) {
-        XMLInputFactory factory = XMLInputFactory.newInstance();
-        try {
-            XMLStreamReader streamReader = factory.createXMLStreamReader(inputStream);
-            processReader(streamReader);
+	static final String CURRENT = "current";
 
-        } catch (XMLStreamException e) {
-            throw new RuntimeException(e);
-        }
+	static final String INTERACTIVE = "interactive";
 
-    }
+	@SuppressWarnings({"unchecked", "null"})
+	public List<SyncDataElementGroup> readConfig(InputStream in) {
+		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
+		try {
+			// First create a new XMLInputFactory
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			// Setup a new eventReader
+			// InputStream in = new FileInputStream(configFile);
+			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+			// Read the XML document
+			SyncDataElementGroup item = null;
 
-    private void processReader(XMLStreamReader streamReader) throws XMLStreamException {
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
 
-        while (streamReader.hasNext()) {
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
+					// If we have a item element we create a new item
+					if (startElement.getName().getLocalPart() == ("dataElementGroup")) {
+						// System.out.println("reaeched here1");
+						item = new SyncDataElementGroup();
+						// We read the attributes from this tag and add the date
+						// attribute to our object
+						Iterator<Attribute> attributes = startElement
+								.getAttributes();
+						while (attributes.hasNext()) {
+							Attribute attribute = attributes.next();
+							// System.out.println(attribute);
+							if (attribute.getName().toString().equals("name")) {
+								item.setName(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("code")) {
+								item.setCode(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("href")) {
+								item.setHref(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("id")) {
+								item.setId(attribute.getValue());
+							}
 
-            switch (streamReader.getEventType()) {
-                case XMLStreamConstants.START_DOCUMENT:
-                    startElement(streamReader, null);
-                    break;
-                case XMLStreamConstants.START_ELEMENT:
-                    startElement(streamReader, streamReader.getLocalName());
-                    break;
-                case XMLStreamConstants.END_ELEMENT:
-                    endElement(streamReader, streamReader.getLocalName());
-                    break;
-                case XMLStreamConstants.CHARACTERS:
-                    characters(streamReader);
-                    break;
+						}
+					}
 
-                default:
-                    break;
-            }
-            streamReader.next();
-            if (XMLStreamConstants.END_DOCUMENT == streamReader.getEventType()) {
-                endElement(streamReader, null);
-                break;
-            }
+				}
+				// If we reach the end of an item element we add it to the list
+				if (event.isEndElement()) {
+					EndElement endElement = event.asEndElement();
+					if (endElement.getName().getLocalPart() == ("dataElementGroup")) {
+						items.add(item);
+					}
+				}
 
-        }
-    }
+			}
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}
+		return items;
+	}
 
-    @Override
-    protected ParsingElement initParsingElement(ParsingElement parsingElement) {
-        parsingElement = super.initParsingElement(parsingElement);
-        parsingElement.setPath(parsingElement.getXmlPath());
-        return parsingElement;
-    }
+	@SuppressWarnings({"unchecked", "null"})
+	public List<SyncDataElement> readDe(String html) {
+		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
+		try {
+			// First create a new XMLInputFactory
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			// Setup a new eventReader
+			InputStream stream = new ByteArrayInputStream(html
+					.getBytes("UTF-8"));
 
-    private void characters(XMLStreamReader streamReader) {
-        if (streamReader.isWhiteSpace()) {
-            return;
-        }
-        if (tempValue == null)
-            tempValue = streamReader.getText();
-        else
-            tempValue = tempValue.concat(streamReader.getText());
-    }
+			// InputStream in = new FileInputStream(configFile);
+			XMLEventReader eventReader = inputFactory
+					.createXMLEventReader(stream);
+			// Read the XML document
+			SyncDataElement item = null;
 
-    private void endElement(final XMLStreamReader streamReader, String tagName) {
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
 
-//        final String qName = streamReader.getLocalName();
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
 
-        /*
-         * current key is in parent tag
-         */
-        final String generateKey = parentTag();
+					if (startElement.getName().getLocalPart() == ("dataElement") == true) {
 
-        if (tagName != null)
-            parentTagRemove(tagName);
+						item = new SyncDataElement();
 
-        final String parentTagPath = parentTag();
-        PathInfo path = pathInfo.set(tagName, parentTagPath, generateKey);
+						// System.out.println("wasup");
+						Iterator<Attribute> attributes = startElement
+								.getAttributes();
+						while (attributes.hasNext()) {
+							Attribute attribute = attributes.next();
+							// System.out.println(attribute);
+							if (attribute.getName().toString().equals("name")) {
+								item.setName(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("code")) {
+								item.setCode(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("href")) {
+								item.setHref(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("id")) {
+								item.setId(attribute.getValue());
+							}
 
-        boolean isObjectTagTypeExist = false;
-        List<ParsingElement> endValueEventElements = getEndValueEventElements(generateKey);
-        for (ParsingElement parsingElement : endValueEventElements) {
-            if (parsingElement.getTypeAdapter().isObject()) {
-                isObjectTagTypeExist = true;
-                continue;
-            }
-            setValueOnNode(parsingElement, path, tempValue);
+						}
 
-        }
-        evaluateEndDefaultValue(path, generateKey);
+					}
 
-        if (isObjectTagTypeExist) {
-            for (ParsingElement parsingElement : endValueEventElements) {
-                if (parsingElement.getTypeAdapter().isObject()) {
-                    setValueOnNode(parsingElement, path, tempValue);
-                }
-            }
-        }
-        tempValue = null;
+				}
+				// If we reach the end of an item element we add it to the list
+				if (event.isEndElement()) {
+					EndElement endElement = event.asEndElement();
+					if (endElement.getName().getLocalPart() == ("dataElement")) {
+						items.add(item);
+					}
+				}
 
-    }
+			}
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 
-    private void startElement(XMLStreamReader streamReader, String tagName) {
+		return items;
+	}
 
-//        final String qName ;= streamReader.getLocalName();
-        tempValue = null;
-        final String parentTagPath = parentTag();
-        // add tag to parent to generate new key
-        if (tagName != null)
-            parentTagAdd(tagName);
-        final String generatedKey = parentTag();
+	@SuppressWarnings({"unchecked", "null"})
+	public List<SyncDataSet> readDS(String html) {
+		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
+		try {
+			// First create a new XMLInputFactory
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			// Setup a new eventReader
+			InputStream stream = new ByteArrayInputStream(html
+					.getBytes("UTF-8"));
 
-        PathInfo path = pathInfo.set(tagName, parentTagPath, generatedKey);
-        Map<String, String> attributes = null;
-        List<ParsingElement> startEventElements = getStartEventElements(generatedKey);
-        for (ParsingElement parsingElement : startEventElements) {
-            TypeAdaptor typeAdapter = parsingElement.getTypeAdapter();
-            if (typeAdapter.isObject()) {
-                registerNewNode(parsingElement, path);
-            } else {
-                String value;
-                if (parsingElement.isAttribute()) {
-                    if (attributes == null) {
-                        attributes = new HashMap<>();
-                        for (int i = 0; i < streamReader.getAttributeCount(); i++) {
-                            attributes.put(streamReader.getAttributeName(i).getLocalPart(), streamReader.getAttributeValue(i));
-                        }
-                    }
+			// InputStream in = new FileInputStream(configFile);
+			XMLEventReader eventReader = inputFactory
+					.createXMLEventReader(stream);
+			// Read the XML document
+			SyncDataSet item = null;
 
-                    value = attributes.get(parsingElement.getPath());
-                    if (value != null) {
-                        setValueOnNode(parsingElement, path, value);
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
 
-                    }
-                } else {
-                    setValueOnNode(parsingElement, path, null);
-                }
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
 
-            }
-        }
-        evaluateStartDefaultValue(path, generatedKey);
-    }
+					if (startElement.getName().getLocalPart() == ("dataSet") == true) {
 
-    protected List<ParsingElement> getEndValueEventElements(String genderedKey) {
+						item = new SyncDataSet();
 
-        List<ParsingElement> parsingElements = cacheEndValueEventConfigMaps.get(genderedKey);
+						// System.out.println("wasup");
+						Iterator<Attribute> attributes = startElement
+								.getAttributes();
+						while (attributes.hasNext()) {
+							Attribute attribute = attributes.next();
+							// System.out.println(attribute);
+							if (attribute.getName().toString().equals("name")) {
+								item.setName(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("code")) {
+								item.setCode(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("href")) {
+								item.setHref(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("id")) {
+								item.setId(attribute.getValue());
+							}
 
-        if (parsingElements == null) {
-            parsingElements = getParsingElements(endElementConfigMaps, genderedKey);
-            parsingElements.addAll(getParsingElements(objectParsingElementMaps, genderedKey));
-            cacheEndValueEventConfigMaps.put(genderedKey, parsingElements);
-        }
-        return parsingElements;
+						}
 
-    }
+					}
 
-    protected List<ParsingElement> getStartEventElements(String genderedKey) {
+				}
+				// If we reach the end of an item element we add it to the list
+				if (event.isEndElement()) {
+					EndElement endElement = event.asEndElement();
+					if (endElement.getName().getLocalPart() == ("dataSet")) {
+						items.add(item);
+					}
+				}
 
-        List<ParsingElement> parsingElements = cacheStartEventConfigMaps.get(genderedKey);
+			}
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return items;
+	}
 
-        if (parsingElements == null) {
-            parsingElements = getParsingElements(objectParsingElementMaps, genderedKey);
-            if (!startElementConfigMaps.isEmpty())
-                parsingElements.addAll(getParsingElements(startElementConfigMaps, genderedKey));
-            cacheStartEventConfigMaps.put(genderedKey, parsingElements);
-        }
-        return parsingElements;
+	@SuppressWarnings({"unchecked", "null"})
+	public List<SyncCategoryCombo> readCategoryCombo(String html) {
+		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
+		try {
+			// First create a new XMLInputFactory
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			// Setup a new eventReader
+			InputStream stream = new ByteArrayInputStream(html
+					.getBytes("UTF-8"));
 
-    }
+			// InputStream in = new FileInputStream(configFile);
+			XMLEventReader eventReader = inputFactory
+					.createXMLEventReader(stream);
+			// Read the XML document
+			SyncCategoryCombo item = null;
 
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
 
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
+
+					if (startElement.getName().getLocalPart() == ("categoryCombo") == true) {
+
+						item = new SyncCategoryCombo();
+
+						// System.out.println("wasup");
+						Iterator<Attribute> attributes = startElement
+								.getAttributes();
+						while (attributes.hasNext()) {
+							Attribute attribute = attributes.next();
+							// System.out.println(attribute);
+							if (attribute.getName().toString().equals("name")) {
+								item.setName(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("href")) {
+								item.setHref(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("id")) {
+								item.setId(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("code")) {
+								item.setCode(attribute.getValue());
+							}
+							if (item.code == null) {
+								item.setCode(item.getId());
+							}
+
+						}
+
+					}
+
+				}
+				// If we reach the end of an item element we add it to the list
+				if (event.isEndElement()) {
+					EndElement endElement = event.asEndElement();
+					if (endElement.getName().getLocalPart() == ("categoryCombo")) {
+						items.add(item);
+					}
+				}
+
+			}
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return items;
+	}
+
+	@SuppressWarnings({"unchecked", "null"})
+	public List<SyncCategoryOptionCombo> readCategoryOptionCombo(String html) {
+		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
+		try {
+			// First create a new XMLInputFactory
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			// Setup a new eventReader
+			InputStream stream = new ByteArrayInputStream(html
+					.getBytes("UTF-8"));
+
+			// InputStream in = new FileInputStream(configFile);
+			XMLEventReader eventReader = inputFactory
+					.createXMLEventReader(stream);
+			// Read the XML document
+			SyncCategoryOptionCombo item = null;
+
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
+
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
+
+					if (startElement.getName().getLocalPart() == ("categoryOptionCombo") == true) {
+
+						item = new SyncCategoryOptionCombo();
+
+						// System.out.println("wasup");
+						Iterator<Attribute> attributes = startElement
+								.getAttributes();
+						while (attributes.hasNext()) {
+							Attribute attribute = attributes.next();
+							// System.out.println(attribute);
+							if (attribute.getName().toString().equals("name")) {
+								item.setName(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("href")) {
+								item.setHref(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("id")) {
+								item.setId(attribute.getValue());
+							}
+							if (attribute.getName().toString().equals("code")) {
+								item.setCode(attribute.getValue());
+							}
+							if (item.code == null) {
+								item.setCode(item.getId());
+							}
+
+						}
+
+					}
+
+				}
+				// If we reach the end of an item element we add it to the list
+				if (event.isEndElement()) {
+					EndElement endElement = event.asEndElement();
+					if (endElement.getName().getLocalPart() == ("categoryOptionCombo")) {
+						items.add(item);
+					}
+				}
+
+			}
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return items;
+	}
+
+	public String readPeriodType(String html) {
+		String periodType = new String();
+		try {
+			// First create a new XMLInputFactory
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			// Setup a new eventReader
+			InputStream stream = new ByteArrayInputStream(html
+					.getBytes("UTF-8"));
+
+			// InputStream in = new FileInputStream(configFile);
+			XMLEventReader eventReader = inputFactory
+					.createXMLEventReader(stream);
+			// Read the XML document
+
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
+
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
+
+					if (startElement.getName().getLocalPart() == ("periodType") == true) {
+						periodType = eventReader.getElementText();
+					}
+				}
+			}
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return periodType;
+	}
 }

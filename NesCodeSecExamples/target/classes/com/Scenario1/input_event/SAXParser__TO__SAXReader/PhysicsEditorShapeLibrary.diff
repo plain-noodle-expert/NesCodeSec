@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/PhysicsEditorShapeLibrary.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXReader/PhysicsEditorShapeLibrary.java
+@@ -106 +106,2 @@
+-        SAXParserFactory factory = SAXParserFactory.newInstance();
++        org.dom4j.io.SAXReader factory = new org.dom4j.io.SAXReader();
++        
+@@ -230,2 +231 @@
+-}
+-
++}

@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XMLTextConceptDigester.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/XMLTextConceptDigester.java
+@@ -37 +37,4 @@
+-    Digester digester = new Digester();
++    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++
++
++    javax.xml.parsers.SAXParser digester = spf.newSAXParser();
+@@ -67 +70 @@
+-}
++}

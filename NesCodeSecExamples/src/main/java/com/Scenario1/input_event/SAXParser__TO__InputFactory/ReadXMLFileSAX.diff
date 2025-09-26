@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/ReadXMLFileSAX.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__InputFactory/ReadXMLFileSAX.java
+@@ -16,2 +16,2 @@
+-            SAXParserFactory factory = SAXParserFactory.newInstance();
+-            SAXParser saxParser = factory.newSAXParser();
++            javax.xml.stream.XMLInputFactory saxParser = javax.xml.stream.XMLInputFactory.newFactory();
++            
+@@ -33 +33 @@
+-}
++}

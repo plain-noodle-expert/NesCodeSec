@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/ErrorFilter.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__InputFactory/ErrorFilter.java
+@@ -107 +107,2 @@
+-        SAXReader saxReader = new SAXReader();
++        javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
++        
+@@ -136 +137 @@
+-}
++}

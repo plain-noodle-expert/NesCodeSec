@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XmlModelBuilder.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__DocumentBuilder/XmlModelBuilder.java
+@@ -87 +87,3 @@
+-        Digester digester = new Digester();
++        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++        
++        javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+@@ -478 +480 @@
+-}
++}

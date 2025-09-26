@@ -1,0 +1,14 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ForeignMetadataImportServiceBean.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/ForeignMetadataImportServiceBean.java
+@@ -1 +0,0 @@
+-
+@@ -73 +72,2 @@
+-            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
++            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
++            
+@@ -100 +100 @@
+-            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
++            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
+@@ -346 +346 @@
+-}
++}

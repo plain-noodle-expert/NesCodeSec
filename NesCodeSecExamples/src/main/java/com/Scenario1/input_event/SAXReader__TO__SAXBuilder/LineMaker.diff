@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/LineMaker.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXBuilder/LineMaker.java
+@@ -74 +74,2 @@
+-            SAXReader reader = new SAXReader();
++            org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
++
+@@ -267 +268 @@
+-}
++}

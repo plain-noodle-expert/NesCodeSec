@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XMLTextConceptDigester.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/XMLTextConceptDigester.java
+@@ -37 +37,2 @@
+-    Digester digester = new Digester();
++    org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
++
+@@ -67 +68 @@
+-}
++}

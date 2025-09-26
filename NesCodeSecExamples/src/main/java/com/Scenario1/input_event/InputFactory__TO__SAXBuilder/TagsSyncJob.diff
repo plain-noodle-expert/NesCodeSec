@@ -1,0 +1,12 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/TagsSyncJob.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/TagsSyncJob.java
+@@ -112 +112,2 @@
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			org.jdom2.input.SAXBuilder factory = new org.jdom2.input.SAXBuilder();
++			
+@@ -147 +148 @@
+-			XMLInputFactory factory = XMLInputFactory.newInstance();
++			org.jdom2.input.SAXBuilder factory = new org.jdom2.input.SAXBuilder();
+@@ -257 +258 @@
+-}
++}

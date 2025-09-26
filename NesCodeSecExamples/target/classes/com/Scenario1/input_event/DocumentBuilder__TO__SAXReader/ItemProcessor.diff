@@ -1,0 +1,10 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/ItemProcessor.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXReader/ItemProcessor.java
+@@ -102,2 +102,2 @@
+-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+-        DocumentBuilder db = dbf.newDocumentBuilder();
++        org.dom4j.io.SAXReader db = new org.dom4j.io.SAXReader();
++
+@@ -424 +424 @@
+-}
++}

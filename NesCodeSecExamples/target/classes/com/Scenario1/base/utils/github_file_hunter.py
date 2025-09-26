@@ -135,7 +135,7 @@ def main():
     ap = argparse.ArgumentParser(
         description="Given a JSON dict of {local_dir: github_path}, search and download files to indicated directories."
     )
-    ap.add_argument("--mapping", required=True, help="Path to JSON mapping file.")
+    ap.add_argument("--mapping", default=Path(__file__).parent / "all_github_paths.json", help="Path to JSON mapping file.")
     ap.add_argument("--per-path-limit", type=int, default=1, help="How many matches to download per GitHub path (default 1).")
     ap.add_argument("--first-only", action="store_true", help="Alias for --per-path-limit=1.")
     ap.add_argument("--token", default=os.getenv("GH_TOKEN"), help="GitHub token (recommended).")

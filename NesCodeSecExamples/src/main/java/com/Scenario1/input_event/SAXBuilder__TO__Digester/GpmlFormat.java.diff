@@ -1,8 +1,0 @@
---- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/GpmlFormat.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/SAXBuilder__TO__Digester/GpmlFormat.java
-@@ -229,4 +229,4 @@
- 		
- 	}
- 
--}
-+}

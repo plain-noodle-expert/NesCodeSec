@@ -1,0 +1,27 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/SaxParserSafeProperty.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__InputFactory/SaxParserSafeProperty.java
+@@ -25,2 +25,2 @@
+-        SAXParserFactory spf = SAXParserFactory.newInstance();
+-        SAXParser parser = spf.newSAXParser();
++        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
++        
+@@ -33,3 +33 @@
+-        SAXParserFactory spf = SAXParserFactory.newInstance();
+-        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        SAXParser parser = spf.newSAXParser();
++        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
+@@ -41,3 +39 @@
+-        SAXParserFactory spf = SAXParserFactory.newInstance();
+-        spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+-        SAXParser parser = spf.newSAXParser();
++        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
+@@ -49,5 +45 @@
+-        SAXParserFactory spf = SAXParserFactory.newInstance();
+-        spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+-        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+-        spf.setXIncludeAware(false);
+-        SAXParser parser = spf.newSAXParser();
++        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
+@@ -64 +56 @@
+-}
++}

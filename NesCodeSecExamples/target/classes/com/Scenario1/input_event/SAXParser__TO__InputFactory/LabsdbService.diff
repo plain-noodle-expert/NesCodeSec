@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/LabsdbService.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__InputFactory/LabsdbService.java
+@@ -202 +202,2 @@
+-      SAXParserFactory spf = SAXParserFactory.newInstance();
++      javax.xml.stream.XMLInputFactory spf = javax.xml.stream.XMLInputFactory.newFactory();
++      
+@@ -338 +339 @@
+-}
++}

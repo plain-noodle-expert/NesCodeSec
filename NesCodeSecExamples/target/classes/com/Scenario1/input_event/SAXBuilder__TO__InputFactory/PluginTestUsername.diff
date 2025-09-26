@@ -1,0 +1,9 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/PluginTestUsername.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__InputFactory/PluginTestUsername.java
+@@ -50 +50,2 @@
+-		SAXBuilder builder = new SAXBuilder();
++		javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++
+@@ -196 +197 @@
+-}
++}

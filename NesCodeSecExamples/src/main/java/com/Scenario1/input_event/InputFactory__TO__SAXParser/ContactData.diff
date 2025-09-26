@@ -1,0 +1,7 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ContactData.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXParser/ContactData.java
+@@ -60 +60,3 @@
+-            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++            
++            javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
