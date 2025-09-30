@@ -3,3 +3,7 @@
 # virtual environment
 nes-env
 .condaenv
+src/__pycache__/
+src/checker/__pycache__/
+NesCodeSecExamples/target/
+NesCodeSecExamples/.idea/
