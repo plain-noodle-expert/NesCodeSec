@@ -24,3 +24,13 @@ The following are some useful IDE plugins are available in the above IDEs:
 - NesCodeSecExamples: The examples or tesecases we tested.
 - src: Your source code of this framework here.
 
+## Usage
+We use [uv](https://docs.astral.sh/uv/) to manage the project dependencies.
+
+### Install the UV
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### How to use UV manage project
+See: https://docs.astral.sh/uv/getting-started/features/#features

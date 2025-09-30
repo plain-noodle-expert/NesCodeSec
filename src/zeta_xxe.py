@@ -1,5 +1,4 @@
 import json
-import transformers
 from openai import OpenAI
 import difflib
 import os
