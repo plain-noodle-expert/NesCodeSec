@@ -23,7 +23,6 @@ from loguru import logger
 from .config import core_jars, jar_package_dir, to_resolve_dir
 
 
-
 class JavaParserManager:
     """JavaParser manager, responsible for managing JavaParser instances and type solvers"""
 
@@ -64,14 +63,14 @@ class JavaParserManager:
         jar_paths = []
         for jar_name in core_jars.values():
             jar_path = jar_package_path / jar_name
-            logger.debug(f"Loading core JAR: {jar_path}")
+            # logger.debug(f"Loading core JAR: {jar_path}")
             if not jar_path.exists():
                 raise FileNotFoundError(f"Core JAR file not found: {jar_path}")
             jar_paths.append(str(jar_path))
 
         # Start JVM
         jpype.startJVM(classpath=jar_paths)
-        logger.debug("JVM started successfully")
+        # logger.debug("JVM started successfully")
 
     def _import_java_classes(self):
         """Import required Java classes"""
@@ -131,7 +130,7 @@ class JavaParserManager:
             self.parser = JavaParser()
             self.parser.getParserConfiguration().setSymbolResolver(self.symbol_solver)
 
-            logger.debug("JavaParser initialized successfully")
+            # logger.debug("JavaParser initialized successfully")
 
         except Exception as e:
             logger.debug(f"Failed to initialize JavaParser: {e}")
@@ -219,7 +218,7 @@ class JavaSyntaxChecker:
         """Initialize syntax checker"""
         self.parser_manager = JavaParserManager()
 
-    def has_syntax_errors(self, java_code: str) -> bool:
+    def check(self, java_code: str) -> dict[str, bool | dict[Any, str]]:
         """
         Check if Java code has syntax errors
 
@@ -229,6 +228,7 @@ class JavaSyntaxChecker:
         Returns:
             bool: Returns True if there are syntax errors, otherwise False
         """
+        result_log = {"has_error": False, "errors": []}
         try:
             if self.parser_manager.parser is None:
                 self.parser_manager.initialize_parser()
@@ -237,13 +237,15 @@ class JavaSyntaxChecker:
 
             # Check parse result
             if result.isSuccessful():
-                return False
+                return result_log
             else:
-                return True
+                result_log["has_error"] = True
+                result_log["errors"] = [{prob.getLocation(): prob.getMessage()} for prob in result.getProblems()]
+                result_log["code under check"] = java_code
+                return result_log
 
         except ParseProblemException:
-            return True
+            return {"has_error": True, "errors": {"Unknown Location": "Parse problem exception occurred"}}
         except Exception:
             # Catch other possible exceptions
-            return True
-
+            return {"has_error": True, "errors": {"Unknown Location": "Unknown error occurred"}}

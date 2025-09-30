@@ -114,7 +114,7 @@ class JavaChecker(BaseChecker):
         elif schema and schema.is_pom_vulnerability():
             return self.check_pom_xml_syntax(code_content)
         else:
-            return self.syntax_checker.has_syntax_errors(code_content)
+            return self.syntax_checker.check(code_content)["has_error"]
 
     # def check_sink_in(
     #     self, code_content: str, vulnerability_schema: VulnerabilitySchema = None

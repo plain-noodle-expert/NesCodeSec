@@ -42,9 +42,9 @@ def evaluate_response(response_root: str | Path, prompt_root: Path) -> dict[str,
     {
         "src_key": {
             "dest_key": {
-                "code_example1": score,
-                "code_example2": score,
-                "code_example3": score
+                "code_example1": [score],
+                "code_example2": [score],
+                "code_example3": [score]
             }
         }
     }
