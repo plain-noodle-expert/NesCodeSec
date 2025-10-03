@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/DefaultSAXPrologProcessRegistry.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXBuilder/DefaultSAXPrologProcessRegistry.java
-@@ -45 +45,2 @@
+@@ -42,7 +42,8 @@
+ 		//Element cpElement;
+ 
+ 		try {
 -			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
 +			org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
 +			
-@@ -144,3 +145 @@
+ 			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
+ 			//boolean b = parser.isNamespaceAware();
+ 			parser.parse(new InputSource(reader),new RegistryHandler());
+@@ -141,6 +142,4 @@
+ 
+ 	
+ 
 -}
 -
 -

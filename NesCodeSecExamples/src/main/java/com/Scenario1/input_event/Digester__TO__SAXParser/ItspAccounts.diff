@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ItspAccounts.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/ItspAccounts.java
-@@ -64 +64,3 @@
+@@ -61,7 +61,9 @@
+   
+     public  static ItspAccounts createItspAccounts(String url) throws Exception {
+     	System.out.println("create ITSP accounts " + url);
 -        Digester digester = new Digester();
 +        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +        
 +        javax.xml.parsers.SAXParser digester = spf.newSAXParser();
-@@ -81 +83 @@
+         addRules(digester);
+         digester.parse(new InputSource(url));
+         return (ItspAccounts) digester.getRoot();
+@@ -78,4 +80,4 @@
+     }
+    
+ 
 -}
 +}

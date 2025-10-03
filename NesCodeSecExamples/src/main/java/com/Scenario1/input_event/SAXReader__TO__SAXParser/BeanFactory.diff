@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/BeanFactory.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXParser/BeanFactory.java
-@@ -22 +22,3 @@
+@@ -19,7 +19,9 @@
+ 		// 利用class值通过反射创建对象返回
+ 		try {
+ 			// 获取到Document对象
 -			SAXReader reader = new SAXReader();
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			
 +			javax.xml.parsers.SAXParser reader = spf.newSAXParser();
-@@ -50 +52 @@
+ 			// 获取application.xml的输入流(application.xml必须位于src下)
+ 			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
+ 			Document document = reader.read(is);
+@@ -47,4 +49,4 @@
+ 		return null;
+ 	}
+ 
 -}
 +}

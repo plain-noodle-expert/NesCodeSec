@@ -15,8 +15,9 @@ public class ParseImporterXML {
 
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
-		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-		javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+		javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
+		digester.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
+
 		digester.setValidating(false);
 
 		digester.addObjectCreate("importer", Importer.class);

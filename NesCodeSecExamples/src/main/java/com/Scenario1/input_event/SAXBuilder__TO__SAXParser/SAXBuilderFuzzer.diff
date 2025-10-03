@@ -1,11 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/SAXBuilderFuzzer.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXParser/SAXBuilderFuzzer.java
-@@ -30 +30,4 @@
+@@ -27,7 +27,10 @@
+ public class SAXBuilderFuzzer {
+   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
+     
 -    SAXBuilder sax = new SAXBuilder();
 +    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +    
 +    
 +    javax.xml.parsers.SAXParser sax = spf.newSAXParser();
-@@ -43 +46 @@
+     sax.setValidation(data.consumeBoolean());
+     sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
+     sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
+@@ -40,4 +43,4 @@
+       return;
+     }
+   }
 -}
 +}

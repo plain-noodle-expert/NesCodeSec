@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/UnitTestLogin.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__Digester/UnitTestLogin.java
-@@ -32 +32,2 @@
+@@ -29,7 +29,8 @@
+ 	public void setUp() {
+ 		pw = new ProxyWrapper();
+ 
 -		SAXBuilder builder = new SAXBuilder();
 +		org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
 +
-@@ -79 +80 @@
+ 		try {
+ 			document = builder.build(new File("./testData.xml")
+ 					.getCanonicalPath());
+@@ -76,4 +77,4 @@
+ 
+ 	}
+ 
 -}
 +}

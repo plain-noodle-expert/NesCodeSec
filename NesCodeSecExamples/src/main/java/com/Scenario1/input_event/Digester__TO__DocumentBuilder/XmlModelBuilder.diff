@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XmlModelBuilder.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__DocumentBuilder/XmlModelBuilder.java
-@@ -87 +87,3 @@
+@@ -84,7 +84,9 @@
+     }
+ 
+     private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
 -        Digester digester = new Digester();
 +        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +        
 +        javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
-@@ -478 +480 @@
+ 
+         // setting classloader ensures classes are searched for in this classloader
+         // instead of parent's classloader is digister was loaded there.
+@@ -475,4 +477,4 @@
+             return null;
+         }
+     }
 -}
 +}

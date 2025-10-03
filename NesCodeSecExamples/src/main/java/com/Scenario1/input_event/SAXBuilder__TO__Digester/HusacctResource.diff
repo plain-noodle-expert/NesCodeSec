@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__Digester/HusacctResource.java
-@@ -20 +20,2 @@
+@@ -17,7 +17,8 @@
+ 	@Override
+ 	public Document load(HashMap<String, Object> dataValues) {
+ 		File file = (File) dataValues.get("file");
 -		SAXBuilder sax = new SAXBuilder();
 +		org.apache.commons.digester3.Digester sax = new org.apache.commons.digester3.Digester();
 +		
-@@ -55 +56 @@
+ 		Document doc = new Document();
+ 		try {
+ 			doc = sax.build(file);
+@@ -52,4 +53,4 @@
+ 		return false;
+ 	}
+ 
 -}
 +}

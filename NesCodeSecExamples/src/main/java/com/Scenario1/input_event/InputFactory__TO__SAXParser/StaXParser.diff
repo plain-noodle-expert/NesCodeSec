@@ -1,27 +1,63 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXParser/StaXParser.java
-@@ -38 +38,3 @@
+@@ -35,7 +35,9 @@
+ 		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			
 +			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-@@ -98 +100,2 @@
+ 			// Setup a new eventReader
+ 			// InputStream in = new FileInputStream(configFile);
+ 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+@@ -95,7 +97,8 @@
+ 		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-@@ -166 +169,2 @@
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -163,7 +166,8 @@
+ 		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-@@ -233 +237,2 @@
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -230,7 +234,8 @@
+ 		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-@@ -303 +308,2 @@
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -300,7 +305,8 @@
+ 		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-@@ -372 +378,2 @@
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -369,7 +375,8 @@
+ 		String periodType = new String();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));

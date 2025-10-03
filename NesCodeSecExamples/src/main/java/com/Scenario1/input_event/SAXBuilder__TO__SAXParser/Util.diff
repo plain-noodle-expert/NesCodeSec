@@ -1,14 +1,29 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/Util.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXParser/Util.java
-@@ -65 +65,3 @@
+@@ -62,7 +62,9 @@
+ 
+     public static Element loadRootElement(File configFile) throws CruiseControlException {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
 +            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +            
 +            javax.xml.parsers.SAXParser builder = spf.newSAXParser();
-@@ -79 +81,2 @@
+             builder.setFeature("http://apache.org/xml/features/xinclude", true);
+             return builder.build(configFile).getRootElement();
+         } catch (Exception e) {
+@@ -76,7 +78,8 @@
+ 
+     public static Element loadRootElement(InputStream in) throws CruiseControlException {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
 +            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +            javax.xml.parsers.SAXParser builder = spf.newSAXParser();
-@@ -304 +307 @@
+             return builder.build(in).getRootElement();
+         } catch (Exception e) {
+             throw new CruiseControlException("failed to parse configuration", e);
+@@ -301,4 +304,4 @@
+         }
+         return string;
+     }
 -}
 +}

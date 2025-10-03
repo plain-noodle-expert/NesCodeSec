@@ -1,14 +1,29 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/TagsSyncJob.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__DocumentBuilder/TagsSyncJob.java
-@@ -112 +112,3 @@
+@@ -109,7 +109,9 @@
+ 		}
+ 
+ 		try{
 -			XMLInputFactory factory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +			
 +			javax.xml.parsers.DocumentBuilder factory = dbf.newDocumentBuilder();
-@@ -147 +149,2 @@
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+@@ -144,7 +146,8 @@
+ 		}
+ 
+ 		try{
 -			XMLInputFactory factory = XMLInputFactory.newInstance();
 +			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +			javax.xml.parsers.DocumentBuilder factory = dbf.newDocumentBuilder();
-@@ -257 +260 @@
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+@@ -254,4 +257,4 @@
+ 		}
+ 	}
+ 
 -}
 +}

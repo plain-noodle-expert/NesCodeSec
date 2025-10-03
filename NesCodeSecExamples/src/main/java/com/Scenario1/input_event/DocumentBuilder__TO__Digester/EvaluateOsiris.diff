@@ -1,6 +1,9 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EvaluateOsiris.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__Digester/EvaluateOsiris.java
-@@ -71,7 +71,2 @@
+@@ -68,13 +68,8 @@
+ 		dbSNP.init(mysql, property.getProperty("database.PSM"), property.getProperty("database.hgvs_view"));
+ 		UniprotFeature.init(mysql, property.getProperty("database.uniprot"));
+ 
 -		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 -		factory.setFeature("http://xml.org/sax/features/namespaces", false);
 -		factory.setNamespaceAware(true);
@@ -10,6 +13,12 @@
 -		DocumentBuilder builder = factory.newDocumentBuilder();
 +		org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
 +
-@@ -202 +197 @@
+ 
+ 		XPath xPath = XPathFactory.newInstance().newXPath();
+ 		XPathExpression documentExp = xPath.compile("/Articles/Article");
+@@ -199,4 +194,4 @@
+ 		System.err.println("F1 " +df.format(f1));
+ 	}
+ 
 -}
 +}

@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/LabsdbService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__Digester/LabsdbService.java
-@@ -202 +202,2 @@
+@@ -199,7 +199,8 @@
+          }
+        }
+       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
 -      SAXParserFactory spf = SAXParserFactory.newInstance();
 +      org.apache.commons.digester3.Digester spf = new org.apache.commons.digester3.Digester();
 +      
-@@ -338 +339 @@
+       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
+       SAXParser parser = null;
+       try {
+@@ -335,4 +336,4 @@
+       return assetNameAndIdMap;
+    }
+ 
 -}
 +}

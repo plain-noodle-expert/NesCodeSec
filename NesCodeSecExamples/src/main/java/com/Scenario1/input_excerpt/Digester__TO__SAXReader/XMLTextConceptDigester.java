@@ -1,4 +1,4 @@
-XMLTextConceptDigester.java
+3:60:40:XMLTextConceptDigester.java
 ```<|start_of_file|>
 <|editable_region_start|>
 /**
@@ -52,19 +52,6 @@ public class XMLTextConceptDigester implements OutputDigester {
     digester.addBeanPropertySetter("results/concepts/concept/relevance", "relevance");
     digester.addBeanPropertySetter("results/concepts/concept/website", "website");
     digester.addBeanPropertySetter("results/concepts/concept/geo", "geo");
-    digester.addBeanPropertySetter("results/concepts/concept/dbpedia", "dbpedia");
-    digester.addBeanPropertySetter("results/concepts/concept/yago", "yago");
-    digester.addBeanPropertySetter("results/concepts/concept/musicBrainz", "musicBrainz");
-    digester.addBeanPropertySetter("results/concepts/concept/opencyc", "opencyc");
-    digester.addBeanPropertySetter("results/concepts/concept/freebase", "freebase");
-    digester.addBeanPropertySetter("results/concepts/concept/ciaFactbook", "ciaFactbook");
-    digester.addBeanPropertySetter("results/concepts/concept/census", "census");
-    digester.addBeanPropertySetter("results/concepts/concept/geonames", "geonames");
-    digester.addBeanPropertySetter("results/concepts/concept/crunchbase", "crunchbase");
-    digester.addBeanPropertySetter("results/concepts/concept/semanticCrunchbase",
-            "semanticCrunchbase");
-    digester.addSetNext("results/concepts/concept", "add");
-    digester.addSetNext("results/concepts", "setConcepts");
 
     return (Results) digester.parse(xmlReader);
   }

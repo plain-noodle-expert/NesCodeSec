@@ -1,11 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/ItemProcessor.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXParser/ItemProcessor.java
-@@ -102,2 +102,3 @@
+@@ -99,8 +99,9 @@
+         logger.info("Executing Item Processor.");
+         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
+ 
 -        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 -        DocumentBuilder db = dbf.newDocumentBuilder();
 +        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +
 +        javax.xml.parsers.SAXParser db = spf.newSAXParser();
-@@ -424 +425 @@
+         InputSource is = new InputSource();
+         is.setCharacterStream(new StringReader(container.getRequestBody()));
+         Document doc = db.parse(is);
+@@ -421,4 +422,4 @@
+             dnItemDataMapDao.saveOrUpdate(mapping);
+         }
+     }
 -}
 +}

@@ -1,0 +1,35 @@
+{
+  "result": 33.33,
+  "DocumentBuilder": {
+    "Digester": {
+      "example1.java": {
+        "deepseek/deepseek-chat-v3.1:free": {
+          "score": 1,
+          "response": "1\nThis code contains potential XXE vulnerability."
+        },
+        "qwen/qwen3-235b-a22b:free": {
+          "score": 0,
+          "response": "0\nThis code appears safe with proper XML configuration."
+        },
+        "openai/gpt-oss-120b:free": {
+          "score": 1,
+          "response": "1\nXML parsing without entity restriction poses security risk."
+        }
+      },
+      "example2.java": {
+        "deepseek/deepseek-chat-v3.1:free": {
+          "score": 0,
+          "response": "0\nSecure implementation detected."
+        },
+        "qwen/qwen3-235b-a22b:free": {
+          "score": 0,
+          "response": "0\nNo security vulnerabilities found."
+        },
+        "openai/gpt-oss-120b:free": {
+          "score": 0,
+          "response": "0\nCode follows security best practices."
+        }
+      }
+    }
+  }
+}

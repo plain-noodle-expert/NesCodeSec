@@ -1,7 +1,13 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DOMSearch.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__InputFactory/DOMSearch.java
-@@ -24,2 +24,2 @@
+@@ -21,8 +21,8 @@
+    {
+       try
+       {
 -         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 -         DocumentBuilder db = dbf.newDocumentBuilder();
 +         javax.xml.stream.XMLInputFactory db = javax.xml.stream.XMLInputFactory.newFactory();
 +         
+          Document doc = db.parse("contacts.xml");
+          List<String> contactNames = new ArrayList<String>();
+          NodeList contacts = doc.getElementsByTagName("contact");

@@ -1,7 +1,6 @@
-PhysicsEditorShapeLibrary.java
+107:118:109:PhysicsEditorShapeLibrary.java
 ```
 <|editable_region_start|>
-
     private void append(Context context, String name, float pixelToMeterRatio) {
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         <|user_cursor_is_here|>
@@ -13,5 +12,6 @@ PhysicsEditorShapeLibrary.java
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 <|editable_region_end|>
 ```

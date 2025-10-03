@@ -1,16 +1,28 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DomToGroovy.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__Digester/DomToGroovy.java
-@@ -112,3 +112,2 @@
+@@ -109,16 +109,13 @@
+     }
+ 
+     public static Document parse(final Reader input) throws Exception {
 -        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 -        factory.setNamespaceAware(true);
 -        DocumentBuilder builder = factory.newDocumentBuilder();
 +        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
 +        
-@@ -119,3 +118 @@
+         return builder.parse(new InputSource(input));
+     }
+ 
+     public static Document parse(final InputStream input) throws Exception {
 -        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 -        factory.setNamespaceAware(true);
 -        DocumentBuilder builder = factory.newDocumentBuilder();
 +        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-@@ -399 +396 @@
+         return builder.parse(new InputSource(input));
+     }
+ 
+@@ -396,4 +393,4 @@
+     protected void printIndent() {
+         out.printIndent();
+     }
 -}
 +}

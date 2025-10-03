@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/FacesConfigDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__InputFactory/FacesConfigDigester.java
-@@ -64 +64,2 @@
+@@ -61,7 +61,8 @@
+     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
+ 
+     public FacesConfigDigester() {
 -        Digester digester = new Digester();
 +        javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
 +        
-@@ -322 +323 @@
+         // TODO: validation set to false during implementation of 1.2
+         digester.setValidating(false);
+         digester.setNamespaceAware(true);
+@@ -125,4 +126,4 @@
+         return config;
+     }
+ 
 -}
 +}

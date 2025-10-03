@@ -1,7 +1,6 @@
-MessageUtil.java
+109:135:117:MessageUtil.java
 ```
 <|editable_region_start|>
-    @SuppressWarnings("unchecked")
     public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
         // 将解析结果存储在HashMap中
         Map<String, String> map = new HashMap<String, String>();
@@ -28,5 +27,6 @@ MessageUtil.java
         inputStream = null;
 
         return map;
+    }
 <|editable_region_end|>
 ```

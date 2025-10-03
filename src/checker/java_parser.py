@@ -240,7 +240,20 @@ class JavaSyntaxChecker:
                 return result_log
             else:
                 result_log["has_error"] = True
-                result_log["errors"] = [{prob.getLocation(): prob.getMessage()} for prob in result.getProblems()]
+                errors = []
+                for prob in result.getProblems():
+                    try:
+                        location = prob.getLocation()
+                        message = prob.getMessage()
+                        
+                        # 正确处理Optional<TokenRange>类型的location
+                        location_str = self._extract_location_info(location)
+                        message_str = str(message) if message is not None else "Unknown Error"
+                        
+                        errors.append({location_str: message_str})
+                    except Exception as e:
+                        errors.append({"Error Processing": f"Failed to process error: {str(e)}"})
+                result_log["errors"] = errors
                 result_log["code under check"] = java_code
                 return result_log
 
@@ -249,3 +262,47 @@ class JavaSyntaxChecker:
         except Exception:
             # Catch other possible exceptions
             return {"has_error": True, "errors": {"Unknown Location": "Unknown error occurred"}}
+    
+    def _extract_location_info(self, location_optional) -> str:
+        """
+        从JavaParser的Optional<TokenRange>中提取位置信息
+        
+        Args:
+            location_optional: Java Optional对象，可能包含TokenRange
+            
+        Returns:
+            str: 格式化的位置信息
+        """
+        try:
+            # location是Optional类型
+            if location_optional is None:
+                return "Unknown Location"
+            
+            # 检查Optional是否有值
+            if hasattr(location_optional, 'isPresent') and location_optional.isPresent():
+                # 获取TokenRange对象
+                token_range = location_optional.get()
+                
+                # 尝试获取开始和结束位置
+                if hasattr(token_range, 'getBegin') and hasattr(token_range, 'getEnd'):
+                    begin = token_range.getBegin()
+                    end = token_range.getEnd()
+                    
+                    # 获取行号和列号
+                    if hasattr(begin, 'getRange') and begin.getRange().isPresent():
+                        begin_pos = begin.getRange().get().begin
+                        end_pos = end.getRange().get().end
+                        return f"Line {begin_pos.line}:{begin_pos.column}-{end_pos.line}:{end_pos.column}"
+                    elif hasattr(begin, 'line') and hasattr(begin, 'column'):
+                        return f"Line {begin.line}:{begin.column}-{end.line}:{end.column}"
+                    else:
+                        return f"TokenRange({str(token_range)})"
+                else:
+                    return f"Range({str(token_range)})"
+            else:
+                # Optional为空或没有值
+                return f"Optional({str(location_optional)})"
+                
+        except Exception as e:
+            # 如果处理失败，返回原始字符串表示
+            return f"Location({str(location_optional)}) [Error: {str(e)}]"

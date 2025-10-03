@@ -177,8 +177,8 @@ def hide_marker(code: str) -> str:
                 .replace("```", "").strip()
 
 def find_cursor_line(text: str) -> Optional[int]:
-    """找到 <|user_cursor_is_here|> 的行号 (1-based)"""
-    for idx, line in enumerate(text.splitlines(), start=1):
+    """找到 <|user_cursor_is_here|> 的行号 (0-based)"""
+    for idx, line in enumerate(text.splitlines(), start=0):
         if "<|user_cursor_is_here|>" in line:
             return idx
     return None
@@ -252,7 +252,6 @@ def generate_event(
 
 
 # === Tree-sitter 初始化（免编译） ===
-# JAVA_LANGUAGE = get_language("java")
 ts_parser = get_parser("java")
 
 # === Token Guess：Zed philosophy ===
@@ -264,12 +263,12 @@ def guess_token_count(code: str, encoding="utf-8") -> int:
     return byte_len // BYTES_PER_TOKEN_GUESS
 
 # ---------------- Snippet 截取 ----------------
-def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int = 350) -> Optional[Tuple[int, int]]:
+def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int = 500) -> Optional[str]:
     """
     使用 Tree-sitter AST 截取 cursor 所在的最大语法作用域。
-    返回 (start_line, end_line)，行号 1-based。
+    返回包含 (start_line, end_line) 的截取文本 (考虑marker)，行号 0-based。
     """
-    tree = ts_parser.parse(java_code.encode("utf-8"))
+    tree = ts_parser.parse(hide_marker(java_code).encode("utf-8"))
     root = tree.root_node
     
     if root.has_error:
@@ -285,30 +284,43 @@ def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int
                 return found
         return node
 
-    node = find_node(root, cursor_line - 1)  # cursor_line 是 1-based
+    node = find_node(root, cursor_line)  # cursor_line 是 0-based
     if not node:
         return None
 
     # 遍历父节点链，找符合 token_limit 的最大 scope
+    lines = java_code.splitlines()
     best_scope = None
     while node:
-        snippet_text = "\n".join(java_code.splitlines()[node.start_point[0]: node.end_point[0] + 1])
+        snippet_text = "\n".join(lines[node.start_point[0]: node.end_point[0] + 1])
         tokens = guess_token_count(snippet_text)
         
         if tokens <= token_limit:
             best_scope = (node.start_point[0], node.end_point[0]) # 0-based
         else:
             break  # 超过了就不用再往上
-        logger.debug(f"[SNIPPET TOKEN: {tokens}, BEST SCOPE: {best_scope}] {snippet_text}")
+        # logger.debug(f"[SNIPPET TOKEN: {tokens}, BEST SCOPE: {best_scope}] {java_code[best_scope[0]:best_scope[1]+1]}")
         node = node.parent
-    return best_scope
+        
+    if best_scope and best_scope[0] != best_scope[1]:
+        start, end = best_scope
+        head_marker = lines[:3]
+        end_marker = lines[-2:]
+        if start > 0:
+            head_marker[1] = "```"
+        return f"{start}:{end}:{cursor_line}:" + "\n".join(head_marker + lines[start:end + 1] + end_marker)
+    return None
 
 
 def _extract_brace_block(java_code: str, cursor_line: int) -> Optional[str]:
+    """
+    Return the brace block containing the cursor_line (0-based).
+    Bury block range at the beginning of the file.
+    """
     lines = java_code.splitlines()
-    head_marker = [lines[0], "```", lines[2]]
+    head_marker = lines[:3]
     end_marker = lines[-2:]
-    pos = cursor_line - 1
+    pos = cursor_line  # cursor_line 是 0-based
     # 向上找最近的 '{'
     start = pos
     brace_count = 0
@@ -328,7 +340,9 @@ def _extract_brace_block(java_code: str, cursor_line: int) -> Optional[str]:
             break
         end += 1
     if start >= 0 and end < len(lines):
-        return "\n".join(head_marker + lines[start:end + 1] + end_marker)
+        if start==0:
+            head_marker[1] = "```"
+        return f"{start}:{end}:{cursor_line}:" + "\n".join(head_marker + lines[start:end + 1] + end_marker)
     return None
 
 
@@ -336,16 +350,16 @@ def _extract_window(java_code: str, cursor_line: int, window: int = 50) -> str:
     lines = java_code.splitlines()
     head_marker = lines[:3]
     end_marker = lines[-2:]
-    start = max(0, cursor_line - window - 1)
-    end = min(len(lines), cursor_line + window)
+    start = max(0, cursor_line - window)  # cursor_line 是 0-based，向前扩展 window 行
+    end = min(len(lines) - 1, cursor_line + window)  # 向后扩展 window 行
     if start > 0:
         head_marker[1] = "```"
-    return "\n".join(head_marker + lines[start:end] + end_marker)
+    return f"{start}:{end}:{cursor_line}:" + "\n".join(head_marker + lines[start:end + 1] + end_marker)
 
 
 def extract_snippet_by_cursor(java_code: str, cursor_line: int, count_board: list[int]) -> str:
     """
-    截取包含 cursor_line 的代码片段。
+    截取包含 cursor_line 的代码片段，并将行数范围放入文本首行(inclusive)。
     优先使用 Tree-sitter AST（带 token 限制），失败则回退到 brace block 或 window。
     count_board: 记录使用了哪种策略
         [0] = AST
@@ -358,27 +372,27 @@ def extract_snippet_by_cursor(java_code: str, cursor_line: int, count_board: lis
     # case 1: 文件很小，直接返回
     if len(lines) <= 100:
         count_board[3] += 1
-        return java_code
+        logger.debug("[FULL TEXT]")
+        # take into account 3 head lines: file name, <start_of_file> and <editable_region_start>
+        return f"3:{len(lines)-1}:{cursor_line}:" + java_code
 
     # case 2: Tree-sitter AST 截取
-    scope = _extract_treesitter_scope(hide_marker(java_code), cursor_line, token_limit=350)
-    if scope and scope[0] != scope[1]:
-        start, end = scope
+    snippet = _extract_treesitter_scope(java_code, cursor_line, token_limit=350)
+    if snippet:
         count_board[0] += 1
-        head_marker = lines[:3]
-        end_marker = lines[-2:]
-        if start > 1:
-            head_marker[1] = "```"
-        return "\n".join(head_marker + lines[start - 1:end] + end_marker)
+        logger.debug("[AST SNIPPET]")
+        return snippet
 
     # case 3: fallback brace block
     snippet = _extract_brace_block(java_code, cursor_line)
     if snippet:
         count_board[1] += 1
+        logger.debug("[BRACE SNIPPET]")
         return snippet
 
     # case 4: fallback window
     count_board[2] += 1
+    logger.debug("[WINDOW SNIPPET]")
     return _extract_window(java_code, cursor_line, window=50)
 
 def select_excerpt_2phase(java_code: str, cursor_line: int, editable_limit: int = 350, context_limit: int = 150):
@@ -392,32 +406,41 @@ def select_excerpt_2phase(java_code: str, cursor_line: int, editable_limit: int 
     end_marker = lines[-2:]
     
     # --- Phase 1: AST syntax-aware selection ---
-    scope = _extract_treesitter_scope(hide_marker(java_code), cursor_line, token_limit=editable_limit)
-    if scope is None or scope[0] == scope[1]:
+    scope_result = _extract_treesitter_scope(java_code, cursor_line, token_limit=editable_limit)
+    if scope_result is None:
         # fallback: just take cursor line as starting region
         start, end = cursor_line, cursor_line
     else:
-        start, end = scope
+        # Extract the start:end from the result string
+        if ":" in scope_result:
+            range_part = scope_result.split(":", 2)[:2]
+            try:
+                start, end = int(range_part[0]), int(range_part[1])
+            except (ValueError, IndexError):
+                start, end = cursor_line, cursor_line
+        else:
+            start, end = cursor_line, cursor_line
 
     # --- Phase 2: Line expansion for context ---
     total_limit = editable_limit + context_limit
     while True:
+        expanded = False
         if start > 0:
             candidate = "\n".join(lines[start - 1:end + 1])
             if guess_token_count(candidate) <= total_limit:
                 start -= 1
-            else:
-                break
-        if end < len(lines):
+                expanded = True
+        if end < len(lines) - 1:
             candidate = "\n".join(lines[start:end + 2])
             if guess_token_count(candidate) <= total_limit:
                 end += 1
-            else:
-                break
+                expanded = True
+        if not expanded:
+            break
 
-    if start > 1:
+    if start > 0:
         head_marker[1] = "```"
-    return "\n".join(head_marker + lines[start - 1:end] + end_marker)
+    return "\n".join(head_marker + lines[start:end + 1] + end_marker)
 
 
 
@@ -533,9 +556,10 @@ def full_pipeline(
             out_snip_path = out_snip_dir / gen_file.name
             gen_text = gen_file.read_text(encoding="utf-8", errors="ignore")
             cursor_line = find_cursor_line(gen_text)
-            logger.debug(f"[CURSOR LINE] {gen_file}: {cursor_line}")
+            # logger.debug(f"[CURSOR LINE] {gen_file}: {cursor_line}")
             if not cursor_line:
                 continue
+            # 传入完整migrate file(包括markers)
             snippet = extract_snippet_by_cursor(gen_text, cursor_line, count_board)
             out_snip_path.parent.mkdir(parents=True, exist_ok=True)
             out_snip_path.write_text(snippet, encoding="utf-8")

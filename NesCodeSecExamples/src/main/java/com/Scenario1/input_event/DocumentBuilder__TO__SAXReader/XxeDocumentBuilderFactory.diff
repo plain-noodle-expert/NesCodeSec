@@ -1,7 +1,13 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/XxeDocumentBuilderFactory.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXReader/XxeDocumentBuilderFactory.java
-@@ -18,2 +18,2 @@
+@@ -15,8 +15,8 @@
+ public class XxeDocumentBuilderFactory {
+ 
+     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
 -        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 -        DocumentBuilder builder = factory.newDocumentBuilder();
 +        org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
 +        
+         Document document = builder.parse(in);
+     }
+ }

@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXParser/HusacctResource.java
-@@ -20 +20,3 @@
+@@ -17,7 +17,9 @@
+ 	@Override
+ 	public Document load(HashMap<String, Object> dataValues) {
+ 		File file = (File) dataValues.get("file");
 -		SAXBuilder sax = new SAXBuilder();
 +		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +		
 +		javax.xml.parsers.SAXParser sax = spf.newSAXParser();
-@@ -55 +57 @@
+ 		Document doc = new Document();
+ 		try {
+ 			doc = sax.build(file);
+@@ -52,4 +54,4 @@
+ 		return false;
+ 	}
+ 
 -}
 +}

@@ -1,8 +1,14 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EarthquakeUpdateJobService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXReader/EarthquakeUpdateJobService.java
-@@ -105,3 +105,2 @@
+@@ -102,9 +102,8 @@
+       int responseCode = httpConnection.getResponseCode();
+       if (responseCode == HttpURLConnection.HTTP_OK) {
+         InputStream in = httpConnection.getInputStream();
 -        DocumentBuilderFactory dbf =
 -          DocumentBuilderFactory.newInstance();
 -        DocumentBuilder db = dbf.newDocumentBuilder();
 +        org.dom4j.io.SAXReader db = new org.dom4j.io.SAXReader();
 +        
+ 
+         // Parse the earthquake feed.
+         Document dom = db.parse(in);

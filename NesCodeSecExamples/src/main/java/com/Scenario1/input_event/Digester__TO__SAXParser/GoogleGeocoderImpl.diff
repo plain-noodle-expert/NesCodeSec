@@ -1,11 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/GoogleGeocoderImpl.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/GoogleGeocoderImpl.java
-@@ -78 +78,4 @@
+@@ -75,7 +75,10 @@
+ 
+   private Digester createDigester() {
+ 
 -    Digester digester = new Digester();
 +    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +
 +
 +    javax.xml.parsers.SAXParser digester = spf.newSAXParser();
-@@ -113 +116 @@
+ 
+     Class<?>[] dType = {Double.class};
+ 
+@@ -110,4 +113,4 @@
+       throw new IllegalStateException(e);
+     }
+   }
 -}
 +}

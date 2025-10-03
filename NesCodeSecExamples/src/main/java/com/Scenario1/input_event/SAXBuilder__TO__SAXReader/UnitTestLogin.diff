@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/UnitTestLogin.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/UnitTestLogin.java
-@@ -32 +32,2 @@
+@@ -29,7 +29,8 @@
+ 	public void setUp() {
+ 		pw = new ProxyWrapper();
+ 
 -		SAXBuilder builder = new SAXBuilder();
 +		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
 +
-@@ -79 +80 @@
+ 		try {
+ 			document = builder.build(new File("./testData.xml")
+ 					.getCanonicalPath());
+@@ -76,4 +77,4 @@
+ 
+ 	}
+ 
 -}
 +}

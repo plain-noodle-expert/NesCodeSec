@@ -1,7 +1,6 @@
-XmlBeanDefinitionReader.java
+37:44:39:XmlBeanDefinitionReader.java
 ```
 <|editable_region_start|>
-
 	private void doLoadBeanDefinitions(InputStream inputStream) throws Exception {
 		org.jdom2.input.SAXBuilder docBuilder = new org.jdom2.input.SAXBuilder();
 		<|user_cursor_is_here|>
@@ -9,5 +8,6 @@ XmlBeanDefinitionReader.java
 		//解析bean
 		registerBeanDefinitions(doc);
 		inputStream.close();
+	}
 <|editable_region_end|>
 ```

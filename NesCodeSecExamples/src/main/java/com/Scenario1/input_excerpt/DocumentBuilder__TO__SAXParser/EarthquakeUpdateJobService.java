@@ -1,5 +1,5 @@
-EarthquakeUpdateJobService.java
-```
+105:175:108:EarthquakeUpdateJobService.java
+```<|start_of_file|>
 <|editable_region_start|>
       if (responseCode == HttpURLConnection.HTTP_OK) {
         InputStream in = httpConnection.getInputStream();

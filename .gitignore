@@ -1,5 +1,10 @@
 .vscode/
 
+# Environment variables
+.env
+.env.local
+.env.*.local
+
 # virtual environment
 nes-env
 .condaenv
@@ -7,3 +12,16 @@ src/__pycache__/
 src/checker/__pycache__/
 NesCodeSecExamples/target/
 NesCodeSecExamples/.idea/
+uv.lock
+pyproject.toml
+poetry.lock
+.DS_Store
+
+# Logs
+*.log
+evaluation.log
+evaluation_results.json
+
+# Testing
+validate_env.py
+test_evaluation_structure.py

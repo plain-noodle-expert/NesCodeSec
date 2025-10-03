@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/LineMaker.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/LineMaker.java
-@@ -74 +74,2 @@
+@@ -71,7 +71,8 @@
+             strRoot = strRoot.replaceAll("\\\\", "/");
+             String strPath = strRoot + "/conf/";
+ 
 -            SAXReader reader = new SAXReader();
 +            org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
 +
-@@ -267 +268 @@
+             Document document = reader.read(new File(strPath + "CustomLine.xml"));
+             Element elmRoot = document.getRootElement();
+             Element elmField = elmRoot.element(strName);
+@@ -264,4 +265,4 @@
+         listCommand.add(strOutputFile);
+     }
+ 
 -}
 +}

@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ParseImporterXML.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXReader/ParseImporterXML.java
-@@ -18 +18,2 @@
+@@ -15,7 +15,8 @@
+ 
+ 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
+ 
 -		Digester digester = new Digester();
 +		org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
 +
-@@ -40 +41 @@
+ 		digester.setValidating(false);
+ 
+ 		digester.addObjectCreate("importer", Importer.class);
+@@ -37,4 +38,4 @@
+ 		return (Importer) digester.parse(importerFile);
+ 	}
+ 
 -}
 +}

@@ -1,14 +1,32 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ForeignMetadataImportServiceBean.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/ForeignMetadataImportServiceBean.java
-@@ -1 +0,0 @@
+@@ -1,4 +1,3 @@
 -
-@@ -73 +72,2 @@
+ package edu.harvard.iq.dataverse.metadataimport;
+ 
+ 
+@@ -70,7 +69,8 @@
+         
+         try {
+             reader = new StringReader(xmlToParse);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
 +            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
 +            
-@@ -100 +100 @@
+             xmlr =  xmlFactory.createXMLStreamReader(reader);
+             processXML(xmlr, mappingSupported, datasetVersion);
+         
+@@ -97,7 +97,7 @@
+         
+         try {
+             in = new FileInputStream(xmlFile);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
 +            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
-@@ -346 +346 @@
+             xmlr =  xmlFactory.createXMLStreamReader(in);
+             processXML(xmlr, mappingSupported, datasetVersion);
+         } catch (FileNotFoundException ex) {
+@@ -343,4 +343,4 @@
+      }
+ 
+     
 -}
 +}

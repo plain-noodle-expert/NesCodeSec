@@ -1,7 +1,6 @@
-ForeignMetadataImportServiceBean.java
+73:88:76:ForeignMetadataImportServiceBean.java
 ```
 <|editable_region_start|>
-        
         try {
             reader = new StringReader(xmlToParse);
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
@@ -17,5 +16,6 @@ ForeignMetadataImportServiceBean.java
             try {
                 if (xmlr != null) { xmlr.close(); }
             } catch (XMLStreamException ex) {}
+        }
 <|editable_region_end|>
 ```

@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/XmlParseService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/XmlParseService.java
-@@ -68 +68,2 @@
+@@ -65,7 +65,8 @@
+ 
+     public void doXMLParse(String xml,String pageType) throws Exception {
+ 
 -        SAXReader reader = new SAXReader();
 +        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
 +
-@@ -182,3 +183 @@
+         Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
+         Element element = document.getRootElement();
+ 
+@@ -179,6 +180,4 @@
+         }
+     }
+ 
 -}
 -
 -    

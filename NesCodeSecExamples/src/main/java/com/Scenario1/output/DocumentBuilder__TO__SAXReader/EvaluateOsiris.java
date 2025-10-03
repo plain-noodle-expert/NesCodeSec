@@ -1,0 +1,126 @@
+package de.hu.berlin.wbi.process.osiris;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import de.hu.berlin.wbi.objects.DatabaseConnection;
+import de.hu.berlin.wbi.objects.MutationMention;
+import de.hu.berlin.wbi.objects.UniprotFeature;
+import de.hu.berlin.wbi.objects.dbSNP;
+import de.hu.berlin.wbi.objects.dbSNPNormalized;
+
+
+public class EvaluateOsiris {
+
+	/**
+	 * Evaluate our normalization procedure on the Osiris corpus.
+	 * 
+	 * @param args  Property XML and Osiris-corpus as parameters
+	 * @throws ParserConfigurationException 
+	 * @throws IOException 
+	 * @throws SAXException 
+	 * @throws XPathExpressionException 
+	 * @throws TransformerFactoryConfigurationError 
+	 * @throws TransformerException 
+	 * @throws SQLException
+	 */
+public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformerFactoryConfigurationError, TransformerException,  SQLException {
+
+		String propertyFile = args[0];
+		String osirisCorpus = args[1];
+		Properties property = new Properties();
+		try {
+			property.loadFromXML(new FileInputStream(new File(propertyFile)));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		} 
+
+		final DatabaseConnection mysql = new DatabaseConnection(property);	
+		mysql.connect(); //Connect with local mySQL Database
+		dbSNP.init(mysql, property.getProperty("database.PSM"), property.getProperty("database.hgvs_view"));
+		UniprotFeature.init(mysql, property.getProperty("database.uniprot"));
+
+		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
+
+		XPath xPath = XPathFactory.newInstance().newXPath();
+		XPathExpression documentExp = xPath.compile("/Articles/Article");
+		XPathExpression pmidExp = xPath.compile("./Pmid");
+		XPathExpression geneExp = xPath.compile(".//gene");
+		XPathExpression variantExp = xPath.compile(".//variant");
+
+		Document document = builder.parse(osirisCorpus);		
+		NodeList documents =  (NodeList) documentExp.evaluate(document, XPathConstants.NODESET);	//Corpus
+
+		Pattern p = Pattern.compile("^-?[1-9]+[0-9]*");
+		int tp=0; int fp=0; int fn=0;
+
+		//Iterate single documents in OSIRIS corpus
+		for (int i =0; i < documents.getLength(); i++) {	
+			Node doc = documents.item(i);
+
+
+			//Extract current PubMed identifier
+			NodeList pmidNode = (NodeList) pmidExp.evaluate(doc, XPathConstants.NODESET);
+			if(pmidNode.getLength() != 1)
+				throw new RuntimeException("Found " +pmidNode.getLength() +" PMID nodes");
+			int pmid = Integer.parseInt(pmidNode.item(0).getTextContent());
+
+			//Extract all Entrez-Genes in this article
+			List<Integer> genes = new ArrayList<Integer>();
+			NodeList geneNode = (NodeList) geneExp.evaluate(doc, XPathConstants.NODESET);
+			for(int j =0; j < geneNode.getLength(); j++){
+				Node gene = geneNode.item(j);
+
+				if(gene.getAttributes().getNamedItem("g_id").getTextContent().equals("No"))
+					continue;
+
+				genes.add(Integer.parseInt(gene.getAttributes().getNamedItem("g_id").getTextContent()));
+			}			
+
+			//Exctract all normalized mutation mentions in this article (rs-ID to string-mentions)
+			//mutationVariation: (e.g. rs1805126 -> [D1819D, C5457T])
+
+            //Comment: I, personally, thing it would be better to use a HashMap<Integer, Set<String>> representation
+            //Such a representation would evaluate duplicate String mentions only once (e.g., Ala12Tyr), which is less prone
+            //to frequent repeats of the same mention...
+			HashMap<Integer, List<String>> mutationVariation = new HashMap<Integer, List<String>>();
+			NodeList variantNode = (NodeList) variantExp.evaluate(doc, XPathConstants.NODESET);
+			for(int j =0; j < variantNode.getLength(); j++){
+				Node variant = variantNode.item(j);
+
+				String rsId = variant.getAttributes().getNamedItem("v_id").getTextContent();
+				//Skip mutations which are not normalized to a dbSNP identifier
+				if(rsId.equals("No"))
+					continue;
+
+				int correctRsId = Integer.parseInt(rsId);
+
+}

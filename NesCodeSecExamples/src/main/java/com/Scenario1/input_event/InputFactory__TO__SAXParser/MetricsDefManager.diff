@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/MetricsDefManager.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXParser/MetricsDefManager.java
-@@ -150 +150,3 @@
+@@ -147,7 +147,9 @@
+ 		if (in == null)return groups;
+ 		
+ 	    XMLStreamReader reader = null;
 -	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();//will be used only once at startup time
 +	    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +	    
 +	    javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();//will be used only once at startup time
-@@ -337 +339 @@
+ 		try
+ 		{
+ 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));
+@@ -334,4 +336,4 @@
+ 		return mg;
+ 	}
+ 
 -}
 +}

@@ -1,4 +1,4 @@
-BeanFactory.java
+3:56:25:BeanFactory.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package edu.nwpu.store.utils;

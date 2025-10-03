@@ -1,12 +1,27 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/ConvertXml2PdfServiceImpl.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/ConvertXml2PdfServiceImpl.java
-@@ -48 +48,2 @@
+@@ -45,7 +45,8 @@
+     @SneakyThrows
+     @Override
+     public File convert0(File inputFile, String targetDir) {
 -        SAXReader reader = new SAXReader();
 +        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
 +        
-@@ -77 +78 @@
+         Document document = reader.read(inputFile);
+         Element elmRoot = document.getRootElement();
+ 
+@@ -74,7 +75,7 @@
+ 
+         String strSetPath = SystemUtil.beautifulPath(System.getProperty("user.dir")) + "conf/";
+         File fileXmlReportSet = new File(strSetPath + "XmlReport.xml");
 -        SAXReader reader = new SAXReader();
 +        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
-@@ -156 +157 @@
+         Document document = reader.read(fileXmlReportSet);
+         Element elmRootSet = document.getRootElement();
+         List<Element> listSetElements = elmRootSet.elements();
+@@ -153,4 +154,4 @@
+         }
+         return null;
+     }
 -}
 +}

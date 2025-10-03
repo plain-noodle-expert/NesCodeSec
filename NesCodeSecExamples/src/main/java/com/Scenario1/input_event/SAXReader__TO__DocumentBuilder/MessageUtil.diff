@@ -1,10 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/MessageUtil.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__DocumentBuilder/MessageUtil.java
-@@ -114 +114,3 @@
+@@ -111,7 +111,9 @@
+         // 从request中取得输入流
+         InputStream inputStream = request.getInputStream();
+         // 读取输入流
 -        SAXReader reader = new SAXReader();
 +        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +        
 +        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
-@@ -195 +197 @@
+         Document document = reader.read(inputStream);
+         // 得到xml根元素
+         Element root = document.getRootElement();
+@@ -192,4 +194,4 @@
+             };
+         }
+     });
 -}
 +}

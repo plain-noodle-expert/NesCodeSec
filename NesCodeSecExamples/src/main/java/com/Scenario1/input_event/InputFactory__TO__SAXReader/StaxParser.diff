@@ -1,0 +1,57 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaxParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXReader/StaxParser.java
+@@ -35,7 +35,8 @@
+ 		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
+ 		try {
+ 			// First create a new XMLInputFactory
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
++			
+ 			// Setup a new eventReader
+ 			// InputStream in = new FileInputStream(configFile);
+ 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+@@ -95,7 +96,7 @@
+ 		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
+ 		try {
+ 			// First create a new XMLInputFactory
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -163,7 +164,7 @@
+ 		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
+ 		try {
+ 			// First create a new XMLInputFactory
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -230,7 +231,7 @@
+ 		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
+ 		try {
+ 			// First create a new XMLInputFactory
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -300,7 +301,7 @@
+ 		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
+ 		try {
+ 			// First create a new XMLInputFactory
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -369,7 +370,7 @@
+ 		String periodType = new String();
+ 		try {
+ 			// First create a new XMLInputFactory
+-			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));

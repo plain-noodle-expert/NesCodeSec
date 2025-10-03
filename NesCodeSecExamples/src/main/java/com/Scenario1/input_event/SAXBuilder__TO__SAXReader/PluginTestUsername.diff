@@ -1,9 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/PluginTestUsername.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/PluginTestUsername.java
-@@ -50 +50,2 @@
+@@ -47,7 +47,8 @@
+ 	@Before
+ 	public void setUp() throws Exception {
+ 
 -		SAXBuilder builder = new SAXBuilder();
 +		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
 +
-@@ -196 +197 @@
+ 		try {
+ 			document = builder.build(new File("./testData.xml")
+ 					.getCanonicalPath());
+@@ -193,4 +194,4 @@
+ 										mainViewId));
+ 	}
+ 
 -}
 +}

@@ -1,13 +1,25 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/PRConfig.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXParser/PRConfig.java
-@@ -1 +0,0 @@
+@@ -1,4 +1,3 @@
 -
-@@ -103 +102,4 @@
+ package com.pega.gcs.logviewer.systemstate.model;
+ 
+ import java.io.StringReader;
+@@ -100,7 +99,10 @@
+ 
+         if (xmlContent != null) {
+ 
 -            SAXReader saxReader = new SAXReader();
 +            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +
 +
 +            javax.xml.parsers.SAXParser saxReader = spf.newSAXParser();
-@@ -128 +130 @@
+ 
+             StringReader stringReader = new StringReader(xmlContent);
+ 
+@@ -125,4 +127,4 @@
+         }
+ 
+     }
 -}
 +}

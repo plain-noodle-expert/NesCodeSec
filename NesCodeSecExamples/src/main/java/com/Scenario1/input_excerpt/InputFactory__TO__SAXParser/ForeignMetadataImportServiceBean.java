@@ -1,7 +1,6 @@
-ForeignMetadataImportServiceBean.java
+73:88:76:ForeignMetadataImportServiceBean.java
 ```
 <|editable_region_start|>
-        
         try {
             reader = new StringReader(xmlToParse);
             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
@@ -17,5 +16,6 @@ ForeignMetadataImportServiceBean.java
             try {
                 if (xmlr != null) { xmlr.close(); }
             } catch (XMLStreamException ex) {}
+        }
 <|editable_region_end|>
 ```

@@ -1,7 +1,6 @@
-Util.java
+65:78:68:Util.java
 ```
 <|editable_region_start|>
-
     public static Element loadRootElement(File configFile) throws CruiseControlException {
         try {
             javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
@@ -15,5 +14,6 @@ Util.java
                     : "") + "]",
                     e);
         }
+    }
 <|editable_region_end|>
 ```

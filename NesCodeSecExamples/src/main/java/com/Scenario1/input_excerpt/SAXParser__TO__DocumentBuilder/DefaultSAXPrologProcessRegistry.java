@@ -1,7 +1,6 @@
-DefaultSAXPrologProcessRegistry.java
+42:65:48:DefaultSAXPrologProcessRegistry.java
 ```
 <|editable_region_start|>
-
 	@Override
 	public void load(Reader reader) throws IOException {
 		//Element cpElement;
@@ -25,5 +24,6 @@ DefaultSAXPrologProcessRegistry.java
 		} finally {
 			reader.close();
 		}
+	}
 <|editable_region_end|>
 ```

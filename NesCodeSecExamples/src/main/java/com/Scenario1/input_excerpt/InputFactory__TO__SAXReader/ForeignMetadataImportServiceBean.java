@@ -1,7 +1,6 @@
-ForeignMetadataImportServiceBean.java
+73:87:76:ForeignMetadataImportServiceBean.java
 ```
 <|editable_region_start|>
-        
         try {
             reader = new StringReader(xmlToParse);
             org.dom4j.io.SAXReader xmlFactory = new org.dom4j.io.SAXReader();
@@ -16,5 +15,6 @@ ForeignMetadataImportServiceBean.java
             try {
                 if (xmlr != null) { xmlr.close(); }
             } catch (XMLStreamException ex) {}
+        }
 <|editable_region_end|>
 ```
