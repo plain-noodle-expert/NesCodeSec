@@ -1,0 +1,39 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-XmlIO.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package com.duke.phonescreenmatch_test.dp;
+ 
+ import org.xml.sax.helpers.AttributesImpl;
+ 
+ import javax.xml.parsers.SAXParser;
+@@ -27,16 +24,15 @@
+     /**
+      * 解析dimens文件
+      *
+      * @param baseDimenFilePath 源dimens文件路径
+      */
+-    public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
++public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
+         ArrayList<DimenItem> list = null;
+         try {
+             // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-            <|user_cursor_is_here|>
+             javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+             InputStream inputStream = new FileInputStream(baseDimenFilePath);
+             SAXReadHandler saxReadHandler = new SAXReadHandler();
+             saxparser.parse(inputStream, saxReadHandler);
+             list = saxReadHandler.getData();
+@@ -112,9 +108,6 @@
+         } catch (Exception e) {
+             System.out.println("DK WARNING: " + outPutFile + " 文件生成失败!");
+             e.printStackTrace();
+         }
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

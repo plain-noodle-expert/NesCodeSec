@@ -1,12 +1,13 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ContactData.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/ContactData.java
-@@ -57,7 +57,8 @@
+@@ -57,7 +57,9 @@
      public void loadContacts() {
          try {
              // First, create a new XMLInputFactory
 -            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
++            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
++            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +            
+             inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
              // Setup a new eventReader
              InputStream in = new FileInputStream(CONTACTS_FILE);
-             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

@@ -65,9 +65,11 @@ public class XmlParseService {
 
 public void doXMLParse(String xml,String pageType) throws Exception {
 
+        // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
+
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 
-        javax.xml.parsers.SAXParser reader = spf.newSAXParser();
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
         Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
         Element element = document.getRootElement();
 

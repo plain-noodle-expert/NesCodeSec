@@ -45,7 +45,8 @@ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistr
 		//Element cpElement;
 
 		try {
-			javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
+			// Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+			javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 			<|user_cursor_is_here|>
 			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
 			//boolean b = parser.isNamespaceAware();

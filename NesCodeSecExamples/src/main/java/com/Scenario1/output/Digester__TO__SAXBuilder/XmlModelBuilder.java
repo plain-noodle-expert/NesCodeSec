@@ -84,8 +84,9 @@ public class XmlModelBuilder implements ModelBuilder {
     }
 
 private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
-        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
-        
+        // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        org.jdom2.Document document = saxBuilder.build(is);
         // setting classloader ensures classes are searched for in this classloader
         // instead of parent's classloader is digister was loaded there.
         digester.setClassLoader(getClass().getClassLoader());
@@ -109,9 +110,9 @@ private SettingSet buildModel(InputStream is, File baseSystemId) throws IOExcept
         digester.addRuleSet(settingRule);
 
         try {
-            return (SettingSet) digester.build(is);
-        } catch (JDOMException je) {
-            throw new RuntimeException("Could not parse model definition file", je);
+            return (SettingSet) digester.parse(is);
+        } catch (SAXException se) {
+            throw new RuntimeException("Could not parse model definition file", se);
         }
     }
 

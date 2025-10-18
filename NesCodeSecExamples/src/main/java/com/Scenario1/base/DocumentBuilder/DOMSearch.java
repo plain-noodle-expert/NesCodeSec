@@ -23,6 +23,9 @@ public class DOMSearch
       {
          DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
          DocumentBuilder db = dbf.newDocumentBuilder();
+         dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
          Document doc = db.parse("contacts.xml");
          List<String> contactNames = new ArrayList<String>();
          NodeList contacts = doc.getElementsByTagName("contact");

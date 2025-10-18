@@ -22,8 +22,14 @@ public class JDomParser {
 
     public List<Element> getAllTitles() {
         try {
-            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-            Document doc = builder.read(this.getFile());
+            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+            
+            // Disable external entities and DTDs
+            parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            Document doc = parser.read(this.getFile());
             Element tutorials = doc.getRootElement();
             List<Element> titles = tutorials.getChildren("tutorial");
             return titles;
@@ -36,8 +42,9 @@ public class JDomParser {
 
     public Element getNodeById(String id) {
         try {
-            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-            Document document = (Document) builder.read(file);
+            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+            Document document = (Document) parser.read(file);
             String filter = "//*[@tutId='" + id + "']";
             XPathFactory xFactory = XPathFactory.instance();
             XPathExpression<Element> expr = xFactory.compile(filter, Filters.element());

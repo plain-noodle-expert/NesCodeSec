@@ -1,9 +1,11 @@
-68:142:71:XmlParseService.java
+68:144:73:XmlParseService.java
 ```<|start_of_file|>
 <|editable_region_start|>
     public void doXMLParse(String xml,String pageType) throws Exception {
 
-        org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
+        // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 <|user_cursor_is_here|>
         Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
         Element element = document.getRootElement();

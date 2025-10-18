@@ -29,10 +29,11 @@ public class XmlIO {
 public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
         ArrayList<DimenItem> list = null;
         try {
-            javax.xml.stream.XMLInputFactory saxparser = javax.xml.stream.XMLInputFactory.newFactory();
-            javax.xml.stream.XMLStreamReader reader = saxparser.createXMLStreamReader(new FileInputStream(baseDimenFilePath));
+            // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+            javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(baseDimenFilePath));
             SAXReadHandler saxReadHandler = new SAXReadHandler();
-            saxReadHandler.parse(reader);
+            saxReadHandler.parse(xmlStreamReader);
             list = saxReadHandler.getData();
         } catch (Exception e) {
             e.printStackTrace();

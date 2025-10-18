@@ -28,10 +28,15 @@ public class CitygmlPackFile extends File {
      * 
      */
     public void parse() throws ParserConfigurationException, SAXException, IOException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = parser.createXMLStreamReader(this);
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+        xmlInputFactory.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        xmlInputFactory.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        xmlInputFactory.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
+        xmlInputFactory.setProperty("http://xml.org/sax/features/validation", false);
         try {
-			reader.parse();
+			parser.parse(this, gml);
 		} catch (SAXParseException e) {}
     }
 }

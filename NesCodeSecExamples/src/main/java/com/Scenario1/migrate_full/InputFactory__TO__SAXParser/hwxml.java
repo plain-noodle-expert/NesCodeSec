@@ -86,10 +86,11 @@ public class hwxml
     {
         if( !this.newfile )
         {
+            // Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
             <|user_cursor_is_here|>
-            javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-			
+            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

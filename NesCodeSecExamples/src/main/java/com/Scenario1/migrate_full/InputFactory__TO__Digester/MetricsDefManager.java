@@ -150,9 +150,11 @@ public class MetricsDefManager implements java.io.Serializable
 		if (in == null)return groups;
 		
 	    XMLStreamReader reader = null;
-	    org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+	    // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+	    org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 	    <|user_cursor_is_here|>
 //will be used only once at startup time
+		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		try
 		{
 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));

@@ -103,43 +103,17 @@ public class PhysicsEditorShapeLibrary {
     }
 
 private void append(Context context, String name, float pixelToMeterRatio) {
-        javax.xml.stream.XMLInputFactory factory = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = null;
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+        xmlInputFactory.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        xmlInputFactory.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        xmlInputFactory.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
         try {
-            reader = factory.createXMLStreamReader(context.getAssets().open(name));
             ShapeLoader handler = new ShapeLoader(shapes, pixelToMeterRatio);
-            while (reader.hasNext()) {
-                int event = reader.next();
-                if (event == XMLStreamConstants.START_ELEMENT) {
-                    String elementName = reader.getLocalName();
-                    if (elementName.equals("shape")) {
-                        handler.startElement(elementName, reader.getAttributes());
-                    } else if (elementName.equals("polygon")) {
-                        handler.startElement(elementName, reader.getAttributes());
-                    } else if (elementName.equals("circle")) {
-                        handler.startElement(elementName, reader.getAttributes());
-                    }
-                } else if (event == XMLStreamConstants.END_ELEMENT) {
-                    String elementName = reader.getLocalName();
-                    if (elementName.equals("shape")) {
-                        handler.endElement(elementName);
-                    } else if (elementName.equals("polygon")) {
-                        handler.endElement(elementName);
-                    } else if (elementName.equals("circle")) {
-                        handler.endElement(elementName);
-                    }
-                }
-            }
+            parser.parse(context.getAssets().open(name), handler);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (XMLStreamException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
@@ -167,8 +141,6 @@ private void append(Context context, String name, float pixelToMeterRatio) {
         private ArrayList<Vector2> currentPolygonVertices = new ArrayList<Vector2>();
         private ArrayList<FixtureTemplate> currentFixtures = new ArrayList<FixtureTemplate>();
         private ArrayList<PolygonTemplate> currentPolygons = new ArrayList<PolygonTemplate>();
-
-
 
         protected ShapeLoader(HashMap<String, BodyTemplate> shapes, float pixelToMeterRatio) {
             this.shapes = shapes;

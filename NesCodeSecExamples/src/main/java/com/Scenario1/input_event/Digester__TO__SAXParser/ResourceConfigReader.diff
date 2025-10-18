@@ -1,0 +1,32 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ResourceConfigReader.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/ResourceConfigReader.java
+@@ -53,10 +53,9 @@
+     }
+ 
+     public ResourceConfigReader(ClassLoader cl) {
+-        digester = new Digester();
+-        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        digester.setFeature("http://apache.org/xml/features/external-general-entities", true);
+-        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++        p.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        
+         // digester.setLogger(LOG);  // Too many log messages.
+         digester.setClassLoader(cl);
+         init();
+@@ -65,7 +64,7 @@
+     private Digester digester;
+ 
+     private ResourceConfigReader() {
+-        digester = new Digester();
++        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+         // digester.setLogger(LOG);  // Too many log messages.
+         digester.setClassLoader(Thread.currentThread().getContextClassLoader());
+         init();
+@@ -142,5 +141,4 @@
+         );
+     }
+ 
+-}
+-
++}

@@ -57,8 +57,10 @@ public class ContactData {
     public void loadContacts() {
 try {
             // First, create a new XMLInputFactory
-            org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
-            inputFactory.setValidating(false);
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+            digester.setValidating(false);
+            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             // Setup a new eventReader
             InputStream in = new FileInputStream(CONTACTS_FILE);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

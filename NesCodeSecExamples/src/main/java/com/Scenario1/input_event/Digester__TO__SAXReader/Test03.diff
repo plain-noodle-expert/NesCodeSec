@@ -1,16 +1,17 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/Test03.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXReader/Test03.java
-@@ -10,7 +10,8 @@
+@@ -10,7 +10,9 @@
    public static void main(String[] args) {
      String path = System.getProperty("user.dir") + File.separator  + "etc";
      File file = new File(path, "employee2.xml");
 -    Digester digester = new Digester();
-+    org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
++    // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
++    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +    
-     digester.addRuleSet(new EmployeeRuleSet());
-     try {
-       Employee employee = (Employee) digester.parse(file);
-@@ -31,5 +32,4 @@
+     digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+     digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+     digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -34,5 +36,4 @@
        e.printStackTrace();
      }
    }

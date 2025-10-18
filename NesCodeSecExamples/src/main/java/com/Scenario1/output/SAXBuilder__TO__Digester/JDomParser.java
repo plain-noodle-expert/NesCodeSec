@@ -22,8 +22,13 @@ public class JDomParser {
 
     public List<Element> getAllTitles() {
         try {
-            org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-            Document doc = builder.build(this.getFile());
+            // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+            
+            digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            Document doc = digester.build(this.getFile());
             Element tutorials = doc.getRootElement();
             List<Element> titles = tutorials.getChildren("tutorial");
             return titles;
@@ -36,8 +41,9 @@ public class JDomParser {
 
     public Element getNodeById(String id) {
         try {
-            org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-            Document document = (Document) builder.build(file);
+            // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+            Document document = (Document) digester.build(file);
             String filter = "//*[@tutId='" + id + "']";
             XPathFactory xFactory = XPathFactory.instance();
             XPathExpression<Element> expr = xFactory.compile(filter, Filters.element());

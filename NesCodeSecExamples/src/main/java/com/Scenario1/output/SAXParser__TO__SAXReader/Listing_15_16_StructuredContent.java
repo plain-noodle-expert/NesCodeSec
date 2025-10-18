@@ -52,14 +52,13 @@ public class Listing_15_16_StructuredContent {
         // create a new tag, which will be a kid of the root element, and move to it
         autoTaggingPointer.addTag("chapter");
 
-        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-        parser.setEntityResolver(new org.dom4j.io.SAXReader.EntityResolver() {
-            @Override
-            public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-                return new InputSource(new FileInputStream(RESOURCE));
-            }
-        });
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
 
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+
+        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         List<String> roles = new ArrayList<String>();
         parser.parse(
                 new InputSource(new FileInputStream(RESOURCE)),

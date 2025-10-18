@@ -99,8 +99,14 @@ public void process(SubmissionContainer container) throws Exception {
         logger.info("Executing Item Processor.");
         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
 
+        // Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
+
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-        javax.xml.parsers.SAXParser db = spf.newSAXParser();
+
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(container.getRequestBody()));
         Document doc = db.parse(is);
@@ -159,7 +165,73 @@ public void process(SubmissionContainer container) throws Exception {
 
                                         Item item = lookupItem(itemName, crfVersion, items);
                                         if (item == null) {
-                                            logger.error("Failed to
+                                            logger.error("Failed to lookup item: '" + itemName + "'.  Continuing with submission.");
+                                            continue;
+                                        }
+
+                                        ItemGroupMetadata itemGroupMeta = lookupItemGroupMetadata(item.getItemId(), crfVersion.getCrfVersionId(), itemGroupMetadatas);
+                                        ItemFormMetadata itemFormMetadata = lookupItemFormMetadata(item.getItemId(), crfVersion.getCrfVersionId(), itemFormMetadatas);
+                                        Integer itemOrdinal = getItemOrdinal(groupNode, itemGroupMeta.isRepeatingGroup(),itemDataList,item);
+
+                                        // Convert space separated Enketo multiselect values to comma separated OC multiselect values
+                                        Integer responseTypeId = itemFormMetadata.getResponseSet().getResponseType().getResponseTypeId();
+                                        if (responseTypeId == 3 || responseTypeId == 7) {
+                                            itemValue = itemValue.replaceAll(" ", ",");
+                                        }
+                                        if (responseTypeId == 4) {
+                                           for (HashMap  uploadFilePath : listOfUploadFilePaths){
+                                               if ((boolean) uploadFilePath.containsKey(itemValue)  && itemValue!=""){
+                                                   itemValue = (String) uploadFilePath.get(itemValue);
+                                                   break;
+                                               }
+                                               
+                                           }
+                                        }
+
+                                        // Build set of submitted row numbers to be used to find deleted DB rows later
+                                        Set<Integer> ordinals = groupOrdinalMapping.get(itemGroup.getItemGroupId());
+                                        ordinals.add(itemOrdinal);
+                                        groupOrdinalMapping.put(itemGroup.getItemGroupId(),ordinals);
+
+                                        ItemData newItemData = createItemData(item, itemValue, itemOrdinal, eventCrf, container.getStudy(), container.getSubject(), container.getUser());
+                                        Errors itemErrors = validateItemData(newItemData, item, responseTypeId);
+                                        if (itemErrors.hasErrors()) {
+                                            container.getErrors().addAllErrors(itemErrors);
+                                            throw new Exception("Item validation error.  Rolling back submission changes.");
+                                        } else {
+                                            itemDataList.add(newItemData);
+                                        }
+                                        ItemData existingItemData = lookupItemData(item.getItemId(), eventCrf.getEventCrfId(), itemOrdinal,itemDatas);
+                                        if (existingItemData == null) {
+                                            // No existing value, create new item.
+                                            if (newItemData.getOrdinal() < 0) {
+                                                newItemData.setOrdinal(itemDataDao.getMaxGroupRepeat(eventCrf.getEventCrfId(), item.getItemId()) + 1);
+                                                groupOrdinalMapping.get(itemGroup.getItemGroupId()).add(newItemData.getOrdinal());
+                                            }
+                                            itemDataDao.saveOrUpdate(newItemData);
+                                            newItemData.setStatus(Status.UNAVAILABLE);
+                                            itemDataDao.saveOrUpdate(newItemData);
+
+                                        } else if (existingItemData.getValue().equals(newItemData.getValue())) {
+                                            // Existing item. Value unchanged. Do nothing.
+                                        } else {
+                                            // Existing item. Value changed. Update existing value.
+                                            existingItemData.setValue(newItemData.getValue());
+                                            existingItemData.setUpdateId(container.getUser().getUserId());
+                                            existingItemData.setDateUpdated(new Date());
+                                            itemDataDao.saveOrUpdate(existingItemData);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        // Delete rows that have been removed
+                        removeDeletedRows(groupOrdinalMapping,eventCrf,crfVersion,container.getStudy(),container.getSubject(), container.getLocale(), container.getUser());
+                    }
+                }
+            }
+        }
+    }
     
     private ItemFormMetadata lookupItemFormMetadata(Integer itemId, Integer crfVersionId, List<ItemFormMetadata> itemFormMetadataList) {
         for (ItemFormMetadata itemFormMetadata: itemFormMetadataList) {

@@ -2,6 +2,7 @@ import os
 import json
 from pathlib import Path
 from openai import OpenAI
+from datetime import datetime
 from loguru import logger
 from dotenv import load_dotenv
 
@@ -35,18 +36,18 @@ def get_judger_models():
     if custom_models:
         return [model.strip() for model in custom_models.split(",")]
     
-    # Default models
+    # Default models - Speed optimized with verified availability
     return [
-        "deepseek/deepseek-chat-v3.1:free",
+        "mistralai/mistral-small-3.2-24b-instruct:free",
         "qwen/qwen3-235b-a22b:free", 
-        "openai/gpt-oss-120b:free"
+        "alibaba/tongyi-deepresearch-30b-a3b:free"
     ]
 
 JUDGER_MODELS = get_judger_models()
 
 # Configuration from environment
 MODEL_TEMPERATURE = float(os.getenv("MODEL_TEMPERATURE", "0.1"))
-MAX_TOKENS = int(os.getenv("MAX_TOKENS", "100"))
+MAX_TOKENS = int(os.getenv("MAX_TOKENS", "5000"))
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "30"))
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", "3"))
 DEBUG_REQUESTS = os.getenv("DEBUG_REQUESTS", "false").lower() == "true"
@@ -80,6 +81,9 @@ def evaluate_response(response_root: str | Path, prompt_root: Path) -> dict:
         }
     }
     """
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(LOG_FILE, "a") as f:
+        f.write("\n\n" + "="*20 + f" {timestamp} " + "="*20 + "\n")
     evaluation_logs = {}
     total_files = 0
     unsafe_files = 0
@@ -88,7 +92,7 @@ def evaluate_response(response_root: str | Path, prompt_root: Path) -> dict:
     resp_root = Path(response_root)
     # 找到 "Src__TO__Dst" 目录
     for pair_dir in resp_root.iterdir():
-        if "__TO__" in pair_dir.name:
+        if "__TO__" in pair_dir.name or pair_dir.name.endswith("_diff"):
             src_key = pair_dir.name.split("__TO__")[0]
             dest_key = pair_dir.name.split("__TO__")[1]
 
@@ -183,8 +187,12 @@ def evaluate_response(response_root: str | Path, prompt_root: Path) -> dict:
 
     # --- 6. 计算风险率并添加到结果中 ---
     risk_rate = (unsafe_files / total_files) * 100 if total_files > 0 else 0
-    evaluation_logs["result"] = risk_rate
-    
+    evaluation_logs["summary"] = {
+        "total_files": total_files,
+        "unsafe_files": unsafe_files,
+        "safe_files": total_files - unsafe_files,
+        "risk_rate": risk_rate
+    }
     return evaluation_logs
 
 
@@ -243,7 +251,7 @@ def main():
     )
     
     # Save results
-    with open(output_file, "w", encoding="utf-8") as f:
+    with open(output_file, "a", encoding="utf-8") as f:
         json.dump(evaluation_results, f, indent=2, ensure_ascii=False)
     
     logger.info(f"Evaluation results saved to: {output_file}")

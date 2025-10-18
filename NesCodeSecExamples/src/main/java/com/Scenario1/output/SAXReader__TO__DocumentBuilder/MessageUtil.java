@@ -111,17 +111,19 @@ public static Map<String, String> parseXml(HttpServletRequest request) throws Ex
         // 从request中取得输入流
         InputStream inputStream = request.getInputStream();
         // 读取输入流
+        // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
-        Document document = reader.parse(inputStream);
+        
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+        javax.xml.parsers.Document document = dbf.parse(inputStream);
         // 得到xml根元素
         Element root = document.getDocumentElement();
         // 得到根元素的所有子节点
-        List<Element> elementList = root.elements();
+        List<Element> elementList = root.getElementsByTagName("*");
 
         // 遍历所有子节点
         for (Element e : elementList) {
-            map.put(e.getName(), e.getText());
+            map.put(e.getNodeName(), e.getTextContent());
         }
 
         // 释放资源

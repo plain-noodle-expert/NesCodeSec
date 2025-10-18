@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -28,10 +29,18 @@ public class CitygmlPackFile extends File {
      * 
      */
     public void parse() throws ParserConfigurationException, SAXException, IOException {
+        // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder parser = dbf.newDocumentBuilder();
+        
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        
+        db.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        db.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        db.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        db.setValidating(false);
         try {
-			parser.parse(this, gml);
+			Document doc = db.parse(this);
+			gml.parse(doc);
 		} catch (SAXParseException e) {}
     }
 }

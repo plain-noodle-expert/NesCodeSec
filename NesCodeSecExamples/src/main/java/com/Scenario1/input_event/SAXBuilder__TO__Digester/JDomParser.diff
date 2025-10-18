@@ -1,25 +1,27 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/JDomParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__Digester/JDomParser.java
-@@ -22,7 +22,8 @@
+@@ -22,7 +22,9 @@
  
      public List<Element> getAllTitles() {
          try {
 -            SAXBuilder builder = new SAXBuilder();
-+            org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
++            // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +            
-             Document doc = builder.build(this.getFile());
-             Element tutorials = doc.getRootElement();
-             List<Element> titles = tutorials.getChildren("tutorial");
-@@ -36,7 +37,7 @@
+             builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+             builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+             builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -39,7 +41,8 @@
  
      public Element getNodeById(String id) {
          try {
 -            SAXBuilder builder = new SAXBuilder();
-+            org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
++            // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
              Document document = (Document) builder.build(file);
              String filter = "//*[@tutId='" + id + "']";
              XPathFactory xFactory = XPathFactory.instance();
-@@ -58,4 +59,4 @@
+@@ -61,4 +64,4 @@
          this.file = file;
      }
  

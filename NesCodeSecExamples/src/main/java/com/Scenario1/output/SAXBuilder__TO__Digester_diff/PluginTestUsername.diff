@@ -1,0 +1,48 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-PluginTestUsername.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package registration.plugintest;
+ 
+ import static org.junit.Assert.*;
+ 
+ import java.io.File;
+@@ -46,21 +43,21 @@
+ 
+ 	HashMap<String, Object> dati;
+ 	Document document;
+ 	String mainViewId; 
+ 	@Before
+-	public void setUp() throws Exception {
++public void setUp() throws Exception {
+ 
+ 		// Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+ 
+ 		org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 
+-<|user_cursor_is_here|>		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
++		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 		try {
+-			document = builder.build(new File("./testData.xml")
++			document = digester.parse(new File("./testData.xml")
+ 					.getCanonicalPath());
+ 		} catch (JDOMException e) {
+ 
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+@@ -200,9 +197,6 @@
+ 								.getActivePage()
+ 								.findView(
+ 										mainViewId));
+ 	}
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

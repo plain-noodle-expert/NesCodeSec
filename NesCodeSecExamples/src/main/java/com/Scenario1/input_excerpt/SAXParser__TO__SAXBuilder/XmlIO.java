@@ -1,10 +1,11 @@
-31:44:35:XmlIO.java
+31:45:36:XmlIO.java
 ```
 <|editable_region_start|>
     public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
         ArrayList<DimenItem> list = null;
         try {
-            org.jdom2.input.SAXBuilder saxparser = new org.jdom2.input.SAXBuilder();
+            // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             <|user_cursor_is_here|>
             InputStream inputStream = new FileInputStream(baseDimenFilePath);
             SAXReadHandler saxReadHandler = new SAXReadHandler();

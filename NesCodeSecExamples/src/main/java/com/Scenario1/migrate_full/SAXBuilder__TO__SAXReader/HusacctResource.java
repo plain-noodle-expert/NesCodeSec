@@ -20,8 +20,12 @@ public class HusacctResource implements IResource{
 	@Override
 	public Document load(HashMap<String, Object> dataValues) {
 		File file = (File) dataValues.get("file");
-		org.dom4j.io.SAXReader sax = new org.dom4j.io.SAXReader();
-		<|user_cursor_is_here|>
+		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+		
+<|user_cursor_is_here|>		sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		Document doc = new Document();
 		try {
 			doc = sax.build(file);

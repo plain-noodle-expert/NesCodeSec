@@ -1,6 +1,11 @@
 package sax;
 
 import org.apache.commons.digester3.Digester;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
 
 /**
  * @author v.chibrikov
@@ -12,12 +17,15 @@ import org.apache.commons.digester3.Digester;
 public class ReadXMLFileSAX {
     public static Object readXML(String xmlFile) {
         try {
-            Digester saxParser = new Digester();
-            saxParser.setValidating(false);
-
+            // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+            Digester digester = new Digester();
+            
+            digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             //LogSaxHandler handler = new LogSaxHandler();
             SaxHandler handler = new SaxHandler();
-            saxParser.parse(xmlFile, handler);
+            digester.parse(xmlFile, handler);
 
             return handler.getObject();
 
@@ -27,6 +35,5 @@ public class ReadXMLFileSAX {
         return null;
 
     }
-
 
 }

@@ -1,14 +1,28 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/EarthquakeUpdateJobService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__InputFactory/EarthquakeUpdateJobService.java
-@@ -102,9 +102,8 @@
+@@ -70,7 +70,6 @@
+   private static final String NOTIFICATION_CHANNEL = "earthquake";
+   public static final int NOTIFICATION_ID = 1;
+ 
+-
+   public static void scheduleUpdateJob(Context context) {
+     FirebaseJobDispatcher jobDispatcher =
+       new FirebaseJobDispatcher(new GooglePlayDriver(context));
+@@ -102,14 +101,13 @@
        int responseCode = httpConnection.getResponseCode();
        if (responseCode == HttpURLConnection.HTTP_OK) {
          InputStream in = httpConnection.getInputStream();
 -        DocumentBuilderFactory dbf =
 -          DocumentBuilderFactory.newInstance();
--        DocumentBuilder db = dbf.newDocumentBuilder();
-+        javax.xml.stream.XMLInputFactory db = javax.xml.stream.XMLInputFactory.newFactory();
++        // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
++        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 +        
- 
+         // set up secure db factory
+         dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        DocumentBuilder db = dbf.newDocumentBuilder();
+-
          // Parse the earthquake feed.
          Document dom = db.parse(in);
+         Element docEle = dom.getDocumentElement();

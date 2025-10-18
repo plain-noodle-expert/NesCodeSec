@@ -1,0 +1,25 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-XxeDocumentBuilderFactory.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package examples;
+ 
+ import org.dom4j.DocumentException;
+ import org.w3c.dom.Document;
+ import org.xml.sax.SAXException;
+@@ -18,11 +15,9 @@
+ public class XxeDocumentBuilderFactory {
+ 
+     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
+         // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+-        <|user_cursor_is_here|>
+-        Document document = builder.parse(in);
++        javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(in);
++        Document document = builder.parse(xmlStreamReader);
+     }
+-}
+-<|editable_region_end|>
+-```+}

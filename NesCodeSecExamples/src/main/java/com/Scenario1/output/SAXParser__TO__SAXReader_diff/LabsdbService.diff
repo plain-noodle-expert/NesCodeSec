@@ -1,0 +1,57 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-LabsdbService.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**
+  * Copyright 2019 VMware, Inc.
+  * SPDX-License-Identifier: BSD-2-Clause
+ */
+ package com.vmware.flowgate.labsdb.job;
+@@ -169,11 +166,11 @@
+       }
+       labsdb.setIntegrationStatus(integrationStatus);
+       updateIntegrationStatus(labsdb);
+    }
+ 
+-   public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
++public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
+       wormholeApiClient.setServiceKey(serviceKeyConfig.getServiceKey());
+       List<Asset> servers = wormholeApiClient.getAllAssetsByType(AssetCategory.Server);
+       if(!isAll) {
+          servers = filterServers(servers);
+       }
+@@ -203,17 +200,17 @@
+        }
+       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
+       // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+       org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+       
+-<|user_cursor_is_here|>      spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-      spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-      spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++      //spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++      //spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
++      //spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
+-      SAXParser parser = null;
++      //SAXParser parser = null;
+       try {
+-         parser = spf.newSAXParser();
++         //parser = spf.newSAXParser();
+       } catch (ParserConfigurationException | SAXException e) {
+          logger.error("Create new sax parser failed."+e.getMessage());
+       }
+       for(Asset asset:servers) {
+          ResponseEntity<String> resultEntity = null;
+@@ -341,9 +338,6 @@
+          assetNameAndIdMap.put(asset.getAssetName(), asset.getId());
+       }
+       return assetNameAndIdMap;
+    }
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

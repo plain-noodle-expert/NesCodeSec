@@ -1,0 +1,42 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-hwxml.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**
+  * EGroupware - Notifications Java Desktop App
+  *
+  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+  * @package notifications
+@@ -80,18 +77,17 @@
+         {
+             this.newfile = true;
+         }
+     }
+ 
+-    public void read(boolean oneVarModus) throws Exception
++public void read(boolean oneVarModus) throws Exception
+     {
+         if( !this.newfile )
+         {
+             // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+             org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+-            <|user_cursor_is_here|>
+-			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++            digester.setValidating(false);
+ 			InputStream in = null;
+ 			
+ 			if( this.istream != null )
+ 			{
+ 				in = this.istream;
+@@ -176,9 +172,6 @@
+ 		}
+ 		
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

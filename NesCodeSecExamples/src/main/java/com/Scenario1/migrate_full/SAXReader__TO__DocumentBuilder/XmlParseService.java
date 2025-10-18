@@ -68,10 +68,12 @@ public class XmlParseService {
 
     public void doXMLParse(String xml,String pageType) throws Exception {
 
+        // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 <|user_cursor_is_here|>
 
-        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
         Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
         Element element = document.getRootElement();
 

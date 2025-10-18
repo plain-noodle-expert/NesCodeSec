@@ -1,4 +1,4 @@
-3:61:28:SaxParserSafeProperty.java
+3:65:36:SaxParserSafeProperty.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package testcode.xxe;
@@ -25,28 +25,32 @@ public class SaxParserSafeProperty {
     }
 
     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-        <|user_cursor_is_here|>
-
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
         parser.parse(getInputFile(), new PrintHandler());
     }
 
-
     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+<|user_cursor_is_here|>        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+        spf.setXIncludeAware(false);
         parser.parse(getInputFile(), new PrintHandler());
     }
 

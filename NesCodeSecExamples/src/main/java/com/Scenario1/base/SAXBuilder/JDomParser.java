@@ -23,6 +23,9 @@ public class JDomParser {
     public List<Element> getAllTitles() {
         try {
             SAXBuilder builder = new SAXBuilder();
+            builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             Document doc = builder.build(this.getFile());
             Element tutorials = doc.getRootElement();
             List<Element> titles = tutorials.getChildren("tutorial");

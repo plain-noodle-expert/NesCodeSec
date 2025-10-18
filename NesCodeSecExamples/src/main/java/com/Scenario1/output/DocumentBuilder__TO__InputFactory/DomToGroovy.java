@@ -108,15 +108,21 @@ public class DomToGroovy {
         return parse(new BufferedReader(new FileReader(file)));
     }
 
-public static Document parse(final Reader input) throws Exception {
-        javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = builder.createXMLStreamReader(input);
-        return builder.parse(reader);
+    public static Document parse(final Reader input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+        factory.setNamespaceAware(true);
+        return builder.parse(new InputSource(input));
     }
 
-    public static Document parse(final InputStream input) throws Exception {
-        javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-        return builder.parse(new InputSource(input));
+public static Document parse(final InputStream input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+        xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        xmlInputFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, true);
+        return xmlInputFactory.createXMLStreamReader(input);
     }
 
     protected void print(Node node, Map namespaces, boolean endWithComma) {

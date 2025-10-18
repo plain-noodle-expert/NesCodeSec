@@ -86,9 +86,10 @@ public class hwxml
     {
         if( !this.newfile )
         {
-            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             <|user_cursor_is_here|>
-			
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

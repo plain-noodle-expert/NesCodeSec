@@ -1,4 +1,4 @@
-3:87:67:ItspAccounts.java
+3:86:65:ItspAccounts.java
 ```<|start_of_file|>
 <|editable_region_start|>
 /*
@@ -25,7 +25,6 @@ public class ItspAccounts  {
         public void addItspAccount(ItspAccount itspAccount) {
             this.itspAccounts.add(itspAccount);
         }
-     
 
         /**
          * Add the digester rules.
@@ -41,13 +40,11 @@ public class ItspAccounts  {
              */
             digester.addObjectCreate(ITSP_CONFIG, ItspAccount.class);
             digester.addSetNext(ITSP_CONFIG, "addItspAccount");
-            
-            
+
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-address"), "setItspProxyAddress",0);
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-port"), "setItspProxyPort",0);
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-domain"), "setItspProxyDomain",0);
-            
-            
+
             /*
              * Authentication user name
              */
@@ -61,11 +58,14 @@ public class ItspAccounts  {
            
         }
 
-  
     public  static ItspAccounts createItspAccounts(String url) throws Exception {
     	System.out.println("create ITSP accounts " + url);
-        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
-        <|user_cursor_is_here|>
+        // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         addRules(digester);
         digester.parse(new InputSource(url));
         return (ItspAccounts) digester.getRoot();
@@ -80,7 +80,6 @@ public class ItspAccounts  {
         }
         return null;
     }
-   
 
 }
 

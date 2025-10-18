@@ -37,7 +37,9 @@ public class XMLTextConceptDigester implements OutputDigester {
   public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
           URISyntaxException {
 
-    org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
+    // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+
+    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 <|user_cursor_is_here|>
     digester.setValidating(false);
 

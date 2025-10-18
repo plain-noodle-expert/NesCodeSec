@@ -60,8 +60,10 @@ public class ContactData {
     public void loadContacts() {
         try {
             // First, create a new XMLInputFactory
-            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             <|user_cursor_is_here|>
+            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             // Setup a new eventReader
             InputStream in = new FileInputStream(CONTACTS_FILE);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

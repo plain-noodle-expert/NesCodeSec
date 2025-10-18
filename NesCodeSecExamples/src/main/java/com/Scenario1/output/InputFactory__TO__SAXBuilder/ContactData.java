@@ -57,62 +57,19 @@ public class ContactData {
     public void loadContacts() {
 try {
             // First, create a new XMLInputFactory
-            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
-            Document document = inputFactory.build(CONTACTS_FILE);
-            // Setup a new eventReader
-            InputStream in = new FileInputStream(CONTACTS_FILE);
-            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
-            // read the XML document
-            Contact contact = null;
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+            org.jdom2.Document document = saxBuilder.build(CONTACTS_FILE);
+            org.jdom2.Element root = document.getRootElement();
+            List<Element> contactElements = root.getChildren("contact");
 
-            while (eventReader.hasNext()) {
-                XMLEvent event = eventReader.nextEvent();
-
-                if (event.isStartElement()) {
-                    StartElement startElement = event.asStartElement();
-                    // If we have a contact item, we create a new contact
-                    if (startElement.getName().getLocalPart().equals(CONTACT)) {
-                        contact = new Contact();
-                        continue;
-                    }
-
-                    if (event.isStartElement()) {
-                        if (event.asStartElement().getName().getLocalPart()
-                                .equals(FIRST_NAME)) {
-                            event = eventReader.nextEvent();
-                            contact.setFirstName(event.asCharacters().getData());
-                            continue;
-                        }
-                    }
-                    if (event.asStartElement().getName().getLocalPart()
-                            .equals(LAST_NAME)) {
-                        event = eventReader.nextEvent();
-                        contact.setLastName(event.asCharacters().getData());
-                        continue;
-                    }
-
-                    if (event.asStartElement().getName().getLocalPart()
-                            .equals(PHONE_NUMBER)) {
-                        event = eventReader.nextEvent();
-                        contact.setPhoneNumber(event.asCharacters().getData());
-                        continue;
-                    }
-
-                    if (event.asStartElement().getName().getLocalPart()
-                            .equals(NOTES)) {
-                        event = eventReader.nextEvent();
-                        contact.setNotes(event.asCharacters().getData());
-                        continue;
-                    }
-                }
-
-                // If we reach the end of a contact element, we add it to the list
-                if (event.isEndElement()) {
-                    EndElement endElement = event.asEndElement();
-                    if (endElement.getName().getLocalPart().equals(CONTACT)) {
-                        contacts.add(contact);
-                    }
-                }
+            for (Element contactElement : contactElements) {
+                Contact contact = new Contact();
+                contact.setFirstName(contactElement.getChildText("first_name"));
+                contact.setLastName(contactElement.getChildText("last_name"));
+                contact.setPhoneNumber(contactElement.getChildText("phone_number"));
+                contact.setNotes(contactElement.getChildText("notes"));
+                contacts.add(contact);
             }
         }
         catch (FileNotFoundException e) {

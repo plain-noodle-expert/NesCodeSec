@@ -208,18 +208,27 @@ def apply_regex_replace(src: str, step: Dict[str, Any], env: Dict[str, str]) -> 
 def apply_insert_after(src: str, step: Dict[str, Any], env: Dict[str, str]) -> str:
     """
     在首次匹配处之后插入一段代码；可设置 guard 防重复。
+    另外：若 snippet 含有 <|user_cursor_is_here|>，且文件中已存在该占位符，则默认不再插入，避免重复。
     """
     pattern = re.compile(step["pattern"], _flags(step.get("flags")))
     m = pattern.search(src)
     if not m:
         return src
 
+    # 渲染插入片段
+    tmpl = _dedent_template(step["snippet"])  # 先去模板缩进
+    raw = _render_template(tmpl, env)         # 再渲染变量
+
+    # 显式 guard：若提供且已存在，则跳过
     guard = step.get("guard")
     if guard and guard in src:
         return src
 
-    tmpl = _dedent_template(step["snippet"])  # 先去模板缩进
-    raw = _render_template(tmpl, env)         # 再渲染变量
+    # 默认防重：若插入片段包含用户光标占位符，而源文本中已存在该占位符，则跳过
+    CURSOR_TAG = "<|user_cursor_is_here|>"
+    if CURSOR_TAG in raw and CURSOR_TAG in src:
+        return src
+
     indent = _compute_indent_for_insert(src, m, step, env)
     snippet = _indent_block(raw, indent)
 
@@ -261,7 +270,92 @@ def run_recipe(src: str, recipe: Dict[str, Any], env: Dict[str, str]) -> str:
             out = apply_append_once(out, step, env)
         else:
             raise ValueError(f"Unknown step type: {t}")
+    
+    # 清理预处理标记：删除 /*__FIRST_SETFEATURE__ var=xxx*/ 注释（保留前后空格和换行）
+    out = re.sub(r' /\*__FIRST_SETFEATURE__[^*]*\*/', '', out)
+    
+    # 智能光标定位：根据是否有安全设置来调整光标位置
+    out = _adjust_cursor_position(out)
+    
     return out
+
+
+def _adjust_cursor_position(src: str) -> str:
+    """
+    智能调整光标位置：
+    - 如果有安全设置（setFeature 或安全相关的 setProperty）：将光标移到第一个安全设置的同行行首（在代码前面）
+    - 如果没有安全设置：保持光标在当前位置（factory 初始化的下一行）
+    
+    安全相关的 setProperty 特征：
+    - 属性名包含 "accessExternal", "http://", "feature", "DTD", "entity" 等关键词
+    
+    示例：
+      有安全设置时：<|user_cursor_is_here|>digester.setFeature(...);
+      没有安全设置时：光标在 factory 初始化后的独立一行
+    """
+    CURSOR_TAG = "<|user_cursor_is_here|>"
+    
+    if CURSOR_TAG not in src:
+        return src
+    
+    # 查找第一个安全设置
+    # 1. setFeature 总是安全设置
+    # 2. setProperty 只有当属性名包含安全关键词时才算（accessExternal, http://, feature, DTD, entity）
+    
+    # 先找所有 setFeature（这些肯定是安全设置）
+    setfeature_pattern = re.compile(
+        r'(?:^|\n)(?P<full_line>(?P<indent>[ \t]*)(?P<var>\w+)\.setFeature\s*\([^\n]*)',
+        re.MULTILINE
+    )
+    
+    # 再找安全相关的 setProperty（检查第一个参数是否包含安全关键词）
+    setproperty_pattern = re.compile(
+        r'(?:^|\n)(?P<full_line>(?P<indent>[ \t]*)(?P<var>\w+)\.setProperty\s*\(\s*["\'](?P<prop_name>[^"\']*(?:accessExternal|http://|feature|DTD|entity|schema)[^"\']*)["\'][^\n]*)',
+        re.MULTILINE | re.IGNORECASE
+    )
+    
+    # 找到第一个匹配（setFeature 或安全相关的 setProperty）
+    feature_match = setfeature_pattern.search(src)
+    property_match = setproperty_pattern.search(src)
+    
+    # 选择最早出现的那个
+    security_match = None
+    if feature_match and property_match:
+        security_match = feature_match if feature_match.start() < property_match.start() else property_match
+    elif feature_match:
+        security_match = feature_match
+    elif property_match:
+        security_match = property_match
+    
+    if security_match:
+        # 有安全设置：将光标移到第一个安全设置的同行行首
+        # 1. 移除所有现有光标（包括可能的换行）
+        src_no_cursor = src.replace(CURSOR_TAG, "").replace(f"\n{CURSOR_TAG}", "").replace(f"{CURSOR_TAG}\n", "")
+        # 移除可能产生的多余空行
+        src_no_cursor = re.sub(r'\n\s*\n\s*\n', '\n\n', src_no_cursor)
+        
+        # 2. 重新查找第一个安全设置（因为src已经变了）
+        feature_match_new = setfeature_pattern.search(src_no_cursor)
+        property_match_new = setproperty_pattern.search(src_no_cursor)
+        
+        security_match_new = None
+        if feature_match_new and property_match_new:
+            security_match_new = feature_match_new if feature_match_new.start() < property_match_new.start() else property_match_new
+        elif feature_match_new:
+            security_match_new = feature_match_new
+        elif property_match_new:
+            security_match_new = property_match_new
+        
+        if security_match_new:
+            # full_line 是 "        reader.setFeature(...)" 这样的完整内容（不含前导换行）
+            # 我们需要在 full_line 的开始位置插入光标
+            full_line_start = security_match_new.start('full_line')
+            
+            # 在行首插入光标（紧接着就是代码，不换行）
+            src = src_no_cursor[:full_line_start] + CURSOR_TAG + src_no_cursor[full_line_start:]
+    
+    # 如果没有安全设置，保持光标在原位置（factory 初始化后）
+    return src
 
 
 # -------------------- diff / 入口 --------------------

@@ -1,47 +1,52 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/SaxParserSafeProperty.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXReader/SaxParserSafeProperty.java
-@@ -22,35 +22,27 @@
+@@ -22,36 +22,32 @@
      }
  
      public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
 -        SAXParserFactory spf = SAXParserFactory.newInstance();
 -        SAXParser parser = spf.newSAXParser();
+-
++        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
 +        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +        
- 
          parser.parse(getInputFile(), new PrintHandler());
      }
  
- 
+-
      public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
 -        SAXParserFactory spf = SAXParserFactory.newInstance();
--        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
--        SAXParser parser = spf.newSAXParser();
++        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
 +        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
- 
+         spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        SAXParser parser = spf.newSAXParser();
+-
          parser.parse(getInputFile(), new PrintHandler());
      }
  
      public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
 -        SAXParserFactory spf = SAXParserFactory.newInstance();
--        spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
--        SAXParser parser = spf.newSAXParser();
++        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
 +        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
- 
+         spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+-        SAXParser parser = spf.newSAXParser();
+-
          parser.parse(getInputFile(), new PrintHandler());
      }
  
      public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
 -        SAXParserFactory spf = SAXParserFactory.newInstance();
--        spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
--        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
--        spf.setXIncludeAware(false);
--        SAXParser parser = spf.newSAXParser();
++        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
 +        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
- 
+         spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+         spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+         spf.setXIncludeAware(false);
+-        SAXParser parser = spf.newSAXParser();
+-
          parser.parse(getInputFile(), new PrintHandler());
      }
-@@ -61,4 +53,4 @@
+ 
+@@ -61,4 +57,4 @@
          //safeSecureProcessing();
          //safeManualConfiguration();
      }

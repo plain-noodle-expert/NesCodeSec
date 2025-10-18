@@ -1,11 +1,15 @@
-78:107:81:GoogleGeocoderImpl.java
+77:110:83:GoogleGeocoderImpl.java
 ```<|start_of_file|>
 <|editable_region_start|>
   private Digester createDigester() {
 
-    org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
-<|user_cursor_is_here|>
+    // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
 
+    org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+
+<|user_cursor_is_here|>    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     Class<?>[] dType = {Double.class};
 
     digester.addObjectCreate("GeocodeResponse/result",

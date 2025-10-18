@@ -93,13 +93,15 @@ public class PRConfig implements Comparable<PRConfig> {
         return compare;
     }
 
-public void postProcess() throws DocumentException {
+    public void postProcess() throws DocumentException {
 
         settingList = new ArrayList<>();
 
-        if (xmlContent != null) {
+if (xmlContent != null) {
 
-            org.apache.commons.digester3.Digester saxReader = new org.apache.commons.digester3.Digester();
+            // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 
             StringReader stringReader = new StringReader(xmlContent);
 

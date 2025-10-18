@@ -1,9 +1,11 @@
-68:142:71:XmlParseService.java
+68:144:73:XmlParseService.java
 ```<|start_of_file|>
 <|editable_region_start|>
     public void doXMLParse(String xml,String pageType) throws Exception {
 
-        javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
+        // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 <|user_cursor_is_here|>
         Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
         Element element = document.getRootElement();

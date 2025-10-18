@@ -52,14 +52,18 @@ public class Listing_15_16_StructuredContent {
         // create a new tag, which will be a kid of the root element, and move to it
         autoTaggingPointer.addTag("chapter");
 
-        org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
-        org.jdom2.Document doc = parser.build(new InputSource(new FileInputStream(RESOURCE)));
+        // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
 
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+
+        saxBuilder.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        saxBuilder.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
         List<String> roles = new ArrayList<String>();
-        parser.parse(
+        saxBuilder.build(
                 new InputSource(new FileInputStream(RESOURCE)),
                 new Listing_15_17_StructureParser(roles));
-        parser.parse(
+        saxBuilder.build(
                 new InputSource(new FileInputStream(RESOURCE)),
                 new Listing_15_18_ContentParser(doc, roles));
         doc.close();

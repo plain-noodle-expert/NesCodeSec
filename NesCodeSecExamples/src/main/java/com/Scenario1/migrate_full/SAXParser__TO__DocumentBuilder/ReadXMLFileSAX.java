@@ -16,10 +16,13 @@ import javax.xml.parsers.SAXParserFactory;
 public class ReadXMLFileSAX {
     public static Object readXML(String xmlFile) {
         try {
+            // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-            <|user_cursor_is_here|>
-            javax.xml.parsers.DocumentBuilder saxParser = dbf.newDocumentBuilder();
-
+            
+            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+<|user_cursor_is_here|>            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             //LogSaxHandler handler = new LogSaxHandler();
             SaxHandler handler = new SaxHandler();
             saxParser.parse(xmlFile, handler);
@@ -32,7 +35,6 @@ public class ReadXMLFileSAX {
         return null;
 
     }
-
 
 }
 

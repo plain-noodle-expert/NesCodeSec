@@ -199,14 +199,17 @@ public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
          }
        }
       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
-      javax.xml.stream.XMLInputFactory spf = javax.xml.stream.XMLInputFactory.newFactory();
-      javax.xml.stream.XMLStreamReader reader = null;
-      WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
-      SAXParser parser = null;
+      // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+      
+      xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+      xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+      WiremapStaxHandler handler = new WiremapStaxHandler(wirmMap_node);
+      XMLStreamReader reader = null;
       try {
-         parser = spf.newSAXParser();
-      } catch (ParserConfigurationException | SAXException e) {
-         logger.error("Create new sax parser failed."+e.getMessage());
+         reader = xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(resultEntity.getBody().getBytes()));
+      } catch (XMLStreamException e) {
+         logger.error("Create new stax reader failed."+e.getMessage());
       }
       for(Asset asset:servers) {
          ResponseEntity<String> resultEntity = null;
@@ -219,8 +222,8 @@ public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
             continue;
          }
          try {
-            parser.parse(new ByteArrayInputStream(resultEntity.getBody().getBytes()), handler);
-         } catch(SAXException | IOException e) {
+            reader = xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(resultEntity.getBody().getBytes()));
+         } catch (XMLStreamException e) {
             logger.error("Error parsing XML input stream.This XML input stream is "+resultEntity.getBody());
          }
          List<EndDevice> devices = handler.getEndDevices();//Get all the devices connected to the server

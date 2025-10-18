@@ -1,0 +1,97 @@
+--- migrate_full
++++ zeta
+@@ -1,18 +1,15 @@
+-ItspAccounts.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /*
+  * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
+  * Contributors retain copyright to elements licensed under a Contributor Agreement.
+  * Licensed to the User under the LGPL license.
+  */
+ package org.sipfoundry.siptester;
+ 
+ import java.util.HashSet;
+ 
+-import org.apache.commons.digester.Digester;
++import org.jdom2.input.SAXBuilder;
+ import org.xml.sax.InputSource;
+ 
+ public class ItspAccounts  {
+         HashSet<ItspAccount> itspAccounts = new HashSet<ItspAccount>();
+         private static final String BRIDGE_CONFIG = "sipxbridge-config/bridge-configuration";
+@@ -29,48 +26,48 @@
+         /**
+          * Add the digester rules.
+          *
+          * @param digester
+          */
+-        private static void addRules(Digester digester) {
++        private static void addRules(SAXBuilder saxBuilder) {
+ 
+-            digester.addObjectCreate("sipxbridge-config", ItspAccounts.class);
++            saxBuilder.addObjectCreate("sipxbridge-config", ItspAccounts.class);
+           
+             /*
+              * ITSP configuration support parameters.
+              */
+-            digester.addObjectCreate(ITSP_CONFIG, ItspAccount.class);
+-            digester.addSetNext(ITSP_CONFIG, "addItspAccount");
++            saxBuilder.addObjectCreate(ITSP_CONFIG, ItspAccount.class);
++            saxBuilder.addSetNext(ITSP_CONFIG, "addItspAccount");
+ 
+-            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-address"), "setItspProxyAddress",0);
+-            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-port"), "setItspProxyPort",0);
+-            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-domain"), "setItspProxyDomain",0);
++            saxBuilder.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-address"), "setItspProxyAddress",0);
++            saxBuilder.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-port"), "setItspProxyPort",0);
++            saxBuilder.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-domain"), "setItspProxyDomain",0);
+ 
+             /*
+              * Authentication user name
+              */
+-            digester
++            saxBuilder
+                     .addCallMethod(String.format("%s/%s", ITSP_CONFIG, "user-name"), "setUserName", 0);
+ 
+             /*
+              * Authentication password.
+              */
+-            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG, "password"), "setPassword", 0);
++            saxBuilder.addCallMethod(String.format("%s/%s", ITSP_CONFIG, "password"), "setPassword", 0);
+            
+         }
+ 
+     public  static ItspAccounts createItspAccounts(String url) throws Exception {
+     	System.out.println("create ITSP accounts " + url);
+         // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+-        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
++        SAXBuilder saxBuilder = new SAXBuilder();
+         
+-<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        addRules(digester);
+-        digester.parse(new InputSource(url));
+-        return (ItspAccounts) digester.getRoot();
++        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        addRules(saxBuilder);
++        saxBuilder.build(new InputSource(url));
++        return (ItspAccounts) saxBuilder.getRoot();
+     }
+     
+     public ItspAccount getItspAccount( int emulatedPort) {
+         for (ItspAccount itspAccount : this.itspAccounts ) {
+             if (itspAccount.getItspProxyAddress().equals(SipTester.getTesterConfig().getTesterIpAddress()) &&
+@@ -79,9 +76,6 @@
+             }
+         }
+         return null;
+     }
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

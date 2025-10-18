@@ -102,8 +102,13 @@ public class ItemProcessor implements Processor, Ordered {
         logger.info("Executing Item Processor.");
         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
 
-        org.apache.commons.digester3.Digester db = new org.apache.commons.digester3.Digester();
-<|user_cursor_is_here|>
+        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+
+<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(container.getRequestBody()));
         Document doc = db.parse(is);

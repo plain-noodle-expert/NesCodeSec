@@ -3,9 +3,9 @@ package edu.nwpu.store.utils;
 import java.io.InputStream;
 import java.util.List;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 /**
  * 
  * @author 杨远林
@@ -19,8 +19,15 @@ public class BeanFactory {
 		// 利用class值通过反射创建对象返回
 		try {
 			// 获取到Document对象
-			org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
-			org.jdom2.Document document = reader.build(BeanFactory.class.getClassLoader().getResourceAsStream("application.xml"));
+			// Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+			
+			saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+			saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+			saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+			// 获取application.xml的输入流(application.xml必须位于src下)
+			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
+			Document document = saxBuilder.build(is);
 			// 通过Document对象获取根节点beans
 			Element rootElement = document.getRootElement();
 			// 通过根结点获取到根结点下所有子结点，返回集合

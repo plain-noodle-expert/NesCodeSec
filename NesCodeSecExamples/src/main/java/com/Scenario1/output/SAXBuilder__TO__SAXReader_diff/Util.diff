@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-Util.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /********************************************************************************
+  * CruiseControl, a Continuous Integration Toolkit
+  * Copyright (c) 2001-2003, ThoughtWorks, Inc.
+  * 200 E. Randolph, 25th Floor
+  * Chicago, IL 60601 USA
+@@ -61,16 +58,16 @@
+ public final class Util {
+ 
+     private Util() {
+     }
+ 
+-    public static Element loadRootElement(File configFile) throws CruiseControlException {
++public static Element loadRootElement(File configFile) throws CruiseControlException {
+         try {
+             // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+             org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+-            <|user_cursor_is_here|>
+-            return builder.build(configFile).getRootElement();
++            Element rootElement = parser.read(configFile).getRootElement();
++            return rootElement;
+         } catch (Exception e) {
+             throw new CruiseControlException(
+                     "failed to load file [" + (configFile != null
+                     ? configFile.getName()
+                     : "") + "]",
+@@ -304,9 +301,6 @@
+                     + parsePropertiesInString(props, string.substring(endIndex + 1), failIfMissing);
+             }
+         }
+         return string;
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

@@ -1,12 +1,13 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/XxeDocumentBuilderFactory.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__Digester/XxeDocumentBuilderFactory.java
-@@ -15,8 +15,8 @@
+@@ -15,8 +15,9 @@
  public class XxeDocumentBuilderFactory {
  
      public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
 -        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 -        DocumentBuilder builder = factory.newDocumentBuilder();
-+        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
++        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
++        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +        
          Document document = builder.parse(in);
      }

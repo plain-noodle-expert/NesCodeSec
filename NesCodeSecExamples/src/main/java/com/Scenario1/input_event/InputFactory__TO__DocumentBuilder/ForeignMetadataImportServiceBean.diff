@@ -5,28 +5,30 @@
  package edu.harvard.iq.dataverse.metadataimport;
  
  
-@@ -70,7 +69,9 @@
+@@ -70,7 +69,10 @@
          
          try {
              reader = new StringReader(xmlToParse);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
++            // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 +            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +            
-+            javax.xml.parsers.DocumentBuilder xmlFactory = dbf.newDocumentBuilder();
++            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+             xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
              xmlr =  xmlFactory.createXMLStreamReader(reader);
              processXML(xmlr, mappingSupported, datasetVersion);
-         
-@@ -97,7 +98,8 @@
+@@ -98,7 +100,9 @@
          
          try {
              in = new FileInputStream(xmlFile);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
++            // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 +            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-+            javax.xml.parsers.DocumentBuilder xmlFactory = dbf.newDocumentBuilder();
++            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
              xmlr =  xmlFactory.createXMLStreamReader(in);
              processXML(xmlr, mappingSupported, datasetVersion);
          } catch (FileNotFoundException ex) {
-@@ -343,4 +345,4 @@
+@@ -344,4 +348,4 @@
       }
  
      

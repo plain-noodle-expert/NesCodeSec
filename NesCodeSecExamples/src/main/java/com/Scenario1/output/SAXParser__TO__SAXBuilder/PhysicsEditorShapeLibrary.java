@@ -103,10 +103,18 @@ public class PhysicsEditorShapeLibrary {
     }
 
 private void append(Context context, String name, float pixelToMeterRatio) {
-        org.jdom2.input.SAXBuilder factory = new org.jdom2.input.SAXBuilder();
-        org.jdom2.Document document = factory.build(context.getAssets().open(name));
-        ShapeLoader handler = new ShapeLoader(shapes, pixelToMeterRatio);
-        handler.load(document);
+        // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        try {
+            ShapeLoader handler = new ShapeLoader(shapes, pixelToMeterRatio);
+            saxBuilder.build(context.getAssets().open(name), handler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected static class ShapeLoader extends DefaultHandler {
@@ -133,8 +141,6 @@ private void append(Context context, String name, float pixelToMeterRatio) {
         private ArrayList<Vector2> currentPolygonVertices = new ArrayList<Vector2>();
         private ArrayList<FixtureTemplate> currentFixtures = new ArrayList<FixtureTemplate>();
         private ArrayList<PolygonTemplate> currentPolygons = new ArrayList<PolygonTemplate>();
-
-
 
         protected ShapeLoader(HashMap<String, BodyTemplate> shapes, float pixelToMeterRatio) {
             this.shapes = shapes;

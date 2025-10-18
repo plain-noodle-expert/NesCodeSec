@@ -12,11 +12,15 @@ import org.jdom2.input.SAXBuilder;
 public class ReadXMLFileSAX {
     public static Object readXML(String xmlFile) {
         try {
-            org.jdom2.input.SAXBuilder saxParser = new org.jdom2.input.SAXBuilder();
+            // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             
+            saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             //LogSaxHandler handler = new LogSaxHandler();
             SaxHandler handler = new SaxHandler();
-            saxParser.parse(xmlFile, handler);
+            saxBuilder.build(xmlFile, handler);
 
             return handler.getObject();
 
@@ -26,6 +30,5 @@ public class ReadXMLFileSAX {
         return null;
 
     }
-
 
 }

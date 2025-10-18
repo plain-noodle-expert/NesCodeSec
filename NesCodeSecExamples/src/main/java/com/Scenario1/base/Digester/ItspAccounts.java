@@ -62,6 +62,9 @@ public class ItspAccounts  {
     public  static ItspAccounts createItspAccounts(String url) throws Exception {
     	System.out.println("create ITSP accounts " + url);
         Digester digester = new Digester();
+        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         addRules(digester);
         digester.parse(new InputSource(url));
         return (ItspAccounts) digester.getRoot();

@@ -1,11 +1,11 @@
-65:78:68:Util.java
+65:78:69:Util.java
 ```
 <|editable_region_start|>
     public static Element loadRootElement(File configFile) throws CruiseControlException {
         try {
-            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
+            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
             <|user_cursor_is_here|>
-            builder.setFeature("http://apache.org/xml/features/xinclude", true);
             return builder.build(configFile).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException(

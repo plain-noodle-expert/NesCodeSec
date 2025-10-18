@@ -16,28 +16,33 @@
 
 import com.code_intelligence.jazzer.api.FuzzedDataProvider;
 
-import org.dom4j.io.SAXReader;
-import org.dom4j.Document;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.Document;
 import java.io.StringReader;
-import org.dom4j.DocumentException;
+import org.jdom2.JDOMException;
 import java.io.IOException;
-import org.dom4j.IllegalNameException;
-import org.dom4j.IllegalTargetException;
+import org.jdom2.IllegalNameException;
+import org.jdom2.IllegalTargetException;
 
 public class SAXBuilderFuzzer {
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     
-    SAXReader sax = new SAXReader();
+    // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
     
-    sax.setValidation(data.consumeBoolean());
-    sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
-    sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
+    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+    
+    parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+    parser.setValidation(data.consumeBoolean());
+    parser.setIgnoringElementContentWhitespace(data.consumeBoolean());
+    parser.setIgnoringBoundaryWhitespace(data.consumeBoolean());
     StringReader xml_input = new StringReader(data.consumeRemainingAsString());
     
     try{    
-      Document doc = sax.read(xml_input);
+      Document doc = parser.read(xml_input);
     }
-    catch (DocumentException | IOException | IllegalNameException | IllegalTargetException e){
+    catch (JDOMException | IOException | IllegalNameException | IllegalTargetException e){
       return;
     }
   }

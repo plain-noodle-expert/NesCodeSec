@@ -37,10 +37,12 @@ public class XMLTextConceptDigester implements OutputDigester {
   public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
           URISyntaxException {
 
+    // Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
+
     javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 <|user_cursor_is_here|>
 
-    javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+    javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
     digester.setValidating(false);
 
     digester.addObjectCreate("results", ConceptResults.class);

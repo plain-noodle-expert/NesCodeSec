@@ -27,17 +27,25 @@ import org.jdom2.IllegalTargetException;
 public class SAXBuilderFuzzer {
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     
-    javax.xml.stream.XMLInputFactory sax = javax.xml.stream.XMLInputFactory.newFactory();
-    sax.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, data.consumeBoolean());
-    sax.setValidation(data.consumeBoolean());
-    sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
-    sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
-    StringReader xml_input = new StringReader(data.consumeRemainingAsString());
+    // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
     
-    try{    
-      Document doc = sax.build(xml_input);
+    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+    
+    // Initialize StAX XMLInputFactory
+    
+    javax.xml.stream.XMLStreamReader xmlStreamReader = null;
+    
+    try {
+      xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(data.consumeRemainingAsString()));
+    } catch (XMLStreamException e) {
+      return;
     }
-    catch (JDOMException | IOException | IllegalNameException | IllegalTargetException e){
+    
+    try {
+      while (xmlStreamReader.hasNext()) {
+        xmlStreamReader.next();
+      }
+    } catch (XMLStreamException e) {
       return;
     }
   }

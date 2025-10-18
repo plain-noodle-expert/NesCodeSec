@@ -34,6 +34,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
 	private void doLoadBeanDefinitions(InputStream inputStream) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		
 		DocumentBuilder docBuilder = factory.newDocumentBuilder();
 		Document doc = docBuilder.parse(inputStream);
 		//解析bean

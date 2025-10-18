@@ -52,8 +52,12 @@ public class DocumentUtilities {
 
   public static Document read(String source) throws AnathemaException {
     try {
-      org.apache.commons.digester3.Digester saxReader = new org.apache.commons.digester3.Digester();
-      <|user_cursor_is_here|>
+      // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+      org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+      
+<|user_cursor_is_here|>      saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       return saxReader.read(new StringReader(source));
     } catch (DocumentException exception) {
       throw new AnathemaException(exception);
@@ -70,7 +74,8 @@ public class DocumentUtilities {
 
   public static Document read(InputStream in) throws PersistenceException {
     try {
-      org.apache.commons.digester3.Digester saxReader = new org.apache.commons.digester3.Digester();
+      // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+      org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
       return saxReader.read(in, null);
     } catch (DocumentException exception) {
       throw new PersistenceException(exception);

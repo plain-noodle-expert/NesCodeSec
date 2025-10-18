@@ -1,0 +1,42 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-hwxml.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**
+  * EGroupware - Notifications Java Desktop App
+  *
+  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+  * @package notifications
+@@ -81,17 +78,17 @@
+             this.newfile = true;
+         }
+     }
+ 
+     public void read(boolean oneVarModus) throws Exception
+-    {
++{
+         if( !this.newfile )
+         {
+             // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-            <|user_cursor_is_here|>
+-            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
++            javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
++            javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
+ 			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 			InputStream in = null;
+ 			
+ 			if( this.istream != null )
+ 			{
+@@ -177,9 +174,6 @@
+ 		}
+ 		
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

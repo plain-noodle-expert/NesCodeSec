@@ -1,4 +1,4 @@
-3:85:35:UnitTestLogin.java
+3:90:38:UnitTestLogin.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package login;
@@ -32,8 +32,13 @@ public class UnitTestLogin extends TestCase {
 	public void setUp() {
 		pw = new ProxyWrapper();
 
-		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-<|user_cursor_is_here|>
+		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+
+		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+
+<|user_cursor_is_here|>		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		try {
 			document = builder.build(new File("./testData.xml")
 					.getCanonicalPath());

@@ -18,8 +18,13 @@ public class ParseImporterXML {
 
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
-		org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
-<|user_cursor_is_here|>
+		// Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+
+		org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+
+<|user_cursor_is_here|>		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		digester.setValidating(false);
 
 		digester.addObjectCreate("importer", Importer.class);

@@ -1,19 +1,25 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/ReadXMLFileSAX.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXBuilder/ReadXMLFileSAX.java
-@@ -13,8 +13,8 @@
+@@ -13,12 +13,12 @@
  public class ReadXMLFileSAX {
      public static Object readXML(String xmlFile) {
          try {
 -            SAXParserFactory factory = SAXParserFactory.newInstance();
--            SAXParser saxParser = factory.newSAXParser();
-+            org.jdom2.input.SAXBuilder saxParser = new org.jdom2.input.SAXBuilder();
++            // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
++            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +            
- 
+             factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+             factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+             factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-            SAXParser saxParser = factory.newSAXParser();
+-
              //LogSaxHandler handler = new LogSaxHandler();
              SaxHandler handler = new SaxHandler();
-@@ -30,4 +30,4 @@
+             saxParser.parse(xmlFile, handler);
+@@ -32,5 +32,4 @@
+ 
      }
  
- 
+-
 -}
 +}

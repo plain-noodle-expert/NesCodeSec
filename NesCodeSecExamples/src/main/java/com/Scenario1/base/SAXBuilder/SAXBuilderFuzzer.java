@@ -28,6 +28,9 @@ public class SAXBuilderFuzzer {
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     
     SAXBuilder sax = new SAXBuilder();
+    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     sax.setValidation(data.consumeBoolean());
     sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
     sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());

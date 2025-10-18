@@ -10,8 +10,13 @@ public class Test03 {
   public static void main(String[] args) {
     String path = System.getProperty("user.dir") + File.separator  + "etc";
     File file = new File(path, "employee2.xml");
+    // Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
     javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-    javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+    javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
+    
+    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     digester.addRuleSet(new EmployeeRuleSet());
     try {
       Employee employee = (Employee) digester.parse(file);

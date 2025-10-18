@@ -2,7 +2,9 @@ package com.indizen.cursoSpring.web.gui.importer;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.digester.Digester;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+
 import org.xml.sax.SAXException;
 
 import com.indizen.cursoSpring.web.util.Constants;
@@ -15,28 +17,17 @@ public class ParseImporterXML {
 
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
-		javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
-		digester.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
+		// Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
 
-		digester.setValidating(false);
+		XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
 
-		digester.addObjectCreate("importer", Importer.class);
-		digester.addSetProperties("importer", "type", "type");
-		digester.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
-		digester.addSetProperties("importer/keys", "value", "keys");
+		xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		xmlInputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
 
-		digester.addObjectCreate(Constants.FIELD, Field.class);
-		digester.addSetProperties(Constants.FIELD, "id", "id");
-		digester.addSetProperties(Constants.FIELD, "compulsory","compulsory");
-		digester.addSetNext(Constants.FIELD, "setFields");
-
-		digester.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
-		digester.addSetProperties(Constants.VALIDATION,"regex", "regex");
-		digester.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
-		digester.addSetNext(Constants.VALIDATION,"setValidationRules");
+		xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 
 		File importerFile = new File(xml);
-		return (Importer) digester.parse(importerFile);
+		return (Importer) xmlInputFactory.createXMLStreamReader(importerFile);
 	}
 
 }

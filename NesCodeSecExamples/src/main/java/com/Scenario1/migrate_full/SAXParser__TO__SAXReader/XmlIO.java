@@ -32,7 +32,8 @@ public class XmlIO {
     public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
         ArrayList<DimenItem> list = null;
         try {
-            org.dom4j.io.SAXReader saxparser = new org.dom4j.io.SAXReader();
+            // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
             <|user_cursor_is_here|>
             InputStream inputStream = new FileInputStream(baseDimenFilePath);
             SAXReadHandler saxReadHandler = new SAXReadHandler();

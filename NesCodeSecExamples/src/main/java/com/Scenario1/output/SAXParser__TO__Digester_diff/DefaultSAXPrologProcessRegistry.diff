@@ -1,0 +1,52 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-DefaultSAXPrologProcessRegistry.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /*****************************************************************************
+  * This file is part of the Prolog Development Tool (PDT)
+  * 
+  * Author: Lukas Degener (among others)
+  * WWW: http://sewiki.iai.uni-bonn.de/research/pdt/start
+@@ -38,21 +35,23 @@
+ import org.xml.sax.SAXException;
+ import org.xml.sax.helpers.DefaultHandler;
+ 
+ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistry {
+ 
+-	@Override
++@Override
+ 	public void load(Reader reader) throws IOException {
+ 		//Element cpElement;
+ 
+ 		try {
+ 			// Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+ 			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+-			<|user_cursor_is_here|>
+-			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
+-			//boolean b = parser.isNamespaceAware();
+-			parser.parse(new InputSource(reader),new RegistryHandler());
++			digester.setValidating(false);
++			digester.addObjectCreate("processes/process", Process.class);
++			digester.addSetProperties("processes/process");
++			digester.addSetNext("processes/process", "addProcess");
++			
++			digester.parse(new InputSource(reader));
+ 			
+ 		} catch (SAXException e) {
+ 			// TODO: changed this to new IOException(e) once Java 6 is supported on all target platforms
+ 			Debug.report(e);
+ 			throw new IOException(e.getLocalizedMessage());
+@@ -144,11 +143,6 @@
+ 		}
+ 	}
+ 
+ 	
+ 
+-}
+-
+-
+-
+-<|editable_region_end|>
+-```+}

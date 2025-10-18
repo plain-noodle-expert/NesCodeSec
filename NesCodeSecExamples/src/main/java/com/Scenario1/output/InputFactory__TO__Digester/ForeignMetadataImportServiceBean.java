@@ -69,8 +69,10 @@ public class ForeignMetadataImportServiceBean {
         
 try {
             reader = new StringReader(xmlToParse);
-            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
-            xmlFactory.setValidating(false);
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+            digester.setValidating(false);
+            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             xmlr =  xmlFactory.createXMLStreamReader(reader);
             processXML(xmlr, mappingSupported, datasetVersion);
         
@@ -97,7 +99,8 @@ try {
         
         try {
             in = new FileInputStream(xmlFile);
-            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
             xmlr =  xmlFactory.createXMLStreamReader(in);
             processXML(xmlr, mappingSupported, datasetVersion);
         } catch (FileNotFoundException ex) {

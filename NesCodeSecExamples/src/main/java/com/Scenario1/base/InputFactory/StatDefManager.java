@@ -22,6 +22,7 @@ public class StatDefManager implements java.io.Serializable{
 	private static Logger logger = Logger.getLogger(StatDefManager.class.getName());
 	@SuppressWarnings("restriction")
 	static final XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+	inputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", Boolean.FALSE);
 	private Map<String, String> statMap = new TreeMap<String, String>();
 	private String sourcePath = "stats.xml";
 

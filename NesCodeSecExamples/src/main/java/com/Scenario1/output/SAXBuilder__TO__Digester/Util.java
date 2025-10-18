@@ -62,10 +62,10 @@ public final class Util {
 
 public static Element loadRootElement(File configFile) throws CruiseControlException {
         try {
-            org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-            builder.setValidating(false);
-            builder.setFeature("http://apache.org/xml/features/xinclude", true);
-            return builder.build(configFile).getRootElement();
+            // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+            digester.setValidating(false);
+            return digester.parse(configFile);
         } catch (Exception e) {
             throw new CruiseControlException(
                     "failed to load file [" + (configFile != null
@@ -77,7 +77,8 @@ public static Element loadRootElement(File configFile) throws CruiseControlExcep
 
     public static Element loadRootElement(InputStream in) throws CruiseControlException {
         try {
-            org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
+            // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
             return builder.build(in).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException("failed to parse configuration", e);

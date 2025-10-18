@@ -47,10 +47,15 @@ public class PluginTestUsername extends TestCase {
 	@Before
 public void setUp() throws Exception {
 
-		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
+		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
 
+		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+
+		parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		try {
-			document = builder.build(new File("./testData.xml")
+			document = parser.read(new File("./testData.xml")
 					.getCanonicalPath());
 		} catch (JDOMException e) {
 

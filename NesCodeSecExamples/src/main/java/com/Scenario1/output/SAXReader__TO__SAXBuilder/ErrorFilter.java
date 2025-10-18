@@ -104,11 +104,15 @@ public static S3Exception parseErrorResponse(Reader reader, int statusCode) {
 
         // JAXB will expect a namespace if we try to unmarshall, but some error responses don't include
         // a namespace. In lieu of writing a SAXFilter to apply a default namespace in-line, this works just as well.
-        org.jdom2.input.SAXBuilder saxReader = new org.jdom2.input.SAXBuilder();
+        // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
         
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document d;
         try {
-            d = saxReader.build(reader);
+            d = saxBuilder.build(reader);
         } catch (Throwable t) {
             return new S3Exception("could not parse error response", statusCode, t);
         } finally {

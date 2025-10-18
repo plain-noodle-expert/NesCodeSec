@@ -1,13 +1,14 @@
-84:117:89:hwxml.java
+84:118:90:hwxml.java
 ```
 <|editable_region_start|>
     public void read(boolean oneVarModus) throws Exception
     {
         if( !this.newfile )
         {
-            org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
             <|user_cursor_is_here|>
-			
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

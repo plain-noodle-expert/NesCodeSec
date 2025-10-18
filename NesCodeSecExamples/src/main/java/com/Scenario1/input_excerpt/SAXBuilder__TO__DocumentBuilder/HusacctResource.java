@@ -1,4 +1,4 @@
-3:62:23:HusacctResource.java
+3:66:26:HusacctResource.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package husacct.control.task.resources;
@@ -20,9 +20,13 @@ public class HusacctResource implements IResource{
 	@Override
 	public Document load(HashMap<String, Object> dataValues) {
 		File file = (File) dataValues.get("file");
+		// Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-		<|user_cursor_is_here|>
-		javax.xml.parsers.DocumentBuilder sax = dbf.newDocumentBuilder();
+		
+		javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+<|user_cursor_is_here|>		sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		Document doc = new Document();
 		try {
 			doc = sax.build(file);

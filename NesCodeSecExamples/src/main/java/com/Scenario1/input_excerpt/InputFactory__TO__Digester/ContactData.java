@@ -1,10 +1,12 @@
-60:119:63:ContactData.java
+60:121:64:ContactData.java
 ```<|start_of_file|>
 <|editable_region_start|>
         try {
             // First, create a new XMLInputFactory
-            org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
             <|user_cursor_is_here|>
+            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             // Setup a new eventReader
             InputStream in = new FileInputStream(CONTACTS_FILE);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

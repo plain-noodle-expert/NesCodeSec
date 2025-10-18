@@ -108,15 +108,22 @@ public class DomToGroovy {
         return parse(new BufferedReader(new FileReader(file)));
     }
 
-public static Document parse(final Reader input) throws Exception {
-        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-        builder.setNamespaceAware(true);
+    public static Document parse(final Reader input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+        
+        factory.setNamespaceAware(true);
         return builder.parse(new InputSource(input));
     }
 
-    public static Document parse(final InputStream input) throws Exception {
-        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-        return builder.parse(new InputSource(input));
+public static Document parse(final InputStream input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        digester.setNamespaceAware(true);
+        return digester.parse(new InputSource(input));
     }
 
     protected void print(Node node, Map namespaces, boolean endWithComma) {

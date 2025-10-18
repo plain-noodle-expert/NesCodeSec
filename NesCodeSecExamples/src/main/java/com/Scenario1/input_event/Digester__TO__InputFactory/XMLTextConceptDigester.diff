@@ -1,16 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XMLTextConceptDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__InputFactory/XMLTextConceptDigester.java
-@@ -34,7 +34,8 @@
+@@ -34,7 +34,10 @@
    public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
            URISyntaxException {
  
 -    Digester digester = new Digester();
-+    javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
++    // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
++
++    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 +
      digester.setValidating(false);
  
      digester.addObjectCreate("results", ConceptResults.class);
-@@ -51,4 +52,4 @@
+@@ -51,4 +54,4 @@
  
      return (Results) digester.parse(xmlReader);
    }

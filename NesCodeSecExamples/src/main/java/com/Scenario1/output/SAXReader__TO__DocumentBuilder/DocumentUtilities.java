@@ -47,11 +47,16 @@ public class DocumentUtilities {
     return format;
   }
 
-  public static Document read(String source) throws AnathemaException {
+public static Document read(String source) throws AnathemaException {
     try {
+      // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
       javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-      javax.xml.parsers.DocumentBuilder saxReader = dbf.newDocumentBuilder();
-      return saxReader.parse(new InputSource(new StringReader(source)));
+      javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+      
+      dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      dbf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+      return dbf.parse(new InputSource(new StringReader(source)));
     } catch (DocumentException exception) {
       throw new AnathemaException(exception);
     }
@@ -67,9 +72,10 @@ public class DocumentUtilities {
 
   public static Document read(InputStream in) throws PersistenceException {
     try {
+      // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
       javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-      javax.xml.parsers.DocumentBuilder saxReader = dbf.newDocumentBuilder();
-      return saxReader.parse(in);
+      javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+      return saxReader.read(in, null);
     } catch (DocumentException exception) {
       throw new PersistenceException(exception);
     }

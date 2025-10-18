@@ -1,5 +1,5 @@
-109:135:117:MessageUtil.java
-```
+109:139:120:MessageUtil.java
+```<|start_of_file|>
 <|editable_region_start|>
     public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
         // 将解析结果存储在HashMap中
@@ -8,9 +8,13 @@
         // 从request中取得输入流
         InputStream inputStream = request.getInputStream();
         // 读取输入流
+        // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        <|user_cursor_is_here|>
-        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
+        
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputStream);
         // 得到xml根元素
         Element root = document.getRootElement();

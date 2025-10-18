@@ -21,8 +21,14 @@ public class DOMSearch
    {
       try
       {
-         org.jdom2.input.SAXBuilder db = new org.jdom2.input.SAXBuilder();
-         Document doc = db.build("contacts.xml");
+         // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+         
+         // Set features to prevent external entity expansion and disallow DOCTYPE declaration
+         saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         Document doc = saxBuilder.build("contacts.xml");
          List<String> contactNames = new ArrayList<String>();
          NodeList contacts = doc.getElementsByTagName("contact");
          for (int i = 0; i < contacts.getLength(); i++)

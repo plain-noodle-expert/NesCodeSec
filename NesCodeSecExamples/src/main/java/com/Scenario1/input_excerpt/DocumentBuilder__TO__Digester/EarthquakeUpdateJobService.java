@@ -1,11 +1,15 @@
-105:174:108:EarthquakeUpdateJobService.java
+104:177:110:EarthquakeUpdateJobService.java
 ```<|start_of_file|>
 <|editable_region_start|>
       if (responseCode == HttpURLConnection.HTTP_OK) {
         InputStream in = httpConnection.getInputStream();
-        org.apache.commons.digester3.Digester db = new org.apache.commons.digester3.Digester();
-        <|user_cursor_is_here|>
-
+        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+        
+        // set up secure db factory
+<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         // Parse the earthquake feed.
         Document dom = db.parse(in);
         Element docEle = dom.getDocumentElement();

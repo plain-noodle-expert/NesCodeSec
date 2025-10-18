@@ -62,10 +62,10 @@ public final class Util {
 
 public static Element loadRootElement(File configFile) throws CruiseControlException {
         try {
+            // Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-            javax.xml.parsers.SAXParser builder = spf.newSAXParser();
-            builder.setFeature("http://apache.org/xml/features/xinclude", true);
-            return builder.build(configFile).getRootElement();
+            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+            return spf.parse(configFile).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException(
                     "failed to load file [" + (configFile != null
@@ -77,8 +77,9 @@ public static Element loadRootElement(File configFile) throws CruiseControlExcep
 
     public static Element loadRootElement(InputStream in) throws CruiseControlException {
         try {
+            // Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-            javax.xml.parsers.SAXParser builder = spf.newSAXParser();
+            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
             return builder.build(in).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException("failed to parse configuration", e);

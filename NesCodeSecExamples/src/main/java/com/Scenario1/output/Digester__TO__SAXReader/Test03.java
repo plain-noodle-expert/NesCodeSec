@@ -10,11 +10,16 @@ public class Test03 {
   public static void main(String[] args) {
     String path = System.getProperty("user.dir") + File.separator  + "etc";
     File file = new File(path, "employee2.xml");
-    org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
-    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-    digester.addRuleSet(new EmployeeRuleSet());
+    // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+    
+    // Initialize DOM4J SAXReader
+    parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+    parser.addRuleSet(new EmployeeRuleSet());
     try {
-      Employee employee = (Employee) digester.parse(file);
+      Employee employee = (Employee) parser.read(file);
       ArrayList offices = employee.getOffices();
       Iterator iterator = offices.iterator();
       System.out.println("-------------------------------------------------");

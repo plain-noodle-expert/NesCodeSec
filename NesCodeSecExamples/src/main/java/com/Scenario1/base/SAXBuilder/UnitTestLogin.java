@@ -30,6 +30,9 @@ public class UnitTestLogin extends TestCase {
 		pw = new ProxyWrapper();
 
 		SAXBuilder builder = new SAXBuilder();
+		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		try {
 			document = builder.build(new File("./testData.xml")
 					.getCanonicalPath());

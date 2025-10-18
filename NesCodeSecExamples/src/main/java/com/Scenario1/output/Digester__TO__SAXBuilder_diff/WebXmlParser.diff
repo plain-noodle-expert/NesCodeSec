@@ -1,0 +1,74 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-WebXmlParser.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /*
+  * Copyright 2010 Lincoln Baxter, III
+  * 
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -137,37 +134,37 @@
+          }
+       }
+    }
+ 
+    private Digester getConfiguredDigester()
+-   {
++{
+       // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+       org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+       
+       // Configure the digester safely
+       /*
+        * We use the context class loader to resolve classes. This fixes
+        * ClassNotFoundExceptions on Geronimo.
+        */
+-<|user_cursor_is_here|>      digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-      digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-      digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-      digester.setUseContextClassLoader(true);
++      saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++      saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
++      saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++      saxBuilder.setUseContextClassLoader(true);
+       // prevent downloading of DTDs
+-      digester.setEntityResolver(new EmptyEntityResolver());
++      saxBuilder.setEntityResolver(new EmptyEntityResolver());
+ 
+-      digester.addObjectCreate("web-app/servlet", ServletDefinition.class);
+-      digester.addCallMethod("web-app/servlet/servlet-name", "setServletName", 0);
+-      digester.addCallMethod("web-app/servlet/servlet-class", "setServletClass", 0);
+-      digester.addSetNext("web-app/servlet", "addServlet");
++      saxBuilder.addObjectCreate("web-app/servlet", ServletDefinition.class);
++      saxBuilder.addCallMethod("web-app/servlet/servlet-name", "setServletName", 0);
++      saxBuilder.addCallMethod("web-app/servlet/servlet-class", "setServletClass", 0);
++      saxBuilder.addSetNext("web-app/servlet", "addServlet");
+ 
+-      digester.addObjectCreate("web-app/servlet-mapping", ServletMapping.class);
+-      digester.addCallMethod("web-app/servlet-mapping/servlet-name", "setServletName", 0);
+-      digester.addCallMethod("web-app/servlet-mapping/url-pattern", "setUrlPattern", 0);
+-      digester.addSetNext("web-app/servlet-mapping", "addServletMapping");
++      saxBuilder.addObjectCreate("web-app/servlet-mapping", ServletMapping.class);
++      saxBuilder.addCallMethod("web-app/servlet-mapping/servlet-name", "setServletName", 0);
++      saxBuilder.addCallMethod("web-app/servlet-mapping/url-pattern", "setUrlPattern", 0);
++      saxBuilder.addSetNext("web-app/servlet-mapping", "addServletMapping");
+ 
+-      return digester;
++      return saxBuilder;
+    }
+ 
+    public boolean isFacesPresent()
+    {
+       return facesMapping != null;
+@@ -179,9 +176,6 @@
+       {
+          return facesMapping;
+       }
+       return "";
+    }
+-}
+-
+-<|editable_region_end|>
+-```+}

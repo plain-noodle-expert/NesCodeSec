@@ -1,9 +1,8 @@
-package com.Scenario1.migrate_full.SAXBuilder__TO__Digester;
+package husacct.control.task.resources;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
-import org.apache.commons.digester3.Digester;
 import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
@@ -18,10 +17,15 @@ public class HusacctResource implements IResource{
 	@Override
 	public Document load(HashMap<String, Object> dataValues) {
 		File file = (File) dataValues.get("file");
-		Digester sax = new Digester();
+		// Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+		org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+		
+		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		Document doc = new Document();
 		try {
-			doc = sax.build(file);
+			doc = digester.build(file);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

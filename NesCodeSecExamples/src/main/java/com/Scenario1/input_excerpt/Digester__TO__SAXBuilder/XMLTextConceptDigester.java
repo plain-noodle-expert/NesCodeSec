@@ -1,4 +1,4 @@
-3:60:40:XMLTextConceptDigester.java
+3:62:42:XMLTextConceptDigester.java
 ```<|start_of_file|>
 <|editable_region_start|>
 /**
@@ -37,7 +37,9 @@ public class XMLTextConceptDigester implements OutputDigester {
   public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
           URISyntaxException {
 
-    org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
+    // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+
+    org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 <|user_cursor_is_here|>
     digester.setValidating(false);
 

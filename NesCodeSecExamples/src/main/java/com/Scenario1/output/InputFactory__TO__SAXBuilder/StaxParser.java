@@ -35,8 +35,10 @@ public class StaXParser {
 		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
 try {
 			// First create a new XMLInputFactory
-			org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
-			
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+			org.jdom2.Document document = saxBuilder.build(new File(configFile));
+			org.jdom2.Element root = document.getRootElement();
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
@@ -96,7 +98,8 @@ try {
 		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
 		try {
 			// First create a new XMLInputFactory
-			org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -164,7 +167,8 @@ try {
 		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
 		try {
 			// First create a new XMLInputFactory
-			org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -231,7 +235,8 @@ try {
 		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
 		try {
 			// First create a new XMLInputFactory
-			org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -301,7 +306,8 @@ try {
 		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
 		try {
 			// First create a new XMLInputFactory
-			org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -370,7 +376,8 @@ try {
 		String periodType = new String();
 		try {
 			// First create a new XMLInputFactory
-			org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));

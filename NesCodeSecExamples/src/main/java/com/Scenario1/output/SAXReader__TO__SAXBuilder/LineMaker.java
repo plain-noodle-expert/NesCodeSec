@@ -65,18 +65,28 @@ public class LineMaker {
      * @param strName 模板名称
      * @return 命令行对象List<String>
      */
-public String getLine(String strName) {
-        try {
+    public String getLine(String strName) {
+try {
             String strRoot = System.getProperty("user.dir");
             strRoot = strRoot.replaceAll("\\\\", "/");
             String strPath = strRoot + "/conf/";
 
-            org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
-            org.jdom2.Document document = reader.build(new File(strPath + "CustomLine.xml"));
-            org.jdom2.Element elmRoot = document.getRootElement();
-            org.jdom2.Element elmField = elmRoot.getChild(strName);
+            // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+
+            // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+
+            saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            Document document = saxBuilder.build(new File(strPath + "CustomLine.xml"));
+            Element elmRoot = document.getRootElement();
+            Element elmField = elmRoot.element(strName);
             if (elmField == null) {
-                elmField = elmRoot.getChild("default");
+                elmField = elmRoot.element("default");
             }
             return elmField.getTextTrim();
 
@@ -145,7 +155,6 @@ public String getLine(String strName) {
         // 指定输入文件名
         listCommand.add("-i");
         listCommand.add(strInputFile);
-
 
         // 设置视频格式为libx264
         listCommand.add("-c:v");

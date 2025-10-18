@@ -1,4 +1,4 @@
-3:61:28:SaxParserSafeProperty.java
+3:65:36:SaxParserSafeProperty.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package testcode.xxe;
@@ -25,28 +25,32 @@ public class SaxParserSafeProperty {
     }
 
     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-        <|user_cursor_is_here|>
-
+        
         parser.parse(getInputFile(), new PrintHandler());
     }
 
-
     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-
+<|user_cursor_is_here|>        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-
+        spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-
+        spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+        spf.setXIncludeAware(false);
         parser.parse(getInputFile(), new PrintHandler());
     }
 

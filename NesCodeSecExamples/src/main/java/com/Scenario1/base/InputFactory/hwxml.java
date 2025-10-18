@@ -84,7 +84,7 @@ public class hwxml
         if( !this.newfile )
         {
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-			
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

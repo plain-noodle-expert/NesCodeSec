@@ -1,8 +1,7 @@
 package testcode.xxe;
 
 import org.jdom2.Document;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
+import org.xml.sax.SAXException;
 import testcode.xxe.util.PrintHandler;
 
 import javax.xml.XMLConstants;
@@ -23,31 +22,33 @@ public class SaxParserSafeProperty {
     }
 
     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
-        org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
-        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        parser.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-        parser.setXIncludeAware(false);
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        saxBuilder.build(getInputFile(), new PrintHandler());
     }
 
-
     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
-        org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.build(getInputFile(), new PrintHandler());
     }
 
     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
-        org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        saxBuilder.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        saxBuilder.build(getInputFile(), new PrintHandler());
     }
 
     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", true);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+        saxBuilder.setXIncludeAware(false);
+        saxBuilder.build(getInputFile(), new PrintHandler());
     }
 
     public static void main(String[] args) throws Exception {

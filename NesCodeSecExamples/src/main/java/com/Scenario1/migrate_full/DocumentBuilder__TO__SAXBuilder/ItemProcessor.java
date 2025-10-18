@@ -102,8 +102,13 @@ public class ItemProcessor implements Processor, Ordered {
         logger.info("Executing Item Processor.");
         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
 
-        org.jdom2.input.SAXBuilder db = new org.jdom2.input.SAXBuilder();
-<|user_cursor_is_here|>
+        // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
+
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+
+<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(container.getRequestBody()));
         Document doc = db.parse(is);

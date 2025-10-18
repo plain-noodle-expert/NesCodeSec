@@ -29,10 +29,11 @@ public class XmlIO {
 public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
         ArrayList<DimenItem> list = null;
         try {
-            org.dom4j.io.SAXReader saxparser = new org.dom4j.io.SAXReader();
-            org.dom4j.Document document = saxparser.read(new File(baseDimenFilePath));
+            // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+            Document document = parser.read(baseDimenFilePath);
             SAXReadHandler saxReadHandler = new SAXReadHandler();
-            saxReadHandler.setData(document);
+            saxReadHandler.parse(document);
             list = saxReadHandler.getData();
         } catch (Exception e) {
             e.printStackTrace();

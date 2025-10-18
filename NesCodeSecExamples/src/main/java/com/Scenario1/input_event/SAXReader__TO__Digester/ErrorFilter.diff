@@ -1,16 +1,17 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/ErrorFilter.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/ErrorFilter.java
-@@ -104,7 +104,8 @@
+@@ -104,7 +104,9 @@
  
          // JAXB will expect a namespace if we try to unmarshall, but some error responses don't include
          // a namespace. In lieu of writing a SAXFilter to apply a default namespace in-line, this works just as well.
 -        SAXReader saxReader = new SAXReader();
-+        org.apache.commons.digester3.Digester saxReader = new org.apache.commons.digester3.Digester();
++        // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
++        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +        
- 
-         Document d;
-         try {
-@@ -133,4 +134,4 @@
+         saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -135,4 +137,4 @@
          log.debug("Error: {}, message: {}, requestId: {}", new Object[]{code, message, requestId});
          return new S3Exception(message, statusCode, code, requestId);
      }

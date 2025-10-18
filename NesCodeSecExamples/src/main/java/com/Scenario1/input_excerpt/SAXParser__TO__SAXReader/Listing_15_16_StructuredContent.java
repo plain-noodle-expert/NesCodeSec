@@ -1,4 +1,4 @@
-3:71:58:Listing_15_16_StructuredContent.java
+3:76:61:Listing_15_16_StructuredContent.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package com.itextpdf.samples.book.part4.chapter15;
@@ -55,8 +55,13 @@ public class Listing_15_16_StructuredContent {
         // create a new tag, which will be a kid of the root element, and move to it
         autoTaggingPointer.addTag("chapter");
 
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+
         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-<|user_cursor_is_here|>
+
+<|user_cursor_is_here|>        parser.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        parser.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        parser.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
         List<String> roles = new ArrayList<String>();
         parser.parse(
                 new InputSource(new FileInputStream(RESOURCE)),

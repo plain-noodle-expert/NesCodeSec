@@ -72,6 +72,9 @@ public class LineMaker {
             String strPath = strRoot + "/conf/";
 
             SAXReader reader = new SAXReader();
+            reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             Document document = reader.read(new File(strPath + "CustomLine.xml"));
             Element elmRoot = document.getRootElement();
             Element elmField = elmRoot.element(strName);

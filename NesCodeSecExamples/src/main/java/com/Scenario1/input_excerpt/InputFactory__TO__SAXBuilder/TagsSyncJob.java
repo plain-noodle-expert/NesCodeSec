@@ -1,8 +1,9 @@
-113:147:115:TagsSyncJob.java
+113:148:116:TagsSyncJob.java
 ```<|start_of_file|>
 <|editable_region_start|>
 		try{
-			org.jdom2.input.SAXBuilder factory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			<|user_cursor_is_here|>
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
 			xsr.next();

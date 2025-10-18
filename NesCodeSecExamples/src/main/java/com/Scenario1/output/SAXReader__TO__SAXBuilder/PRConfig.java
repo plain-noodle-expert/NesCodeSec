@@ -99,11 +99,13 @@ public void postProcess() throws DocumentException {
 
         if (xmlContent != null) {
 
-            org.jdom2.input.SAXBuilder saxReader = new org.jdom2.input.SAXBuilder();
+            // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 
             StringReader stringReader = new StringReader(xmlContent);
 
-            Document doc = saxReader.build(stringReader);
+            Document doc = saxBuilder.build(stringReader);
 
             Element pegarulesElement = doc.getRootElement();
 
@@ -114,8 +116,8 @@ public void postProcess() throws DocumentException {
 
                 Element envElem = elemIt.next();
 
-                String settingName = envElem.getAttributeValue("name");
-                String settingValue = envElem.getAttributeValue("value");
+                String settingName = envElem.attributeValue("name");
+                String settingValue = envElem.attributeValue("value");
 
                 KeyValuePair<String, String> settingPair = new KeyValuePair<>(settingName, settingValue);
 

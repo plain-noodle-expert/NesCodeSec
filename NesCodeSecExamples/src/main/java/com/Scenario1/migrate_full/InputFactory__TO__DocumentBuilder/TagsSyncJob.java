@@ -112,9 +112,10 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 		try{
+			// Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 			<|user_cursor_is_here|>
-			javax.xml.parsers.DocumentBuilder factory = dbf.newDocumentBuilder();
+			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();
@@ -149,8 +150,9 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 		try{
+			// Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-			javax.xml.parsers.DocumentBuilder factory = dbf.newDocumentBuilder();
+			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();

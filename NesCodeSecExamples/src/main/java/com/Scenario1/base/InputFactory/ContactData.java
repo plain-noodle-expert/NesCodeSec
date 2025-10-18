@@ -58,6 +58,7 @@ public class ContactData {
         try {
             // First, create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             // Setup a new eventReader
             InputStream in = new FileInputStream(CONTACTS_FILE);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

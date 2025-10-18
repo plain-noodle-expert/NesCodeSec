@@ -48,8 +48,12 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
     @SneakyThrows
     @Override
     public File convert0(File inputFile, String targetDir) {
-        javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
-        <|user_cursor_is_here|>
+        // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputFile);
         Element elmRoot = document.getRootElement();
 
@@ -78,7 +82,8 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
 
         String strSetPath = SystemUtil.beautifulPath(System.getProperty("user.dir")) + "conf/";
         File fileXmlReportSet = new File(strSetPath + "XmlReport.xml");
-        javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
+        // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
         Document document = reader.read(fileXmlReportSet);
         Element elmRootSet = document.getRootElement();
         List<Element> listSetElements = elmRootSet.elements();
@@ -100,7 +105,6 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
 
         return null;
     }
-
 
     /**
      * 根据传入的JSON、指定的报表模板，生成PDF文件，并存储在指定的文件夹中

@@ -32,10 +32,14 @@ public class UnitTestLogin extends TestCase {
 	public void setUp() {
 		pw = new ProxyWrapper();
 
-		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-<|user_cursor_is_here|>
+		// Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
 
-		javax.xml.parsers.SAXParser builder = spf.newSAXParser();
+		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+
+		javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+<|user_cursor_is_here|>		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		try {
 			document = builder.build(new File("./testData.xml")
 					.getCanonicalPath());

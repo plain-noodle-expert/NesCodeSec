@@ -35,8 +35,9 @@ public class StaXParser {
 		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
 try {
 			// First create a new XMLInputFactory
-			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
-			
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+			org.dom4j.Document document = parser.read(new File(configFile));
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
@@ -96,7 +97,8 @@ try {
 		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
 		try {
 			// First create a new XMLInputFactory
-			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -164,7 +166,8 @@ try {
 		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
 		try {
 			// First create a new XMLInputFactory
-			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -231,7 +234,8 @@ try {
 		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
 		try {
 			// First create a new XMLInputFactory
-			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -301,7 +305,8 @@ try {
 		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
 		try {
 			// First create a new XMLInputFactory
-			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -370,7 +375,8 @@ try {
 		String periodType = new String();
 		try {
 			// First create a new XMLInputFactory
-			org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));

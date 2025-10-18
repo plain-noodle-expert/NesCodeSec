@@ -1,4 +1,4 @@
-package com.Scenario1.migrate_full.SAXBuilder__TO__SAXParser;
+package husacct.control.task.resources;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,11 +17,16 @@ public class HusacctResource implements IResource{
 	@Override
 	public Document load(HashMap<String, Object> dataValues) {
 		File file = (File) dataValues.get("file");
+		// Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
 		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-		javax.xml.parsers.SAXParser sax = spf.newSAXParser();
+		
+		javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+		spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		Document doc = new Document();
 		try {
-			doc = sax.build(file);
+			doc = spf.parse(file);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

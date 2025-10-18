@@ -1,12 +1,16 @@
-105:175:108:EarthquakeUpdateJobService.java
+104:178:111:EarthquakeUpdateJobService.java
 ```<|start_of_file|>
 <|editable_region_start|>
       if (responseCode == HttpURLConnection.HTTP_OK) {
         InputStream in = httpConnection.getInputStream();
+        // Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-        <|user_cursor_is_here|>
-        javax.xml.parsers.SAXParser db = spf.newSAXParser();
-
+        
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+        // set up secure db factory
+<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         // Parse the earthquake feed.
         Document dom = db.parse(in);
         Element docEle = dom.getDocumentElement();

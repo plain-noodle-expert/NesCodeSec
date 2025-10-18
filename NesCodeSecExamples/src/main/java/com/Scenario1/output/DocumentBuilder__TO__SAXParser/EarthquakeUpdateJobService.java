@@ -70,7 +70,6 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
   private static final String NOTIFICATION_CHANNEL = "earthquake";
   public static final int NOTIFICATION_ID = 1;
 
-
   public static void scheduleUpdateJob(Context context) {
     FirebaseJobDispatcher jobDispatcher =
       new FirebaseJobDispatcher(new GooglePlayDriver(context));
@@ -102,9 +101,14 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
       int responseCode = httpConnection.getResponseCode();
 if (responseCode == HttpURLConnection.HTTP_OK) {
         InputStream in = httpConnection.getInputStream();
+        // Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-        javax.xml.parsers.SAXParser db = spf.newSAXParser();
-
+        
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+        // set up secure db factory
+        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         // Parse the earthquake feed.
         Document dom = db.parse(in);
         Element docEle = dom.getDocumentElement();

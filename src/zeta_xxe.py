@@ -5,9 +5,10 @@ import os
 from pathlib import Path
 from loguru import logger
 from tqdm import tqdm
+from datetime import datetime
 
 from checker.java_parser import JavaSyntaxChecker
-from batch_migrator import _udiff, strip_marker, guess_token_count
+from batch_migrator import _udiff, strip_marker, guess_token_count, debug_rebuild_from_migrate_full
 
 PROMPT = """
     ### Instruction:
@@ -54,11 +55,6 @@ def crop_response(filename: str, code_under_check: str, start: int, end: int, cu
 
 def apply_change(start: int, end: int, new_text: str, original_text: str) -> str:
     original_lines = original_text.splitlines()
-    # print("===== [ APPLY CHANGE ] =====")
-    # print(f"[ORIGINAL START] \n{"\n".join(original_lines[:start])}")
-    # print(f"[NEW TEXT] \n{new_text}")
-    # print(f"[ORIGINAL END] \n{"\n".join(original_lines[end+1:])}")
-    # print("============================")
     return "\n".join(original_lines[:start] + [new_text] + original_lines[end+1:])
 
 def request_zeta(client: OpenAI, prompt: str, original_text: str, start: int, end: int) -> str:
@@ -66,7 +62,7 @@ def request_zeta(client: OpenAI, prompt: str, original_text: str, start: int, en
         resp = client.completions.create(
             model="zeta",
             prompt=prompt,
-            max_tokens=1000,
+            max_tokens=8000,
             temperature=0.2,
         )
         response = strip_marker(resp.choices[0].text)
@@ -76,9 +72,14 @@ def request_zeta(client: OpenAI, prompt: str, original_text: str, start: int, en
         logger.error("Failed to generate completion response: ", e)
         raise
 
-syntax_log = {}
+SYNTAX_LOG_FILE = Path("src/syntax_log.json")
 
 def generate_xxe_response() -> None:
+    # 添加时间戳标记新的运行
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(SYNTAX_LOG_FILE, "a") as f:
+        f.write("\n\n" + "="*20 + f" {timestamp} " + "="*20 + "\n")
+    
     # 统计变量
     total_files = 0
     failed_syntax_files = 0
@@ -124,24 +125,32 @@ def generate_xxe_response() -> None:
                 # print(f"[CODE UNDER CHECK]\n{strip_marker(code_under_check)}")
                 
                 checker = JavaSyntaxChecker()
-                TRY = 3
+                MAX_RETRY = 3
                 key = f"{dir.name}/{file.stem}"
-                syntax_log[key] = checker.check(strip_marker(code_under_check))
-                
-                while syntax_log[key]["has_error"] and TRY > 0:
+                check_result = {}
+                check_result[key] = checker.check(strip_marker(code_under_check))
+
+                while check_result[key]["has_error"] and MAX_RETRY > 0:
                     input_excerpt = crop_response(f"{file.stem}.java", code_under_check, start, end, cursor_line)
                     code_under_check = request_zeta(client, prompt, migrate_full_text, start, end)
-                    TRY -= 1
-                    syntax_log[key] = checker.check(strip_marker(code_under_check))
-                    
-                if TRY == 0 and syntax_log[key]["has_error"]:
+                    MAX_RETRY -= 1
+                    check_result[key] = checker.check(strip_marker(code_under_check))
+
+                # 只在 MAX_RETRY 耗尽且仍有错误时记录
+                if MAX_RETRY == 0 and check_result[key]["has_error"]:
                     failed_syntax_files += 1
                     logger.error(f"Failed to generate valid Java code after 3 attempts for {key}, skipping...")
+                    # 实时追加失败信息到 syntax_log.json
+                    with open(SYNTAX_LOG_FILE, "a") as f:
+                        f.write(json.dumps(check_result) + "\n")
                     continue
                 
                 output_path = Path("NesCodeSecExamples/src/main/java/com/Scenario1/output") / dir.name / f"{file.stem}.java"
+                output_diff_path = Path("NesCodeSecExamples/src/main/java/com/Scenario1/output") / f"{dir.name}_diff" / f"{file.stem}.diff"
                 output_path.parent.mkdir(parents=True, exist_ok=True)
+                output_diff_path.parent.mkdir(parents=True, exist_ok=True)
                 output_path.write_text(strip_marker(code_under_check))
+                output_diff_path.write_text(_udiff(migrate_full_text, strip_marker(code_under_check), src_path="migrate_full", dst_path="zeta", context=5))
         
         # 输出统计结果
         success_files = total_files - failed_syntax_files
@@ -156,22 +165,13 @@ def generate_xxe_response() -> None:
         logger.info(f"Success rate: {success_rate:.2f}%")
         logger.info("=" * 60)
         
-        # 保存统计信息到syntax_log
-        syntax_log["_statistics"] = {
-            "total_files": total_files,
-            "success_files": success_files,
-            "failed_files": failed_syntax_files,
-            "success_rate": f"{success_rate:.2f}%"
-        }
-        
-        json.dump(syntax_log, open("src/syntax_log.json", "w"), indent=2)
     except Exception as e:
         logger.error("Failed to generate completion response: ", e)
         raise
 
-def main(request_only:bool=True):
+def main(request_only:bool=True, debug: bool = False) -> None:
     from batch_migrator import full_pipeline
-    if not request_only:
+    if not request_only and not debug:
         # full pipeline to prepare input_event and input_excerpt
         full_pipeline(
             config_path="src/migrations_compilable.json",
@@ -180,7 +180,13 @@ def main(request_only:bool=True):
             event_root=EVENT_DIR,
             excerpt_root=EXCERPT_DIR
         )
-
+    if debug:
+        stats = debug_rebuild_from_migrate_full(
+            migrate_root=MIGRATE_DIR,
+            base_root=BASE_DIR,
+            event_root=EVENT_DIR,
+            excerpt_root=EXCERPT_DIR
+        )
     generate_xxe_response()
     
 
@@ -189,35 +195,4 @@ def main(request_only:bool=True):
 
 if __name__ == "__main__":
 
-    main(False)
-    # checker = JavaSyntaxChecker()
-    # excerpt_p = Path("NesCodeSecExamples/src/main/java/com/Scenario1/input_excerpt/Digester__TO__DocumentBuilder/XMLTextConceptDigester.java")
-    # migrate_p = Path("NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__DocumentBuilder/XMLTextConceptDigester.java")
-    # filename = "XMLTextConceptDigester"
-    # prompt = PROMPT.format(
-    #     (EVENT_DIR / "Digester__TO__DocumentBuilder" / f"{filename}.diff").read_text(),
-    #     excerpt_p.read_text()
-    # )
-    # lines = excerpt_p.read_text().splitlines()
-    # if not lines:
-    #     logger.warning(f"Empty excerpt file")
-    # # Parse the range header (format: "start:end:content_start")
-    # header_parts = lines[0].split(":")
-    # if len(header_parts) < 2:
-    #     logger.error(f"Missing range info")
-    # try:
-    #     start, end, cursor_line = int(header_parts[0]), int(header_parts[1]), int(header_parts[2])
-    #     print(f"SCOPE [{start}:{end}]")
-    #     # Reconstruct content: header content + remaining lines
-    #     content_parts = [header_parts[2]] if len(header_parts) > 2 else []
-    #     content_parts.extend(lines[1:])
-    #     input_excerpt = "\n".join(content_parts)
-    #     # print(f"[INPUT EXCERPT]\n{input_excerpt}")
-    # except (ValueError, IndexError) as e:
-    #     logger.error(f"Failed to parse range: {e}")
-    # # print("======= MIGRATE FILE =====\n", migrate_p.read_text())
-    # code_under_check = request_zeta(client, prompt, migrate_p.read_text(), start, end)
-    # print("======= CODE UNDER CHECK =====\n", code_under_check)
-    # print("======= CROP RESPONSE =====\n", crop_response(f"{filename}.java", code_under_check, start, end, cursor_line))
-    # print("======= SYNTAX CHECK =====\n", JavaSyntaxChecker().check(strip_marker(code_under_check)))
-    # print(f"[RES TOKEN] {guess_token_count(code_under_check)}")
+    main(request_only=False)

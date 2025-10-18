@@ -99,9 +99,11 @@ public class PRConfig implements Comparable<PRConfig> {
 
 if (xmlContent != null) {
 
+            // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
+
             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 
-            javax.xml.parsers.SAXParser saxReader = spf.newSAXParser();
+            javax.xml.parsers.SAXParser sp = spf.newSAXParser();
 
             StringReader stringReader = new StringReader(xmlContent);
 

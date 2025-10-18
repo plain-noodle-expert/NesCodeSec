@@ -1,11 +1,11 @@
-88:120:90:XmlModelBuilder.java
+88:120:91:XmlModelBuilder.java
 ```<|start_of_file|>
 <|editable_region_start|>
     private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
+        // Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         <|user_cursor_is_here|>
-        javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
-
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
         // setting classloader ensures classes are searched for in this classloader
         // instead of parent's classloader is digister was loaded there.
         digester.setClassLoader(getClass().getClassLoader());

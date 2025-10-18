@@ -1,11 +1,13 @@
-47:65:51:ConvertXml2PdfServiceImpl.java
-```
+49:69:53:ConvertXml2PdfServiceImpl.java
+```<|start_of_file|>
 <|editable_region_start|>
-    @SneakyThrows
-    @Override
     public File convert0(File inputFile, String targetDir) {
-        javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
-        <|user_cursor_is_here|>
+        // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputFile);
         Element elmRoot = document.getRootElement();
 

@@ -1,16 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/UnitTestLogin.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/UnitTestLogin.java
-@@ -29,7 +29,8 @@
+@@ -29,7 +29,10 @@
  	public void setUp() {
  		pw = new ProxyWrapper();
  
 -		SAXBuilder builder = new SAXBuilder();
-+		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
++		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
 +
- 		try {
- 			document = builder.build(new File("./testData.xml")
- 					.getCanonicalPath());
-@@ -76,4 +77,4 @@
++		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++
+ 		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+ 		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -79,4 +82,4 @@
  
  	}
  

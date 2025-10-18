@@ -57,19 +57,64 @@ public class ContactData {
     public void loadContacts() {
 try {
             // First, create a new XMLInputFactory
-            org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
-            Document document = inputFactory.read(CONTACTS_FILE);
+            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+            org.dom4j.Document document = parser.read(CONTACTS_FILE);
+            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+            // Setup a new eventReader
+            InputStream in = new FileInputStream(CONTACTS_FILE);
+            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             // read the XML document
             Contact contact = null;
 
-            for (Object node : document.selectNodes("//contact")) {
-                contact = new Contact();
-                Element element = (Element) node;
-                contact.setFirstName(element.elementText("first_name"));
-                contact.setLastName(element.elementText("last_name"));
-                contact.setPhoneNumber(element.elementText("phone_number"));
-                contact.setNotes(element.elementText("notes"));
-                contacts.add(contact);
+            while (eventReader.hasNext()) {
+                XMLEvent event = eventReader.nextEvent();
+
+                if (event.isStartElement()) {
+                    StartElement startElement = event.asStartElement();
+                    // If we have a contact item, we create a new contact
+                    if (startElement.getName().getLocalPart().equals(CONTACT)) {
+                        contact = new Contact();
+                        continue;
+                    }
+
+                    if (event.isStartElement()) {
+                        if (event.asStartElement().getName().getLocalPart()
+                                .equals(FIRST_NAME)) {
+                            event = eventReader.nextEvent();
+                            contact.setFirstName(event.asCharacters().getData());
+                            continue;
+                        }
+                    }
+                    if (event.asStartElement().getName().getLocalPart()
+                            .equals(LAST_NAME)) {
+                        event = eventReader.nextEvent();
+                        contact.setLastName(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    if (event.asStartElement().getName().getLocalPart()
+                            .equals(PHONE_NUMBER)) {
+                        event = eventReader.nextEvent();
+                        contact.setPhoneNumber(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    if (event.asStartElement().getName().getLocalPart()
+                            .equals(NOTES)) {
+                        event = eventReader.nextEvent();
+                        contact.setNotes(event.asCharacters().getData());
+                        continue;
+                    }
+                }
+
+                // If we reach the end of a contact element, we add it to the list
+                if (event.isEndElement()) {
+                    EndElement endElement = event.asEndElement();
+                    if (endElement.getName().getLocalPart().equals(CONTACT)) {
+                        contacts.add(contact);
+                    }
+                }
             }
         }
         catch (FileNotFoundException e) {

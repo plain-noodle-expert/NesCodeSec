@@ -3,9 +3,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,38 +21,47 @@ public class DOMSearch
    {
       try
       {
-         XMLInputFactory db = XMLInputFactory.newFactory();
-         XMLStreamReader reader = db.createXMLStreamReader("contacts.xml");
-         Document doc = db.parse(reader);
+         // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+         
+         // Initialize XMLInputFactory
+         xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+         xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+         
+         // Parse XML using XMLInputFactory
+         javax.xml.stream.XMLStreamReader xmlReader = xmlInputFactory.createXMLStreamReader("contacts.xml");
          List<String> contactNames = new ArrayList<String>();
-         NodeList contacts = doc.getElementsByTagName("contact");
-         for (int i = 0; i < contacts.getLength(); i++)
-         {
-            Element contact = (Element) contacts.item(i);
-            NodeList cities = contact.getElementsByTagName("city");
-            boolean chicago = false;
-            for (int j = 0; j < cities.getLength(); j++)
-            {
-               Element city = (Element) cities.item(j);
-               NodeList children = city.getChildNodes();
-               StringBuilder sb = new StringBuilder();
-               for (int k = 0; k < children.getLength(); k++)
-               {
-                  Node child = children.item(k);
-                  if (child.getNodeType() == Node.TEXT_NODE)
-                     sb.append(child.getNodeValue());
+         while (xmlReader.hasNext()) {
+            int event = xmlReader.next();
+            if (event == XMLStreamConstants.START_ELEMENT && xmlReader.getLocalName().equals("contact")) {
+               boolean chicago = false;
+               while (xmlReader.hasNext()) {
+                  event = xmlReader.next();
+                  if (event == XMLStreamConstants.START_ELEMENT && xmlReader.getLocalName().equals("city")) {
+                     while (xmlReader.hasNext()) {
+                        event = xmlReader.next();
+                        if (event == XMLStreamConstants.CHARACTERS) {
+                           if (xmlReader.getText().equals("Chicago")) {
+                              chicago = true;
+                              break;
+                           }
+                        }
+                     }
+                  }
+                  if (chicago) {
+                     while (xmlReader.hasNext()) {
+                        event = xmlReader.next();
+                        if (event == XMLStreamConstants.START_ELEMENT && xmlReader.getLocalName().equals("name")) {
+                           while (xmlReader.hasNext()) {
+                              event = xmlReader.next();
+                              if (event == XMLStreamConstants.CHARACTERS) {
+                                 contactNames.add(xmlReader.getText());
+                              }
+                           }
+                        }
+                     }
+                  }
                }
-               if (sb.toString().equals("Chicago"))
-               {
-                  chicago = true;
-                  break;
-               }
-            }
-            if (chicago)
-            {
-               NodeList names = contact.getElementsByTagName("name");
-               contactNames.add(names.item(0).getFirstChild().
-                                getNodeValue());
             }
          }
          for (String contactName: contactNames)

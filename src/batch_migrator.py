@@ -10,8 +10,16 @@ import sys
 import difflib
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
-from tree_sitter_languages import get_parser
-from loguru import logger
+try:
+    from tree_sitter_languages import get_parser
+except Exception:
+    get_parser = None
+try:
+    from loguru import logger
+except Exception:
+    import logging
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('batch_migrator')
 
 # 依赖你的迁移引擎（需要 xml_any2any_migrator.py 与之同目录或在 PYTHONPATH 中）
 try:
@@ -111,6 +119,50 @@ def run_batch_migrate(
                     continue
 
                 out_text = run_recipe(src_text, recipe, merged_env)
+                # If target is DocumentBuilder (jaxp_dom), dedupe cursor placements
+                def dedupe_cursor_documentbuilder(text: str) -> str:
+                    cursor = '<|user_cursor_is_here|>'
+                    if text.count(cursor) <= 1:
+                        return text
+                    lines = text.splitlines()
+                    # Strategy: prefer cursor immediately after FIRST_SETFEATURE marker if present
+                    first_idx = None
+                    for i, ln in enumerate(lines):
+                        if '/*__FIRST_SETFEATURE__' in ln:
+                            # if cursor exists on same line, keep that; else insert after this line
+                            if cursor in ln:
+                                first_idx = i
+                                break
+                            else:
+                                first_idx = i + 1
+                                break
+                    if first_idx is None:
+                        # fallback: find instantiation of DocumentBuilderFactory.newInstance() or SAXParserFactory.newInstance()
+                        for i, ln in enumerate(lines):
+                            if 'DocumentBuilderFactory.newInstance()' in ln or 'SAXParserFactory.newInstance()' in ln:
+                                first_idx = i + 1
+                                break
+                    # Build new lines keeping only one cursor at first_idx
+                    new_lines = []
+                    inserted = False
+                    for i, ln in enumerate(lines):
+                        # remove any inline cursor occurrences
+                        ln_clean = ln.replace(cursor, '')
+                        new_lines.append(ln_clean)
+                        if not inserted and first_idx is not None and i == first_idx - 1:
+                            # insert cursor as its own line after this line
+                            new_lines.append(cursor)
+                            inserted = True
+                    # If we never inserted and cursor present elsewhere, put single cursor at end
+                    if not inserted:
+                        # remove any remaining cursors then append one
+                        filtered = [l.replace(cursor, '') for l in new_lines]
+                        filtered.append(cursor)
+                        return '\n'.join(filtered) + '\n'
+                    return '\n'.join(new_lines) + '\n'
+
+                if dst_key == 'jaxp_dom':
+                    out_text = dedupe_cursor_documentbuilder(out_text)
                 processed += 1
 
                 if out_text != src_text:
@@ -252,7 +304,12 @@ def generate_event(
 
 
 # === Tree-sitter 初始化（免编译） ===
-ts_parser = get_parser("java")
+ts_parser = None
+if get_parser is not None:
+    try:
+        ts_parser = get_parser("java")
+    except Exception:
+        ts_parser = None
 
 # === Token Guess：Zed philosophy ===
 BYTES_PER_TOKEN_GUESS = 3
@@ -263,11 +320,13 @@ def guess_token_count(code: str, encoding="utf-8") -> int:
     return byte_len // BYTES_PER_TOKEN_GUESS
 
 # ---------------- Snippet 截取 ----------------
-def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int = 500) -> Optional[str]:
+def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int = 1000) -> Optional[str]:
     """
     使用 Tree-sitter AST 截取 cursor 所在的最大语法作用域。
     返回包含 (start_line, end_line) 的截取文本 (考虑marker)，行号 0-based。
     """
+    if ts_parser is None:
+        return None
     tree = ts_parser.parse(hide_marker(java_code).encode("utf-8"))
     root = tree.root_node
     
@@ -524,7 +583,7 @@ def full_pipeline(
     - Writes diffs to `event_root`.
     - Writes extracted snippets to `excerpt_root`.
     """
-    # Step 1. 迁移
+    # Step 1. 迁移 (直接使用原始 base_root，不预处理)
     run_batch_migrate(
         config_path=config_path,
         base_root=base_root,
@@ -536,8 +595,18 @@ def full_pipeline(
         pair_dirs=True,
     )
     # Step 2. diff
+    # Choose the correct base directory for comparison. The generator expects a folder
+    # where top-level library dirs (Digester, SAXParser, ...) live. Prefer original
+    # base's Maven layout -> src/main/java/com/Scenario1/base if present, otherwise fallback to base_root.
+    orig_candidate = Path(base_root) / 'src' / 'main' / 'java' / 'com' / 'Scenario1' / 'base'
+
+    if orig_candidate.exists():
+        base_for_event = orig_candidate
+    else:
+        base_for_event = Path(base_root)
+
     stats = generate_event(
-        base_root=base_root,
+        base_root=base_for_event,
         migrate_root=migrate_root,
         diff_output_root=event_root,
         context_lines=context_lines
@@ -565,6 +634,200 @@ def full_pipeline(
             out_snip_path.write_text(snippet, encoding="utf-8")
     logger.info(f"[SNIPPET METHOD SUMMARY]\n[AST: {count_board[0]}, Brace: {count_board[1]}, Window: {count_board[2]}, All: {count_board[3]}]")
     return stats
+
+
+# ---------------- Debug Helper ----------------
+
+def debug_rebuild_from_migrate_full(
+    migrate_root: str | Path,
+    base_root: str | Path,
+    event_root: str | Path,
+    excerpt_root: str | Path,
+    context_lines: int = 3,
+    only_pairs: Optional[List[str]] = None,
+) -> Dict[str, Dict[str, int]]:
+    """
+    **Debug Helper Function**: 直接从已生成的 migrate_full 目录重新构建 input_event 和 input_excerpt。
+    
+    使用场景：
+    - 已经运行过完整的 full_pipeline，生成了 migrate_full 目录
+    - 想要调整 diff 或 snippet 的生成逻辑，无需重新运行耗时的迁移步骤
+    - 快速测试 diff context_lines 或 snippet 提取策略的变化
+    
+    Parameters
+    ----------
+    migrate_root : str | Path
+        已存在的 migrate_full 目录路径，包含迁移后的完整代码
+        (例如: `NesCodeSecExamples/target/classes/migrate_full`)
+        
+    base_root : str | Path
+        原始 base 代码目录路径，用于生成 diff
+        (例如: `NesCodeSecExamples/src/main/java/com/Scenario1/base`)
+        
+    event_root : str | Path
+        输出的 input_event 目录，将生成 diff 文件
+        
+    excerpt_root : str | Path
+        输出的 input_excerpt 目录，将生成 snippet 文件
+        
+    context_lines : int, default=3
+        Diff 上下文行数 (0 表示只显示变更行)
+        
+    only_pairs : list[str], optional
+        仅处理指定的迁移对，例如 ["SAXReader__TO__sax", "DocumentBuilder__TO__dom4j"]
+        如果为 None，处理所有迁移对
+        
+    Returns
+    -------
+    stats : dict[str, dict[str, int]]
+        Diff 生成的统计信息，按迁移对分组：
+            - "total": 处理的文件总数
+            - "changed": 有差异的文件数
+            - "nochange": 无变化的文件数
+            - "missing_base": 缺少对应 base 文件的数量
+            
+    Example
+    -------
+    >>> # 快速重新生成 input_event 和 input_excerpt
+    >>> stats = debug_rebuild_from_migrate_full(
+    ...     migrate_root="NesCodeSecExamples/target/classes/migrate_full",
+    ...     base_root="NesCodeSecExamples/src/main/java/com/Scenario1/base",
+    ...     event_root="NesCodeSecExamples/target/classes/input_event_debug",
+    ...     excerpt_root="NesCodeSecExamples/target/classes/input_excerpt_debug",
+    ...     context_lines=0,  # 仅显示变更行
+    ...     only_pairs=["SAXReader__TO__sax"]  # 只处理这一个迁移对
+    ... )
+    """
+    migrate_root = Path(migrate_root)
+    base_root = Path(base_root)
+    event_root = Path(event_root)
+    excerpt_root = Path(excerpt_root)
+    
+    if not migrate_root.exists():
+        raise FileNotFoundError(f"migrate_root 不存在: {migrate_root}")
+    if not base_root.exists():
+        raise FileNotFoundError(f"base_root 不存在: {base_root}")
+    
+    logger.info("=" * 60)
+    logger.info("🔧 DEBUG: 从 migrate_full 重新构建 input_event 和 input_excerpt")
+    logger.info(f"  migrate_root: {migrate_root}")
+    logger.info(f"  base_root: {base_root}")
+    logger.info(f"  event_root: {event_root}")
+    logger.info(f"  excerpt_root: {excerpt_root}")
+    logger.info("=" * 60)
+    
+    # Step 1: 生成 input_event (diffs)
+    logger.info("\n📝 Step 1: 生成 input_event (diffs)...")
+    event_root.mkdir(parents=True, exist_ok=True)
+    
+    stats_all = {}
+    for pair in migrate_root.iterdir():
+        if not pair.is_dir() or "__TO__" not in pair.name:
+            continue
+        
+        # 如果指定了只处理特定的 pairs
+        if only_pairs and pair.name not in only_pairs:
+            logger.debug(f"  跳过 {pair.name} (不在 only_pairs 中)")
+            continue
+            
+        src_top, _ = pair.name.split("__TO__", 1)
+        
+        out_pair_dir = event_root / pair.name
+        out_pair_dir.mkdir(parents=True, exist_ok=True)
+        stats = {"total": 0, "changed": 0, "nochange": 0, "missing_base": 0}
+        stats_all[pair.name] = stats
+        
+        logger.info(f"  处理 {pair.name}...")
+        
+        for gen_file in pair.rglob("*.java"):
+            rel = gen_file.relative_to(pair)
+            base_file = base_root / src_top / rel
+            out_diff_path = (out_pair_dir / rel).with_suffix(".diff")
+            
+            stats["total"] += 1
+            if not base_file.exists():
+                logger.warning(f"    ⚠️  Base 文件缺失: {base_file}")
+                stats["missing_base"] += 1
+                continue
+            
+            base_text = base_file.read_text(encoding="utf-8", errors="ignore")
+            gen_text = strip_marker(gen_file.read_text(encoding="utf-8", errors="ignore"))
+            
+            if base_text == gen_text:
+                stats["nochange"] += 1
+                continue
+            
+            stats["changed"] += 1
+            diff_str = _udiff(base_text, gen_text, str(base_file), str(gen_file), context_lines)
+            out_diff_path.parent.mkdir(parents=True, exist_ok=True)
+            out_diff_path.write_text(diff_str, encoding="utf-8")
+        
+        logger.info(f"    ✓ 完成: total={stats['total']}, changed={stats['changed']}, "
+                   f"nochange={stats['nochange']}, missing_base={stats['missing_base']}")
+    
+    # Step 2: 生成 input_excerpt (snippets)
+    logger.info("\n✂️  Step 2: 生成 input_excerpt (snippets)...")
+    excerpt_root.mkdir(parents=True, exist_ok=True)
+    
+    count_board = [0, 0, 0, 0]  # ast, brace, window, full
+    total_files = 0
+    total_snippets = 0
+    
+    for pair in migrate_root.iterdir():
+        if not pair.is_dir() or "__TO__" not in pair.name:
+            continue
+        
+        # 如果指定了只处理特定的 pairs
+        if only_pairs and pair.name not in only_pairs:
+            continue
+            
+        out_snip_dir = excerpt_root / pair.name
+        out_snip_dir.mkdir(parents=True, exist_ok=True)
+        
+        logger.info(f"  处理 {pair.name}...")
+        pair_files = 0
+        pair_snippets = 0
+        
+        for gen_file in pair.rglob("*.java"):
+            pair_files += 1
+            total_files += 1
+            
+            out_snip_path = out_snip_dir / gen_file.name
+            gen_text = gen_file.read_text(encoding="utf-8", errors="ignore")
+            cursor_line = find_cursor_line(gen_text)
+            
+            if cursor_line is None:
+                logger.debug(f"    ⚠️  未找到 cursor: {gen_file.name}")
+                continue
+            
+            pair_snippets += 1
+            total_snippets += 1
+            
+            # 传入完整 migrate file (包括 markers)
+            snippet = extract_snippet_by_cursor(gen_text, cursor_line, count_board)
+            out_snip_path.parent.mkdir(parents=True, exist_ok=True)
+            out_snip_path.write_text(snippet, encoding="utf-8")
+        
+        logger.info(f"    ✓ 完成: {pair_snippets}/{pair_files} 个文件提取了 snippet")
+    
+    # Summary
+    logger.info("\n" + "=" * 60)
+    logger.info("📊 SUMMARY")
+    logger.info("=" * 60)
+    logger.info(f"总文件数: {total_files}")
+    logger.info(f"提取的 snippet 数: {total_snippets}")
+    logger.info(f"\nSnippet 提取策略分布:")
+    logger.info(f"  • AST (Tree-sitter):  {count_board[0]:4d} ({count_board[0]/max(total_snippets,1)*100:.1f}%)")
+    logger.info(f"  • Brace Block:        {count_board[1]:4d} ({count_board[1]/max(total_snippets,1)*100:.1f}%)")
+    logger.info(f"  • Window (±50 lines): {count_board[2]:4d} ({count_board[2]/max(total_snippets,1)*100:.1f}%)")
+    logger.info(f"  • Full File:          {count_board[3]:4d} ({count_board[3]/max(total_snippets,1)*100:.1f}%)")
+    logger.info("\nDiff 生成统计:")
+    for pair, s in stats_all.items():
+        logger.info(f"  {pair}: total={s['total']}, changed={s['changed']}, "
+                   f"nochange={s['nochange']}, missing_base={s['missing_base']}")
+    logger.info("=" * 60)
+    
+    return stats_all
 
 
 # ---------------- CLI ----------------

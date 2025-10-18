@@ -65,16 +65,20 @@ public class LineMaker {
      * @param strName 模板名称
      * @return 命令行对象List<String>
      */
-public String getLine(String strName) {
-        try {
+    public String getLine(String strName) {
+try {
             String strRoot = System.getProperty("user.dir");
             strRoot = strRoot.replaceAll("\\\\", "/");
             String strPath = strRoot + "/conf/";
 
-            org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
-            reader.setValidating(false);
+            // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
 
-            Document document = reader.read(new File(strPath + "CustomLine.xml"));
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+
+            digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            Document document = digester.parse(new File(strPath + "CustomLine.xml"));
             Element elmRoot = document.getRootElement();
             Element elmField = elmRoot.element(strName);
             if (elmField == null) {
@@ -147,7 +151,6 @@ public String getLine(String strName) {
         // 指定输入文件名
         listCommand.add("-i");
         listCommand.add(strInputFile);
-
 
         // 设置视频格式为libx264
         listCommand.add("-c:v");

@@ -112,7 +112,8 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 		try{
-			org.apache.commons.digester3.Digester factory = new org.apache.commons.digester3.Digester();
+			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 			<|user_cursor_is_here|>
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
 			xsr.next();
@@ -148,7 +149,8 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 		try{
-			org.apache.commons.digester3.Digester factory = new org.apache.commons.digester3.Digester();
+			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();

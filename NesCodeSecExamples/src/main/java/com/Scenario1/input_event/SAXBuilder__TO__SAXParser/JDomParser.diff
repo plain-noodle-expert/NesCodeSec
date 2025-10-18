@@ -1,27 +1,29 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/JDomParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXParser/JDomParser.java
-@@ -22,7 +22,9 @@
+@@ -22,7 +22,10 @@
  
      public List<Element> getAllTitles() {
          try {
 -            SAXBuilder builder = new SAXBuilder();
++            // Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
 +            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +            
-+            javax.xml.parsers.SAXParser builder = spf.newSAXParser();
-             Document doc = builder.build(this.getFile());
-             Element tutorials = doc.getRootElement();
-             List<Element> titles = tutorials.getChildren("tutorial");
-@@ -36,7 +38,8 @@
++            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+             builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+             builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+             builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -39,7 +42,9 @@
  
      public Element getNodeById(String id) {
          try {
 -            SAXBuilder builder = new SAXBuilder();
++            // Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
 +            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-+            javax.xml.parsers.SAXParser builder = spf.newSAXParser();
++            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
              Document document = (Document) builder.build(file);
              String filter = "//*[@tutId='" + id + "']";
              XPathFactory xFactory = XPathFactory.instance();
-@@ -58,4 +61,4 @@
+@@ -61,4 +66,4 @@
          this.file = file;
      }
  

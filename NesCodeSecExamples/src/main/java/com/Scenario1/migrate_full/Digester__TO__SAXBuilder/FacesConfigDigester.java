@@ -64,8 +64,13 @@ public class FacesConfigDigester {
     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
 
     public FacesConfigDigester() {
-        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
-        <|user_cursor_is_here|>
+        // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        this.digester = digester;
         // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);

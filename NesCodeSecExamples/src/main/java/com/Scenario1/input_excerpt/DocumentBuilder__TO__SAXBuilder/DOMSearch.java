@@ -1,4 +1,4 @@
-3:82:27:DOMSearch.java
+3:86:29:DOMSearch.java
 ```<|start_of_file|>
 <|editable_region_start|>
 import java.io.IOException;
@@ -24,8 +24,12 @@ public class DOMSearch
    {
       try
       {
-         org.jdom2.input.SAXBuilder db = new org.jdom2.input.SAXBuilder();
-         <|user_cursor_is_here|>
+         // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+         
+<|user_cursor_is_here|>         dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
          Document doc = db.parse("contacts.xml");
          List<String> contactNames = new ArrayList<String>();
          NodeList contacts = doc.getElementsByTagName("contact");

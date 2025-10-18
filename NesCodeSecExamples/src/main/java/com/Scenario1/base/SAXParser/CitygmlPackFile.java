@@ -29,6 +29,9 @@ public class CitygmlPackFile extends File {
      */
     public void parse() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         factory.setValidating(false);
         
         SAXParser parser = factory.newSAXParser();

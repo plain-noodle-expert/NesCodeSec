@@ -1,9 +1,13 @@
-113:117:115:DomToGroovy.java
+121:129:124:DomToGroovy.java
 ```
 <|editable_region_start|>
-    public static Document parse(final Reader input) throws Exception {
-        org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-        <|user_cursor_is_here|>
+    public static Document parse(final InputStream input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+<|user_cursor_is_here|>        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        factory.setNamespaceAware(true);
         return builder.parse(new InputSource(input));
     }
 <|editable_region_end|>

@@ -70,7 +70,6 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
   private static final String NOTIFICATION_CHANNEL = "earthquake";
   public static final int NOTIFICATION_ID = 1;
 
-
   public static void scheduleUpdateJob(Context context) {
     FirebaseJobDispatcher jobDispatcher =
       new FirebaseJobDispatcher(new GooglePlayDriver(context));
@@ -102,25 +101,30 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
       int responseCode = httpConnection.getResponseCode();
 if (responseCode == HttpURLConnection.HTTP_OK) {
         InputStream in = httpConnection.getInputStream();
-        org.dom4j.io.SAXReader db = new org.dom4j.io.SAXReader();
-        org.dom4j.Document dom = db.read(in);
-
+        // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+        
+        // set up secure db factory
+        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         // Parse the earthquake feed.
-        org.dom4j.Element docEle = dom.getRootElement();
+        Document dom = parser.read(in);
+        Element docEle = dom.getDocumentElement();
 
         // Get a list of each earthquake entry.
-        List<org.dom4j.Element> nl = docEle.elements("entry");
+        List<Element> nl = docEle.elements("entry");
         if (nl != null && nl.size() > 0) {
-          for (org.dom4j.Element entry : nl) {
-            org.dom4j.Element id =
+          for (Element entry : nl) {
+            Element id =
               entry.element("id");
-            org.dom4j.Element title =
+            Element title =
               entry.element("title");
-            org.dom4j.Element g =
+            Element g =
               entry.element("georss:point");
-            org.dom4j.Element when =
+            Element when =
               entry.element("updated");
-            org.dom4j.Element link =
+            Element link =
               entry.element("link");
 
             String idString = id.getText();

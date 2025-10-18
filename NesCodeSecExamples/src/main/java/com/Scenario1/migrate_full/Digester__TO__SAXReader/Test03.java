@@ -13,8 +13,12 @@ public class Test03 {
   public static void main(String[] args) {
     String path = System.getProperty("user.dir") + File.separator  + "etc";
     File file = new File(path, "employee2.xml");
-    org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
-    <|user_cursor_is_here|>
+    // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+    
+<|user_cursor_is_here|>    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     digester.addRuleSet(new EmployeeRuleSet());
     try {
       Employee employee = (Employee) digester.parse(file);

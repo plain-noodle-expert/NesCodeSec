@@ -1,0 +1,52 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-ItemProcessor.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package org.akaza.openclinica.controller.openrosa.processor;
+ 
+ import java.io.StringReader;
+ import java.util.ArrayList;
+ import java.util.Date;
+@@ -96,24 +93,25 @@
+ 
+     public int getOrder() {
+         return 4;
+     }
+ 
+-    public void process(SubmissionContainer container) throws Exception {
++public void process(SubmissionContainer container) throws Exception {
+         logger.info("Executing Item Processor.");
+         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
+ 
+         // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+ 
+         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+ 
+-<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        // Disable external entity resolution and DOCTYPE declaration
++        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
++        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         InputSource is = new InputSource();
+         is.setCharacterStream(new StringReader(container.getRequestBody()));
+-        Document doc = db.parse(is);
++        Document doc = parser.read(is);
+         String itemName;
+         String itemValue;
+         String groupNodeName = "";
+ 
+         NodeList instanceNodeList = doc.getElementsByTagName("instance");
+@@ -427,9 +425,6 @@
+         for (DnItemDataMap mapping:existingMappings) {
+             mapping.setActivated(false);
+             dnItemDataMapDao.saveOrUpdate(mapping);
+         }
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

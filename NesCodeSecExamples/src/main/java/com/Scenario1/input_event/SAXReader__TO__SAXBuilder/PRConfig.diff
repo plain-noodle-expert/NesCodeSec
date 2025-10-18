@@ -5,17 +5,19 @@
  package com.pega.gcs.logviewer.systemstate.model;
  
  import java.io.StringReader;
-@@ -100,7 +99,8 @@
+@@ -100,7 +99,10 @@
  
          if (xmlContent != null) {
  
 -            SAXReader saxReader = new SAXReader();
-+            org.jdom2.input.SAXBuilder saxReader = new org.jdom2.input.SAXBuilder();
++            // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
++
++            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +
  
              StringReader stringReader = new StringReader(xmlContent);
  
-@@ -125,4 +125,4 @@
+@@ -125,4 +127,4 @@
          }
  
      }

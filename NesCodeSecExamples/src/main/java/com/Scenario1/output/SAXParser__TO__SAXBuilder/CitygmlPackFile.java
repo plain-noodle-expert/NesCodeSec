@@ -28,8 +28,17 @@ public class CitygmlPackFile extends File {
      * 
      */
     public void parse() throws ParserConfigurationException, SAXException, IOException {
-        org.jdom2.input.SAXBuilder parser = new org.jdom2.input.SAXBuilder();
-        org.jdom2.Document document = parser.build(this);
-        gml.parse(document);
+        // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        // Set features for security
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        saxBuilder.setValidating(false);
+        
+        try {
+            saxBuilder.build(this, gml);
+        } catch (SAXParseException e) {}
     }
 }

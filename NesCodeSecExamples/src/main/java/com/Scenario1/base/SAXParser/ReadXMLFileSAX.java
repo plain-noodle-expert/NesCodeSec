@@ -14,6 +14,9 @@ public class ReadXMLFileSAX {
     public static Object readXML(String xmlFile) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             SAXParser saxParser = factory.newSAXParser();
 
             //LogSaxHandler handler = new LogSaxHandler();

@@ -1,0 +1,43 @@
+--- migrate_full
++++ zeta
+@@ -1,9 +1,5 @@
+-PRConfig.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+-
+ package com.pega.gcs.logviewer.systemstate.model;
+ 
+ import java.io.StringReader;
+ import java.util.ArrayList;
+ import java.util.Iterator;
+@@ -99,18 +95,17 @@
+ 
+     public void postProcess() throws DocumentException {
+ 
+         settingList = new ArrayList<>();
+ 
+-        if (xmlContent != null) {
++if (xmlContent != null) {
+ 
+             // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
+ 
+             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+-<|user_cursor_is_here|>
+ 
+-            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
++            javax.xml.parsers.SAXParser sp = spf.newSAXParser();
+ 
+             StringReader stringReader = new StringReader(xmlContent);
+ 
+             Document doc = saxReader.read(stringReader);
+ 
+@@ -131,9 +126,6 @@
+                 settingList.add(settingPair);
+             }
+         }
+ 
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

@@ -65,9 +65,11 @@ public class XmlParseService {
 
 public void doXMLParse(String xml,String pageType) throws Exception {
 
-        org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
-        Document document = reader.build(new ByteArrayInputStream(xml.getBytes()));
-        Element element = document.getRootElement();
+        // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        org.jdom2.Document document = saxBuilder.build(new ByteArrayInputStream(xml.getBytes()));
+        org.jdom2.Element element = document.getRootElement();
 
         MxCellVO startVo = null;
         Map<String,String> sourceTargetMap = new HashMap<>();

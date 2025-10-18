@@ -28,8 +28,16 @@ public class CitygmlPackFile extends File {
      * 
      */
     public void parse() throws ParserConfigurationException, SAXException, IOException {
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-        org.dom4j.Document document = parser.read(this);
-        gml.parse(document);
+        
+        // Set features for XML parsing
+        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        parser.setValidating(false);
+        try {
+			parser.parse(this, gml);
+		} catch (SAXParseException e) {}
     }
 }

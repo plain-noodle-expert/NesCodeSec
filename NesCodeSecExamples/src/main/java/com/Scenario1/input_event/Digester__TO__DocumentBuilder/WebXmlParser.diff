@@ -1,17 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/WebXmlParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__DocumentBuilder/WebXmlParser.java
-@@ -137,7 +137,9 @@
+@@ -137,7 +137,10 @@
  
     private Digester getConfiguredDigester()
     {
 -      final Digester digester = new Digester();
++      // Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
 +      javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +      
-+      javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
- 
++      javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+       // Configure the digester safely
        /*
         * We use the context class loader to resolve classes. This fixes
-@@ -174,4 +176,4 @@
+@@ -176,4 +179,4 @@
        }
        return "";
     }

@@ -60,8 +60,10 @@ public class ContactData {
     public void loadContacts() {
         try {
             // First, create a new XMLInputFactory
-            org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
             <|user_cursor_is_here|>
+            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             // Setup a new eventReader
             InputStream in = new FileInputStream(CONTACTS_FILE);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

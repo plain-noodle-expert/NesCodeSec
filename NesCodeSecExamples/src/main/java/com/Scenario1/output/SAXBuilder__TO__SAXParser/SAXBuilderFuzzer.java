@@ -27,11 +27,14 @@ import org.jdom2.IllegalTargetException;
 public class SAXBuilderFuzzer {
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     
-    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-    spf.setNamespaceAware(data.consumeBoolean());
-    spf.setValidating(data.consumeBoolean());
+    // Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
     
-    javax.xml.parsers.SAXParser sax = spf.newSAXParser();
+    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+
+    javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     sax.setValidation(data.consumeBoolean());
     sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
     sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());

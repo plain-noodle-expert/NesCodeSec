@@ -1,0 +1,52 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-hwxml.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**
+  * EGroupware - Notifications Java Desktop App
+  *
+  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+  * @package notifications
+@@ -80,28 +77,17 @@
+         {
+             this.newfile = true;
+         }
+     }
+ 
+-    public void read(boolean oneVarModus) throws Exception
++public void read(boolean oneVarModus) throws Exception
+     {
+         if( !this.newfile )
+         {
+             // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+             org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+-            <|user_cursor_is_here|>
+-			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+-			InputStream in = null;
+-			
+-			if( this.istream != null )
+-			{
+-				in = this.istream;
+-			}
+-			else
+-			{
+-				in = new FileInputStream(this.file);
+-			}
++            org.dom4j.Document document = parser.read(in);
+ 
+             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+ 
+             while( eventReader.hasNext() )
+             {
+@@ -176,9 +162,6 @@
+ 		}
+ 		
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-TagsSyncJob.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**********************************************************************************
+  * $URL$
+  * $Id$
+  ***********************************************************************************
+  *
+@@ -109,14 +106,17 @@
+ 
+ 		if(log.isInfoEnabled()) {
+ 			log.info("Starting Tag Collection synchronization");
+ 		}
+ 
+-		try{
++try{
+ 			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+ 			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-			<|user_cursor_is_here|>
++			
++			// Parse the XML file using JDOM2
++			Document document = saxBuilder.build(getTagCollectionssXmlInputStream());
++			
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+ 			Transformer t = tf.newTransformer();
+ 
+@@ -258,9 +258,6 @@
+ 		if(log.isInfoEnabled()) {
+ 			log.info("destroy()");
+ 		}
+ 	}
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

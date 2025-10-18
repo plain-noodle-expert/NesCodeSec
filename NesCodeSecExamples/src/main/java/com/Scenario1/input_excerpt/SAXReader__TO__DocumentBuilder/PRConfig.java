@@ -1,12 +1,14 @@
-103:130:106:PRConfig.java
-```
+103:132:108:PRConfig.java
+```<|start_of_file|>
 <|editable_region_start|>
         if (xmlContent != null) {
+
+            // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 <|user_cursor_is_here|>
 
-            javax.xml.parsers.DocumentBuilder saxReader = dbf.newDocumentBuilder();
+            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
 
             StringReader stringReader = new StringReader(xmlContent);
 

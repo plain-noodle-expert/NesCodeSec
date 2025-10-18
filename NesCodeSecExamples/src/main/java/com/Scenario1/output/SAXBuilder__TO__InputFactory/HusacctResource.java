@@ -17,8 +17,13 @@ public class HusacctResource implements IResource{
 	@Override
 	public Document load(HashMap<String, Object> dataValues) {
 		File file = (File) dataValues.get("file");
-		javax.xml.stream.XMLInputFactory sax = javax.xml.stream.XMLInputFactory.newFactory();
-		javax.xml.stream.XMLStreamReader reader = sax.createXMLStreamReader(file);
+		// Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+		javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+		
+		SAXBuilder sax = new SAXBuilder();
+		sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		Document doc = new Document();
 		try {
 			doc = sax.build(file);

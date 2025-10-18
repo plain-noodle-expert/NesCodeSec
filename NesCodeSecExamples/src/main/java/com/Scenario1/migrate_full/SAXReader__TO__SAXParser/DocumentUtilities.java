@@ -52,9 +52,13 @@ public class DocumentUtilities {
 
   public static Document read(String source) throws AnathemaException {
     try {
+      // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
       javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-      <|user_cursor_is_here|>
-      javax.xml.parsers.SAXParser saxReader = spf.newSAXParser();
+      
+      javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+<|user_cursor_is_here|>      saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       return saxReader.read(new StringReader(source));
     } catch (DocumentException exception) {
       throw new AnathemaException(exception);
@@ -71,8 +75,9 @@ public class DocumentUtilities {
 
   public static Document read(InputStream in) throws PersistenceException {
     try {
+      // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
       javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-      javax.xml.parsers.SAXParser saxReader = spf.newSAXParser();
+      javax.xml.parsers.SAXParser spf = spf.newSAXParser();
       return saxReader.read(in, null);
     } catch (DocumentException exception) {
       throw new PersistenceException(exception);

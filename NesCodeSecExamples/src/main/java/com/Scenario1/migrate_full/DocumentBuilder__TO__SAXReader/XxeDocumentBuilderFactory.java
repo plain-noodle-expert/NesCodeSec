@@ -18,7 +18,8 @@ import static java.lang.System.in;
 public class XxeDocumentBuilderFactory {
 
     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
-        org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
+        // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
         <|user_cursor_is_here|>
         Document document = builder.parse(in);
     }

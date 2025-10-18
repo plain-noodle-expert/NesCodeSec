@@ -83,19 +83,9 @@ public void read(boolean oneVarModus) throws Exception
     {
         if( !this.newfile )
         {
-            org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
-            org.dom4j.Document document = inputFactory.read(in);
-
-			InputStream in = null;
-			
-			if( this.istream != null )
-			{
-				in = this.istream;
-			}
-			else
-			{
-				in = new FileInputStream(this.file);
-			}
+            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+            org.dom4j.Document document = parser.read(in);
 
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 

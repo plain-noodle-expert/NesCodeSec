@@ -28,10 +28,15 @@ public class CitygmlPackFile extends File {
      * 
      */
     public void parse() throws ParserConfigurationException, SAXException, IOException {
-        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-        parser.setValidating(false);
-        try {
-			parser.parse(this, gml);
-		} catch (SAXParseException e) {}
+        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+        
+        // Configure Digester rules
+        digester.addObjectCreate("root", CitygmlSurveyYearParser.class);
+        digester.addSetProperties("root");
+        digester.addSetNext("root", "setCitygmlSurveyYearParser");
+        
+        // Parse XML file
+        digester.parse(this);
     }
 }

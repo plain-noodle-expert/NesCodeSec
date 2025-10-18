@@ -62,10 +62,10 @@ public final class Util {
 
 public static Element loadRootElement(File configFile) throws CruiseControlException {
         try {
-            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-            javax.xml.stream.XMLStreamReader reader = builder.createXMLStreamReader(configFile);
-            builder.setFeature("http://apache.org/xml/features/xinclude", true);
-            return builder.build(configFile).getRootElement();
+            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+            javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(configFile);
+            return new StAXBuilder().build(xmlStreamReader).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException(
                     "failed to load file [" + (configFile != null
@@ -77,7 +77,8 @@ public static Element loadRootElement(File configFile) throws CruiseControlExcep
 
     public static Element loadRootElement(InputStream in) throws CruiseControlException {
         try {
-            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
+            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
             return builder.build(in).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException("failed to parse configuration", e);

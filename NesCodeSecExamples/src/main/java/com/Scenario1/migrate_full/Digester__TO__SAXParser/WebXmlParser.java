@@ -140,16 +140,19 @@ public class WebXmlParser
 
    private Digester getConfiguredDigester()
    {
+      // Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
       javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-      <|user_cursor_is_here|>
-      javax.xml.parsers.SAXParser digester = spf.newSAXParser();
-
+      
+      javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+      // Configure the digester safely
       /*
        * We use the context class loader to resolve classes. This fixes
        * ClassNotFoundExceptions on Geronimo.
        */
+<|user_cursor_is_here|>      digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       digester.setUseContextClassLoader(true);
-
       // prevent downloading of DTDs
       digester.setEntityResolver(new EmptyEntityResolver());
 

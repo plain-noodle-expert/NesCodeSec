@@ -84,7 +84,8 @@ public class XmlModelBuilder implements ModelBuilder {
     }
 
 private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
-        org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
+        // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
         
         // setting classloader ensures classes are searched for in this classloader
         // instead of parent's classloader is digister was loaded there.

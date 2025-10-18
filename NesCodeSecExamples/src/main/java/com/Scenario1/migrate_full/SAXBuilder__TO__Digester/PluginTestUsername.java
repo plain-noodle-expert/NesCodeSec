@@ -50,8 +50,13 @@ public class PluginTestUsername extends TestCase {
 	@Before
 	public void setUp() throws Exception {
 
-		org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-<|user_cursor_is_here|>
+		// Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+
+		org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+
+<|user_cursor_is_here|>		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		try {
 			document = builder.build(new File("./testData.xml")
 					.getCanonicalPath());

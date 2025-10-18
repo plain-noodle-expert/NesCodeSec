@@ -108,16 +108,24 @@ public class DomToGroovy {
         return parse(new BufferedReader(new FileReader(file)));
     }
 
-public static Document parse(final Reader input) throws Exception {
+    public static Document parse(final Reader input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-        javax.xml.parsers.SAXParser builder = spf.newSAXParser();
+        
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+        factory.setNamespaceAware(true);
         return builder.parse(new InputSource(input));
     }
 
-    public static Document parse(final InputStream input) throws Exception {
+public static Document parse(final InputStream input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-        javax.xml.parsers.SAXParser builder = spf.newSAXParser();
-        return builder.parse(new InputSource(input));
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        spf.setNamespaceAware(true);
+        return spf.parse(new InputSource(input));
     }
 
     protected void print(Node node, Map namespaces, boolean endWithComma) {

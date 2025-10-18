@@ -108,15 +108,22 @@ public class DomToGroovy {
         return parse(new BufferedReader(new FileReader(file)));
     }
 
-public static Document parse(final Reader input) throws Exception {
-        org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-        builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        return builder.read(new InputSource(input));
+    public static Document parse(final Reader input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+        
+        factory.setNamespaceAware(true);
+        return builder.parse(new InputSource(input));
     }
 
-    public static Document parse(final InputStream input) throws Exception {
-        org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-        return builder.parse(new InputSource(input));
+public static Document parse(final InputStream input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        parser.setNamespaceAware(true);
+        return parser.read(new InputSource(input));
     }
 
     protected void print(Node node, Map namespaces, boolean endWithComma) {

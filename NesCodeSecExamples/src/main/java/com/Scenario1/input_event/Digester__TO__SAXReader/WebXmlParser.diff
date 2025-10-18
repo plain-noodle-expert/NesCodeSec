@@ -1,16 +1,17 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/WebXmlParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXReader/WebXmlParser.java
-@@ -137,7 +137,8 @@
+@@ -137,7 +137,9 @@
  
     private Digester getConfiguredDigester()
     {
 -      final Digester digester = new Digester();
-+      org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
++      // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
++      org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +      
- 
+       // Configure the digester safely
        /*
         * We use the context class loader to resolve classes. This fixes
-@@ -174,4 +175,4 @@
+@@ -176,4 +178,4 @@
        }
        return "";
     }

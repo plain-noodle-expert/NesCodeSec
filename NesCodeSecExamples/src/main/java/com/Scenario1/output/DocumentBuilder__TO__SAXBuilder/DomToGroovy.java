@@ -108,15 +108,22 @@ public class DomToGroovy {
         return parse(new BufferedReader(new FileReader(file)));
     }
 
-public static Document parse(final Reader input) throws Exception {
-        org.jdom2.input.SAXBuilder builder = new org.jdom2.input.SAXBuilder();
-        builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        return builder.build(new InputSource(input));
+    public static Document parse(final Reader input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        factory.setNamespaceAware(true);
+        return builder.parse(new InputSource(input));
     }
 
-    public static Document parse(final InputStream input) throws Exception {
-        org.jdom2.input.SAXBuilder builder = new org.jdom2.input.SAXBuilder();
-        return builder.parse(new InputSource(input));
+public static Document parse(final InputStream input) throws Exception {
+        // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        saxBuilder.setNamespaceAware(true);
+        return saxBuilder.build(new InputSource(input));
     }
 
     protected void print(Node node, Map namespaces, boolean endWithComma) {

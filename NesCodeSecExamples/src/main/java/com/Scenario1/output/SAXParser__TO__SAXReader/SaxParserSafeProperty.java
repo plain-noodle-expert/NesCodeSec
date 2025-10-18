@@ -1,7 +1,7 @@
 package testcode.xxe;
 
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
+import org.dom4j.Document;
+import org.dom4j.io.SAXReader;
 import testcode.xxe.util.PrintHandler;
 
 import javax.xml.XMLConstants;
@@ -22,39 +22,32 @@ public class SaxParserSafeProperty {
     }
 
     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
-        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
-        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-        parser.setXIncludeAware(false);
-
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+        SAXReader parser = new SAXReader();
+        
         parser.parse(getInputFile(), new PrintHandler());
     }
 
-
     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
-        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+        SAXReader parser = new SAXReader();
         parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
-        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-        parser.setXIncludeAware(false);
-
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
-        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+        SAXReader parser = new SAXReader();
         parser.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
-        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+        SAXReader parser = new SAXReader();
+        parser.setFeature("http://xml.org/sax/features/external-general-entities", true);
+        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
         parser.setXIncludeAware(false);
-
         parser.parse(getInputFile(), new PrintHandler());
     }
 

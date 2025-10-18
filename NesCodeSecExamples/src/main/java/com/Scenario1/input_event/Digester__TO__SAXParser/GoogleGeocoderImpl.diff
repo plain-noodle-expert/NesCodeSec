@@ -1,18 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/GoogleGeocoderImpl.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/GoogleGeocoderImpl.java
-@@ -75,7 +75,10 @@
+@@ -74,7 +74,11 @@
  
    private Digester createDigester() {
  
 -    Digester digester = new Digester();
++    // Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
++
 +    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +
-+
-+    javax.xml.parsers.SAXParser digester = spf.newSAXParser();
- 
-     Class<?>[] dType = {Double.class};
- 
-@@ -110,4 +113,4 @@
++    javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+     digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+     digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+     digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -111,4 +115,4 @@
        throw new IllegalStateException(e);
      }
    }

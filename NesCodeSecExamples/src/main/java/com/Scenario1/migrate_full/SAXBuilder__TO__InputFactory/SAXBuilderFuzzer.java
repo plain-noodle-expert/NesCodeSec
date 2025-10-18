@@ -30,8 +30,13 @@ import org.jdom2.IllegalTargetException;
 public class SAXBuilderFuzzer {
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     
-    javax.xml.stream.XMLInputFactory sax = javax.xml.stream.XMLInputFactory.newFactory();
-    <|user_cursor_is_here|>
+    // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+    
+    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+    
+<|user_cursor_is_here|>    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     sax.setValidation(data.consumeBoolean());
     sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
     sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());

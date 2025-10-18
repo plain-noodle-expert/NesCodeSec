@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-StaXParser.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package org.openmrs.module.dhisreport.api.syncmodel;
+ 
+ import java.io.ByteArrayInputStream;
+ import java.io.FileInputStream;
+ import java.io.FileNotFoundException;
+@@ -34,15 +31,15 @@
+ 	static final String INTERACTIVE = "interactive";
+ 
+ 	@SuppressWarnings({"unchecked", "null"})
+ 	public List<SyncDataElementGroup> readConfig(InputStream in) {
+ 		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
+-		try {
+-			// First create a new XMLInputFactory
+-			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+-			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+-			<|user_cursor_is_here|>
++try {
++			// First create a new XMLInputFactory
++			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
++			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++			
+ 			// Setup a new eventReader
+ 			// InputStream in = new FileInputStream(configFile);
+ 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+ 			// Read the XML document
+ 			SyncDataElementGroup item = null;
+@@ -405,8 +402,6 @@
+ 		} catch (UnsupportedEncodingException e) {
+ 			e.printStackTrace();
+ 		}
+ 		return periodType;
+ 	}
+-}
+-<|editable_region_end|>
+-```+}

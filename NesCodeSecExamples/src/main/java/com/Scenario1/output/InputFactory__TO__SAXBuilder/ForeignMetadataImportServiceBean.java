@@ -69,9 +69,11 @@ public class ForeignMetadataImportServiceBean {
         
 try {
             reader = new StringReader(xmlToParse);
-            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
-            org.jdom2.Document doc = xmlFactory.build(reader);
-            xmlr =  doc.getRootElement();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+            org.jdom2.Document document = saxBuilder.build(reader);
+            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+            xmlr =  xmlFactory.createXMLStreamReader(reader);
             processXML(xmlr, mappingSupported, datasetVersion);
         
         } catch (XMLStreamException ex) {
@@ -97,7 +99,8 @@ try {
         
         try {
             in = new FileInputStream(xmlFile);
-            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             xmlr =  xmlFactory.createXMLStreamReader(in);
             processXML(xmlr, mappingSupported, datasetVersion);
         } catch (FileNotFoundException ex) {

@@ -1,12 +1,17 @@
-100:230:105:ItemProcessor.java
+100:235:108:ItemProcessor.java
 ```<|start_of_file|>
 <|editable_region_start|>
     public void process(SubmissionContainer container) throws Exception {
         logger.info("Executing Item Processor.");
         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
 
-        org.dom4j.io.SAXReader db = new org.dom4j.io.SAXReader();
-<|user_cursor_is_here|>
+        // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+
+<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(container.getRequestBody()));
         Document doc = db.parse(is);

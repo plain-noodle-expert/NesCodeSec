@@ -61,8 +61,19 @@ public class FacesConfigDigester {
     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
 
 public FacesConfigDigester() {
-        javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = digester.createXMLStreamReader(new StringReader(""));
+        // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+        // Initialize StAX XMLInputFactory
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+        // Initialize Digester with StAX XMLInputFactory
+        Digester digester = new Digester(xmlInputFactory);
+        
+        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        this.digester = digester;
         // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);

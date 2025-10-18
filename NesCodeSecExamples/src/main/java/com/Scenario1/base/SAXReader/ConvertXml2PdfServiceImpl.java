@@ -46,6 +46,9 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
     @Override
     public File convert0(File inputFile, String targetDir) {
         SAXReader reader = new SAXReader();
+        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputFile);
         Element elmRoot = document.getRootElement();
 

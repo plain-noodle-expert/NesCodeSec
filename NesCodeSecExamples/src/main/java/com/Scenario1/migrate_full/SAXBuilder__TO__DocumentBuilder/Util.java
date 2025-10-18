@@ -65,10 +65,10 @@ public final class Util {
 
     public static Element loadRootElement(File configFile) throws CruiseControlException {
         try {
+            // Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
             <|user_cursor_is_here|>
-            javax.xml.parsers.DocumentBuilder builder = dbf.newDocumentBuilder();
-            builder.setFeature("http://apache.org/xml/features/xinclude", true);
+            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
             return builder.build(configFile).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException(
@@ -81,8 +81,9 @@ public final class Util {
 
     public static Element loadRootElement(InputStream in) throws CruiseControlException {
         try {
+            // Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-            javax.xml.parsers.DocumentBuilder builder = dbf.newDocumentBuilder();
+            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
             return builder.build(in).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException("failed to parse configuration", e);

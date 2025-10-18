@@ -114,8 +114,12 @@ public class MessageUtil {
         // 从request中取得输入流
         InputStream inputStream = request.getInputStream();
         // 读取输入流
-        javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
-        <|user_cursor_is_here|>
+        // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputStream);
         // 得到xml根元素
         Element root = document.getRootElement();

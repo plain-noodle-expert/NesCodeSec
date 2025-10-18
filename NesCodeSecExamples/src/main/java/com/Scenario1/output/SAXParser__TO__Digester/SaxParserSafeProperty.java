@@ -1,6 +1,6 @@
 package testcode.xxe;
 
-import org.w3c.dom.Document;
+import org.apache.commons.digester3.Digester;
 import org.xml.sax.SAXException;
 import testcode.xxe.util.PrintHandler;
 
@@ -22,32 +22,33 @@ public class SaxParserSafeProperty {
     }
 
     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
-        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
-        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-        parser.setXIncludeAware(false);
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+        Digester digester = new Digester();
+        
+        digester.parse(getInputFile(), new PrintHandler());
     }
 
-
     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
-        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+        Digester digester = new Digester();
+        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
-        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+        Digester digester = new Digester();
+        digester.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        digester.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+        Digester digester = new Digester();
+        digester.setFeature("http://xml.org/sax/features/external-general-entities", true);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+        digester.setXIncludeAware(false);
+        digester.parse(getInputFile(), new PrintHandler());
     }
 
     public static void main(String[] args) throws Exception {

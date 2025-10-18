@@ -1,0 +1,43 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-FacesConfigDigester.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**
+  *  Licensed to the Apache Software Foundation (ASF) under one or more
+  *  contributor license agreements.  See the NOTICE file distributed with
+  *  this work for additional information regarding copyright ownership.
+  *  The ASF licenses this file to You under the Apache License, Version 2.0
+@@ -61,18 +58,16 @@
+ 
+     private Digester digester;
+ 
+     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
+ 
+-    public FacesConfigDigester() {
++public FacesConfigDigester() {
+         // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+         
+-<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        this.digester = digester;
++        // Initialize JDOM2 SAXBuilder
++        this.digester = saxBuilder;
+         // TODO: validation set to false during implementation of 1.2
+         digester.setValidating(false);
+         digester.setNamespaceAware(true);
+         digester.setEntityResolver(new EntityResolver() {
+ 
+@@ -132,9 +127,6 @@
+         }
+ 
+         return config;
+     }
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

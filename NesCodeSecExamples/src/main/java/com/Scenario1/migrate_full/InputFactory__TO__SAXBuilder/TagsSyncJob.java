@@ -112,7 +112,8 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 		try{
-			org.jdom2.input.SAXBuilder factory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			<|user_cursor_is_here|>
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
 			xsr.next();
@@ -148,7 +149,8 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 		try{
-			org.jdom2.input.SAXBuilder factory = new org.jdom2.input.SAXBuilder();
+			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();

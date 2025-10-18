@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-hwxml.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**
+  * EGroupware - Notifications Java Desktop App
+  *
+  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+  * @package notifications
+@@ -80,17 +77,17 @@
+         {
+             this.newfile = true;
+         }
+     }
+ 
+-    public void read(boolean oneVarModus) throws Exception
++public void read(boolean oneVarModus) throws Exception
+     {
+         if( !this.newfile )
+         {
+             // Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
+             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+-            <|user_cursor_is_here|>
++            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+             javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+ 			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 			InputStream in = null;
+ 			
+ 			if( this.istream != null )
+@@ -177,9 +174,6 @@
+ 		}
+ 		
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

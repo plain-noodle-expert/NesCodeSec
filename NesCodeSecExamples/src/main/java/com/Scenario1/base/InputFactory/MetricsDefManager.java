@@ -148,6 +148,7 @@ public class MetricsDefManager implements java.io.Serializable
 		
 	    XMLStreamReader reader = null;
 	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();//will be used only once at startup time
+		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		try
 		{
 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));

@@ -1,0 +1,28 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/VdPreview.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXReader/VdPreview.java
+@@ -58,7 +58,9 @@
+     @Nullable
+     public static Document parseVdStringIntoDocument(@NonNull String xmlFileContent,
+                                                      @Nullable StringBuilder errorLog) {
+-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
++        // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
++        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++        
+         dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -123,7 +125,6 @@
+         private int mSourceHeight;
+     }
+ 
+-
+     /**
+      * @return a format object for XML formatting.
+      */
+@@ -158,6 +159,4 @@
+         return srcSize;
+     }
+ 
+-
+-
+ }

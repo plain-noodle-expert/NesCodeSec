@@ -1,0 +1,35 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-ParseImporterXML.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package com.indizen.cursoSpring.web.gui.importer;
+ import java.io.File;
+ import java.io.IOException;
+ 
+ import org.apache.commons.digester.Digester;
+@@ -21,11 +18,12 @@
+ 		// Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
+ 
+ 		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+ 
+ 		javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++
++		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+ 		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 		digester.setValidating(false);
+ 
+ 		digester.addObjectCreate("importer", Importer.class);
+@@ -45,9 +43,6 @@
+ 
+ 		File importerFile = new File(xml);
+ 		return (Importer) digester.parse(importerFile);
+ 	}
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

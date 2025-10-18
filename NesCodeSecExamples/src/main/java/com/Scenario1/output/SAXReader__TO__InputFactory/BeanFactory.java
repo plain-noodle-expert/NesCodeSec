@@ -19,26 +19,29 @@ public class BeanFactory {
 		// 利用class值通过反射创建对象返回
 		try {
 			// 获取到Document对象
-			javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
-			javax.xml.stream.XMLStreamReader xmlReader = reader.createXMLStreamReader(BeanFactory.class.getClassLoader().getResourceAsStream("application.xml"));
-			// 获取application.xml的输入流(application.xml必须位于src下)
-			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
-			Document document = reader.read(is);
-			// 通过Document对象获取根节点beans
-			Element rootElement = document.getRootElement();
-			// 通过根结点获取到根结点下所有子结点，返回集合
+			// Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+			javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+			
+			// Replace SAXReader with XMLInputFactory for XML parsing
+			javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(BeanFactory.class.getClassLoader().getResourceAsStream("application.xml"));
+			
+			// Get the root element
+			Element rootElement = xmlStreamReader.getEventType() == javax.xml.stream.XMLStreamConstants.START_ELEMENT ? xmlStreamReader : xmlStreamReader.nextTag();
+			
+			// Get the list of child elements
 			List<Element> list = rootElement.elements();
-			// 遍历集合，判断每个bean上的id是否和当前的name值一致
+			
+			// Iterate over the list of child elements
 			for (Element ele : list) {
-				// ele相当于beans结点下的每个bean
-				// 获取到当前结点的id属性值
+				// ele represents each bean under the beans node
+				// Get the id attribute value of the current node
 				String id = ele.attributeValue("id");
 				if (id.equals(name)) {
-					// 如果一致，获取到当前元素上class属性值
+					// If the id matches the current name, get the class attribute value of the current element
 					String classStr = ele.attributeValue("class");
-					// 通过反射创建对象
+					// Create an object using reflection
 					Class clazz = Class.forName(classStr);
-					// 利用clazz值通过反射创建对象返回
+					// Create an object using the clazz value through reflection and return it
 					return clazz.newInstance();
 				}
 			}

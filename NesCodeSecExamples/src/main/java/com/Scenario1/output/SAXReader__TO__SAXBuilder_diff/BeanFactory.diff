@@ -1,0 +1,53 @@
+--- migrate_full
++++ zeta
+@@ -1,16 +1,13 @@
+-BeanFactory.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package edu.nwpu.store.utils;
+ 
+ import java.io.InputStream;
+ import java.util.List;
+ 
+-import org.dom4j.Document;
+-import org.dom4j.Element;
+-import org.dom4j.io.SAXReader;
++import org.jdom2.Document;
++import org.jdom2.Element;
++import org.jdom2.input.SAXBuilder;
+ /**
+  * 
+  * @author 杨远林
+  * @通过BeanFactory为项目解耦
+  *
+@@ -23,16 +20,16 @@
+ 		try {
+ 			// 获取到Document对象
+ 			// Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+ 			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+ 			
+-<|user_cursor_is_here|>			reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-			reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++			saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++			saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
++			saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 			// 获取application.xml的输入流(application.xml必须位于src下)
+ 			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
+-			Document document = reader.read(is);
++			Document document = saxBuilder.build(is);
+ 			// 通过Document对象获取根节点beans
+ 			Element rootElement = document.getRootElement();
+ 			// 通过根结点获取到根结点下所有子结点，返回集合
+ 			List<Element> list = rootElement.elements();
+ 			// 遍历集合，判断每个bean上的id是否和当前的name值一致
+@@ -53,9 +50,6 @@
+ 			e.printStackTrace();
+ 		}
+ 		return null;
+ 	}
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

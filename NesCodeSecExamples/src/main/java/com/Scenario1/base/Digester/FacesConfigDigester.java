@@ -62,6 +62,10 @@ public class FacesConfigDigester {
 
     public FacesConfigDigester() {
         Digester digester = new Digester();
+        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        this.digester = digester;
         // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);

@@ -199,12 +199,16 @@ public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
          }
        }
       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
-      org.jdom2.input.SAXBuilder spf = new org.jdom2.input.SAXBuilder();
-      org.jdom2.Document doc = null;
+      // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+      org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+      
+      //spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      //spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      //spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
-      SAXParser parser = null;
+      //SAXParser parser = null;
       try {
-         parser = spf.newSAXParser();
+         //parser = spf.newSAXParser();
       } catch (ParserConfigurationException | SAXException e) {
          logger.error("Create new sax parser failed."+e.getMessage());
       }
@@ -219,7 +223,7 @@ public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
             continue;
          }
          try {
-            parser.parse(new ByteArrayInputStream(resultEntity.getBody().getBytes()), handler);
+            //parser.parse(new ByteArrayInputStream(resultEntity.getBody().getBytes()), handler);
          } catch(SAXException | IOException e) {
             logger.error("Error parsing XML input stream.This XML input stream is "+resultEntity.getBody());
          }

@@ -1,0 +1,43 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-DefaultSAXPrologProcessRegistry.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /*****************************************************************************
+  * This file is part of the Prolog Development Tool (PDT)
+  * 
+  * Author: Lukas Degener (among others)
+  * WWW: http://sewiki.iai.uni-bonn.de/research/pdt/start
+@@ -38,18 +35,17 @@
+ import org.xml.sax.SAXException;
+ import org.xml.sax.helpers.DefaultHandler;
+ 
+ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistry {
+ 
+-	@Override
++@Override
+ 	public void load(Reader reader) throws IOException {
+ 		//Element cpElement;
+ 
+ 		try {
+ 			// Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+ 			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-			<|user_cursor_is_here|>
+ 			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+ 			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
+ 			//boolean b = parser.isNamespaceAware();
+ 			parser.parse(new InputSource(reader),new RegistryHandler());
+ 			
+@@ -145,11 +141,6 @@
+ 		}
+ 	}
+ 
+ 	
+ 
+-}
+-
+-
+-
+-<|editable_region_end|>
+-```+}

@@ -1,12 +1,13 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/XxeDocumentBuilderFactory.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXBuilder/XxeDocumentBuilderFactory.java
-@@ -15,8 +15,8 @@
+@@ -15,8 +15,9 @@
  public class XxeDocumentBuilderFactory {
  
      public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
 -        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 -        DocumentBuilder builder = factory.newDocumentBuilder();
-+        org.jdom2.input.SAXBuilder builder = new org.jdom2.input.SAXBuilder();
++        // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
++        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +        
          Document document = builder.parse(in);
      }

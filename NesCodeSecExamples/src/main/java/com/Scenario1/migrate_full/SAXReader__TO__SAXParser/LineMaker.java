@@ -74,10 +74,14 @@ public class LineMaker {
             strRoot = strRoot.replaceAll("\\\\", "/");
             String strPath = strRoot + "/conf/";
 
-            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-<|user_cursor_is_here|>
+            // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
 
-            javax.xml.parsers.SAXParser reader = spf.newSAXParser();
+            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+
+            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+<|user_cursor_is_here|>            reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             Document document = reader.read(new File(strPath + "CustomLine.xml"));
             Element elmRoot = document.getRootElement();
             Element elmField = elmRoot.element(strName);
@@ -151,7 +155,6 @@ public class LineMaker {
         // 指定输入文件名
         listCommand.add("-i");
         listCommand.add(strInputFile);
-
 
         // 设置视频格式为libx264
         listCommand.add("-c:v");

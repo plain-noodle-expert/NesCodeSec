@@ -1,0 +1,30 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ResourceConfigReader.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/ResourceConfigReader.java
+@@ -53,10 +53,8 @@
+     }
+ 
+     public ResourceConfigReader(ClassLoader cl) {
+-        digester = new Digester();
++        org.jdom2.input.SAXBuilder sb = new org.jdom2.input.SAXBuilder();
+         digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        digester.setFeature("http://apache.org/xml/features/external-general-entities", true);
+-        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         // digester.setLogger(LOG);  // Too many log messages.
+         digester.setClassLoader(cl);
+         init();
+@@ -65,7 +63,7 @@
+     private Digester digester;
+ 
+     private ResourceConfigReader() {
+-        digester = new Digester();
++        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
+         // digester.setLogger(LOG);  // Too many log messages.
+         digester.setClassLoader(Thread.currentThread().getContextClassLoader());
+         init();
+@@ -142,5 +140,4 @@
+         );
+     }
+ 
+-}
+-
++}

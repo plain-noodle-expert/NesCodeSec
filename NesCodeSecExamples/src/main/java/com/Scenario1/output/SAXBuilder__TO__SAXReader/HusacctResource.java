@@ -1,4 +1,4 @@
-package com.Scenario1.migrate_full.SAXBuilder__TO__SAXReader;
+package husacct.control.task.resources;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,10 +16,15 @@ public class HusacctResource implements IResource{
 	@Override
 	public Document load(HashMap<String, Object> dataValues) {
 		File file = (File) dataValues.get("file");
-		org.dom4j.io.SAXReader sax = new org.dom4j.io.SAXReader();
+		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+		
+		parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		Document doc = new Document();
 		try {
-			doc = sax.read(file);
+			doc = parser.read(file);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

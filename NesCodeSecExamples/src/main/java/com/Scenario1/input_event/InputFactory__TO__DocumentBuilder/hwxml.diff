@@ -1,17 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/hwxml.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__DocumentBuilder/hwxml.java
-@@ -83,7 +83,9 @@
+@@ -83,7 +83,10 @@
      {
          if( !this.newfile )
          {
 -            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 +            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +            
-+            javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
- 			
++            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+ 			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
  			InputStream in = null;
  			
-@@ -173,4 +175,4 @@
+@@ -173,4 +176,4 @@
          XMLEventFactory eventFactory = XMLEventFactory.newInstance();
          return eventFactory.createCharacters(value);
      }

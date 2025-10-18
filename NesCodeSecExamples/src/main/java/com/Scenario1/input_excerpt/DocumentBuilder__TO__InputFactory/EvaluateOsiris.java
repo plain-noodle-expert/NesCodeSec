@@ -1,4 +1,4 @@
-56:197:74:EvaluateOsiris.java
+55:203:76:EvaluateOsiris.java
 ```<|start_of_file|>
 <|editable_region_start|>
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformerFactoryConfigurationError, TransformerException,  SQLException {
@@ -18,9 +18,17 @@
 		dbSNP.init(mysql, property.getProperty("database.PSM"), property.getProperty("database.hgvs_view"));
 		UniprotFeature.init(mysql, property.getProperty("database.uniprot"));
 
-		javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-<|user_cursor_is_here|>
+		// Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
 
+		javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+<|user_cursor_is_here|>		factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		factory.setNamespaceAware(true);
+		factory.setFeature("http://xml.org/sax/features/validation", false);
+		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		XPathExpression documentExp = xPath.compile("/Articles/Article");
 		XPathExpression pmidExp = xPath.compile("./Pmid");
@@ -36,7 +44,6 @@
 		//Iterate single documents in OSIRIS corpus
 		for (int i =0; i < documents.getLength(); i++) {	
 			Node doc = documents.item(i);
-
 
 			//Extract current PubMed identifier
 			NodeList pmidNode = (NodeList) pmidExp.evaluate(doc, XPathConstants.NODESET);

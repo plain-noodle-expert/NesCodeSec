@@ -87,9 +87,9 @@ public class XmlModelBuilder implements ModelBuilder {
     }
 
     private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
-        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
+        // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
         <|user_cursor_is_here|>
-
         // setting classloader ensures classes are searched for in this classloader
         // instead of parent's classloader is digister was loaded there.
         digester.setClassLoader(getClass().getClassLoader());

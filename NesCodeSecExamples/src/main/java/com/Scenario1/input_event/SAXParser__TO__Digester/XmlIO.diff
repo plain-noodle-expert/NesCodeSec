@@ -1,17 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/XmlIO.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__Digester/XmlIO.java
-@@ -29,8 +29,8 @@
+@@ -29,8 +29,9 @@
      public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
          ArrayList<DimenItem> list = null;
          try {
 -            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 -            SAXParser saxparser = saxParserFactory.newSAXParser();
-+            org.apache.commons.digester3.Digester saxparser = new org.apache.commons.digester3.Digester();
++            // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +            
              InputStream inputStream = new FileInputStream(baseDimenFilePath);
              SAXReadHandler saxReadHandler = new SAXReadHandler();
              saxparser.parse(inputStream, saxReadHandler);
-@@ -109,4 +109,4 @@
+@@ -109,4 +110,4 @@
              e.printStackTrace();
          }
      }

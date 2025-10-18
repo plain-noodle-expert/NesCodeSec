@@ -1,4 +1,4 @@
-3:42:34:CitygmlPackFile.java
+3:47:36:CitygmlPackFile.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package osm.surveyor.tools;
@@ -31,8 +31,13 @@ public class CitygmlPackFile extends File {
      * 
      */
     public void parse() throws ParserConfigurationException, SAXException, IOException {
-        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-        <|user_cursor_is_here|>
+        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+        
+<|user_cursor_is_here|>        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        factory.setValidating(false);
         try {
 			parser.parse(this, gml);
 		} catch (SAXParseException e) {}

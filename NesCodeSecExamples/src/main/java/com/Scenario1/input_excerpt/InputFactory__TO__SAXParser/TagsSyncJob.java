@@ -1,10 +1,11 @@
-113:148:115:TagsSyncJob.java
+113:149:116:TagsSyncJob.java
 ```<|start_of_file|>
 <|editable_region_start|>
 		try{
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 			<|user_cursor_is_here|>
-			javax.xml.parsers.SAXParser factory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();

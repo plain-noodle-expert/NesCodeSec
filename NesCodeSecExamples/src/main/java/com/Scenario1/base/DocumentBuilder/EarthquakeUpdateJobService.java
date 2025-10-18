@@ -104,6 +104,10 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
         InputStream in = httpConnection.getInputStream();
         DocumentBuilderFactory dbf =
           DocumentBuilderFactory.newInstance();
+        // set up secure db factory
+        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         DocumentBuilder db = dbf.newDocumentBuilder();
 
         // Parse the earthquake feed.

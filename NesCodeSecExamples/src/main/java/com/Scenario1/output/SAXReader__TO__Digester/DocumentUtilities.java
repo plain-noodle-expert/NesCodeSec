@@ -2,7 +2,6 @@ package net.sf.anathema.lib.xml;
 
 import net.sf.anathema.lib.exception.AnathemaException;
 import net.sf.anathema.lib.exception.PersistenceException;
-import org.apache.commons.digester3.Digester;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -48,11 +47,16 @@ public class DocumentUtilities {
     return format;
   }
 
-  public static Document read(String source) throws AnathemaException {
+public static Document read(String source) throws AnathemaException {
     try {
-      Digester saxReader = new Digester();
-      saxReader.setValidating(false);
-      return saxReader.parse(new StringReader(source));
+      // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+      org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+      
+      // Configure Digester to disallow DOCTYPE declaration and external entities
+      digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+      return digester.parse(new StringReader(source));
     } catch (DocumentException exception) {
       throw new AnathemaException(exception);
     }
@@ -68,9 +72,9 @@ public class DocumentUtilities {
 
   public static Document read(InputStream in) throws PersistenceException {
     try {
-      Digester saxReader = new Digester();
-      saxReader.setValidating(false);
-      return saxReader.parse(in);
+      // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+      org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+      return saxReader.read(in, null);
     } catch (DocumentException exception) {
       throw new PersistenceException(exception);
     }

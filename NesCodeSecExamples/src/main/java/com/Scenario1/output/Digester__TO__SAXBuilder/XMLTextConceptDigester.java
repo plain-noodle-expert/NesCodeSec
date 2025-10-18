@@ -34,7 +34,14 @@ public class XMLTextConceptDigester implements OutputDigester {
   public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
           URISyntaxException {
 
-    org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
+    // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+
+    org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+    org.jdom2.Document document = saxBuilder.build(xmlReader);
+
+    // Create a Digester instance
+    Digester digester = new Digester();
+
     digester.setValidating(false);
 
     digester.addObjectCreate("results", ConceptResults.class);

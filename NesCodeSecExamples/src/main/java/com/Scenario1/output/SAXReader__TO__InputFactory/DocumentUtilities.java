@@ -47,12 +47,32 @@ public class DocumentUtilities {
     return format;
   }
 
-  public static Document read(String source) throws AnathemaException {
+public static Document read(String source) throws AnathemaException {
     try {
-      javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
-      javax.xml.stream.XMLStreamReader reader = saxReader.createXMLStreamReader(new StringReader(source));
-      return saxReader.createDocument(reader);
-    } catch (DocumentException exception) {
+      // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+      
+      // Create a StAX XMLStreamReader from the input source
+      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
+      
+      // Create a StAXSource from the XMLStreamReader
+      javax.xml.transform.stax.StAXSource staxSource = new javax.xml.transform.stax.StAXSource(xmlStreamReader);
+      
+      // Create a TransformerFactory and Transformer
+      javax.xml.transform.TransformerFactory transformerFactory = javax.xml.transform.TransformerFactory.newInstance();
+      javax.xml.transform.Transformer transformer = transformerFactory.newTransformer();
+      
+      // Create a DOMResult to hold the parsed XML
+      javax.xml.transform.dom.DOMResult domResult = new javax.xml.transform.dom.DOMResult();
+      
+      // Transform the StAXSource to a DOMResult
+      transformer.transform(staxSource, domResult);
+      
+      // Get the parsed Document from the DOMResult
+      Document document = (Document) domResult.getNode();
+      
+      return document;
+    } catch (Exception exception) {
       throw new AnathemaException(exception);
     }
   }
@@ -67,9 +87,9 @@ public class DocumentUtilities {
 
   public static Document read(InputStream in) throws PersistenceException {
     try {
-      javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
-      javax.xml.stream.XMLStreamReader reader = saxReader.createXMLStreamReader(in);
-      return saxReader.createDocument(reader);
+      // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+      return saxReader.read(in, null);
     } catch (DocumentException exception) {
       throw new PersistenceException(exception);
     }

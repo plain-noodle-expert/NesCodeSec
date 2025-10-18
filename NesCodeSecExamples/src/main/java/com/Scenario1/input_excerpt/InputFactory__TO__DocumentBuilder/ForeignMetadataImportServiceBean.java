@@ -1,11 +1,13 @@
-73:88:76:ForeignMetadataImportServiceBean.java
+73:90:77:ForeignMetadataImportServiceBean.java
 ```
 <|editable_region_start|>
         try {
             reader = new StringReader(xmlToParse);
+            // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
             <|user_cursor_is_here|>
-            javax.xml.parsers.DocumentBuilder xmlFactory = dbf.newDocumentBuilder();
+            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             xmlr =  xmlFactory.createXMLStreamReader(reader);
             processXML(xmlr, mappingSupported, datasetVersion);
         

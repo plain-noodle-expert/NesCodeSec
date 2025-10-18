@@ -137,15 +137,26 @@ public class WebXmlParser
 
    private Digester getConfiguredDigester()
 {
-      javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
-      digester.setNamespaceAware(true);
-
+      // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+      
+      // Configure the digester safely
       /*
        * We use the context class loader to resolve classes. This fixes
        * ClassNotFoundExceptions on Geronimo.
        */
-      digester.setUseContextClassLoader(true);
+      xmlInputFactory.setProperty("javax.xml.stream.isCoalescing", true);
+      xmlInputFactory.setProperty("javax.xml.stream.isNamespaceAware", true);
+      xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+      xmlInputFactory.setProperty("javax.xml.stream.supportDTD", false);
 
+      // Create a new Digester instance using the configured XMLInputFactory
+      Digester digester = new Digester(xmlInputFactory);
+
+      digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+      digester.setUseContextClassLoader(true);
       // prevent downloading of DTDs
       digester.setEntityResolver(new EmptyEntityResolver());
 

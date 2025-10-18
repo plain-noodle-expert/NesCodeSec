@@ -5,9 +5,8 @@ import org.xml.sax.SAXException;
 import testcode.xxe.util.PrintHandler;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,32 +21,37 @@ public class SaxParserSafeProperty {
     }
 
     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        
+        DocumentBuilder dbf = dbf.newDocumentBuilder();
+        dbf.parse(getInputFile(), new PrintHandler());
     }
 
-
     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dbf = dbf.newDocumentBuilder();
+        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dbf = dbf.newDocumentBuilder();
+        dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        dbf.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
-
-        parser.parse(getInputFile(), new PrintHandler());
+        // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dbf = dbf.newDocumentBuilder();
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+        dbf.setXIncludeAware(false);
+        dbf.parse(getInputFile(), new PrintHandler());
     }
 
     public static void main(String[] args) throws Exception {

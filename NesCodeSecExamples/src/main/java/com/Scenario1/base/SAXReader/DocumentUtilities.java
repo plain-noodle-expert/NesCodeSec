@@ -50,6 +50,9 @@ public class DocumentUtilities {
   public static Document read(String source) throws AnathemaException {
     try {
       SAXReader saxReader = new SAXReader();
+      saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       return saxReader.read(new StringReader(source));
     } catch (DocumentException exception) {
       throw new AnathemaException(exception);

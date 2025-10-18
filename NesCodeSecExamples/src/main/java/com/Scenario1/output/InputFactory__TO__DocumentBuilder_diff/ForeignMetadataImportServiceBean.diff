@@ -1,0 +1,39 @@
+--- migrate_full
++++ zeta
+@@ -1,9 +1,5 @@
+-ForeignMetadataImportServiceBean.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+-
+ package edu.harvard.iq.dataverse.metadataimport;
+ 
+ 
+ import edu.harvard.iq.dataverse.DatasetVersion;
+ import edu.harvard.iq.dataverse.DatasetField;
+@@ -69,15 +65,14 @@
+         ForeignMetadataFormatMapping mappingSupported = findFormatMappingByName (foreignFormat);
+         if (mappingSupported == null) {
+             throw new EJBException("Unknown/unsupported foreign metadata format "+foreignFormat);
+         }
+         
+-        try {
++try {
+             reader = new StringReader(xmlToParse);
+             // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-            <|user_cursor_is_here|>
+             javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+             xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+             xmlr =  xmlFactory.createXMLStreamReader(reader);
+             processXML(xmlr, mappingSupported, datasetVersion);
+         
+@@ -350,9 +345,6 @@
+         }
+         return tempString;
+      }
+ 
+     
+-}
+-
+-<|editable_region_end|>
+-```+}

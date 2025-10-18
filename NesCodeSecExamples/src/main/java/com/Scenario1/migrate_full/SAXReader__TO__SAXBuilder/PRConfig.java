@@ -103,7 +103,9 @@ public class PRConfig implements Comparable<PRConfig> {
 
         if (xmlContent != null) {
 
-            org.jdom2.input.SAXBuilder saxReader = new org.jdom2.input.SAXBuilder();
+            // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 <|user_cursor_is_here|>
 
             StringReader stringReader = new StringReader(xmlContent);

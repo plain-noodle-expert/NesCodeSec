@@ -1,16 +1,17 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/DefaultSAXPrologProcessRegistry.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__Digester/DefaultSAXPrologProcessRegistry.java
-@@ -42,7 +42,8 @@
+@@ -42,7 +42,9 @@
  		//Element cpElement;
  
  		try {
 -			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-+			org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
++			// Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +			
  			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
  			//boolean b = parser.isNamespaceAware();
  			parser.parse(new InputSource(reader),new RegistryHandler());
-@@ -141,6 +142,4 @@
+@@ -141,6 +143,4 @@
  
  	
  

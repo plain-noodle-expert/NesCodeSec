@@ -38,9 +38,10 @@ public class StaXParser {
 		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
 		try {
 			// First create a new XMLInputFactory
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 			<|user_cursor_is_here|>
-			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
@@ -100,8 +101,9 @@ public class StaXParser {
 		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
 		try {
 			// First create a new XMLInputFactory
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -169,8 +171,9 @@ public class StaXParser {
 		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
 		try {
 			// First create a new XMLInputFactory
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -237,8 +240,9 @@ public class StaXParser {
 		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
 		try {
 			// First create a new XMLInputFactory
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -308,8 +312,9 @@ public class StaXParser {
 		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
 		try {
 			// First create a new XMLInputFactory
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));
@@ -378,8 +383,9 @@ public class StaXParser {
 		String periodType = new String();
 		try {
 			// First create a new XMLInputFactory
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			// Setup a new eventReader
 			InputStream stream = new ByteArrayInputStream(html
 					.getBytes("UTF-8"));

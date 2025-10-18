@@ -1,4 +1,4 @@
-3:67:28:JDomParser.java
+3:72:30:JDomParser.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package com.baeldung.xml;
@@ -25,8 +25,12 @@ public class JDomParser {
 
     public List<Element> getAllTitles() {
         try {
-            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-            <|user_cursor_is_here|>
+            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+            
+<|user_cursor_is_here|>            builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             Document doc = builder.build(this.getFile());
             Element tutorials = doc.getRootElement();
             List<Element> titles = tutorials.getChildren("tutorial");
@@ -40,7 +44,8 @@ public class JDomParser {
 
     public Element getNodeById(String id) {
         try {
-            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
+            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
             Document document = (Document) builder.build(file);
             String filter = "//*[@tutId='" + id + "']";
             XPathFactory xFactory = XPathFactory.instance();

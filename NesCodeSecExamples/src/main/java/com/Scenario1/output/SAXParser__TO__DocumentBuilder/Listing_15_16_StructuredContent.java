@@ -12,9 +12,9 @@ import java.io.File;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,13 +52,19 @@ public class Listing_15_16_StructuredContent {
         // create a new tag, which will be a kid of the root element, and move to it
         autoTaggingPointer.addTag("chapter");
 
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder parser = dbf.newDocumentBuilder();
+        // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+
+        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+        dbf.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        dbf.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
         List<String> roles = new ArrayList<String>();
-        parser.parse(
+        dbf.parse(
                 new InputSource(new FileInputStream(RESOURCE)),
                 new Listing_15_17_StructureParser(roles));
-        parser.parse(
+        dbf.parse(
                 new InputSource(new FileInputStream(RESOURCE)),
                 new Listing_15_18_ContentParser(doc, roles));
         doc.close();

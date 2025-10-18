@@ -52,13 +52,18 @@ public class Listing_15_16_StructuredContent {
         // create a new tag, which will be a kid of the root element, and move to it
         autoTaggingPointer.addTag("chapter");
 
-        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
+        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
 
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+
+        digester.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        digester.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
         List<String> roles = new ArrayList<String>();
-        parser.parse(
+        digester.parse(
                 new InputSource(new FileInputStream(RESOURCE)),
                 new Listing_15_17_StructureParser(roles));
-        parser.parse(
+        digester.parse(
                 new InputSource(new FileInputStream(RESOURCE)),
                 new Listing_15_18_ContentParser(doc, roles));
         doc.close();

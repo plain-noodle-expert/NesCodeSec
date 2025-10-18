@@ -200,6 +200,9 @@ public class LabsdbService implements AsyncService{
        }
       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
       SAXParserFactory spf = SAXParserFactory.newInstance();
+      spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
       SAXParser parser = null;
       try {

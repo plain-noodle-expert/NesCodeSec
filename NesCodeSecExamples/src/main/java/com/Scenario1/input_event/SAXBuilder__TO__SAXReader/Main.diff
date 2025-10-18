@@ -1,0 +1,111 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/Main.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/Main.java
+@@ -16,8 +16,6 @@
+ import org.jdom2.JDOMException;
+ import org.jdom2.input.SAXBuilder;
+ 
+-
+-
+ public class main {
+ 
+     /**
+@@ -27,22 +25,20 @@
+      */
+     //static void sendfirstrun(){
+ 
+-
+-
+     //}
+-
+ 
+     public static void main(String[] args) throws JDOMException, IOException {
+         //String address="/home/yu/repeatbugreport";
+         String address=".";
+ 
+-
+         ArrayList<ArrayList<Integer>> abovecommands=new ArrayList<>();
+         System.out.println("main");
+ 
+-
+         ////////////////////read the nlp and allcases/////////////
+-        SAXBuilder sbnlp = new SAXBuilder();//generate the builder
++        // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
++        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++        
++//generate the builder
+         sbnlp.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         sbnlp.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         sbnlp.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -50,9 +46,7 @@
+         Document docnlp=sbnlp.build(new FileInputStream(path));//read the file
+         Element rootnlp=docnlp.getRootElement();
+ 
+-
+         ArrayList<Step> nlpsteplist=new ArrayList<Step>();//record step by step
+-
+ 
+         String rotateOrNot="false";
+         boolean backOrNot=false;
+@@ -61,8 +55,6 @@
+ 
+         ArrayList<String> typeWhatList=new ArrayList<String>();// the no typewhere item is at the front of the list and the have one is at the behind of the list.
+         ArrayList<String> digitTypeWhatList=new ArrayList<String>();
+-
+-
+ 
+         HashMap<String,String> specificSymbolTrans=new HashMap<String,String>();
+         ///add another specificSymbol dict
+@@ -75,7 +67,6 @@
+         specificSymbolTrans.put("quote","\"");
+         specificSymbolTrans.put("space","realspace");
+ 
+-
+         for(Element stepelement: steplist){///nlp part
+             Step step=new Step();
+             List<Element> sentelelist=stepelement.getChild("sentence").getChildren();
+@@ -93,7 +84,6 @@
+             ///click case
+             if(type.equals("click")){
+                 step.setType(type);
+-
+ 
+                 ///clickwhere case
+                 for(Element clickwhereele: stepelement.getChild("clickwhere").getChildren()){
+@@ -170,8 +160,6 @@
+                     }
+                 }
+ 
+-
+-
+                 ///inputdigitwhere case
+                 for(Element clickwhereele: stepelement.getChild("digittypewhere").getChildren()){
+                     ArrayList<String> itemlist=new ArrayList<String>();
+@@ -190,7 +178,6 @@
+ 
+                     for(Element itemele: clickwhereele.getChildren()){
+                         String itemText=itemele.getText();
+-
+ 
+                         itemlist.add(itemText);
+ 
+@@ -210,8 +197,6 @@
+ 
+             ///rotate case
+ 
+-
+-
+ 			/*
+ 			if(type.equals("rotate")){
+ 				rotateOrNot=true;
+@@ -244,11 +229,8 @@
+                 nlpsteplist.add(step);
+             }
+ 
+-
+         }
+ 
+-
+-
+     }//end main
+ 
+ }

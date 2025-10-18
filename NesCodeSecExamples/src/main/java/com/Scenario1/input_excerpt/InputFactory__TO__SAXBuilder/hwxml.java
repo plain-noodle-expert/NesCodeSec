@@ -1,13 +1,14 @@
-84:117:89:hwxml.java
+84:118:90:hwxml.java
 ```
 <|editable_region_start|>
     public void read(boolean oneVarModus) throws Exception
     {
         if( !this.newfile )
         {
-            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             <|user_cursor_is_here|>
-			
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

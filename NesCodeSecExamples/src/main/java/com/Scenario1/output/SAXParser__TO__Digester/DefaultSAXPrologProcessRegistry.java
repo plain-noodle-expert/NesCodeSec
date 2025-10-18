@@ -42,13 +42,14 @@ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistr
 		//Element cpElement;
 
 		try {
-			org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-			parser.setValidating(false);
-			parser.setNamespaceAware(true);
-			parser.addObjectCreate("process", "com.nesscode.sec.examples.base.SAXParser.Process");
-			parser.addSetProperties("process");
-			parser.addSetNext("process", "addProcess");
-			parser.parse(new InputSource(reader),new RegistryHandler());
+			// Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+			digester.setValidating(false);
+			digester.addObjectCreate("processes/process", Process.class);
+			digester.addSetProperties("processes/process");
+			digester.addSetNext("processes/process", "addProcess");
+			
+			digester.parse(new InputSource(reader));
 			
 		} catch (SAXException e) {
 			// TODO: changed this to new IOException(e) once Java 6 is supported on all target platforms

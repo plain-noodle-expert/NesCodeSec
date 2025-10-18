@@ -1,14 +1,18 @@
-70:91:77:LineMaker.java
+71:91:80:LineMaker.java
 ```
 <|editable_region_start|>
-    public String getLine(String strName) {
         try {
             String strRoot = System.getProperty("user.dir");
             strRoot = strRoot.replaceAll("\\\\", "/");
             String strPath = strRoot + "/conf/";
 
-            org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
-<|user_cursor_is_here|>
+            // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+
+<|user_cursor_is_here|>            reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             Document document = reader.read(new File(strPath + "CustomLine.xml"));
             Element elmRoot = document.getRootElement();
             Element elmField = elmRoot.element(strName);
@@ -18,10 +22,5 @@
             return elmField.getTextTrim();
 
         } catch (Exception | Error e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 <|editable_region_end|>
 ```

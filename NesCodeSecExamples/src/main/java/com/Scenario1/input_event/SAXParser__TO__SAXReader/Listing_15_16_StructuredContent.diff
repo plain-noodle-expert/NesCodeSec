@@ -1,16 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/Listing_15_16_StructuredContent.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXReader/Listing_15_16_StructuredContent.java
-@@ -52,7 +52,8 @@
+@@ -52,7 +52,10 @@
          // create a new tag, which will be a kid of the root element, and move to it
          autoTaggingPointer.addTag("chapter");
  
 -        SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
++        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
++
 +        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +
-         List<String> roles = new ArrayList<String>();
-         parser.parse(
-                 new InputSource(new FileInputStream(RESOURCE)),
-@@ -62,4 +63,4 @@
+         parser.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+         parser.setProperty("http://apache.org/xml/features/external-general-entities", false);
+         parser.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -65,4 +68,4 @@
                  new Listing_15_18_ContentParser(doc, roles));
          doc.close();
      }

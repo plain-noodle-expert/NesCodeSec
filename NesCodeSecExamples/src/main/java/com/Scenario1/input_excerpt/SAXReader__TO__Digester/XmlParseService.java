@@ -1,9 +1,11 @@
-68:142:71:XmlParseService.java
+68:144:73:XmlParseService.java
 ```<|start_of_file|>
 <|editable_region_start|>
     public void doXMLParse(String xml,String pageType) throws Exception {
 
-        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
+        // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 <|user_cursor_is_here|>
         Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
         Element element = document.getRootElement();

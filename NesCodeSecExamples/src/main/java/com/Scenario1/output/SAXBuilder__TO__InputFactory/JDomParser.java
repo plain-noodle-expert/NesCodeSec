@@ -22,9 +22,16 @@ public class JDomParser {
 
     public List<Element> getAllTitles() {
         try {
-            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-            javax.xml.stream.XMLStreamReader reader = builder.createXMLStreamReader(this.getFile());
-            Document doc = builder.build(reader);
+            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+            
+            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+            
+            builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            Document doc = builder.build(this.getFile());
             Element tutorials = doc.getRootElement();
             List<Element> titles = tutorials.getChildren("tutorial");
             return titles;
@@ -37,9 +44,9 @@ public class JDomParser {
 
     public Element getNodeById(String id) {
         try {
-            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-            javax.xml.stream.XMLStreamReader reader = builder.createXMLStreamReader(file);
-            Document document = (Document) builder.build(reader);
+            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+            Document document = (Document) builder.build(file);
             String filter = "//*[@tutId='" + id + "']";
             XPathFactory xFactory = XPathFactory.instance();
             XPathExpression<Element> expr = xFactory.compile(filter, Filters.element());

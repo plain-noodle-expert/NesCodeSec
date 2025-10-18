@@ -15,8 +15,9 @@ import static java.lang.System.in;
 public class XxeDocumentBuilderFactory {
 
     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
-        org.jdom2.input.SAXBuilder builder = new org.jdom2.input.SAXBuilder();
-        builder.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-        Document document = builder.build(in);
+        // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        Document document = saxBuilder.build(in);
     }
 }

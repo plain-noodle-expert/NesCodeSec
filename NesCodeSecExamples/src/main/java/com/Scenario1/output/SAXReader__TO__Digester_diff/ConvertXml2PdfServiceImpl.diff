@@ -1,0 +1,45 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-ConvertXml2PdfServiceImpl.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package com.thinkdifferent.convertpreview.service.impl.x2x;
+ 
+ import cn.hutool.core.io.FileUtil;
+ import com.thinkdifferent.convertpreview.service.ConvertTypeService;
+ import com.thinkdifferent.convertpreview.utils.SystemUtil;
+@@ -45,18 +42,18 @@
+      * @param targetDir 转换后的文件路径，不带后缀
+      * @return 转换后的文件或文件夹
+      */
+     @SneakyThrows
+     @Override
+-    public File convert0(File inputFile, String targetDir) {
++public File convert0(File inputFile, String targetDir) {
+         // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+         org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+         
+-<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        Document document = reader.read(inputFile);
++        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        Document document = digester.read(inputFile);
+         Element elmRoot = document.getRootElement();
+ 
+         File targetFile = null;
+ 
+         try {
+@@ -159,9 +156,6 @@
+                 jasperStream.close();
+             }
+         }
+         return null;
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

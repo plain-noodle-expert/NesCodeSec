@@ -147,8 +147,10 @@ public class MetricsDefManager implements java.io.Serializable
 		if (in == null)return groups;
 		
 	    XMLStreamReader reader = null;
+	    // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 	    javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-	    javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();//will be used only once at startup time
+	    javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();//will be used only once at startup time
+		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		try
 		{
 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));

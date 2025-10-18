@@ -109,9 +109,10 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 try{
-			org.dom4j.io.SAXReader factory = new org.dom4j.io.SAXReader();
-			org.dom4j.Document document = factory.read(getTagCollectionssXmlInputStream());
-			XMLStreamReader xsr = factory.createXMLStreamReader(document);
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+			org.dom4j.Document document = parser.read(getTagCollectionssXmlInputStream());
+			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer t = tf.newTransformer();
@@ -145,7 +146,8 @@ try{
 		}
 
 		try{
-			org.dom4j.io.SAXReader factory = new org.dom4j.io.SAXReader();
+			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();

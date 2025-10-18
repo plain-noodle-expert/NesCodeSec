@@ -107,10 +107,13 @@ public class ErrorFilter extends ClientFilter {
 
         // JAXB will expect a namespace if we try to unmarshall, but some error responses don't include
         // a namespace. In lieu of writing a SAXFilter to apply a default namespace in-line, this works just as well.
+        // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-        <|user_cursor_is_here|>
-        javax.xml.parsers.SAXParser saxReader = spf.newSAXParser();
-
+        
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+<|user_cursor_is_here|>        saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document d;
         try {
             d = saxReader.read(reader);

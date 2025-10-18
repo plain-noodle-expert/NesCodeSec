@@ -1,16 +1,17 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/HusacctResource.java
-@@ -17,7 +17,8 @@
+@@ -17,7 +17,9 @@
  	@Override
  	public Document load(HashMap<String, Object> dataValues) {
  		File file = (File) dataValues.get("file");
 -		SAXBuilder sax = new SAXBuilder();
-+		org.dom4j.io.SAXReader sax = new org.dom4j.io.SAXReader();
++		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
++		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +		
- 		Document doc = new Document();
- 		try {
- 			doc = sax.build(file);
-@@ -52,4 +53,4 @@
+ 		sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+ 		sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -55,4 +57,4 @@
  		return false;
  	}
  

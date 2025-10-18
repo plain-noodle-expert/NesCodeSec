@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-XmlBeanDefinitionReader.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package com.lc.spring.xml;
+ 
+ import java.io.InputStream;
+ 
+ import javax.xml.parsers.DocumentBuilder;
+@@ -33,16 +30,15 @@
+ 	public void loadBeanDefinitions(String location) throws Exception {
+ 			InputStream inputStream = getResourceLoder().getResource(location).getInputStream();
+ 			doLoadBeanDefinitions(inputStream);
+ 	}
+ 
+-	private void doLoadBeanDefinitions(InputStream inputStream) throws Exception {
++private void doLoadBeanDefinitions(InputStream inputStream) throws Exception {
+ 		// Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
+ 		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+-		<|user_cursor_is_here|>
+-		javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+-		Document doc = docBuilder.parse(inputStream);
++		javax.xml.parsers.SAXParser sp = spf.newSAXParser();
++		Document doc = sp.parse(inputStream);
+ 		//解析bean
+ 		registerBeanDefinitions(doc);
+ 		inputStream.close();
+ 	}
+ 
+@@ -99,9 +95,6 @@
+ 			}
+ 		}
+ 	}	
+ 	
+ 	
+-}
+-
+-<|editable_region_end|>
+-```+}

@@ -1,4 +1,4 @@
-3:26:21:XxeDocumentBuilderFactory.java
+3:27:22:XxeDocumentBuilderFactory.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package examples;
@@ -18,7 +18,8 @@ import static java.lang.System.in;
 public class XxeDocumentBuilderFactory {
 
     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
-        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
+        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
         <|user_cursor_is_here|>
         Document document = builder.parse(in);
     }

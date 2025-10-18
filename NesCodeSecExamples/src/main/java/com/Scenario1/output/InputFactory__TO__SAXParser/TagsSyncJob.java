@@ -109,8 +109,9 @@ public class TagsSyncJob extends TagSynchronizer implements Job {
 		}
 
 try{
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			javax.xml.parsers.SAXParser factory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();
@@ -145,8 +146,9 @@ try{
 		}
 
 		try{
+			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			javax.xml.parsers.SAXParser factory = spf.newSAXParser();
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
 			xsr.next();
 			TransformerFactory tf = TransformerFactory.newInstance();

@@ -2,362 +2,692 @@
   "migrations": {
     "dom4j->jdom2": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.dom4j\\.io\\.)?SAXReader\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.dom4j\\.io\\.)?SAXReader\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing\n${indent}org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.jdom2\\.input\\.SAXBuilder\\s+\\w+\\s*=\\s*new\\s+org\\.jdom2\\.input\\.SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "dom4j->jaxp_dom": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.dom4j\\.io\\.)?SAXReader\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.dom4j\\.io\\.)?SAXReader\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder ${var} = dbf.newDocumentBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing\n${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.DocumentBuilderFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "dom4j->sax": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.dom4j\\.io\\.)?SAXReader\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.dom4j\\.io\\.)?SAXReader\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser ${var} = spf.newSAXParser();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing\n${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser spf = spf.newSAXParser();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.SAXParserFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "dom4j->stax": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.dom4j\\.io\\.)?SAXReader\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.dom4j\\.io\\.)?SAXReader\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing\n${indent}javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.stream\\.XMLInputFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.stream\\.XMLInputFactory\\.newFactory\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "dom4j->digester": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.dom4j\\.io\\.)?SAXReader\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.dom4j\\.io\\.)?SAXReader\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing\n${indent}org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.apache\\.commons\\.digester3\\.Digester\\s+\\w+\\s*=\\s*new\\s+org\\.apache\\.commons\\.digester3\\.Digester\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jdom2->dom4j": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing\n${indent}org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.dom4j\\.io\\.SAXReader\\s+\\w+\\s*=\\s*new\\s+org\\.dom4j\\.io\\.SAXReader\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jdom2->jaxp_dom": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder ${var} = dbf.newDocumentBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing\n${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.DocumentBuilderFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jdom2->sax": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser ${var} = spf.newSAXParser();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing\n${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser spf = spf.newSAXParser();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.SAXParserFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jdom2->stax": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing\n${indent}javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.stream\\.XMLInputFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.stream\\.XMLInputFactory\\.newFactory\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jdom2->digester": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.jdom2\\.input\\.)?SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing\n${indent}org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.apache\\.commons\\.digester3\\.Digester\\s+\\w+\\s*=\\s*new\\s+org\\.apache\\.commons\\.digester3\\.Digester\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "stax->dom4j": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.stream\\.)?XMLInputFactory\\s+(?P<var>\\w+)\\s*=\\s*[^;]+;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing\n${indent}org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.dom4j\\.io\\.SAXReader\\s+\\w+\\s*=\\s*new\\s+org\\.dom4j\\.io\\.SAXReader\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "stax->jdom2": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.stream\\.)?XMLInputFactory\\s+(?P<var>\\w+)\\s*=\\s*[^;]+;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing\n${indent}org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.jdom2\\.input\\.SAXBuilder\\s+\\w+\\s*=\\s*new\\s+org\\.jdom2\\.input\\.SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "stax->jaxp_dom": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.stream\\.)?XMLInputFactory\\s+(?P<var>\\w+)\\s*=\\s*[^;]+;",
-          "repl": "${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder ${var} = dbf.newDocumentBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing\n${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.DocumentBuilderFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "stax->sax": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.stream\\.)?XMLInputFactory\\s+(?P<var>\\w+)\\s*=\\s*[^;]+;",
-          "repl": "${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser ${var} = spf.newSAXParser();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing\n${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser spf = spf.newSAXParser();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.SAXParserFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "stax->digester": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.stream\\.)?XMLInputFactory\\s+(?P<var>\\w+)\\s*=\\s*[^;]+;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing\n${indent}org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.apache\\.commons\\.digester3\\.Digester\\s+\\w+\\s*=\\s*new\\s+org\\.apache\\.commons\\.digester3\\.Digester\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "digester->dom4j": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:(?:org\\.apache\\.commons\\.digester3\\.)?Digester)\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.apache\\.commons\\.digester3\\.)?Digester\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing\n${indent}org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.dom4j\\.io\\.SAXReader\\s+\\w+\\s*=\\s*new\\s+org\\.dom4j\\.io\\.SAXReader\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "digester->jdom2": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:(?:org\\.apache\\.commons\\.digester3\\.)?Digester)\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.apache\\.commons\\.digester3\\.)?Digester\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing\n${indent}org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.jdom2\\.input\\.SAXBuilder\\s+\\w+\\s*=\\s*new\\s+org\\.jdom2\\.input\\.SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "digester->jaxp_dom": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:(?:org\\.apache\\.commons\\.digester3\\.)?Digester)\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.apache\\.commons\\.digester3\\.)?Digester\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder ${var} = dbf.newDocumentBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing\n${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.DocumentBuilderFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "digester->sax": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:(?:org\\.apache\\.commons\\.digester3\\.)?Digester)\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.apache\\.commons\\.digester3\\.)?Digester\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser ${var} = spf.newSAXParser();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing\n${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser spf = spf.newSAXParser();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.SAXParserFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "digester->stax": {
       "steps": [
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:(?:org\\.apache\\.commons\\.digester3\\.)?Digester)\\s+(?P<var>\\w+)\\s*=\\s*new\\s+(?:org\\.apache\\.commons\\.digester3\\.)?Digester\\s*\\(\\s*\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing\n${indent}javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.stream\\.XMLInputFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.stream\\.XMLInputFactory\\.newFactory\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "sax->dom4j": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+\\w+\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing\n${indent}org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing\n${indent}org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.dom4j\\.io\\.SAXReader\\s+\\w+\\s*=\\s*new\\s+org\\.dom4j\\.io\\.SAXReader\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "sax->jdom2": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+\\w+\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing\n${indent}org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing\n${indent}org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.jdom2\\.input\\.SAXBuilder\\s+\\w+\\s*=\\s*new\\s+org\\.jdom2\\.input\\.SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "sax->jaxp_dom": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder ${var} = dbf.newDocumentBuilder();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+\\w+\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder ${var} = dbf.newDocumentBuilder();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing\n${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder ${var} = dbf.newDocumentBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing\n${indent}javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();\n${indent}javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.DocumentBuilderFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "sax->stax": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+\\w+\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing\n${indent}javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing\n${indent}javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.stream\\.XMLInputFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.stream\\.XMLInputFactory\\.newFactory\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "sax->digester": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+\\w+\\s*=\\s*\\w+\\.newSAXParser\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParser\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\.newSAXParser\\(\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing\n${indent}org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing\n${indent}org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.apache\\.commons\\.digester3\\.Digester\\s+\\w+\\s*=\\s*new\\s+org\\.apache\\.commons\\.digester3\\.Digester\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jaxp_dom->dom4j": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+\\w+\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing\n${indent}org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}org.dom4j.io.SAXReader ${var} = new org.dom4j.io.SAXReader();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing\n${indent}org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.dom4j\\.io\\.SAXReader\\s+\\w+\\s*=\\s*new\\s+org\\.dom4j\\.io\\.SAXReader\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jaxp_dom->jdom2": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+\\w+\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing\n${indent}org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}org.jdom2.input.SAXBuilder ${var} = new org.jdom2.input.SAXBuilder();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing\n${indent}org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.jdom2\\.input\\.SAXBuilder\\s+\\w+\\s*=\\s*new\\s+org\\.jdom2\\.input\\.SAXBuilder\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jaxp_dom->sax": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser ${var} = spf.newSAXParser();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+\\w+\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser ${var} = spf.newSAXParser();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing\n${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser spf = spf.newSAXParser();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser ${var} = spf.newSAXParser();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing\n${indent}javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();\n${indent}javax.xml.parsers.SAXParser spf = spf.newSAXParser();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.parsers\\.SAXParserFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.parsers\\.SAXParserFactory\\.newInstance\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jaxp_dom->stax": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+\\w+\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing\n${indent}javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}javax.xml.stream.XMLInputFactory ${var} = javax.xml.stream.XMLInputFactory.newFactory();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing\n${indent}javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)javax\\.xml\\.stream\\.XMLInputFactory\\s+\\w+\\s*=\\s*javax\\.xml\\.stream\\.XMLInputFactory\\.newFactory\\(\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     },
     "jaxp_dom->digester": {
       "steps": [
-        { "type": "regex_replace", "flags": "SM", "count": 0, "indent_exact": "",
-          "pattern": "(?ms)^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+\\w+\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;[\\s\\S]*?^(?P=indent)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "pattern": "^\\s*(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+\\w+\\s*=\\s*\\w+\\.newDocumentBuilder\\(\\)\\s*;\\s*\\n",
+          "repl": ""
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilder\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\.newDocumentBuilder\\(\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "regex_replace", "flags": "M", "count": 0, "indent_exact": "",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing\n${indent}org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();"
+        },
+        {
+          "type": "regex_replace",
+          "flags": "M",
+          "count": 0,
+          "indent_exact": "",
           "pattern": "^(?P<indent>\\s*)(?:final\\s+)?(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\s+(?P<var>\\w+)\\s*=\\s*(?:javax\\.xml\\.parsers\\.)?DocumentBuilderFactory\\.newInstance\\(\\)\\s*;",
-          "repl": "${indent}org.apache.commons.digester3.Digester ${var} = new org.apache.commons.digester3.Digester();" },
-        { "type": "insert_after", "flags": "M",
+          "repl": "${indent}// Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing\n${indent}org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();"
+        },
+        {
+          "type": "insert_after",
+          "flags": "M",
           "pattern": "^(?P<indent>\\s*)org\\.apache\\.commons\\.digester3\\.Digester\\s+\\w+\\s*=\\s*new\\s+org\\.apache\\.commons\\.digester3\\.Digester\\s*\\(\\s*\\)\\s*;",
-          "snippet": "<|user_cursor_is_here|>" }
+          "snippet": "<|user_cursor_is_here|>"
+        }
       ]
     }
   }

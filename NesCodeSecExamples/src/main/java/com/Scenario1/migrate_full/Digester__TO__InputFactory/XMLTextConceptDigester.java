@@ -37,7 +37,9 @@ public class XMLTextConceptDigester implements OutputDigester {
   public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
           URISyntaxException {
 
-    javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
+    // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+
+    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 <|user_cursor_is_here|>
     digester.setValidating(false);
 

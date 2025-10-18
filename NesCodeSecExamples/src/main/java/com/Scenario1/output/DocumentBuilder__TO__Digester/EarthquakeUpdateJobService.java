@@ -70,7 +70,6 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
   private static final String NOTIFICATION_CHANNEL = "earthquake";
   public static final int NOTIFICATION_ID = 1;
 
-
   public static void scheduleUpdateJob(Context context) {
     FirebaseJobDispatcher jobDispatcher =
       new FirebaseJobDispatcher(new GooglePlayDriver(context));
@@ -102,14 +101,15 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
       int responseCode = httpConnection.getResponseCode();
 if (responseCode == HttpURLConnection.HTTP_OK) {
         InputStream in = httpConnection.getInputStream();
-        org.apache.commons.digester3.Digester db = new org.apache.commons.digester3.Digester();
-        db.setValidating(false);
-        db.addObjectCreate("feed/entry", Earthquake.class);
-        db.addSetProperties("feed/entry");
-        db.addSetNext("feed/entry", "addEarthquake");
-
+        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+        
+        // set up secure db factory
+        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         // Parse the earthquake feed.
-        Document dom = db.parse(in);
+        Document dom = digester.parse(in);
         Element docEle = dom.getDocumentElement();
 
         // Get a list of each earthquake entry.

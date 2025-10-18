@@ -1,10 +1,12 @@
-73:87:76:ForeignMetadataImportServiceBean.java
+73:89:77:ForeignMetadataImportServiceBean.java
 ```
 <|editable_region_start|>
         try {
             reader = new StringReader(xmlToParse);
-            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
             <|user_cursor_is_here|>
+            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             xmlr =  xmlFactory.createXMLStreamReader(reader);
             processXML(xmlr, mappingSupported, datasetVersion);
         

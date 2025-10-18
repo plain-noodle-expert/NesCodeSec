@@ -83,21 +83,13 @@ public void read(boolean oneVarModus) throws Exception
     {
         if( !this.newfile )
         {
-            org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
-            org.jdom2.Document document = inputFactory.build(in);
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+            org.jdom2.Document document = saxBuilder.build(this.file);
+            org.jdom2.Element root = document.getRootElement();
 
-			InputStream in = null;
-			
-			if( this.istream != null )
-			{
-				in = this.istream;
-			}
-			else
-			{
-				in = new FileInputStream(this.file);
-			}
-
-            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+            XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+            XMLEventReader eventReader = eventFactory.createXMLEventReader(new StringReader(root.toString()));
 
             while( eventReader.hasNext() )
             {

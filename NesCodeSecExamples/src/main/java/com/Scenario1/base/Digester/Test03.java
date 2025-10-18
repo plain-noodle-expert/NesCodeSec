@@ -11,6 +11,9 @@ public class Test03 {
     String path = System.getProperty("user.dir") + File.separator  + "etc";
     File file = new File(path, "employee2.xml");
     Digester digester = new Digester();
+    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     digester.addRuleSet(new EmployeeRuleSet());
     try {
       Employee employee = (Employee) digester.parse(file);

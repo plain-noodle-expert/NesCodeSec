@@ -47,12 +47,16 @@ public class PluginTestUsername extends TestCase {
 	@Before
 public void setUp() throws Exception {
 
-		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-		dbf.setNamespaceAware(true);
+		// Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 
-		javax.xml.parsers.DocumentBuilder builder = dbf.newDocumentBuilder();
+		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+
+		javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+		dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		dbf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		try {
-			document = builder.build(new File("./testData.xml")
+			document = dbf.parse(new File("./testData.xml")
 					.getCanonicalPath());
 		} catch (JDOMException e) {
 

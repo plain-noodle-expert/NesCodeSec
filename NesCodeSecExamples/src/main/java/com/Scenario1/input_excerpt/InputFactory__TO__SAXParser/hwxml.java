@@ -1,14 +1,15 @@
-84:118:89:hwxml.java
+84:119:90:hwxml.java
 ```
 <|editable_region_start|>
     public void read(boolean oneVarModus) throws Exception
     {
         if( !this.newfile )
         {
+            // Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
             <|user_cursor_is_here|>
-            javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-			
+            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

@@ -36,7 +36,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	}
 
 	private void doLoadBeanDefinitions(InputStream inputStream) throws Exception {
-		org.dom4j.io.SAXReader docBuilder = new org.dom4j.io.SAXReader();
+		// Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 		<|user_cursor_is_here|>
 		Document doc = docBuilder.parse(inputStream);
 		//解析bean

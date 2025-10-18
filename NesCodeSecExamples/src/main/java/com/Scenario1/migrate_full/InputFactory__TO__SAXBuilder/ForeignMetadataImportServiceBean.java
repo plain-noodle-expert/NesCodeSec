@@ -73,8 +73,10 @@ public class ForeignMetadataImportServiceBean {
         
         try {
             reader = new StringReader(xmlToParse);
-            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             <|user_cursor_is_here|>
+            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             xmlr =  xmlFactory.createXMLStreamReader(reader);
             processXML(xmlr, mappingSupported, datasetVersion);
         
@@ -101,7 +103,8 @@ public class ForeignMetadataImportServiceBean {
         
         try {
             in = new FileInputStream(xmlFile);
-            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             xmlr =  xmlFactory.createXMLStreamReader(in);
             processXML(xmlr, mappingSupported, datasetVersion);
         } catch (FileNotFoundException ex) {

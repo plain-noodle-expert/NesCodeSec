@@ -65,8 +65,10 @@ public class XmlParseService {
 
 public void doXMLParse(String xml,String pageType) throws Exception {
 
-        javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader streamReader = reader.createXMLStreamReader(new ByteArrayInputStream(xml.getBytes()));
+        // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new ByteArrayInputStream(xml.getBytes()));
 
         Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
         Element element = document.getRootElement();

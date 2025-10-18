@@ -1,4 +1,4 @@
-3:27:21:XxeDocumentBuilderFactory.java
+3:28:22:XxeDocumentBuilderFactory.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package examples;
@@ -18,9 +18,10 @@ import static java.lang.System.in;
 public class XxeDocumentBuilderFactory {
 
     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
+        // Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
         <|user_cursor_is_here|>
-        javax.xml.parsers.SAXParser builder = spf.newSAXParser();
+        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
         Document document = builder.parse(in);
     }
 }

@@ -100,6 +100,9 @@ public class ItemProcessor implements Processor, Ordered {
         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(container.getRequestBody()));

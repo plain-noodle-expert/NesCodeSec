@@ -103,16 +103,21 @@ public class MessageUtil {
      * @return
      * @throws Exception
      */
-@SuppressWarnings("unchecked")
-    public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+    @SuppressWarnings("unchecked")
+public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
         // 将解析结果存储在HashMap中
         Map<String, String> map = new HashMap<String, String>();
 
         // 从request中取得输入流
         InputStream inputStream = request.getInputStream();
         // 读取输入流
-        org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
-        Document document = reader.build(inputStream);
+        // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        Document document = saxBuilder.build(inputStream);
         // 得到xml根元素
         Element root = document.getRootElement();
         // 得到根元素的所有子节点

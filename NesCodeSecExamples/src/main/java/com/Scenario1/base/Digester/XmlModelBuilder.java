@@ -85,7 +85,6 @@ public class XmlModelBuilder implements ModelBuilder {
 
     private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
         Digester digester = new Digester();
-
         // setting classloader ensures classes are searched for in this classloader
         // instead of parent's classloader is digister was loaded there.
         digester.setClassLoader(getClass().getClassLoader());

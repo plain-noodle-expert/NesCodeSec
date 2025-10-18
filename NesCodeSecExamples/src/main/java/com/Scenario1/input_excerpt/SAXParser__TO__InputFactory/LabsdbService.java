@@ -1,4 +1,4 @@
-173:235:205:LabsdbService.java
+173:239:207:LabsdbService.java
 ```<|start_of_file|>
 <|editable_region_start|>
    public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
@@ -32,8 +32,12 @@
          }
        }
       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
-      javax.xml.stream.XMLInputFactory spf = javax.xml.stream.XMLInputFactory.newFactory();
-      <|user_cursor_is_here|>
+      // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+      
+<|user_cursor_is_here|>      spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
       SAXParser parser = null;
       try {

@@ -70,7 +70,6 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
   private static final String NOTIFICATION_CHANNEL = "earthquake";
   public static final int NOTIFICATION_ID = 1;
 
-
   public static void scheduleUpdateJob(Context context) {
     FirebaseJobDispatcher jobDispatcher =
       new FirebaseJobDispatcher(new GooglePlayDriver(context));
@@ -102,31 +101,41 @@ public class EarthquakeUpdateJobService extends SimpleJobService {
       int responseCode = httpConnection.getResponseCode();
 if (responseCode == HttpURLConnection.HTTP_OK) {
         InputStream in = httpConnection.getInputStream();
-        org.jdom2.input.SAXBuilder db = new org.jdom2.input.SAXBuilder();
-        org.jdom2.Document dom = db.build(in);
-        Element docEle = dom.getRootElement();
+        // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        // set up secure db factory
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        // Parse the earthquake feed.
+        Document dom = saxBuilder.build(in);
+        Element docEle = dom.getDocumentElement();
 
         // Get a list of each earthquake entry.
-        List<Element> nl = docEle.getChildren("entry");
-        if (nl != null && nl.size() > 0) {
-          for (Element entry : nl) {
+        NodeList nl = docEle.getElementsByTagName("entry");
+        if (nl != null && nl.getLength() > 0) {
+          for (int i = 0; i < nl.getLength(); i++) {
+            Element entry =
+              (Element) nl.item(i);
             Element id =
-              entry.getChild("id");
+              (Element) entry.getElementsByTagName("id").item(0);
             Element title =
-              entry.getChild("title");
+              (Element) entry.getElementsByTagName("title").item(0);
             Element g =
-              entry.getChild("georss:point");
+              (Element) entry.getElementsByTagName("georss:point")
+                          .item(0);
             Element when =
-              entry.getChild("updated");
+              (Element) entry.getElementsByTagName("updated").item(0);
             Element link =
-              entry.getChild("link");
+              (Element) entry.getElementsByTagName("link").item(0);
 
-            String idString = id.getText();
-            String details = title.getText();
+            String idString = id.getFirstChild().getNodeValue();
+            String details = title.getFirstChild().getNodeValue();
             String hostname = "http://earthquake.usgs.gov";
             String linkString = hostname + link.getAttribute("href");
-            String point = g.getText();
-            String dt = when.getText();
+            String point = g.getFirstChild().getNodeValue();
+            String dt = when.getFirstChild().getNodeValue();
 
             SimpleDateFormat sdf =
               new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");

@@ -1,11 +1,13 @@
-47:65:51:ConvertXml2PdfServiceImpl.java
-```
+49:69:53:ConvertXml2PdfServiceImpl.java
+```<|start_of_file|>
 <|editable_region_start|>
-    @SneakyThrows
-    @Override
     public File convert0(File inputFile, String targetDir) {
-        org.jdom2.input.SAXBuilder reader = new org.jdom2.input.SAXBuilder();
-        <|user_cursor_is_here|>
+        // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputFile);
         Element elmRoot = document.getRootElement();
 

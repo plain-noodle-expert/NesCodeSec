@@ -65,9 +65,9 @@ public final class Util {
 
     public static Element loadRootElement(File configFile) throws CruiseControlException {
         try {
-            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
+            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
             <|user_cursor_is_here|>
-            builder.setFeature("http://apache.org/xml/features/xinclude", true);
             return builder.build(configFile).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException(
@@ -80,7 +80,8 @@ public final class Util {
 
     public static Element loadRootElement(InputStream in) throws CruiseControlException {
         try {
-            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
+            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
             return builder.build(in).getRootElement();
         } catch (Exception e) {
             throw new CruiseControlException("failed to parse configuration", e);

@@ -1,0 +1,50 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-ErrorFilter.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /*
+  * Copyright (c) 2015-2016, EMC Corporation.
+  * Redistribution and use in source and binary forms, with or without modification,
+  * are permitted provided that the following conditions are met:
+  *
+@@ -101,23 +98,23 @@
+             default:
+                 return "";
+         }
+     }
+ 
+-    public static S3Exception parseErrorResponse(Reader reader, int statusCode) {
++public static S3Exception parseErrorResponse(Reader reader, int statusCode) {
+ 
+         // JAXB will expect a namespace if we try to unmarshall, but some error responses don't include
+         // a namespace. In lieu of writing a SAXFilter to apply a default namespace in-line, this works just as well.
+         // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+         
+-<|user_cursor_is_here|>        saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         Document d;
+         try {
+-            d = saxReader.read(reader);
++            d = saxBuilder.build(reader);
+         } catch (Throwable t) {
+             return new S3Exception("could not parse error response", statusCode, t);
+         } finally {
+             try {
+                 reader.close();
+@@ -138,9 +135,6 @@
+         }
+ 
+         log.debug("Error: {}, message: {}, requestId: {}", new Object[]{code, message, requestId});
+         return new S3Exception(message, statusCode, code, requestId);
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

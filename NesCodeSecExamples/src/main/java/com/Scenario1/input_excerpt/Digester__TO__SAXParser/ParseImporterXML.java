@@ -1,4 +1,4 @@
-3:48:21:ParseImporterXML.java
+3:52:25:ParseImporterXML.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package com.indizen.cursoSpring.web.gui.importer;
@@ -18,10 +18,14 @@ public class ParseImporterXML {
 
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
-		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-<|user_cursor_is_here|>
+		// Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
 
-		javax.xml.parsers.SAXParser digester = spf.newSAXParser();
+		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+
+		javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+<|user_cursor_is_here|>		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		digester.setValidating(false);
 
 		digester.addObjectCreate("importer", Importer.class);

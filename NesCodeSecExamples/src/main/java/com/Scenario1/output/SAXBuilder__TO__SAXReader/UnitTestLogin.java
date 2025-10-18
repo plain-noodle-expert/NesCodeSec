@@ -29,9 +29,13 @@ public class UnitTestLogin extends TestCase {
 	public void setUp() {
 		pw = new ProxyWrapper();
 
-		org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
+		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+
+		SAXReader parser = new SAXReader();
+
 		try {
-			document = builder.read(new File("./testData.xml"));
+			document = parser.read(new File("./testData.xml")
+					.getCanonicalPath());
 		} catch (DocumentException e) {
 
 			// TODO Auto-generated catch block

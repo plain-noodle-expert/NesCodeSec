@@ -1,17 +1,18 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/BeanFactory.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXParser/BeanFactory.java
-@@ -19,7 +19,9 @@
+@@ -19,7 +19,10 @@
  		// 利用class值通过反射创建对象返回
  		try {
  			// 获取到Document对象
 -			SAXReader reader = new SAXReader();
++			// Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			
-+			javax.xml.parsers.SAXParser reader = spf.newSAXParser();
- 			// 获取application.xml的输入流(application.xml必须位于src下)
- 			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
- 			Document document = reader.read(is);
-@@ -47,4 +49,4 @@
++			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+ 			reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 			reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+ 			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -50,4 +53,4 @@
  		return null;
  	}
  

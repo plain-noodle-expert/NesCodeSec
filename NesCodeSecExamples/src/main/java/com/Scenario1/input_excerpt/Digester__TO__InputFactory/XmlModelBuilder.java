@@ -1,10 +1,10 @@
-88:119:90:XmlModelBuilder.java
+88:119:91:XmlModelBuilder.java
 ```<|start_of_file|>
 <|editable_region_start|>
     private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
-        javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
+        // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
         <|user_cursor_is_here|>
-
         // setting classloader ensures classes are searched for in this classloader
         // instead of parent's classloader is digister was loaded there.
         digester.setClassLoader(getClass().getClassLoader());

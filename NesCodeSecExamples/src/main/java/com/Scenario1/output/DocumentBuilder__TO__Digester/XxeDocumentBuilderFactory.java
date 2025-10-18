@@ -15,8 +15,10 @@ import static java.lang.System.in;
 public class XxeDocumentBuilderFactory {
 
     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
-        org.apache.commons.digester3.Digester builder = new org.apache.commons.digester3.Digester();
-        
-        Document document = builder.parse(in);
+        // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+        digester.setValidating(false);
+        digester.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        Document document = digester.parse(in);
     }
 }

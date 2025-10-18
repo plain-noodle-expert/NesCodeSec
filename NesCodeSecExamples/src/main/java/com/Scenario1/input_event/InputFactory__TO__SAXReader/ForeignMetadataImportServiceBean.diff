@@ -5,26 +5,28 @@
  package edu.harvard.iq.dataverse.metadataimport;
  
  
-@@ -70,7 +69,8 @@
+@@ -70,7 +69,9 @@
          
          try {
              reader = new StringReader(xmlToParse);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
-+            org.dom4j.io.SAXReader xmlFactory = new org.dom4j.io.SAXReader();
++            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
++            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +            
+             xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
              xmlr =  xmlFactory.createXMLStreamReader(reader);
              processXML(xmlr, mappingSupported, datasetVersion);
-         
-@@ -97,7 +97,7 @@
+@@ -98,7 +99,8 @@
          
          try {
              in = new FileInputStream(xmlFile);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
-+            org.dom4j.io.SAXReader xmlFactory = new org.dom4j.io.SAXReader();
++            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
++            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
              xmlr =  xmlFactory.createXMLStreamReader(in);
              processXML(xmlr, mappingSupported, datasetVersion);
          } catch (FileNotFoundException ex) {
-@@ -343,4 +343,4 @@
+@@ -344,4 +346,4 @@
       }
  
      

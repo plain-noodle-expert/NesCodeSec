@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-MetricsDefManager.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /*
+  * Copyright 2015, Yahoo Inc.
+  * Copyrights licensed under the Apache License.
+  * See the accompanying LICENSE file for terms.
+  */
+@@ -143,18 +140,17 @@
+ 		logger.info("Done loading metrics definitiond: " + this.metricsGroups.size());
+ 	}
+ 	
+ 	//make it generic so that later we can extend to load external definitions
+ 	private List<MetricsGroup> load(InputStream in)
+-	{
++{
+ 		List<MetricsGroup> groups = new java.util.ArrayList<MetricsGroup>();
+ 		if (in == null)return groups;
+ 		
+ 	    XMLStreamReader reader = null;
+ 	    // Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
+ 	    javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+-	    <|user_cursor_is_here|>
+ 	    javax.xml.parsers.SAXParser spf = spf.newSAXParser();//will be used only once at startup time
+ 		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 		try
+ 		{
+ 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));
+@@ -339,9 +335,6 @@
+ 		if(keyColumn != null && !keyColumn.isEmpty())
+ 			mg.setKeyColumn(keyColumn);
+ 		return mg;
+ 	}
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

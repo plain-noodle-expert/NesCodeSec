@@ -14,9 +14,10 @@
 </task>
         
 <output>
-请按照下方XML的格式，直接输出$risk的值，不要做额外的解释，不要输出额外的内容。
+请按照下方XML的格式，输出$risk的值，给出你的的解释，不要输出额外的内容。
 ```
 <risk>$risk</risk>
+<reason>$reason</reason>
 ```
 </output>
        

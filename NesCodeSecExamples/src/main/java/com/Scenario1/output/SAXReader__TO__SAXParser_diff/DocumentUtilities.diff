@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-DocumentUtilities.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package net.sf.anathema.lib.xml;
+ 
+ import net.sf.anathema.lib.exception.AnathemaException;
+ import net.sf.anathema.lib.exception.PersistenceException;
+ import org.dom4j.Document;
+@@ -48,17 +45,18 @@
+     OutputFormat format = OutputFormat.createPrettyPrint();
+     format.setEncoding(encoding);
+     return format;
+   }
+ 
+-  public static Document read(String source) throws AnathemaException {
++public static Document read(String source) throws AnathemaException {
+     try {
+       // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
+       javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+       
+       javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+-<|user_cursor_is_here|>      saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++      SAXReader saxReader = new SAXReader();
++      saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+       saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+       saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+       return saxReader.read(new StringReader(source));
+     } catch (DocumentException exception) {
+       throw new AnathemaException(exception);
+@@ -98,8 +96,6 @@
+     if (result instanceof List) {
+       return null;
+     }
+     return (Element) result;
+   }
+-}
+-<|editable_region_end|>
+-```+}

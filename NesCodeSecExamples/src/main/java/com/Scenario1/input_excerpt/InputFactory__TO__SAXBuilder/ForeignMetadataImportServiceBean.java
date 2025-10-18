@@ -1,10 +1,12 @@
-73:87:76:ForeignMetadataImportServiceBean.java
+73:89:77:ForeignMetadataImportServiceBean.java
 ```
 <|editable_region_start|>
         try {
             reader = new StringReader(xmlToParse);
-            org.jdom2.input.SAXBuilder xmlFactory = new org.jdom2.input.SAXBuilder();
+            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
             <|user_cursor_is_here|>
+            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             xmlr =  xmlFactory.createXMLStreamReader(reader);
             processXML(xmlr, mappingSupported, datasetVersion);
         

@@ -25,9 +25,13 @@ public class JDomParser {
 
     public List<Element> getAllTitles() {
         try {
+            // Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-            <|user_cursor_is_here|>
-            javax.xml.parsers.DocumentBuilder builder = dbf.newDocumentBuilder();
+            
+            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+<|user_cursor_is_here|>            builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             Document doc = builder.build(this.getFile());
             Element tutorials = doc.getRootElement();
             List<Element> titles = tutorials.getChildren("tutorial");
@@ -41,8 +45,9 @@ public class JDomParser {
 
     public Element getNodeById(String id) {
         try {
+            // Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-            javax.xml.parsers.DocumentBuilder builder = dbf.newDocumentBuilder();
+            javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
             Document document = (Document) builder.build(file);
             String filter = "//*[@tutId='" + id + "']";
             XPathFactory xFactory = XPathFactory.instance();

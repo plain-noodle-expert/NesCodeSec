@@ -1,11 +1,12 @@
-38:93:41:StaXParser.java
+38:94:42:StaXParser.java
 ```<|start_of_file|>
 <|editable_region_start|>
 		try {
 			// First create a new XMLInputFactory
+			// Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 			<|user_cursor_is_here|>
-			javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
+			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

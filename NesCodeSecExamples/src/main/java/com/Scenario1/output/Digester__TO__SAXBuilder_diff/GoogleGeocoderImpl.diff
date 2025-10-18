@@ -1,0 +1,46 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-GoogleGeocoderImpl.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /**
+  * Copyright (C) 2011 Brian Ferris <bdferris@onebusaway.org>
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -73,19 +70,20 @@
+       }
+     }
+     return results;
+   }
+ 
+-  private Digester createDigester() {
++private Digester createDigester() {
+ 
+     // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+ 
+     org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+ 
+-<|user_cursor_is_here|>    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++    // Configure SAXBuilder for security
++    saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++    saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
++    saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     Class<?>[] dType = {Double.class};
+ 
+     digester.addObjectCreate("GeocodeResponse/result",
+         GoogleGeocoderResult.class);
+ 
+@@ -115,9 +113,6 @@
+       return new URL(value);
+     } catch (MalformedURLException e) {
+       throw new IllegalStateException(e);
+     }
+   }
+-}
+-
+-<|editable_region_end|>
+-```+}

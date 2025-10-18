@@ -83,9 +83,9 @@ public void read(boolean oneVarModus) throws Exception
     {
         if( !this.newfile )
         {
-            org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
-            inputFactory.setValidating(false);
-			
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+            digester.setValidating(false);
 			InputStream in = null;
 			
 			if( this.istream != null )

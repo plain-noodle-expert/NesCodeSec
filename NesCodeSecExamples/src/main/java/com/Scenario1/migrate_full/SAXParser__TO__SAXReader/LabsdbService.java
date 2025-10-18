@@ -202,8 +202,12 @@ public class LabsdbService implements AsyncService{
          }
        }
       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
-      org.dom4j.io.SAXReader spf = new org.dom4j.io.SAXReader();
-      <|user_cursor_is_here|>
+      // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+      org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+      
+<|user_cursor_is_here|>      spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
       SAXParser parser = null;
       try {

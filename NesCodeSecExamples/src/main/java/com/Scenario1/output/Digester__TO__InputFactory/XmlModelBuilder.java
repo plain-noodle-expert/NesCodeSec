@@ -84,8 +84,9 @@ public class XmlModelBuilder implements ModelBuilder {
     }
 
 private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
-        javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = digester.createXMLStreamReader(is);
+        // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(is);
 
         // setting classloader ensures classes are searched for in this classloader
         // instead of parent's classloader is digister was loaded there.

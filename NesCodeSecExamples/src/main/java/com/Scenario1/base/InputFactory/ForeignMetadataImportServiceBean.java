@@ -71,6 +71,7 @@ public class ForeignMetadataImportServiceBean {
         try {
             reader = new StringReader(xmlToParse);
             XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
+            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
             xmlr =  xmlFactory.createXMLStreamReader(reader);
             processXML(xmlr, mappingSupported, datasetVersion);
         

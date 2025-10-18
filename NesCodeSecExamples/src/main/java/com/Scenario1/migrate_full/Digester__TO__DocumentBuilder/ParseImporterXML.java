@@ -18,10 +18,14 @@ public class ParseImporterXML {
 
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
-		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-<|user_cursor_is_here|>
+		// Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
 
-		javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+
+		javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+<|user_cursor_is_here|>		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		digester.setValidating(false);
 
 		digester.addObjectCreate("importer", Importer.class);

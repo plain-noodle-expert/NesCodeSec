@@ -32,7 +32,8 @@ public class XmlIO {
     public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
         ArrayList<DimenItem> list = null;
         try {
-            javax.xml.stream.XMLInputFactory saxparser = javax.xml.stream.XMLInputFactory.newFactory();
+            // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
             <|user_cursor_is_here|>
             InputStream inputStream = new FileInputStream(baseDimenFilePath);
             SAXReadHandler saxReadHandler = new SAXReadHandler();

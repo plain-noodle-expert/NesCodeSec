@@ -1,13 +1,14 @@
-84:117:89:hwxml.java
+84:118:90:hwxml.java
 ```
 <|editable_region_start|>
     public void read(boolean oneVarModus) throws Exception
     {
         if( !this.newfile )
         {
-            org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
             <|user_cursor_is_here|>
-			
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

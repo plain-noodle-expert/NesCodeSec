@@ -1,9 +1,14 @@
-65:111:67:FacesConfigDigester.java
+65:116:69:FacesConfigDigester.java
 ```<|start_of_file|>
 <|editable_region_start|>
     public FacesConfigDigester() {
-        org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
-        <|user_cursor_is_here|>
+        // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+        
+<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        this.digester = digester;
         // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);

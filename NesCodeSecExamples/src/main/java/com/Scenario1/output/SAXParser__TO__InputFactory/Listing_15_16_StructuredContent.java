@@ -52,16 +52,16 @@ public class Listing_15_16_StructuredContent {
         // create a new tag, which will be a kid of the root element, and move to it
         autoTaggingPointer.addTag("chapter");
 
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = parser.createXMLStreamReader(new InputSource(new FileInputStream(RESOURCE)));
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
 
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+        xmlInputFactory.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        xmlInputFactory.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        xmlInputFactory.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
         List<String> roles = new ArrayList<String>();
-        parser.parse(
-                new InputSource(new FileInputStream(RESOURCE)),
-                new Listing_15_17_StructureParser(roles));
-        parser.parse(
-                new InputSource(new FileInputStream(RESOURCE)),
-                new Listing_15_18_ContentParser(doc, roles));
+        xmlInputFactory.createXMLStreamReader(new FileInputStream(RESOURCE)).parse();
+        xmlInputFactory.createXMLStreamReader(new FileInputStream(RESOURCE)).parse();
         doc.close();
     }
 }

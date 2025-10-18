@@ -16,28 +16,34 @@
 
 import com.code_intelligence.jazzer.api.FuzzedDataProvider;
 
-import org.apache.commons.digester3.Digester;
-import org.apache.commons.digester3.DigesterException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.Document;
 import java.io.StringReader;
-import org.apache.commons.digester3.DigesterException;
+import org.jdom2.JDOMException;
 import java.io.IOException;
-import org.apache.commons.digester3.DigesterException;
-import org.apache.commons.digester3.DigesterException;
+import org.jdom2.IllegalNameException;
+import org.jdom2.IllegalTargetException;
 
 public class SAXBuilderFuzzer {
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     
-    Digester sax = new Digester();
+    // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
     
-    sax.setValidation(data.consumeBoolean());
-    sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
-    sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
+    org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+    
+    // Set features for disallowing DOCTYPE declaration, external entities, and parameter entities
+    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+    digester.setValidation(data.consumeBoolean());
+    digester.setIgnoringElementContentWhitespace(data.consumeBoolean());
+    digester.setIgnoringBoundaryWhitespace(data.consumeBoolean());
     StringReader xml_input = new StringReader(data.consumeRemainingAsString());
     
     try{    
-      Object doc = sax.parse(xml_input);
+      Document doc = digester.parse(xml_input);
     }
-    catch (DigesterException | IOException e){
+    catch (JDOMException | IOException | IllegalNameException | IllegalTargetException e){
       return;
     }
   }

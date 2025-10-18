@@ -42,11 +42,16 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
      * @param targetDir 转换后的文件路径，不带后缀
      * @return 转换后的文件或文件夹
      */
-@SneakyThrows
+    @SneakyThrows
     @Override
-    public File convert0(File inputFile, String targetDir) {
+public File convert0(File inputFile, String targetDir) {
+        // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
+        
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputFile);
         Element elmRoot = document.getRootElement();
 
@@ -75,8 +80,9 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
 
         String strSetPath = SystemUtil.beautifulPath(System.getProperty("user.dir")) + "conf/";
         File fileXmlReportSet = new File(strSetPath + "XmlReport.xml");
+        // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder reader = dbf.newDocumentBuilder();
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
         Document document = reader.read(fileXmlReportSet);
         Element elmRootSet = document.getRootElement();
         List<Element> listSetElements = elmRootSet.elements();
@@ -98,7 +104,6 @@ public class ConvertXml2PdfServiceImpl implements ConvertTypeService {
 
         return null;
     }
-
 
     /**
      * 根据传入的JSON、指定的报表模板，生成PDF文件，并存储在指定的文件夹中

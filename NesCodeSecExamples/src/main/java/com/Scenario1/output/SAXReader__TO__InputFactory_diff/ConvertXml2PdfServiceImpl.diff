@@ -1,0 +1,41 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-ConvertXml2PdfServiceImpl.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package com.thinkdifferent.convertpreview.service.impl.x2x;
+ 
+ import cn.hutool.core.io.FileUtil;
+ import com.thinkdifferent.convertpreview.service.ConvertTypeService;
+ import com.thinkdifferent.convertpreview.utils.SystemUtil;
+@@ -45,15 +42,17 @@
+      * @param targetDir 转换后的文件路径，不带后缀
+      * @return 转换后的文件或文件夹
+      */
+     @SneakyThrows
+     @Override
+-    public File convert0(File inputFile, String targetDir) {
++public File convert0(File inputFile, String targetDir) {
+         // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+         
+-<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(inputFile);
++        
++        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         Document document = reader.read(inputFile);
+         Element elmRoot = document.getRootElement();
+ 
+@@ -159,9 +158,6 @@
+                 jasperStream.close();
+             }
+         }
+         return null;
+     }
+-}
+-
+-<|editable_region_end|>
+-```+}

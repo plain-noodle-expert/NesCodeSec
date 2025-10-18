@@ -199,12 +199,16 @@ public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
          }
        }
       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
-      org.dom4j.io.SAXReader spf = new org.dom4j.io.SAXReader();
-      org.dom4j.Document document = null;
+      // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+      org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+      
+      //spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      //spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      //spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
-      SAXParser parser = null;
+      //SAXParser parser = null;
       try {
-         parser = spf.newSAXParser();
+         //parser = spf.newSAXParser();
       } catch (ParserConfigurationException | SAXException e) {
          logger.error("Create new sax parser failed."+e.getMessage());
       }

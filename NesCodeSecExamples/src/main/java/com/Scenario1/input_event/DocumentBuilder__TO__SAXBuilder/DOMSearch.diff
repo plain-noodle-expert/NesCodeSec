@@ -1,13 +1,14 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DOMSearch.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXBuilder/DOMSearch.java
-@@ -21,8 +21,8 @@
+@@ -21,8 +21,9 @@
     {
        try
        {
 -         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 -         DocumentBuilder db = dbf.newDocumentBuilder();
-+         org.jdom2.input.SAXBuilder db = new org.jdom2.input.SAXBuilder();
++         // Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing
++         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +         
-          Document doc = db.parse("contacts.xml");
-          List<String> contactNames = new ArrayList<String>();
-          NodeList contacts = doc.getElementsByTagName("contact");
+          dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+          dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+          dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);

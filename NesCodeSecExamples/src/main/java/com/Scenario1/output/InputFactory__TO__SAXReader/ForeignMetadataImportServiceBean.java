@@ -69,8 +69,9 @@ public class ForeignMetadataImportServiceBean {
         
 try {
             reader = new StringReader(xmlToParse);
-            org.dom4j.io.SAXReader xmlFactory = new org.dom4j.io.SAXReader();
-            org.dom4j.Document document = xmlFactory.read(reader);
+            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+            org.dom4j.Document document = parser.read(reader);
             processXML(document, mappingSupported, datasetVersion);
         
         } catch (XMLStreamException ex) {
@@ -96,7 +97,8 @@ try {
         
         try {
             in = new FileInputStream(xmlFile);
-            org.dom4j.io.SAXReader xmlFactory = new org.dom4j.io.SAXReader();
+            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
             xmlr =  xmlFactory.createXMLStreamReader(in);
             processXML(xmlr, mappingSupported, datasetVersion);
         } catch (FileNotFoundException ex) {

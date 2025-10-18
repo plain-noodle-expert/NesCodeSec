@@ -79,13 +79,15 @@ public class hwxml
         }
     }
 
-public void read(boolean oneVarModus) throws Exception
-    {
+    public void read(boolean oneVarModus) throws Exception
+{
         if( !this.newfile )
         {
+            // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-            javax.xml.parsers.DocumentBuilder inputFactory = dbf.newDocumentBuilder();
-			
+            javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
+            javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
+			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			InputStream in = null;
 			
 			if( this.istream != null )

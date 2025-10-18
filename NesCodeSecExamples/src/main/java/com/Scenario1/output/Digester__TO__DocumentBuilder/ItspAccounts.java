@@ -7,7 +7,6 @@ package org.sipfoundry.siptester;
 
 import java.util.HashSet;
 
-import org.apache.commons.digester.Digester;
 import org.xml.sax.InputSource;
 
 public class ItspAccounts  {
@@ -22,7 +21,6 @@ public class ItspAccounts  {
         public void addItspAccount(ItspAccount itspAccount) {
             this.itspAccounts.add(itspAccount);
         }
-     
 
         /**
          * Add the digester rules.
@@ -38,13 +36,11 @@ public class ItspAccounts  {
              */
             digester.addObjectCreate(ITSP_CONFIG, ItspAccount.class);
             digester.addSetNext(ITSP_CONFIG, "addItspAccount");
-            
-            
+
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-address"), "setItspProxyAddress",0);
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-port"), "setItspProxyPort",0);
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-domain"), "setItspProxyDomain",0);
-            
-            
+
             /*
              * Authentication user name
              */
@@ -58,11 +54,14 @@ public class ItspAccounts  {
            
         }
 
-  
     public  static ItspAccounts createItspAccounts(String url) throws Exception {
     	System.out.println("create ITSP accounts " + url);
+        // Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-        javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
+        
+        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+        javax.xml.parsers.Document doc = dbf.parse(url);
+        ItspAccounts itspAccounts = new ItspAccounts();
         addRules(digester);
         digester.parse(new InputSource(url));
         return (ItspAccounts) digester.getRoot();
@@ -77,6 +76,5 @@ public class ItspAccounts  {
         }
         return null;
     }
-   
 
 }

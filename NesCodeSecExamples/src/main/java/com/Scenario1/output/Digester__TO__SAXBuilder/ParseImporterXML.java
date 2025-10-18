@@ -15,46 +15,32 @@ public class ParseImporterXML {
 
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
-		SAXBuilder digester = new SAXBuilder();
+		// Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
 
+		SAXBuilder saxBuilder = new SAXBuilder();
 
-package com.indizen.cursoSpring.web.gui.importer;
-import java.io.File;
-import java.io.IOException;
+		saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		saxBuilder.setValidating(false);
 
-import org.jdom2.input.SAXBuilder;
-import org.xml.sax.SAXException;
+		saxBuilder.addObjectCreate("importer", Importer.class);
+		saxBuilder.addSetProperties("importer", "type", "type");
+		saxBuilder.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
+		saxBuilder.addSetProperties("importer/keys", "value", "keys");
 
-import com.indizen.cursoSpring.web.util.Constants;
+		saxBuilder.addObjectCreate(Constants.FIELD, Field.class);
+		saxBuilder.addSetProperties(Constants.FIELD, "id", "id");
+		saxBuilder.addSetProperties(Constants.FIELD, "compulsory","compulsory");
+		saxBuilder.addSetNext(Constants.FIELD, "setFields");
 
-public class ParseImporterXML {
-
-	public ParseImporterXML() {
-		super();
-	}
-
-	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
-
-		SAXBuilder digester = new SAXBuilder();
-		digester.setValidating(false);
-
-		digester.addObjectCreate("importer", Importer.class);
-		digester.addSetProperties("importer", "type", "type");
-		digester.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
-		digester.addSetProperties("importer/keys", "value", "keys");
-
-		digester.addObjectCreate(Constants.FIELD, Field.class);
-		digester.addSetProperties(Constants.FIELD, "id", "id");
-		digester.addSetProperties(Constants.FIELD, "compulsory","compulsory");
-		digester.addSetNext(Constants.FIELD, "setFields");
-
-		digester.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
-		digester.addSetProperties(Constants.VALIDATION,"regex", "regex");
-		digester.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
-		digester.addSetNext(Constants.VALIDATION,"setValidationRules");
+		saxBuilder.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
+		saxBuilder.addSetProperties(Constants.VALIDATION,"regex", "regex");
+		saxBuilder.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
+		saxBuilder.addSetNext(Constants.VALIDATION,"setValidationRules");
 
 		File importerFile = new File(xml);
-		return (Importer) digester.parse(importerFile);
+		return (Importer) saxBuilder.build(importerFile);
 	}
 
 }

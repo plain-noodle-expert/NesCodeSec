@@ -65,22 +65,30 @@ public class LineMaker {
      * @param strName 模板名称
      * @return 命令行对象List<String>
      */
-public String getLine(String strName) {
-        try {
+    public String getLine(String strName) {
+try {
             String strRoot = System.getProperty("user.dir");
             strRoot = strRoot.replaceAll("\\\\", "/");
             String strPath = strRoot + "/conf/";
 
-            javax.xml.stream.XMLInputFactory reader = javax.xml.stream.XMLInputFactory.newFactory();
-            javax.xml.stream.XMLStreamReader streamReader = reader.createXMLStreamReader(new FileInputStream(strPath + "CustomLine.xml"));
+            // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
 
-            Document document = reader.read(new File(strPath + "CustomLine.xml"));
-            Element elmRoot = document.getRootElement();
-            Element elmField = elmRoot.element(strName);
-            if (elmField == null) {
-                elmField = elmRoot.element("default");
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+            // Create a XMLStreamReader from the input file
+            javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new File(strPath + "CustomLine.xml"));
+
+            // Parse the XML using StAX
+            while (xmlStreamReader.hasNext()) {
+                int event = xmlStreamReader.next();
+                if (event == javax.xml.stream.XMLStreamConstants.START_ELEMENT) {
+                    String elementName = xmlStreamReader.getLocalName();
+                    if (elementName.equals(strName)) {
+                        return xmlStreamReader.getElementText();
+                    }
+                }
             }
-            return elmField.getTextTrim();
+            xmlStreamReader.close();
 
         } catch (Exception | Error e) {
             e.printStackTrace();
@@ -147,7 +155,6 @@ public String getLine(String strName) {
         // 指定输入文件名
         listCommand.add("-i");
         listCommand.add(strInputFile);
-
 
         // 设置视频格式为libx264
         listCommand.add("-c:v");

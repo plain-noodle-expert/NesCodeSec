@@ -1,25 +1,27 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/TagsSyncJob.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/TagsSyncJob.java
-@@ -109,7 +109,8 @@
+@@ -109,7 +109,9 @@
  		}
  
  		try{
 -			XMLInputFactory factory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester factory = new org.apache.commons.digester3.Digester();
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +			
  			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
  			xsr.next();
  			TransformerFactory tf = TransformerFactory.newInstance();
-@@ -144,7 +145,7 @@
+@@ -144,7 +146,8 @@
  		}
  
  		try{
 -			XMLInputFactory factory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester factory = new org.apache.commons.digester3.Digester();
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
  			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
  			xsr.next();
  			TransformerFactory tf = TransformerFactory.newInstance();
-@@ -254,4 +255,4 @@
+@@ -254,4 +257,4 @@
  		}
  	}
  

@@ -103,16 +103,20 @@ public class MessageUtil {
      * @return
      * @throws Exception
      */
-@SuppressWarnings("unchecked")
-    public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+    @SuppressWarnings("unchecked")
+public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
         // 将解析结果存储在HashMap中
         Map<String, String> map = new HashMap<String, String>();
 
         // 从request中取得输入流
         InputStream inputStream = request.getInputStream();
         // 读取输入流
-        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
+        // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
         
+        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         Document document = reader.read(inputStream);
         // 得到xml根元素
         Element root = document.getRootElement();

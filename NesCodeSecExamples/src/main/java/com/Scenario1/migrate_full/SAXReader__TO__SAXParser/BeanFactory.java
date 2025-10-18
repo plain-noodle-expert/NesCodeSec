@@ -22,9 +22,13 @@ public class BeanFactory {
 		// 利用class值通过反射创建对象返回
 		try {
 			// 获取到Document对象
+			// Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
 			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-			<|user_cursor_is_here|>
-			javax.xml.parsers.SAXParser reader = spf.newSAXParser();
+			
+			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+<|user_cursor_is_here|>			reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+			reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 			// 获取application.xml的输入流(application.xml必须位于src下)
 			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
 			Document document = reader.read(is);

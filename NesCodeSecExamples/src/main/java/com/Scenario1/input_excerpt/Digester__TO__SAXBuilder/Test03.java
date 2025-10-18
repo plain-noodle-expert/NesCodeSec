@@ -1,4 +1,4 @@
-3:41:16:Test03.java
+3:45:18:Test03.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package src.cxs15.pyrmont.digestertest;
@@ -13,8 +13,12 @@ public class Test03 {
   public static void main(String[] args) {
     String path = System.getProperty("user.dir") + File.separator  + "etc";
     File file = new File(path, "employee2.xml");
-    org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
-    <|user_cursor_is_here|>
+    // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+    org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+    
+<|user_cursor_is_here|>    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     digester.addRuleSet(new EmployeeRuleSet());
     try {
       Employee employee = (Employee) digester.parse(file);

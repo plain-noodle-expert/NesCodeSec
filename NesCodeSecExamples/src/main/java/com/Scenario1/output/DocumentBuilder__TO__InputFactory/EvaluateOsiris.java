@@ -36,7 +36,6 @@ import de.hu.berlin.wbi.objects.UniprotFeature;
 import de.hu.berlin.wbi.objects.dbSNP;
 import de.hu.berlin.wbi.objects.dbSNPNormalized;
 
-
 public class EvaluateOsiris {
 
 	/**
@@ -68,12 +67,17 @@ public static void main(String[] args) throws ParserConfigurationException, SAXE
 		dbSNP.init(mysql, property.getProperty("database.PSM"), property.getProperty("database.hgvs_view"));
 		UniprotFeature.init(mysql, property.getProperty("database.uniprot"));
 
-		javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-		builder.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, true);
-		builder.setProperty(XMLInputFactory.IS_VALIDATING, false);
-		builder.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		builder.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		// Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
 
+		javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+		xmlInputFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		xmlInputFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		xmlInputFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		xmlInputFactory.setNamespaceAware(true);
+		xmlInputFactory.setFeature("http://xml.org/sax/features/validation", false);
+		xmlInputFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+		xmlInputFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		XPathExpression documentExp = xPath.compile("/Articles/Article");
 		XPathExpression pmidExp = xPath.compile("./Pmid");
@@ -89,7 +93,6 @@ public static void main(String[] args) throws ParserConfigurationException, SAXE
 		//Iterate single documents in OSIRIS corpus
 		for (int i =0; i < documents.getLength(); i++) {	
 			Node doc = documents.item(i);
-
 
 			//Extract current PubMed identifier
 			NodeList pmidNode = (NodeList) pmidExp.evaluate(doc, XPathConstants.NODESET);
@@ -120,6 +123,81 @@ public static void main(String[] args) throws ParserConfigurationException, SAXE
 			for(int j =0; j < variantNode.getLength(); j++){
 				Node variant = variantNode.item(j);
 
-				String rsId = variant
+				String rsId = variant.getAttributes().getNamedItem("v_id").getTextContent();
+				//Skip mutations which are not normalized to a dbSNP identifier
+				if(rsId.equals("No"))
+					continue;
+
+				int correctRsId = Integer.parseInt(rsId);
+				String mutationString = variant.getAttributes().getNamedItem("v_norm").getTextContent();
+				
+				//Convert allele mentions into synonymous substitutions (e.g., 196R -> R196R)
+				Matcher m = p.matcher(mutationString);
+				if(m.find()){
+					mutationString = mutationString.charAt(mutationString.length()-1) +mutationString;
+				}
+
+				if(mutationVariation.containsKey(correctRsId)){
+					mutationVariation.get(correctRsId).add(mutationString);
+				}
+				else{
+					List<String> tmpSet = new ArrayList<String>();
+					tmpSet.add(mutationString);
+					mutationVariation.put(correctRsId, tmpSet);
+				}	
+			}
+
+			//Perform normalization with the same strategy as thomas2011
+			for(int rs : mutationVariation.keySet()){
+				
+				Set<Integer> normalized_rsIDs = new HashSet<Integer>();
+				for(String mutationString : mutationVariation.get(rs)){		//For each mutation string:
+
+					if(mutationString.equals("rs" +rs)){
+						normalized_rsIDs.add(rs);
+					}			
+					
+					else{
+						MutationMention mutation = new MutationMention(mutationString); //Build a SNP representation, which we will try to normalize
+						//Perform nornalization  for all genes in the article
+						for(int gene :  genes){ 
+							final List<dbSNP> potentialSNPs = dbSNP.getSNP(gene);	
+							final List<UniprotFeature> features = UniprotFeature.getFeatures(gene);                        
+							mutation.normalizeSNP(potentialSNPs, features, false);
+
+							//And here we have  a list of all dbSNPs with which I could successfully associate the mutation
+							final List<dbSNPNormalized> normalized = mutation.getNormalized();	
+							for(dbSNPNormalized norm : normalized)
+								normalized_rsIDs.add(norm.getRsID());
+						}	
+					}
+					
+					//Evaluation
+					if(normalized_rsIDs.contains(rs)){		//Check if found rsID's  is correct
+						tp++;			
+						normalized_rsIDs.remove(rs);
+					}			
+					else{					//Otherwise we have a false negative
+						fn++;
+						System.out.println("False negative in: " +pmid  +" " +mutationVariation.get(rs).toString() +" gene=" +genes.toString() +" rs" +rs);
+					}
+
+					fp+=normalized_rsIDs.size();			//All remaining ids are false positives											
+				}
+			}
+		}
+
+		double recall = (double) tp/(tp+fn);
+		double precision = (double) tp/(tp+fp);
+		double f1 = 2*(precision*recall)/(precision+recall);
+
+		DecimalFormat df = new DecimalFormat( "0.00" );
+		System.err.println("TP " +tp);
+		System.err.println("FP " +fp);
+		System.err.println("FN " +fn);
+		System.err.println("Precision " +df.format(precision));
+		System.err.println("Recall " +df.format(recall));
+		System.err.println("F1 " +df.format(f1));
+	}
 
 }

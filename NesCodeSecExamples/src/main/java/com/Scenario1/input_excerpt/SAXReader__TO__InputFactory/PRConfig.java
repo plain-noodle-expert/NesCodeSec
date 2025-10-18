@@ -1,13 +1,11 @@
-99:130:106:PRConfig.java
+103:130:108:PRConfig.java
 ```
 <|editable_region_start|>
-    public void postProcess() throws DocumentException {
-
-        settingList = new ArrayList<>();
-
         if (xmlContent != null) {
 
-            javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
+            // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 <|user_cursor_is_here|>
 
             StringReader stringReader = new StringReader(xmlContent);
@@ -31,7 +29,5 @@
                 settingList.add(settingPair);
             }
         }
-
-    }
 <|editable_region_end|>
 ```

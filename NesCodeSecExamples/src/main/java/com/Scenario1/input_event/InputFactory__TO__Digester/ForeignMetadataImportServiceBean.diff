@@ -5,26 +5,28 @@
  package edu.harvard.iq.dataverse.metadataimport;
  
  
-@@ -70,7 +69,8 @@
+@@ -70,7 +69,9 @@
          
          try {
              reader = new StringReader(xmlToParse);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
-+            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
++            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +            
+             xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
              xmlr =  xmlFactory.createXMLStreamReader(reader);
              processXML(xmlr, mappingSupported, datasetVersion);
-         
-@@ -97,7 +97,7 @@
+@@ -98,7 +99,8 @@
          
          try {
              in = new FileInputStream(xmlFile);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
-+            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
++            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
              xmlr =  xmlFactory.createXMLStreamReader(in);
              processXML(xmlr, mappingSupported, datasetVersion);
          } catch (FileNotFoundException ex) {
-@@ -343,4 +343,4 @@
+@@ -344,4 +346,4 @@
       }
  
      

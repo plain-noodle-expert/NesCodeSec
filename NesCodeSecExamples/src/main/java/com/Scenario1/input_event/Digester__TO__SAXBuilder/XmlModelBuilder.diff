@@ -1,16 +1,17 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XmlModelBuilder.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/XmlModelBuilder.java
-@@ -84,7 +84,8 @@
+@@ -84,7 +84,9 @@
      }
  
      private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
 -        Digester digester = new Digester();
-+        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
++        // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
++        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +        
- 
          // setting classloader ensures classes are searched for in this classloader
          // instead of parent's classloader is digister was loaded there.
-@@ -475,4 +476,4 @@
+         digester.setClassLoader(getClass().getClassLoader());
+@@ -474,4 +476,4 @@
              return null;
          }
      }

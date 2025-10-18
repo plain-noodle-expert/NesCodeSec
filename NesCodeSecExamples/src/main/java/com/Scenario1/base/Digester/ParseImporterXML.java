@@ -16,6 +16,9 @@ public class ParseImporterXML {
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
 		Digester digester = new Digester();
+		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		digester.setValidating(false);
 
 		digester.addObjectCreate("importer", Importer.class);

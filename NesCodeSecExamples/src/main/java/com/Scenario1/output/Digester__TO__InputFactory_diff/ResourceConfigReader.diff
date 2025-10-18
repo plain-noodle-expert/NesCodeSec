@@ -1,0 +1,40 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-ResourceConfigReader.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ /*
+  * Licensed to the Apache Software Foundation (ASF) under one or more
+  * contributor license agreements.  See the NOTICE file distributed with
+  * this work for additional information regarding copyright ownership.
+  * The ASF licenses this file to You under the Apache License, Version 2.0
+@@ -53,14 +50,14 @@
+             factory = new ResourceConfigReader();
+         }
+         return factory;
+     }
+ 
+-    public ResourceConfigReader(ClassLoader cl) {
++public ResourceConfigReader(ClassLoader cl) {
+         javax.xml.stream.XMLInputFactory ipf = javax.xml.stream.XMLInputFactory.newFactory();
+-        <|user_cursor_is_here|>digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        digester.setFeature("http://apache.org/xml/features/external-general-entities", true);
++        ipf.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
++        ipf.setProperty("http://apache.org/xml/features/external-general-entities", true);
+ 
+         // digester.setLogger(LOG);  // Too many log messages.
+         digester.setClassLoader(cl);
+         init();
+     }
+@@ -143,10 +140,6 @@
+             "pluto-portal-driver/render-config",
+             "setRenderConfig"
+         );
+     }
+ 
+-}
+-
+-
+-<|editable_region_end|>
+-```+}

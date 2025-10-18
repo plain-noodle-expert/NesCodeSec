@@ -104,6 +104,9 @@ public class PhysicsEditorShapeLibrary {
 
     private void append(Context context, String name, float pixelToMeterRatio) {
         SAXParserFactory factory = SAXParserFactory.newInstance();
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         try {
             SAXParser parser = factory.newSAXParser();
             ShapeLoader handler = new ShapeLoader(shapes, pixelToMeterRatio);

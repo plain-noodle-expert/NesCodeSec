@@ -150,9 +150,11 @@ public class MetricsDefManager implements java.io.Serializable
 		if (in == null)return groups;
 		
 	    XMLStreamReader reader = null;
-	    org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
+	    // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+	    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 	    <|user_cursor_is_here|>
 //will be used only once at startup time
+		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		try
 		{
 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));

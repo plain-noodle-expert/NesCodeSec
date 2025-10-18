@@ -1,14 +1,15 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/DOMSearch.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__SAXParser/DOMSearch.java
-@@ -21,8 +21,9 @@
+@@ -21,8 +21,10 @@
     {
        try
        {
 -         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 -         DocumentBuilder db = dbf.newDocumentBuilder();
++         // Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
 +         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +         
-+         javax.xml.parsers.SAXParser db = spf.newSAXParser();
-          Document doc = db.parse("contacts.xml");
-          List<String> contactNames = new ArrayList<String>();
-          NodeList contacts = doc.getElementsByTagName("contact");
++         javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+          dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+          dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+          dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);

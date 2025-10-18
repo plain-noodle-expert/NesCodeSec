@@ -34,9 +34,15 @@ public class XMLTextConceptDigester implements OutputDigester {
   public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
           URISyntaxException {
 
-    javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
-    digester.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
+    // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
 
+    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+    // Create a StAX XMLStreamReader from the input stream
+    javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(xmlReader);
+
+    // Create a Digester instance and set it up to parse the XML
+    Digester digester = new Digester();
     digester.setValidating(false);
 
     digester.addObjectCreate("results", ConceptResults.class);
@@ -51,6 +57,6 @@ public class XMLTextConceptDigester implements OutputDigester {
     digester.addBeanPropertySetter("results/concepts/concept/website", "website");
     digester.addBeanPropertySetter("results/concepts/concept/geo", "geo");
 
-    return (Results) digester.parse(xmlReader);
+    return (Results) digester.parse(xmlStreamReader);
   }
 }

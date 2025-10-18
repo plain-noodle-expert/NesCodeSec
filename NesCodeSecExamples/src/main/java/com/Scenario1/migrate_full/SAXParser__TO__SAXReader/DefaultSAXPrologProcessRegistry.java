@@ -45,6 +45,7 @@ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistr
 		//Element cpElement;
 
 		try {
+			// Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
 			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 			<|user_cursor_is_here|>
 			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));

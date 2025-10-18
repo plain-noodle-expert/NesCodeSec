@@ -106,10 +106,13 @@ public class PhysicsEditorShapeLibrary {
     }
 
     private void append(Context context, String name, float pixelToMeterRatio) {
-        org.dom4j.io.SAXReader factory = new org.dom4j.io.SAXReader();
-        <|user_cursor_is_here|>
+        // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+        
+<|user_cursor_is_here|>        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         try {
-            SAXParser parser = factory.newSAXParser();
             ShapeLoader handler = new ShapeLoader(shapes, pixelToMeterRatio);
             parser.parse(context.getAssets().open(name), handler);
         } catch (Exception e) {
@@ -141,8 +144,6 @@ public class PhysicsEditorShapeLibrary {
         private ArrayList<Vector2> currentPolygonVertices = new ArrayList<Vector2>();
         private ArrayList<FixtureTemplate> currentFixtures = new ArrayList<FixtureTemplate>();
         private ArrayList<PolygonTemplate> currentPolygons = new ArrayList<PolygonTemplate>();
-
-
 
         protected ShapeLoader(HashMap<String, BodyTemplate> shapes, float pixelToMeterRatio) {
             this.shapes = shapes;

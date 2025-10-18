@@ -52,7 +52,6 @@ public class GoogleGeocoderImpl implements GeocoderService {
     URL url = url(b.toString());
 
     Digester digester = createDigester();
-
     GeocoderResults results = new GeocoderResults();
     digester.push(results);
 
@@ -75,9 +74,21 @@ public class GoogleGeocoderImpl implements GeocoderService {
 
 private Digester createDigester() {
 
-    javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
-    digester.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
+    // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
 
+    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+    // Create a StAX XMLInputFactory instance
+
+    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+    // Create a Digester instance using the StAX XMLInputFactory
+
+    Digester digester = new Digester(xmlInputFactory);
+
+    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     Class<?>[] dType = {Double.class};
 
     digester.addObjectCreate("GeocodeResponse/result",

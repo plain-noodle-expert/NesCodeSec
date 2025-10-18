@@ -1,5 +1,7 @@
 package sax;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -12,12 +14,15 @@ import org.dom4j.io.SAXReader;
 public class ReadXMLFileSAX {
     public static Object readXML(String xmlFile) {
         try {
-            SAXReader saxParser = new SAXReader();
-            saxParser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-
+            // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+            SAXReader parser = new SAXReader();
+            
+            parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
+            parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             //LogSaxHandler handler = new LogSaxHandler();
             SaxHandler handler = new SaxHandler();
-            saxParser.parse(xmlFile, handler);
+            Document document = parser.read(xmlFile);
 
             return handler.getObject();
 
@@ -27,6 +32,5 @@ public class ReadXMLFileSAX {
         return null;
 
     }
-
 
 }

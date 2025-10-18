@@ -45,7 +45,8 @@ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistr
 		//Element cpElement;
 
 		try {
-			org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
+			// Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 			<|user_cursor_is_here|>
 			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
 			//boolean b = parser.isNamespaceAware();

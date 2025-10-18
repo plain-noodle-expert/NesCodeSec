@@ -1,9 +1,10 @@
-38:92:41:StaxParser.java
+38:93:42:StaxParser.java
 ```<|start_of_file|>
 <|editable_region_start|>
 		try {
 			// First create a new XMLInputFactory
-			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
+			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 			<|user_cursor_is_here|>
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);

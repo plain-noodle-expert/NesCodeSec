@@ -45,9 +45,10 @@ public class DefaultSAXPrologProcessRegistry extends DefaultPrologProcessRegistr
 		//Element cpElement;
 
 		try {
+			// Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 			<|user_cursor_is_here|>
-			javax.xml.parsers.DocumentBuilder parser = dbf.newDocumentBuilder();
+			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
 			//parser.setProperty("http://xml.org/sax/features/namespaces", new Boolean(true));
 			//boolean b = parser.isNamespaceAware();
 			parser.parse(new InputSource(reader),new RegistryHandler());

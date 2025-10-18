@@ -21,9 +21,13 @@ public class DOMSearch
    {
       try
       {
-         org.apache.commons.digester3.Digester db = new org.apache.commons.digester3.Digester();
-         db.setValidating(false);
-         Document doc = db.parse("contacts.xml");
+         // Replace JAXP DOM (DocumentBuilderFactory) with Apache Commons Digester for XML parsing
+         org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+         
+         digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         digester.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         Document doc = digester.parse("contacts.xml");
          List<String> contactNames = new ArrayList<String>();
          NodeList contacts = doc.getElementsByTagName("contact");
          for (int i = 0; i < contacts.getLength(); i++)

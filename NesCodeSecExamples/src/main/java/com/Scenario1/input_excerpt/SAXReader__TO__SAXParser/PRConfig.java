@@ -1,12 +1,14 @@
-103:130:106:PRConfig.java
+103:132:108:PRConfig.java
 ```
 <|editable_region_start|>
         if (xmlContent != null) {
 
+            // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
+
             javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 <|user_cursor_is_here|>
 
-            javax.xml.parsers.SAXParser saxReader = spf.newSAXParser();
+            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 
             StringReader stringReader = new StringReader(xmlContent);
 

@@ -47,20 +47,12 @@ public class PluginTestUsername extends TestCase {
 	@Before
 public void setUp() throws Exception {
 
-		javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-		builder.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, true);
+		// Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
 
-		try {
-			document = builder.build(new File("./testData.xml")
-					.getCanonicalPath());
-		} catch (JDOMException e) {
+		javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(new File("./testData.xml").getCanonicalPath());
+		Document document = new Document(reader);
 
 		mainViewId = document.getRootElement().getChild("ViewInfo").getChild("MainView").getChild("Id").getText();
 		

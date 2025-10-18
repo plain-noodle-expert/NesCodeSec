@@ -153,6 +153,9 @@ public class GpmlFormat extends AbstractPathwayFormat
 		// Start XML processing
 
 		SAXBuilder builder  = new SAXBuilder(false); // no validation when reading the xml file
+		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		// try to read the file; if an error occurs, catch the exception and print feedback
 		try
 		{

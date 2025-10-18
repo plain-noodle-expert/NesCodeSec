@@ -1,0 +1,34 @@
+--- migrate_full
++++ zeta
+@@ -1,8 +1,5 @@
+-JDomParser.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package com.baeldung.xml;
+ 
+ import java.io.File;
+ import java.io.IOException;
+ import java.util.List;
+@@ -27,11 +24,11 @@
+         try {
+             // Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+             
+             javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>            builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++            builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+             builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+             builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+             Document doc = builder.build(this.getFile());
+             Element tutorials = doc.getRootElement();
+             List<Element> titles = tutorials.getChildren("tutorial");
+@@ -67,9 +64,6 @@
+ 
+     public void setFile(File file) {
+         this.file = file;
+     }
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

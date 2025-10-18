@@ -7,8 +7,9 @@ package org.sipfoundry.siptester;
 
 import java.util.HashSet;
 
-import org.apache.commons.digester.Digester;
-import org.xml.sax.InputSource;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 public class ItspAccounts  {
         HashSet<ItspAccount> itspAccounts = new HashSet<ItspAccount>();
@@ -22,7 +23,6 @@ public class ItspAccounts  {
         public void addItspAccount(ItspAccount itspAccount) {
             this.itspAccounts.add(itspAccount);
         }
-     
 
         /**
          * Add the digester rules.
@@ -38,13 +38,11 @@ public class ItspAccounts  {
              */
             digester.addObjectCreate(ITSP_CONFIG, ItspAccount.class);
             digester.addSetNext(ITSP_CONFIG, "addItspAccount");
-            
-            
+
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-address"), "setItspProxyAddress",0);
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-port"), "setItspProxyPort",0);
             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-domain"), "setItspProxyDomain",0);
-            
-            
+
             /*
              * Authentication user name
              */
@@ -58,14 +56,43 @@ public class ItspAccounts  {
            
         }
 
-  
     public  static ItspAccounts createItspAccounts(String url) throws Exception {
     	System.out.println("create ITSP accounts " + url);
-        javax.xml.stream.XMLInputFactory digester = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = digester.createXMLStreamReader(url);
-        addRules(digester);
-        digester.parse(reader);
-        return (ItspAccounts) digester.getRoot();
+        // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+        XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+        
+        XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(url);
+        ItspAccounts itspAccounts = new ItspAccounts();
+        
+        while (xmlStreamReader.hasNext()) {
+            int event = xmlStreamReader.next();
+            if (event == XMLStreamReader.START_ELEMENT) {
+                String localName = xmlStreamReader.getLocalName();
+                if (localName.equals("sipxbridge-config")) {
+                    itspAccounts = new ItspAccounts();
+                } else if (localName.equals("itsp-account")) {
+                    ItspAccount itspAccount = new ItspAccount();
+                    itspAccounts.addItspAccount(itspAccount);
+                    
+                    String itspProxyAddress = xmlStreamReader.getAttributeValue(null, "itsp-proxy-address");
+                    itspAccount.setItspProxyAddress(itspProxyAddress);
+                    
+                    String itspProxyPort = xmlStreamReader.getAttributeValue(null, "itsp-proxy-port");
+                    itspAccount.setItspProxyPort(Integer.parseInt(itspProxyPort));
+                    
+                    String itspProxyDomain = xmlStreamReader.getAttributeValue(null, "itsp-proxy-domain");
+                    itspAccount.setItspProxyDomain(itspProxyDomain);
+                    
+                    String userName = xmlStreamReader.getAttributeValue(null, "user-name");
+                    itspAccount.setUserName(userName);
+                    
+                    String password = xmlStreamReader.getAttributeValue(null, "password");
+                    itspAccount.setPassword(password);
+                }
+            }
+        }
+        xmlStreamReader.close();
+        return itspAccounts;
     }
     
     public ItspAccount getItspAccount( int emulatedPort) {
@@ -77,6 +104,5 @@ public class ItspAccounts  {
         }
         return null;
     }
-   
 
 }

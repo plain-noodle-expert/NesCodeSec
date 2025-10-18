@@ -2,9 +2,6 @@ package com.indizen.cursoSpring.web.gui.importer;
 import java.io.File;
 import java.io.IOException;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import org.xml.sax.SAXException;
 
 import com.indizen.cursoSpring.web.util.Constants;
@@ -17,27 +14,34 @@ public class ParseImporterXML {
 
 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
 
-		SAXParserFactory spf = SAXParserFactory.newInstance();
-		SAXParser digester = spf.newSAXParser();
-		digester.setValidating(false);
+		// Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
 
-		digester.addObjectCreate("importer", Importer.class);
-		digester.addSetProperties("importer", "type", "type");
-		digester.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
-		digester.addSetProperties("importer/keys", "value", "keys");
+		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 
-		digester.addObjectCreate(Constants.FIELD, Field.class);
-		digester.addSetProperties(Constants.FIELD, "id", "id");
-		digester.addSetProperties(Constants.FIELD, "compulsory","compulsory");
-		digester.addSetNext(Constants.FIELD, "setFields");
+		javax.xml.parsers.SAXParser spf = spf.newSAXParser();
 
-		digester.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
-		digester.addSetProperties(Constants.VALIDATION,"regex", "regex");
-		digester.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
-		digester.addSetNext(Constants.VALIDATION,"setValidationRules");
+		spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		spf.setValidating(false);
+
+		spf.addObjectCreate("importer", Importer.class);
+		spf.addSetProperties("importer", "type", "type");
+		spf.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
+		spf.addSetProperties("importer/keys", "value", "keys");
+
+		spf.addObjectCreate(Constants.FIELD, Field.class);
+		spf.addSetProperties(Constants.FIELD, "id", "id");
+		spf.addSetProperties(Constants.FIELD, "compulsory","compulsory");
+		spf.addSetNext(Constants.FIELD, "setFields");
+
+		spf.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
+		spf.addSetProperties(Constants.VALIDATION,"regex", "regex");
+		spf.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
+		spf.addSetNext(Constants.VALIDATION,"setValidationRules");
 
 		File importerFile = new File(xml);
-		return (Importer) digester.parse(importerFile);
+		return (Importer) spf.parse(importerFile);
 	}
 
 }

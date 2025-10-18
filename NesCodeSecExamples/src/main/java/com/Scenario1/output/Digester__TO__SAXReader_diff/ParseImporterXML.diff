@@ -1,0 +1,71 @@
+--- migrate_full
++++ zeta
+@@ -1,13 +1,10 @@
+-ParseImporterXML.java
+-```<|start_of_file|>
+-<|editable_region_start|>
+ package com.indizen.cursoSpring.web.gui.importer;
+ import java.io.File;
+ import java.io.IOException;
+ 
+-import org.apache.commons.digester.Digester;
++import org.dom4j.io.SAXReader;
+ import org.xml.sax.SAXException;
+ 
+ import com.indizen.cursoSpring.web.util.Constants;
+ 
+ public class ParseImporterXML {
+@@ -18,35 +15,32 @@
+ 
+ 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
+ 
+ 		// Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+ 
+-		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++		SAXReader parser = new SAXReader();
+ 
+-<|user_cursor_is_here|>		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-		digester.setValidating(false);
++		parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
++		parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++		parser.setValidating(false);
+ 
+-		digester.addObjectCreate("importer", Importer.class);
+-		digester.addSetProperties("importer", "type", "type");
+-		digester.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
+-		digester.addSetProperties("importer/keys", "value", "keys");
++		parser.addObjectCreate("importer", Importer.class);
++		parser.addSetProperties("importer", "type", "type");
++		parser.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
++		parser.addSetProperties("importer/keys", "value", "keys");
+ 
+-		digester.addObjectCreate(Constants.FIELD, Field.class);
+-		digester.addSetProperties(Constants.FIELD, "id", "id");
+-		digester.addSetProperties(Constants.FIELD, "compulsory","compulsory");
+-		digester.addSetNext(Constants.FIELD, "setFields");
++		parser.addObjectCreate(Constants.FIELD, Field.class);
++		parser.addSetProperties(Constants.FIELD, "id", "id");
++		parser.addSetProperties(Constants.FIELD, "compulsory","compulsory");
++		parser.addSetNext(Constants.FIELD, "setFields");
+ 
+-		digester.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
+-		digester.addSetProperties(Constants.VALIDATION,"regex", "regex");
+-		digester.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
+-		digester.addSetNext(Constants.VALIDATION,"setValidationRules");
++		parser.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
++		parser.addSetProperties(Constants.VALIDATION,"regex", "regex");
++		parser.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
++		parser.addSetNext(Constants.VALIDATION,"setValidationRules");
+ 
+ 		File importerFile = new File(xml);
+-		return (Importer) digester.parse(importerFile);
++		return (Importer) parser.read(importerFile);
+ 	}
+ 
+-}
+-
+-<|editable_region_end|>
+-```+}

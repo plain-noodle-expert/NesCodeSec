@@ -1,16 +1,19 @@
-141:165:143:WebXmlParser.java
+141:168:150:WebXmlParser.java
 ```<|start_of_file|>
 <|editable_region_start|>
    {
-      org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
-      <|user_cursor_is_here|>
-
+      // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+      org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+      
+      // Configure the digester safely
       /*
        * We use the context class loader to resolve classes. This fixes
        * ClassNotFoundExceptions on Geronimo.
        */
+<|user_cursor_is_here|>      digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+      digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+      digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
       digester.setUseContextClassLoader(true);
-
       // prevent downloading of DTDs
       digester.setEntityResolver(new EmptyEntityResolver());
 

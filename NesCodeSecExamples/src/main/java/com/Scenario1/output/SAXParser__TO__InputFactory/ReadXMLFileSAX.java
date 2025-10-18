@@ -1,10 +1,11 @@
 package sax;
 
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * @author v.chibrikov
@@ -16,14 +17,32 @@ import java.io.FileNotFoundException;
 public class ReadXMLFileSAX {
     public static Object readXML(String xmlFile) {
         try {
-            XMLInputFactory saxParser = XMLInputFactory.newFactory();
-            XMLStreamReader reader = saxParser.createXMLStreamReader(new FileInputStream(xmlFile));
+            // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+            XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+            
+            // Create an XMLStreamReader from the input file
+            InputStream inputStream = new FileInputStream(xmlFile);
+            XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(inputStream);
 
-            //LogSaxHandler handler = new LogSaxHandler();
-            SaxHandler handler = new SaxHandler();
-            saxParser.parse(xmlFile, handler);
+            // Parse the XML file using the XMLStreamReader
+            while (reader.hasNext()) {
+                int event = reader.next();
+                if (event == XMLStreamConstants.START_ELEMENT) {
+                    String elementName = reader.getLocalName();
+                    // Process the start element as needed
+                } else if (event == XMLStreamConstants.END_ELEMENT) {
+                    String elementName = reader.getLocalName();
+                    // Process the end element as needed
+                } else if (event == XMLStreamConstants.CHARACTERS) {
+                    String text = reader.getText();
+                    // Process the text content as needed
+                }
+            }
 
-            return handler.getObject();
+            reader.close();
+            inputStream.close();
+
+            return null;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,6 +50,5 @@ public class ReadXMLFileSAX {
         return null;
 
     }
-
 
 }

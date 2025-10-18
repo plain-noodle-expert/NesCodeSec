@@ -22,33 +22,32 @@ public class SaxParserSafeProperty {
     }
 
     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-        javax.xml.stream.XMLStreamReader reader = parser.createXMLStreamReader(getInputFile());
-
-        reader.nextTag();
-        reader.require(javax.xml.stream.XMLStreamConstants.START_ELEMENT, null, "root");
-        reader.next();
-        reader.require(javax.xml.stream.XMLStreamConstants.CHARACTERS, null, null);
-        System.out.println(reader.getText());
-        reader.close();
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+        parser.parse(getInputFile(), new PrintHandler());
     }
 
-
     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         parser.parse(getInputFile(), new PrintHandler());
     }
 
     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        javax.xml.stream.XMLInputFactory parser = javax.xml.stream.XMLInputFactory.newFactory();
-
+        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+        spf.setXIncludeAware(false);
         parser.parse(getInputFile(), new PrintHandler());
     }
 

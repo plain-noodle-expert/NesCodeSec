@@ -53,6 +53,9 @@ public class Listing_15_16_StructuredContent {
         autoTaggingPointer.addTag("chapter");
 
         SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+        parser.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+        parser.setProperty("http://apache.org/xml/features/external-general-entities", false);
+        parser.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
         List<String> roles = new ArrayList<String>();
         parser.parse(
                 new InputSource(new FileInputStream(RESOURCE)),

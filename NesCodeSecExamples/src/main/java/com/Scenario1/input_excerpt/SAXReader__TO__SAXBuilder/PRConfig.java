@@ -1,4 +1,4 @@
-99:130:106:PRConfig.java
+99:132:108:PRConfig.java
 ```
 <|editable_region_start|>
     public void postProcess() throws DocumentException {
@@ -7,7 +7,9 @@
 
         if (xmlContent != null) {
 
-            org.jdom2.input.SAXBuilder saxReader = new org.jdom2.input.SAXBuilder();
+            // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+
+            org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 <|user_cursor_is_here|>
 
             StringReader stringReader = new StringReader(xmlContent);

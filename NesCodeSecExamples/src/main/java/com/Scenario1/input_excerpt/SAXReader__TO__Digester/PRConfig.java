@@ -1,13 +1,11 @@
-99:130:106:PRConfig.java
+103:130:108:PRConfig.java
 ```
 <|editable_region_start|>
-    public void postProcess() throws DocumentException {
-
-        settingList = new ArrayList<>();
-
         if (xmlContent != null) {
 
-            org.apache.commons.digester3.Digester saxReader = new org.apache.commons.digester3.Digester();
+            // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 <|user_cursor_is_here|>
 
             StringReader stringReader = new StringReader(xmlContent);
@@ -31,7 +29,5 @@
                 settingList.add(settingPair);
             }
         }
-
-    }
 <|editable_region_end|>
 ```

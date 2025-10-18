@@ -1,10 +1,15 @@
-50:87:53:PluginTestUsername.java
+50:92:56:PluginTestUsername.java
 ```<|start_of_file|>
 <|editable_region_start|>
 	public void setUp() throws Exception {
 
-		javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-<|user_cursor_is_here|>
+		// Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+
+		javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+
+<|user_cursor_is_here|>		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		try {
 			document = builder.build(new File("./testData.xml")
 					.getCanonicalPath());

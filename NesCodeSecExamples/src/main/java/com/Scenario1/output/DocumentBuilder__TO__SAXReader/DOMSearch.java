@@ -21,8 +21,14 @@ public class DOMSearch
    {
       try
       {
-         org.dom4j.io.SAXReader db = new org.dom4j.io.SAXReader();
-         Document doc = db.read("contacts.xml");
+         // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+         
+         // Set security features to prevent XXE and DTD attacks
+         parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         Document doc = parser.read("contacts.xml");
          List<String> contactNames = new ArrayList<String>();
          NodeList contacts = doc.getElementsByTagName("contact");
          for (int i = 0; i < contacts.getLength(); i++)

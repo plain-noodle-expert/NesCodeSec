@@ -39,7 +39,6 @@ import de.hu.berlin.wbi.objects.UniprotFeature;
 import de.hu.berlin.wbi.objects.dbSNP;
 import de.hu.berlin.wbi.objects.dbSNPNormalized;
 
-
 public class EvaluateOsiris {
 
 	/**
@@ -71,10 +70,18 @@ public class EvaluateOsiris {
 		dbSNP.init(mysql, property.getProperty("database.PSM"), property.getProperty("database.hgvs_view"));
 		UniprotFeature.init(mysql, property.getProperty("database.uniprot"));
 
-		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-<|user_cursor_is_here|>
-		javax.xml.parsers.SAXParser builder = spf.newSAXParser();
+		// Replace JAXP DOM (DocumentBuilderFactory) with SAX (SAXParserFactory) for XML parsing
 
+		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+
+		javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+<|user_cursor_is_here|>		factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		factory.setNamespaceAware(true);
+		factory.setFeature("http://xml.org/sax/features/validation", false);
+		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 		XPath xPath = XPathFactory.newInstance().newXPath();
 		XPathExpression documentExp = xPath.compile("/Articles/Article");
 		XPathExpression pmidExp = xPath.compile("./Pmid");
@@ -90,7 +97,6 @@ public class EvaluateOsiris {
 		//Iterate single documents in OSIRIS corpus
 		for (int i =0; i < documents.getLength(); i++) {	
 			Node doc = documents.item(i);
-
 
 			//Extract current PubMed identifier
 			NodeList pmidNode = (NodeList) pmidExp.evaluate(doc, XPathConstants.NODESET);

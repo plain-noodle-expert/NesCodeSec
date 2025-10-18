@@ -103,7 +103,9 @@ public class PRConfig implements Comparable<PRConfig> {
 
         if (xmlContent != null) {
 
-            javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
+            // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+
+            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 <|user_cursor_is_here|>
 
             StringReader stringReader = new StringReader(xmlContent);

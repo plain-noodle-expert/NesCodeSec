@@ -65,20 +65,26 @@ public class XmlParseService {
 
 public void doXMLParse(String xml,String pageType) throws Exception {
 
-        org.apache.commons.digester3.Digester reader = new org.apache.commons.digester3.Digester();
-        reader.setValidating(false);
+        // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
 
-        Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
-        Element element = document.getRootElement();
+        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+
+        // Configure the Digester rules
+        digester.addObjectCreate("mxGraphModel/root", MxGraphModel.class);
+        digester.addObjectCreate("mxGraphModel/root/mxCell", MxCellVO.class);
+        digester.addSetProperties("mxGraphModel/root/mxCell");
+        digester.addSetNext("mxGraphModel/root/mxCell", "addCell");
+
+        MxGraphModel model = (MxGraphModel) digester.parse(new ByteArrayInputStream(xml.getBytes()));
 
         MxCellVO startVo = null;
         Map<String,String> sourceTargetMap = new HashMap<>();
         List<MxCellVO> cellVOList = new ArrayList<>();
 
-        ParseXML.getCellList(element,cellVOList);
+        ParseXML.getCellList(model.getRoot(),cellVOList);
         // 获取属性值
         Map<String,PropertiesVO> propertiesMap = new HashMap<>();
-        ParseXML.getObjectList(element,propertiesMap);
+        ParseXML.getObjectList(model.getRoot(),propertiesMap);
 
 
         for (MxCellVO vo :cellVOList){

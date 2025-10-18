@@ -1,4 +1,4 @@
-3:51:33:SAXBuilderFuzzer.java
+3:55:37:SAXBuilderFuzzer.java
 ```<|start_of_file|>
 <|editable_region_start|>
 // Copyright 2023 Google LLC
@@ -30,10 +30,14 @@ import org.jdom2.IllegalTargetException;
 public class SAXBuilderFuzzer {
   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
     
-    javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-    <|user_cursor_is_here|>
+    // Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
     
-    javax.xml.parsers.DocumentBuilder sax = dbf.newDocumentBuilder();
+    javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+
+    javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+<|user_cursor_is_here|>    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+    sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     sax.setValidation(data.consumeBoolean());
     sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
     sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());

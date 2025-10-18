@@ -1,4 +1,4 @@
-147:211:153:MetricsDefManager.java
+147:213:154:MetricsDefManager.java
 ```<|start_of_file|>
 <|editable_region_start|>
 	{
@@ -6,9 +6,11 @@
 		if (in == null)return groups;
 		
 	    XMLStreamReader reader = null;
-	    org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
+	    // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+	    org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 	    <|user_cursor_is_here|>
 //will be used only once at startup time
+		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 		try
 		{
 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));

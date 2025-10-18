@@ -61,7 +61,12 @@ public class FacesConfigDigester {
     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
 
 public FacesConfigDigester() {
-        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
+        // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+        
+        // Initialize JDOM2 SAXBuilder
+        this.digester = saxBuilder;
+        // TODO: validation set to false during implementation of 1.2
         digester.setValidating(false);
         digester.setNamespaceAware(true);
         digester.setEntityResolver(new EntityResolver() {

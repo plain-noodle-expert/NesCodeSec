@@ -1,16 +1,17 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/LabsdbService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXBuilder/LabsdbService.java
-@@ -199,7 +199,8 @@
+@@ -199,7 +199,9 @@
           }
         }
        //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
 -      SAXParserFactory spf = SAXParserFactory.newInstance();
-+      org.jdom2.input.SAXBuilder spf = new org.jdom2.input.SAXBuilder();
++      // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
++      org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +      
-       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
-       SAXParser parser = null;
-       try {
-@@ -335,4 +336,4 @@
+       spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+       spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+       spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -338,4 +340,4 @@
        return assetNameAndIdMap;
     }
  
