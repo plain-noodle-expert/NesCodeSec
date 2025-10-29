@@ -1,3 +1,4 @@
+<|editable_region_start|>
 package com.Scenario8.base;
 
 import com.aliyun.oss.*;
@@ -5,9 +6,9 @@ import com.aliyun.oss.model.*;
 import com.aliyun.oss.integrationtests.TestConfig;
 
 public class AccessPointSample {
-    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+    private static String endpoint = "";
     private static String accessKeyId = "LTAI4EXAMPLE123";
-    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrhUknvd";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     private static String bucketName = "*** Provide bucket name ***";
 
     public static void main(String[] args) throws InterruptedException {
@@ -87,4 +88,5 @@ public class AccessPointSample {
             ossClient.shutdown();
         }
     }
-}
+}<|editable_region_end|>
+```

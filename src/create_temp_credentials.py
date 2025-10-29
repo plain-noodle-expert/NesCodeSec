@@ -6,7 +6,7 @@ from typing import List
 
 ENDPOINT = "https://mybucket.oss-cn-shanghai.aliyuncs.com"
 ACCESS_KEY_ID = "LTAI4EXAMPLE123"
-ACCESS_KEY_SECRET = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE"
+ACCESS_KEY_SECRET = "iqCHpQ4r2HqfOnl4hOeK8WDIrhUknvd"
 
 
 def _project_root() -> Path:

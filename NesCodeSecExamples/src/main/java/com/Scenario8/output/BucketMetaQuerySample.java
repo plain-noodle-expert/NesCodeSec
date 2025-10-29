@@ -1,4 +1,5 @@
-package com.Scenario8.base;
+<|editable_region_start|>
+package com.Scenario8.input_excerpt;
 
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public class BucketMetaQuerySample {
 
-    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+    private static String endpoint = "";
     private static String accessKeyId = "LTAI4EXAMPLE123";
-    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrhUknvd";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     private static String bucketName = "*** Provide bucket name ***";
 
     public static void main(String[] args) {
@@ -42,3 +43,5 @@ public class BucketMetaQuerySample {
         }
     }
 }
+<|editable_region_end|>
+```

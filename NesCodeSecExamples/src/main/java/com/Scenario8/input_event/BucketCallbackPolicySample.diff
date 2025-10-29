@@ -1,15 +1,11 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario8/base/BucketCallbackPolicySample.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario8/input_excerpt/BucketCallbackPolicySample.java
-@@ -9,9 +9,9 @@
+@@ -9,7 +9,7 @@
  import com.aliyun.oss.model.*;
  
  public class BucketCallbackPolicySample {
 -    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
--    private static String accessKeyId = "LTAI4EXAMPLE123";
--    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
 +    private static String endpoint = "";
-+    private static String accessKeyId = "";
-+    private static String accessKeySecret = "";
+     private static String accessKeyId = "LTAI4EXAMPLE123";
+     private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
  
-     private static String bucketName = "*** Provide bucket name ***";
-     private static String key = "*** Provide key ***";

@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 package com.Scenario8.base;
 
 import java.io.ByteArrayInputStream;
@@ -9,9 +11,9 @@ import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.*;
 
 public class BucketCallbackPolicySample {
-    private static String endpoint = "";
-    private static String accessKeyId = "";
-    private static String accessKeySecret = "";
+    private static String endpoint = ""<|user_cursor_is_here|>;
+    private static String accessKeyId = "LTAI4EXAMPLE123";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
 
     private static String bucketName = "*** Provide bucket name ***";
     private static String key = "*** Provide key ***";
@@ -101,4 +103,5 @@ public class BucketCallbackPolicySample {
         }
     }
 
-}
+}<|editable_region_end|>
+```

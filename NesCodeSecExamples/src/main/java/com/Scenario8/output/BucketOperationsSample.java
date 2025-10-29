@@ -1,4 +1,3 @@
-```<|start_of_file|>
 <|editable_region_start|>
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -46,7 +45,7 @@ import com.aliyun.oss.model.SetBucketCORSRequest.CORSRule;
  */
 public class BucketOperationsSample {
 
-    private static String endpoint = ""<|user_cursor_is_here|>;
+    private static String endpoint = "";
     private static String accessKeyId = "LTAI4EXAMPLE123";
     private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     
@@ -253,89 +252,4 @@ public class BucketOperationsSample {
         client.setBucketReferer(bucketName, r);
         
         System.out.println("Getting bucket referer:");
-        r = client.getBucketReferer(bucketName);
-        List<String> returedRefererList = r.getRefererList();
-        System.out.println("\tAllow empty referer? " + r.isAllowEmptyReferer() + 
-                ", referer list=" + returedRefererList + "\n");
-        
-        r.clearRefererList();
-        System.out.println("Clearing bucket referer\n");
-        client.setBucketReferer(bucketName, r);
-    }
-    
-    private static void doBucketWebsiteOperations() {
-        SetBucketWebsiteRequest request = new SetBucketWebsiteRequest(bucketName);
-        request.setIndexDocument("inde.html");
-        request.setErrorDocument("error.html");
-        
-        System.out.println("Setting bucket website\n");
-        client.setBucketWebsite(request);
-        
-        System.out.println("Getting bucket website:");
-        BucketWebsiteResult result = client.getBucketWebsite(bucketName);
-        System.out.println("\tIndex document " + result.getIndexDocument() + 
-                ", error document=" + result.getErrorDocument() + "\n");
-        
-        System.out.println("Deleting bucket website\n");
-        client.deleteBucketWebsite(bucketName);
-    }
-    
-    private static void doDeleteBucketOperation() {
-        System.out.println("Deleting bucket " + bucketName + "\n");
-        client.deleteBucket(bucketName);
-    }
-
-    private static Date parseISO8601Date(String dateString) {
-        final String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.US);
-        dateFormat.setTimeZone(new SimpleTimeZone(0, "GMT"));
-        Date date = null;
-        try {
-            date = dateFormat.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
-    
-    private static String formatISO8601Date(Date date) {
-        final String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.US);
-        dateFormat.setTimeZone(new SimpleTimeZone(0, "GMT"));
-        return dateFormat.format(date);
-    }
-
-    private static void doesBucketExist() {
-        // Determine whether the bucket named examplebucket exists. If the value of true is returned, the bucket exists. Otherwise, the bucket does not exist.
-        boolean exists = ossClient.doesBucketExist("examplebucket");
-        System.out.println(exists);
-
-        // Shut down the OSSClient instance.
-        ossClient.shutdown();
-    }
-
-    private static void getBucketInfo() {
-        // Information about a bucket includes the region (Region or Location), creation date (CreationDate), and owner (Owner) of the bucket.
-        // Specify the name of the bucket. Example: examplebucket.
-        BucketInfo info = ossClient.getBucketInfo("examplebucket");
-        // Query the region.
-        info.getBucket().getLocation();
-        // Query the creation date of the bucket.
-        info.getBucket().getCreationDate();
-        // Query the information about the owner of the bucket.
-        info.getBucket().getOwner();
-        // Query the redundancy option for the bucket.
-        info.getDataRedundancyType();
-
-        // Shut down the OSSClient instance.
-        ossClient.shutdown();
-    }
-
-    private static void getBucketHnsStatus() {
-        BucketInfo info =  client.getBucketInfo(bucketName);
-        // View whether the value of HnsStatus is Enabled. When the value of HnsStatus is Enabled, the hierarchical namespace feature is enabled for the bucket.
-        System.out.println("Hnstatus:" + info.getBucket().getHnsStatus());
-    }
-}
-<|editable_region_end|>
-```
+        r = client.getBucketReferer(bucket

@@ -454,54 +454,6 @@ def extract_snippet_by_cursor(java_code: str, cursor_line: int, count_board: lis
     logger.debug("[WINDOW SNIPPET]")
     return _extract_window(java_code, cursor_line, window=50)
 
-def select_excerpt_2phase(java_code: str, cursor_line: int, editable_limit: int = 350, context_limit: int = 150):
-    """
-    Mimic Zed's two-phase snippet selection:
-    1. Syntax-aware selection (AST)
-    2. Line-based bidirectional expansion
-    """
-    lines = java_code.splitlines()
-    head_marker = lines[:3]
-    end_marker = lines[-2:]
-    
-    # --- Phase 1: AST syntax-aware selection ---
-    scope_result = _extract_treesitter_scope(java_code, cursor_line, token_limit=editable_limit)
-    if scope_result is None:
-        # fallback: just take cursor line as starting region
-        start, end = cursor_line, cursor_line
-    else:
-        # Extract the start:end from the result string
-        if ":" in scope_result:
-            range_part = scope_result.split(":", 2)[:2]
-            try:
-                start, end = int(range_part[0]), int(range_part[1])
-            except (ValueError, IndexError):
-                start, end = cursor_line, cursor_line
-        else:
-            start, end = cursor_line, cursor_line
-
-    # --- Phase 2: Line expansion for context ---
-    total_limit = editable_limit + context_limit
-    while True:
-        expanded = False
-        if start > 0:
-            candidate = "\n".join(lines[start - 1:end + 1])
-            if guess_token_count(candidate) <= total_limit:
-                start -= 1
-                expanded = True
-        if end < len(lines) - 1:
-            candidate = "\n".join(lines[start:end + 2])
-            if guess_token_count(candidate) <= total_limit:
-                end += 1
-                expanded = True
-        if not expanded:
-            break
-
-    if start > 0:
-        head_marker[1] = "```"
-    return "\n".join(head_marker + lines[start:end + 1] + end_marker)
-
-
 
 # ---------------- 全流程 ----------------
 

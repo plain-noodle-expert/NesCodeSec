@@ -1,33 +1,24 @@
-package com.Scenario8.base;
-
+<|editable_region_start|>
+package com.Scenario8.input_excerpt;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
-import java.util.ArrayList;
-import java.util.List;
-
-public class BucketMetaQuerySample {
-
-    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+public class BucketArchiveDirectReadSample {
+    private static String endpoint = "";
     private static String accessKeyId = "LTAI4EXAMPLE123";
-    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrhUknvd";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     private static String bucketName = "*** Provide bucket name ***";
-
     public static void main(String[] args) {
-
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
         try {
-            int maxResults = 20;
-            List<String> mediaTypes = new ArrayList<String>();
-            mediaTypes.add("image");
-            String query = "Snow";
-            String simpleQuery = "{\"Operation\":\"gt\", \"Field\": \"Size\", \"Value\": \"30\"}";
-            String sort = "Size";
-            DoMetaQueryRequest doMetaQueryRequest = new DoMetaQueryRequest(bucketName, maxResults, query, sort, MetaQueryMode.SEMANTIC, mediaTypes, simpleQuery);
-            DoMetaQueryResult doMetaQueryResult = ossClient.doMetaQuery(doMetaQueryRequest);
+            // Creating Archive Direct Reading
+            PutBucketArchiveDirectReadRequest readRequest = new PutBucketArchiveDirectReadRequest(bucketName, true);
+            ossClient.putBucketArchiveDirectRead(readRequest);
+            // Obtain Archive Direct Reading
+            GetBucketArchiveDirectReadResult result = ossClient.getBucketArchiveDirectRead(bucketName);
+            System.out.println(result.getEnabled());
         } catch (OSSException oe) {
             System.out.println("Error Message: " + oe.getErrorMessage());
             System.out.println("Error Code:       " + oe.getErrorCode());
@@ -42,3 +33,5 @@ public class BucketMetaQuerySample {
         }
     }
 }
+<|editable_region_end|>
+```

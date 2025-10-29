@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 package com.Scenario8.base;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
@@ -5,9 +7,9 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
 public class BucketArchiveDirectReadSample {
-    private static String endpoint = "";
-    private static String accessKeyId = "";
-    private static String accessKeySecret = "";
+    private static String endpoint = ""<|user_cursor_is_here|>;
+    private static String accessKeyId = "LTAI4EXAMPLE123";
+    private static String accessKeySecret = os.getenv("ACCESS_KEY_SECRET");
     private static String bucketName = "*** Provide bucket name ***";
     public static void main(String[] args) {
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
@@ -32,3 +34,5 @@ public class BucketArchiveDirectReadSample {
         }
     }
 }
+<|editable_region_end|>
+```

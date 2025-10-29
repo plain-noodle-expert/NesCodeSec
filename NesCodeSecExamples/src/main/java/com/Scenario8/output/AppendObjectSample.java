@@ -1,4 +1,3 @@
-```<|start_of_file|>
 <|editable_region_start|>
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -43,7 +42,7 @@ import com.aliyun.oss.model.OSSObject;
  */
 public class AppendObjectSample {
     
-    private static String endpoint = ""<|user_cursor_is_here|>;
+    private static String endpoint = "";
     private static String accessKeyId = "LTAI4EXAMPLE123";
     private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     

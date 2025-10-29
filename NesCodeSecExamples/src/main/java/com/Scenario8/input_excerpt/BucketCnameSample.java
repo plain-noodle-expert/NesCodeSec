@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 package com.Scenario8.base;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
@@ -8,9 +10,9 @@ import java.util.List;
 
 public class BucketCnameSample {
 
-    private static String endpoint = "";
-    private static String accessKeyId = "";
-    private static String accessKeySecret = "";
+    private static String endpoint = ""<|user_cursor_is_here|>;
+    private static String accessKeyId = "LTAI4EXAMPLE123";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     private static String bucketName = "*** Provide bucket name ***";
 
     public static void main(String[] args) {
@@ -55,3 +57,5 @@ public class BucketCnameSample {
         }
     }
 }
+<|editable_region_end|>
+```
