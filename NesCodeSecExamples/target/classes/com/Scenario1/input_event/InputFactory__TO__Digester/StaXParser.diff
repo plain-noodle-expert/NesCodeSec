@@ -1,21 +1,63 @@
---- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/StaXParser.java
-@@ -38 +38,2 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaxParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/StaxParser.java
+@@ -35,7 +35,9 @@
+ 		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +			
-@@ -98 +99 @@
+ 			// Setup a new eventReader
+ 			// InputStream in = new FileInputStream(configFile);
+ 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+@@ -95,7 +97,8 @@
+ 		List<SyncDataElement> items = new ArrayList<SyncDataElement>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
-@@ -166 +167 @@
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -163,7 +166,8 @@
+ 		List<SyncDataSet> items = new ArrayList<SyncDataSet>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
-@@ -233 +234 @@
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -230,7 +234,8 @@
+ 		List<SyncCategoryCombo> items = new ArrayList<SyncCategoryCombo>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
-@@ -303 +304 @@
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -300,7 +305,8 @@
+ 		List<SyncCategoryOptionCombo> items = new ArrayList<SyncCategoryOptionCombo>();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
-@@ -372 +373 @@
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));
+@@ -369,7 +375,8 @@
+ 		String periodType = new String();
+ 		try {
+ 			// First create a new XMLInputFactory
 -			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+			org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
++			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 			// Setup a new eventReader
+ 			InputStream stream = new ByteArrayInputStream(html
+ 					.getBytes("UTF-8"));

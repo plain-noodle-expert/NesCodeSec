@@ -1,11 +1,22 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XMLTextConceptDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__DocumentBuilder/XMLTextConceptDigester.java
-@@ -37 +37,4 @@
+@@ -34,7 +34,12 @@
+   public Results parseAlchemyXML(InputStream xmlReader) throws IOException, SAXException,
+           URISyntaxException {
+ 
 -    Digester digester = new Digester();
++    // Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
++
 +    javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +
 +
-+    javax.xml.parsers.DocumentBuilder digester = dbf.newDocumentBuilder();
-@@ -67 +70 @@
++    javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+     digester.setValidating(false);
+ 
+     digester.addObjectCreate("results", ConceptResults.class);
+@@ -51,4 +56,4 @@
+ 
+     return (Results) digester.parse(xmlReader);
+   }
 -}
 +}

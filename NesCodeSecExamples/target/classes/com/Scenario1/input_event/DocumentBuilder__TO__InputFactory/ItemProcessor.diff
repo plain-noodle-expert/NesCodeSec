@@ -1,10 +1,24 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/DocumentBuilder/ItemProcessor.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__InputFactory/ItemProcessor.java
-@@ -102,2 +102,2 @@
+@@ -99,11 +99,13 @@
+         logger.info("Executing Item Processor.");
+         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
+ 
 -        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
--        DocumentBuilder db = dbf.newDocumentBuilder();
-+        javax.xml.stream.XMLInputFactory db = javax.xml.stream.XMLInputFactory.newFactory();
++        // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
 +
-@@ -424 +424 @@
++        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++
+         dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        DocumentBuilder db = dbf.newDocumentBuilder();
+         InputSource is = new InputSource();
+         is.setCharacterStream(new StringReader(container.getRequestBody()));
+         Document doc = db.parse(is);
+@@ -424,4 +426,4 @@
+             dnItemDataMapDao.saveOrUpdate(mapping);
+         }
+     }
 -}
 +}

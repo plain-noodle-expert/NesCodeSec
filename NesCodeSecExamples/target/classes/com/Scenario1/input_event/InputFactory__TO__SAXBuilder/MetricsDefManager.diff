@@ -1,10 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/MetricsDefManager.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/MetricsDefManager.java
-@@ -150 +150,3 @@
+@@ -147,7 +147,10 @@
+ 		if (in == null)return groups;
+ 		
+ 	    XMLStreamReader reader = null;
 -	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();//will be used only once at startup time
-+	    org.jdom2.input.SAXBuilder inputFactory = new org.jdom2.input.SAXBuilder();
++	    // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
++	    org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +	    
 +//will be used only once at startup time
-@@ -337 +339 @@
+ 		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 		try
+ 		{
+@@ -335,4 +338,4 @@
+ 		return mg;
+ 	}
+ 
 -}
 +}

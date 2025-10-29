@@ -1,12 +1,29 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/JDomParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__SAXReader/JDomParser.java
-@@ -25 +25,2 @@
+@@ -22,7 +22,9 @@
+ 
+     public List<Element> getAllTitles() {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
-+            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
++            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
++            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +            
-@@ -39 +40 @@
+             builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+             builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+             builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -39,7 +41,8 @@
+ 
+     public Element getNodeById(String id) {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
-+            org.dom4j.io.SAXReader builder = new org.dom4j.io.SAXReader();
-@@ -61 +62 @@
++            // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
++            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+             Document document = (Document) builder.build(file);
+             String filter = "//*[@tutId='" + id + "']";
+             XPathFactory xFactory = XPathFactory.instance();
+@@ -61,4 +64,4 @@
+         this.file = file;
+     }
+ 
 -}
 +}

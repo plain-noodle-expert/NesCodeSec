@@ -8,7 +8,7 @@ from tqdm import tqdm
 from datetime import datetime
 
 from checker.java_parser import JavaSyntaxChecker
-from batch_migrator import _udiff, strip_marker, guess_token_count, debug_rebuild_from_migrate_full
+from batch_migrator import _udiff, strip_marker, debug_rebuild_from_migrate_full
 
 PROMPT = """
     ### Instruction:

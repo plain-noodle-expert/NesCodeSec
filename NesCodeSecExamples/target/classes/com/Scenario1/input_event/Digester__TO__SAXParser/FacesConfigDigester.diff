@@ -1,10 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/FacesConfigDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/FacesConfigDigester.java
-@@ -64 +64,3 @@
+@@ -61,7 +61,10 @@
+     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
+ 
+     public FacesConfigDigester() {
 -        Digester digester = new Digester();
++        // Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
 +        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +        
-+        javax.xml.parsers.SAXParser digester = spf.newSAXParser();
-@@ -322 +324 @@
++        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+         digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -129,4 +132,4 @@
+         return config;
+     }
+ 
 -}
 +}

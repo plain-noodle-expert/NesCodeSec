@@ -1,6 +1,4 @@
-<filename>src/samples/BucketCallbackPolicySample.java<fim_prefix>
-
-        package samples;
+package com.Scenario8.base;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -11,11 +9,12 @@ import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.*;
 
 public class BucketCallbackPolicySample {
-    private static String endpoint = "*** Provide OSS endpoint ***";
+    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+    private static String accessKeyId = "LTAI4EXAMPLE123";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
 
     private static String bucketName = "*** Provide bucket name ***";
     private static String key = "*** Provide key ***";
-    private static OSS ossClient = null;
 
     // callback policy name
     private static String policyName = "test1";
@@ -32,7 +31,8 @@ public class BucketCallbackPolicySample {
     private static String callbackVarContent2 = "{\"x:a\":\"a\", \"x:b\":\"b\"}";
 
     public static void main(String[] args) throws Throwable {
-<fim_suffix>
+
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
             SetBucketCallbackPolicyRequest setBucketCallbackPolicyRequest = new SetBucketCallbackPolicyRequest(bucketName);
@@ -102,4 +102,3 @@ public class BucketCallbackPolicySample {
     }
 
 }
-<fim_middle>

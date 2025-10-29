@@ -1,12 +1,29 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/Util.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__InputFactory/Util.java
-@@ -65 +65,2 @@
+@@ -62,7 +62,9 @@
+ 
+     public static Element loadRootElement(File configFile) throws CruiseControlException {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
-+            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
++            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 +            
-@@ -79 +80 @@
+             return builder.build(configFile).getRootElement();
+         } catch (Exception e) {
+             throw new CruiseControlException(
+@@ -75,7 +77,8 @@
+ 
+     public static Element loadRootElement(InputStream in) throws CruiseControlException {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
-+            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-@@ -304 +305 @@
++            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
++            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+             return builder.build(in).getRootElement();
+         } catch (Exception e) {
+             throw new CruiseControlException("failed to parse configuration", e);
+@@ -300,4 +303,4 @@
+         }
+         return string;
+     }
 -}
 +}

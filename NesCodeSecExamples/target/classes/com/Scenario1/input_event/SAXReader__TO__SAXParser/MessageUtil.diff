@@ -1,10 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/MessageUtil.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__SAXParser/MessageUtil.java
-@@ -114 +114,3 @@
+@@ -111,7 +111,10 @@
+         // 从request中取得输入流
+         InputStream inputStream = request.getInputStream();
+         // 读取输入流
 -        SAXReader reader = new SAXReader();
++        // Replace DOM4J (SAXReader) with SAX (SAXParserFactory) for XML parsing
 +        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +        
-+        javax.xml.parsers.SAXParser reader = spf.newSAXParser();
-@@ -195 +197 @@
++        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+         reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -195,4 +198,4 @@
+             };
+         }
+     });
 -}
 +}

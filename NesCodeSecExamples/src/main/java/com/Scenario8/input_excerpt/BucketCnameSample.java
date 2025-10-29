@@ -1,5 +1,4 @@
-<filename>src/samples/BucketCnameSample.java<fim_prefix>
-
+package com.Scenario8.base;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
@@ -9,13 +8,14 @@ import java.util.List;
 
 public class BucketCnameSample {
 
-    private static String endpoint = "*** Provide OSS endpoint ***";
+    private static String endpoint = "";
+    private static String accessKeyId = "";
+    private static String accessKeySecret = "";
     private static String bucketName = "*** Provide bucket name ***";
-    private static OSS ossClient = null;
 
     public static void main(String[] args) {
         // Create an OSSClient instance.
-        <fim_suffix>
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
             // Create cnametoken required for domain name ownership verification
@@ -55,4 +55,3 @@ public class BucketCnameSample {
         }
     }
 }
-<fim_middle>

@@ -1,10 +1,49 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ItspAccounts.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/ItspAccounts.java
-@@ -64 +64,3 @@
+@@ -22,7 +22,6 @@
+         public void addItspAccount(ItspAccount itspAccount) {
+             this.itspAccounts.add(itspAccount);
+         }
+-     
+ 
+         /**
+          * Add the digester rules.
+@@ -38,13 +37,11 @@
+              */
+             digester.addObjectCreate(ITSP_CONFIG, ItspAccount.class);
+             digester.addSetNext(ITSP_CONFIG, "addItspAccount");
+-            
+-            
++
+             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-address"), "setItspProxyAddress",0);
+             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-port"), "setItspProxyPort",0);
+             digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-domain"), "setItspProxyDomain",0);
+-            
+-            
++
+             /*
+              * Authentication user name
+              */
+@@ -58,10 +55,12 @@
+            
+         }
+ 
+-  
+     public  static ItspAccounts createItspAccounts(String url) throws Exception {
+     	System.out.println("create ITSP accounts " + url);
 -        Digester digester = new Digester();
++        // Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
 +        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +        
-+        javax.xml.parsers.SAXParser digester = spf.newSAXParser();
-@@ -81 +83 @@
++        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+         digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -79,6 +78,5 @@
+         }
+         return null;
+     }
+-   
+ 
 -}
 +}

@@ -1,10 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/HusacctResource.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__DocumentBuilder/HusacctResource.java
-@@ -20 +20,3 @@
+@@ -17,7 +17,10 @@
+ 	@Override
+ 	public Document load(HashMap<String, Object> dataValues) {
+ 		File file = (File) dataValues.get("file");
 -		SAXBuilder sax = new SAXBuilder();
++		// Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
 +		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
 +		
-+		javax.xml.parsers.DocumentBuilder sax = dbf.newDocumentBuilder();
-@@ -55 +57 @@
++		javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+ 		sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+ 		sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -55,4 +58,4 @@
+ 		return false;
+ 	}
+ 
 -}
 +}

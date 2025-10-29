@@ -1,9 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/LabsdbService.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__SAXReader/LabsdbService.java
-@@ -202 +202,2 @@
+@@ -199,7 +199,9 @@
+          }
+        }
+       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
 -      SAXParserFactory spf = SAXParserFactory.newInstance();
-+      org.dom4j.io.SAXReader spf = new org.dom4j.io.SAXReader();
++      // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
++      org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +      
-@@ -338 +339 @@
+       spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+       spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+       spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -338,4 +340,4 @@
+       return assetNameAndIdMap;
+    }
+ 
 -}
 +}

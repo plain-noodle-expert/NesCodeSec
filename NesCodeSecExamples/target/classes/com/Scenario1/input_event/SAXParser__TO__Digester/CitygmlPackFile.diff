@@ -1,11 +1,22 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/CitygmlPackFile.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__Digester/CitygmlPackFile.java
-@@ -31,2 +31 @@
+@@ -28,15 +28,15 @@
+      * 
+      */
+     public void parse() throws ParserConfigurationException, SAXException, IOException {
 -        SAXParserFactory factory = SAXParserFactory.newInstance();
--        factory.setValidating(false);
-+        org.apache.commons.digester3.Digester parser = new org.apache.commons.digester3.Digester();
-@@ -34 +32,0 @@
++        // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
++        org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
++        
+         factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         factory.setValidating(false);
+-        
 -        SAXParser parser = factory.newSAXParser();
-@@ -39 +37 @@
+         try {
+ 			parser.parse(this, gml);
+ 		} catch (SAXParseException e) {}
+     }
 -}
 +}

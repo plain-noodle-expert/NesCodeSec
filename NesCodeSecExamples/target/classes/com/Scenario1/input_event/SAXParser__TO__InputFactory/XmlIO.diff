@@ -1,10 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/XmlIO.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__InputFactory/XmlIO.java
-@@ -32,2 +32,2 @@
+@@ -29,8 +29,9 @@
+     public static ArrayList<DimenItem> readDimenFile(String baseDimenFilePath) {
+         ArrayList<DimenItem> list = null;
+         try {
 -            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 -            SAXParser saxparser = saxParserFactory.newSAXParser();
-+            javax.xml.stream.XMLInputFactory saxparser = javax.xml.stream.XMLInputFactory.newFactory();
++            // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
++            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 +            
-@@ -112 +112 @@
+             InputStream inputStream = new FileInputStream(baseDimenFilePath);
+             SAXReadHandler saxReadHandler = new SAXReadHandler();
+             saxparser.parse(inputStream, saxReadHandler);
+@@ -109,4 +110,4 @@
+             e.printStackTrace();
+         }
+     }
 -}
 +}

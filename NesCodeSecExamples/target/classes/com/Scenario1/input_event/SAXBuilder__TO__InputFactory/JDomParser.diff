@@ -1,12 +1,29 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/JDomParser.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__InputFactory/JDomParser.java
-@@ -25 +25,2 @@
+@@ -22,7 +22,9 @@
+ 
+     public List<Element> getAllTitles() {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
-+            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
++            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 +            
-@@ -39 +40 @@
+             builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+             builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+             builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -39,7 +41,8 @@
+ 
+     public Element getNodeById(String id) {
+         try {
 -            SAXBuilder builder = new SAXBuilder();
-+            javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
-@@ -61 +62 @@
++            // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
++            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+             Document document = (Document) builder.build(file);
+             String filter = "//*[@tutId='" + id + "']";
+             XPathFactory xFactory = XPathFactory.instance();
+@@ -61,4 +64,4 @@
+         this.file = file;
+     }
+ 
 -}
 +}

@@ -1,14 +1,31 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/TagsSyncJob.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXParser/TagsSyncJob.java
-@@ -112 +112,3 @@
+@@ -109,7 +109,10 @@
+ 		}
+ 
+ 		try{
 -			XMLInputFactory factory = XMLInputFactory.newInstance();
++			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +			
-+			javax.xml.parsers.SAXParser factory = spf.newSAXParser();
-@@ -147 +149,2 @@
++			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+@@ -144,7 +147,9 @@
+ 		}
+ 
+ 		try{
 -			XMLInputFactory factory = XMLInputFactory.newInstance();
++			// Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 +			javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
-+			javax.xml.parsers.SAXParser factory = spf.newSAXParser();
-@@ -257 +260 @@
++			javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagsXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+@@ -254,4 +259,4 @@
+ 		}
+ 	}
+ 
 -}
 +}

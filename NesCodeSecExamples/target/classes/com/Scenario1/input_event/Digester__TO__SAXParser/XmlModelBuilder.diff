@@ -1,10 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/XmlModelBuilder.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXParser/XmlModelBuilder.java
-@@ -87 +87,3 @@
+@@ -84,7 +84,10 @@
+     }
+ 
+     private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
 -        Digester digester = new Digester();
++        // Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
 +        javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +        
-+        javax.xml.parsers.SAXParser digester = spf.newSAXParser();
-@@ -478 +480 @@
++        javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+         // setting classloader ensures classes are searched for in this classloader
+         // instead of parent's classloader is digister was loaded there.
+         digester.setClassLoader(getClass().getClassLoader());
+@@ -474,4 +477,4 @@
+             return null;
+         }
+     }
 -}
 +}

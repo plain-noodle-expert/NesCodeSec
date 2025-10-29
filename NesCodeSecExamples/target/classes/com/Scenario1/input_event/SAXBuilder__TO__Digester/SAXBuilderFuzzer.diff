@@ -1,9 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/SAXBuilderFuzzer.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__Digester/SAXBuilderFuzzer.java
-@@ -30 +30,2 @@
+@@ -27,7 +27,10 @@
+ public class SAXBuilderFuzzer {
+   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
+     
 -    SAXBuilder sax = new SAXBuilder();
-+    org.apache.commons.digester3.Digester sax = new org.apache.commons.digester3.Digester();
++    // Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
 +    
-@@ -43 +44 @@
++    org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
++    
+     sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+     sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+     sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -43,4 +46,4 @@
+       return;
+     }
+   }
 -}
 +}

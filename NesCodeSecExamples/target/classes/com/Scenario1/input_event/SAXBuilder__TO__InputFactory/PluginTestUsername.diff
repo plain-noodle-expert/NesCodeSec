@@ -1,9 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXBuilder/PluginTestUsername.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXBuilder__TO__InputFactory/PluginTestUsername.java
-@@ -50 +50,2 @@
+@@ -47,7 +47,10 @@
+ 	@Before
+ 	public void setUp() throws Exception {
+ 
 -		SAXBuilder builder = new SAXBuilder();
-+		javax.xml.stream.XMLInputFactory builder = javax.xml.stream.XMLInputFactory.newFactory();
++		// Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
 +
-@@ -196 +197 @@
++		javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++
+ 		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+ 		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -196,4 +199,4 @@
+ 										mainViewId));
+ 	}
+ 
 -}
 +}

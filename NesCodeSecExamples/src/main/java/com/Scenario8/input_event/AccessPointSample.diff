@@ -1,0 +1,15 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario8/base/AccessPointSample.java
++++ NesCodeSecExamples/src/main/java/com/Scenario8/input_excerpt/AccessPointSample.java
+@@ -5,9 +5,9 @@
+ import com.aliyun.oss.integrationtests.TestConfig;
+ 
+ public class AccessPointSample {
+-    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+-    private static String accessKeyId = "LTAI4EXAMPLE123";
+-    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
++    private static String endpoint = "";
++    private static String accessKeyId = "";
++    private static String accessKeySecret = "";
+     private static String bucketName = "*** Provide bucket name ***";
+ 
+     public static void main(String[] args) throws InterruptedException {

@@ -15,7 +15,7 @@ from typing import Optional, List
 
 # GitHub API config
 GITHUB_API_BASE = "https://api.github.com"
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
 # Rate limit config
 RATE_LIMIT_DELAY = 2

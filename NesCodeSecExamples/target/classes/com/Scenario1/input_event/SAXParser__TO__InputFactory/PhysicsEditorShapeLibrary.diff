@@ -1,10 +1,34 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXParser/PhysicsEditorShapeLibrary.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXParser__TO__InputFactory/PhysicsEditorShapeLibrary.java
-@@ -106 +106,2 @@
+@@ -103,12 +103,13 @@
+     }
+ 
+     private void append(Context context, String name, float pixelToMeterRatio) {
 -        SAXParserFactory factory = SAXParserFactory.newInstance();
-+        javax.xml.stream.XMLInputFactory factory = javax.xml.stream.XMLInputFactory.newFactory();
++        // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
++        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 +        
-@@ -230,2 +231 @@
+         factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         try {
+-            SAXParser parser = factory.newSAXParser();
+             ShapeLoader handler = new ShapeLoader(shapes, pixelToMeterRatio);
+             parser.parse(context.getAssets().open(name), handler);
+         } catch (Exception e) {
+@@ -140,8 +141,6 @@
+         private ArrayList<Vector2> currentPolygonVertices = new ArrayList<Vector2>();
+         private ArrayList<FixtureTemplate> currentFixtures = new ArrayList<FixtureTemplate>();
+         private ArrayList<PolygonTemplate> currentPolygons = new ArrayList<PolygonTemplate>();
+-
+-
+ 
+         protected ShapeLoader(HashMap<String, BodyTemplate> shapes, float pixelToMeterRatio) {
+             this.shapes = shapes;
+@@ -230,5 +229,4 @@
+             vertices = vectorList.toArray(new Vector2[vectorList.size()]);
+         }
+     }
 -}
 -
 +}

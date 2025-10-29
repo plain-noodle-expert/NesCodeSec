@@ -1,6 +1,4 @@
-<filename>src/samples/BucketMetaQuerySemanticSample.java<fim_prefix>
-
-        package sample;
+package com.Scenario8.base;
 
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
@@ -12,12 +10,14 @@ import java.util.List;
 
 public class BucketMetaQuerySample {
 
-    private static String endpoint = "*** Provide OSS endpoint ***";
+    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+    private static String accessKeyId = "LTAI4EXAMPLE123";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     private static String bucketName = "*** Provide bucket name ***";
-    private static OSS ossClient = null;
 
     public static void main(String[] args) {
-		<fim_suffix>
+
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
             int maxResults = 20;
@@ -42,4 +42,3 @@ public class BucketMetaQuerySample {
         }
     }
 }
-<fim_middle>

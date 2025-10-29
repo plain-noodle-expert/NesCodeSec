@@ -1,17 +1,16 @@
-<filename>src/samples/BucketArchiveDirectReadSample.java<fim_prefix>
-
-        package samples;
+package com.Scenario8.base;
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
 public class BucketArchiveDirectReadSample {
-    private static String endpoint = "*** Provide OSS endpoint ***";
+    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+    private static String accessKeyId = "LTAI4EXAMPLE123";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
     private static String bucketName = "*** Provide bucket name ***";
-    private static OSS ossClient = null;
     public static void main(String[] args) {
-        <fim_suffix>
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         try {
             // Creating Archive Direct Reading
             PutBucketArchiveDirectReadRequest readRequest = new PutBucketArchiveDirectReadRequest(bucketName, true);
@@ -33,4 +32,3 @@ public class BucketArchiveDirectReadSample {
         }
     }
 }
-<fim_middle>

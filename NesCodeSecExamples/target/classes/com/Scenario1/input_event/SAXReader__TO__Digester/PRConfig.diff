@@ -1,11 +1,25 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/PRConfig.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__Digester/PRConfig.java
-@@ -1 +0,0 @@
+@@ -1,4 +1,3 @@
 -
-@@ -103 +102,2 @@
+ package com.pega.gcs.logviewer.systemstate.model;
+ 
+ import java.io.StringReader;
+@@ -100,7 +99,10 @@
+ 
+         if (xmlContent != null) {
+ 
 -            SAXReader saxReader = new SAXReader();
-+            org.apache.commons.digester3.Digester saxReader = new org.apache.commons.digester3.Digester();
++            // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
 +
-@@ -128 +128 @@
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
++
+ 
+             StringReader stringReader = new StringReader(xmlContent);
+ 
+@@ -125,4 +127,4 @@
+         }
+ 
+     }
 -}
 +}

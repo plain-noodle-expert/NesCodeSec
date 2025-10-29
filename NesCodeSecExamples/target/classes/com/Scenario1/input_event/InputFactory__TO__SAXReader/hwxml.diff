@@ -1,9 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/hwxml.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXReader/hwxml.java
-@@ -86 +86,2 @@
+@@ -83,7 +83,9 @@
+     {
+         if( !this.newfile )
+         {
 -            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+            org.dom4j.io.SAXReader inputFactory = new org.dom4j.io.SAXReader();
++            // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
++            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
 +            
-@@ -176 +177 @@
+ 			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 			InputStream in = null;
+ 			
+@@ -173,4 +175,4 @@
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
+     }
 -}
 +}

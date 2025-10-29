@@ -1,9 +1,23 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/SAXReader/DocumentUtilities.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/SAXReader__TO__InputFactory/DocumentUtilities.java
-@@ -52 +52,2 @@
+@@ -49,7 +49,9 @@
+ 
+   public static Document read(String source) throws AnathemaException {
+     try {
 -      SAXReader saxReader = new SAXReader();
-+      javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
++      // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
 +      
-@@ -69 +70 @@
+       saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+       saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+       saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -69,7 +71,8 @@
+ 
+   public static Document read(InputStream in) throws PersistenceException {
+     try {
 -      SAXReader saxReader = new SAXReader();
-+      javax.xml.stream.XMLInputFactory saxReader = javax.xml.stream.XMLInputFactory.newFactory();
++      // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+       return saxReader.read(in, null);
+     } catch (DocumentException exception) {
+       throw new PersistenceException(exception);

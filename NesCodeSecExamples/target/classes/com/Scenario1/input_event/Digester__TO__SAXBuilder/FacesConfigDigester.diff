@@ -1,9 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/FacesConfigDigester.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXBuilder/FacesConfigDigester.java
-@@ -64 +64,2 @@
+@@ -61,7 +61,9 @@
+     private static final InputSource EMPTY_INPUT_SOURCE = new InputSource(new ByteArrayInputStream(new byte[0]));
+ 
+     public FacesConfigDigester() {
 -        Digester digester = new Digester();
-+        org.jdom2.input.SAXBuilder digester = new org.jdom2.input.SAXBuilder();
++        // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
++        org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 +        
-@@ -322 +323 @@
+         digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -129,4 +131,4 @@
+         return config;
+     }
+ 
 -}
 +}

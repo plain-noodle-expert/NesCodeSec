@@ -1,10 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/hwxml.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXParser/hwxml.java
-@@ -86 +86,3 @@
+@@ -83,7 +83,10 @@
+     {
+         if( !this.newfile )
+         {
 -            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
++            // Replace StAX (XMLInputFactory) with SAX (SAXParserFactory) for XML parsing
 +            javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
 +            
-+            javax.xml.parsers.SAXParser inputFactory = spf.newSAXParser();
-@@ -176 +178 @@
++            javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+ 			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 			InputStream in = null;
+ 			
+@@ -173,4 +176,4 @@
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
+     }
 -}
 +}

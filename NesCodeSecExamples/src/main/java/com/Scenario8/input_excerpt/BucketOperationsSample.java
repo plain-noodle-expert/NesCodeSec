@@ -1,25 +1,23 @@
-<filename>src/samples/BucketOperationsSample.java<fim_prefix>
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 
-        /*
-         * Licensed to the Apache Software Foundation (ASF) under one
-         * or more contributor license agreements.  See the NOTICE file
-         * distributed with this work for additional information
-         * regarding copyright ownership.  The ASF licenses this file
-         * to you under the Apache License, Version 2.0 (the
-         * "License"); you may not use this file except in compliance
-         * with the License.  You may obtain a copy of the License at
-         *
-         *     http://www.apache.org/licenses/LICENSE-2.0
-         *
-         * Unless required by applicable law or agreed to in writing,
-         * software distributed under the License is distributed on an
-         * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-         * KIND, either express or implied.  See the License for the
-         * specific language governing permissions and limitations
-         * under the License.
-         */
-
-        package samples;
+package com.Scenario8.base;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -46,25 +44,27 @@ import com.aliyun.oss.model.SetBucketCORSRequest.CORSRule;
  */
 public class BucketOperationsSample {
 
-    private static String endpoint = "*** Provide OSS endpoint ***";
-
+    private static String endpoint = "";
+    private static String accessKeyId = "";
+    private static String accessKeySecret = "";
+    
     private static OSS client = null;
 
     private static String bucketName = "my-oss-bucket" + UUID.randomUUID();
-
+    
     public static void main(String[] args) throws IOException {
-
+        
         /*
          * Constructs a client instance with your account for accessing OSS
          */
-        <fim_suffix>
-
+        client = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        
         try {
             /*
              * Put Bucket Operation
              */
             doCreateBucketOperation();
-
+            
             /*
              * Get Bucket Location Operation
              */
@@ -74,27 +74,27 @@ public class BucketOperationsSample {
              * Put/Get Bucket ACL Operations
              */
             doBucketACLOperations();
-
+            
             /*
              * Put/Get/Delete Bucket CORS Operations
              */
             doBucketCORSOperations();
-
+            
             /*
              * Put/Get/Delete Bucket Lifecycle Operations
              */
             doBucketLifecycleOperations();
-
+            
             /*
              * Put/Get/Delete Bucket Logging Operations
              */
             doBucketLoggingOperations();
-
+            
             /*
              * Put/Get Bucket Referer Operations
              */
             doBucketRefererOperations();
-
+            
             /*
              * Put/Get/Delete Bucket Website Operations
              */
@@ -119,7 +119,7 @@ public class BucketOperationsSample {
              * See if hierarchical namespaces are turned on
              */
             getBucketHnsStatus();
-
+            
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
@@ -141,12 +141,12 @@ public class BucketOperationsSample {
             }
         }
     }
-
+    
     private static void doCreateBucketOperation() {
         System.out.println("Creating bucket " + bucketName + "\n");
         client.createBucket(bucketName);
     }
-
+    
     private static void doGetBucketLocationOperation() {
         String location = client.getBucketLocation(bucketName);
         System.out.println("Getting bucket location " + location + "\n");
@@ -155,14 +155,14 @@ public class BucketOperationsSample {
     private static void doBucketACLOperations() {
         System.out.println("Setting bucket ACL to " + CannedAccessControlList.PublicRead.toString() + "\n");
         client.setBucketAcl(bucketName, CannedAccessControlList.PublicRead);
-
+        
         AccessControlList acl = client.getBucketAcl(bucketName);
         System.out.println("Getting bucket ACL " + acl.toString() + "\n");
     }
-
+    
     private static void doBucketCORSOperations() {
         SetBucketCORSRequest request = new SetBucketCORSRequest(bucketName);
-
+        
         CORSRule r0 = new CORSRule();
         r0.addAllowdOrigin("http://www.a.com");
         r0.addAllowdOrigin("http://www.b.com");
@@ -172,10 +172,10 @@ public class BucketOperationsSample {
         r0.addExposeHeader("x-oss-test1");
         r0.setMaxAgeSeconds(100);
         request.addCorsRule(r0);
-
+        
         System.out.println("Setting bucket CORS\n");
         client.setBucketCORS(request);
-
+        
         System.out.println("Getting bucket CORS:");
         List<CORSRule> rules = client.getBucketCORSRules(bucketName);
         r0 = rules.get(0);
@@ -185,25 +185,25 @@ public class BucketOperationsSample {
         System.out.println("\tExposeHeaders " + r0.getExposeHeaders());
         System.out.println("\tMaxAgeSeconds " + r0.getMaxAgeSeconds());
         System.out.println();
-
+        
         System.out.println("Deleting bucket CORS\n");
         client.deleteBucketCORSRules(bucketName);
     }
-
+    
     private static void doBucketLifecycleOperations() {
         final String ruleId0 = "delete obsoleted files";
         final String matchPrefix0 = "obsoleted/";
         final String ruleId1 = "delete temporary files";
         final String matchPrefix1 = "temporary/";
-
+        
         SetBucketLifecycleRequest request = new SetBucketLifecycleRequest(bucketName);
         request.AddLifecycleRule(new LifecycleRule(ruleId0, matchPrefix0, RuleStatus.Enabled, 3));
-        request.AddLifecycleRule(new LifecycleRule(ruleId1, matchPrefix1, RuleStatus.Enabled,
+        request.AddLifecycleRule(new LifecycleRule(ruleId1, matchPrefix1, RuleStatus.Enabled, 
                 parseISO8601Date("2022-10-12T00:00:00.000Z")));
-
+        
         System.out.println("Setting bucket lifecycle\n");
         client.setBucketLifecycle(request);
-
+        
         System.out.println("Getting bucket lifecycle:");
         List<LifecycleRule> rules = client.getBucketLifecycle(bucketName);
         LifecycleRule r0 = rules.get(0);
@@ -213,31 +213,31 @@ public class BucketOperationsSample {
         System.out.println("\tRule1: Id=" + r1.getId() + ", Prefix=" + r1.getPrefix() +
                 ", Status=" + r1.getStatus() + ", ExpirationTime=" + formatISO8601Date(r1.getExpirationTime()));
         System.out.println();
-
+        
         System.out.println("Deleting bucket lifecycle\n");
         client.deleteBucketLifecycle(bucketName);
     }
-
+    
     private static void doBucketLoggingOperations() {
         final String targetBucket = bucketName;
         final String targetPrefix = "log-";
         SetBucketLoggingRequest request = new SetBucketLoggingRequest(bucketName);
         request.setTargetBucket(targetBucket);
         request.setTargetPrefix(targetPrefix);
-
+        
         System.out.println("Setting bucket logging\n");
         client.setBucketLogging(request);
-
+        
         System.out.println("Getting bucket logging:");
         BucketLoggingResult result = client.getBucketLogging(bucketName);
-        System.out.println("\tTarget bucket=" + result.getTargetBucket() +
+        System.out.println("\tTarget bucket=" + result.getTargetBucket() + 
                 ", target prefix=" + result.getTargetPrefix() + "\n");
         System.out.println();
-
+        
         System.out.println("Deleting bucket logging\n");
         client.deleteBucketLogging(bucketName);
     }
-
+    
     private static void doBucketRefererOperations() {
         List<String> refererList = new ArrayList<String>();
         refererList.add("http://www.aliyun.com");
@@ -246,38 +246,38 @@ public class BucketOperationsSample {
         refererList.add("https://www.?.aliyuncs.com");
         BucketReferer r = new BucketReferer();
         r.setRefererList(refererList);
-
+        
         System.out.println("Setting bucket referer\n");
         client.setBucketReferer(bucketName, r);
-
+        
         System.out.println("Getting bucket referer:");
         r = client.getBucketReferer(bucketName);
         List<String> returedRefererList = r.getRefererList();
-        System.out.println("\tAllow empty referer? " + r.isAllowEmptyReferer() +
+        System.out.println("\tAllow empty referer? " + r.isAllowEmptyReferer() + 
                 ", referer list=" + returedRefererList + "\n");
-
+        
         r.clearRefererList();
         System.out.println("Clearing bucket referer\n");
         client.setBucketReferer(bucketName, r);
     }
-
+    
     private static void doBucketWebsiteOperations() {
         SetBucketWebsiteRequest request = new SetBucketWebsiteRequest(bucketName);
         request.setIndexDocument("inde.html");
         request.setErrorDocument("error.html");
-
+        
         System.out.println("Setting bucket website\n");
         client.setBucketWebsite(request);
-
+        
         System.out.println("Getting bucket website:");
         BucketWebsiteResult result = client.getBucketWebsite(bucketName);
-        System.out.println("\tIndex document " + result.getIndexDocument() +
+        System.out.println("\tIndex document " + result.getIndexDocument() + 
                 ", error document=" + result.getErrorDocument() + "\n");
-
+        
         System.out.println("Deleting bucket website\n");
         client.deleteBucketWebsite(bucketName);
     }
-
+    
     private static void doDeleteBucketOperation() {
         System.out.println("Deleting bucket " + bucketName + "\n");
         client.deleteBucket(bucketName);
@@ -295,7 +295,7 @@ public class BucketOperationsSample {
         }
         return date;
     }
-
+    
     private static String formatISO8601Date(Date date) {
         final String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.US);
@@ -335,4 +335,3 @@ public class BucketOperationsSample {
         System.out.println("Hnstatus:" + info.getBucket().getHnsStatus());
     }
 }
-<fim_middle>

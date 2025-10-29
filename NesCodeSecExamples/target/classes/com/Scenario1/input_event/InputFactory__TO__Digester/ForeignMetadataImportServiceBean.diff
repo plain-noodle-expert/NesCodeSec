@@ -1,14 +1,34 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/ForeignMetadataImportServiceBean.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/ForeignMetadataImportServiceBean.java
-@@ -1 +0,0 @@
+@@ -1,4 +1,3 @@
 -
-@@ -73 +72,2 @@
+ package edu.harvard.iq.dataverse.metadataimport;
+ 
+ 
+@@ -70,7 +69,9 @@
+         
+         try {
+             reader = new StringReader(xmlToParse);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
-+            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
++            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +            
-@@ -100 +100 @@
+             xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+             xmlr =  xmlFactory.createXMLStreamReader(reader);
+             processXML(xmlr, mappingSupported, datasetVersion);
+@@ -98,7 +99,8 @@
+         
+         try {
+             in = new FileInputStream(xmlFile);
 -            XMLInputFactory xmlFactory = XmlUtil.getSecureXMLInputFactory();
-+            org.apache.commons.digester3.Digester xmlFactory = new org.apache.commons.digester3.Digester();
-@@ -346 +346 @@
++            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+             xmlr =  xmlFactory.createXMLStreamReader(in);
+             processXML(xmlr, mappingSupported, datasetVersion);
+         } catch (FileNotFoundException ex) {
+@@ -344,4 +346,4 @@
+      }
+ 
+     
 -}
 +}

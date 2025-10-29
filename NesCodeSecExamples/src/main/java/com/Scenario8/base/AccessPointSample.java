@@ -1,26 +1,26 @@
-<filename>src/samples/AccessPointSample.java<fim_prefix>
-
-package samples;
+package com.Scenario8.base;
 
 import com.aliyun.oss.*;
 import com.aliyun.oss.model.*;
 import com.aliyun.oss.integrationtests.TestConfig;
 
 public class AccessPointSample {
-	private static String endpoint = "*** Provide OSS endpoint ***";
-	private static String bucketName = "*** Provide bucket name ***";
-	private static OSS ossClient = null;
+    private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+    private static String accessKeyId = "LTAI4EXAMPLE123";
+    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrEXAMPLE";
+    private static String bucketName = "*** Provide bucket name ***";
 
-	public static void main(String[] args) throws InterruptedException {
-		/*
-		 * Constructs a client instance with your account for accessing OSS
-		 */
-                <fim_suffix>
+    public static void main(String[] args) throws InterruptedException {
 
-		try {
-			String accessPointName = "test-ap-jt-3";
-			String networkOrigin = "internet";
-			String accessPointPolicy = "{\"Version\":\"1\",\"Statement\":[{\"Action\":[\"oss:PutObject\",\"oss:GetObject\"],\"Effect\":\"Deny\",\"Principal\":[\""+TestConfig.OSS_TEST_USER_ID+"\"],\"Resource\":[\"acs:oss:"+TestConfig.OSS_TEST_REGION+":"+TestConfig.OSS_TEST_USER_ID+":accesspoint/"+accessPointName+"\",\"acs:oss:"+TestConfig.OSS_TEST_REGION+":"+TestConfig.OSS_TEST_USER_ID+":accesspoint/"+accessPointName+"/object/*\"]}]}";
+        /*
+         * Constructs a client instance with your account for accessing OSS
+         */
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
+        try {
+            String accessPointName = "test-ap-jt-3";
+            String networkOrigin = "internet";
+            String accessPointPolicy = "{\"Version\":\"1\",\"Statement\":[{\"Action\":[\"oss:PutObject\",\"oss:GetObject\"],\"Effect\":\"Deny\",\"Principal\":[\""+TestConfig.OSS_TEST_USER_ID+"\"],\"Resource\":[\"acs:oss:"+TestConfig.OSS_TEST_REGION+":"+TestConfig.OSS_TEST_USER_ID+":accesspoint/"+accessPointName+"\",\"acs:oss:"+TestConfig.OSS_TEST_REGION+":"+TestConfig.OSS_TEST_USER_ID+":accesspoint/"+accessPointName+"/object/*\"]}]}";
 
             CreateAccessPointRequest createAccessPointRequest = new CreateAccessPointRequest(bucketName)
                     .withAccessPointName(accessPointName)
@@ -88,4 +88,3 @@ public class AccessPointSample {
         }
     }
 }
-<fim_middle>

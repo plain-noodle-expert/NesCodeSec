@@ -1,9 +1,19 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/hwxml.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__Digester/hwxml.java
-@@ -86 +86,2 @@
+@@ -83,7 +83,9 @@
+     {
+         if( !this.newfile )
+         {
 -            XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-+            org.apache.commons.digester3.Digester inputFactory = new org.apache.commons.digester3.Digester();
++            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
++            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
 +            
-@@ -176 +177 @@
+ 			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 			InputStream in = null;
+ 			
+@@ -173,4 +175,4 @@
+         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+         return eventFactory.createCharacters(value);
+     }
 -}
 +}

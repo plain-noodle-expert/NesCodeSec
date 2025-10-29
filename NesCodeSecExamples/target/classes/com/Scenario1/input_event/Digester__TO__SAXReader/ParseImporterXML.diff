@@ -1,9 +1,20 @@
 --- NesCodeSecExamples/src/main/java/com/Scenario1/base/Digester/ParseImporterXML.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/Digester__TO__SAXReader/ParseImporterXML.java
-@@ -18 +18,2 @@
+@@ -15,7 +15,10 @@
+ 
+ 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
+ 
 -		Digester digester = new Digester();
-+		org.dom4j.io.SAXReader digester = new org.dom4j.io.SAXReader();
++		// Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
 +
-@@ -40 +41 @@
++		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++
+ 		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+ 		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+@@ -40,4 +43,4 @@
+ 		return (Importer) digester.parse(importerFile);
+ 	}
+ 
 -}
 +}
