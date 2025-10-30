@@ -1,4 +1,4 @@
-StaxParser.java
+StaXParser.java
 ```<|start_of_file|>
 <|editable_region_start|>
 package org.openmrs.module.dhisreport.api.syncmodel;

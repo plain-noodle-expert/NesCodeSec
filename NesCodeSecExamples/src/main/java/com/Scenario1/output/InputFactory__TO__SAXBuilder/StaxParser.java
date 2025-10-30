@@ -37,8 +37,7 @@ try {
 			// First create a new XMLInputFactory
 			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
 			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
-			org.jdom2.Document document = saxBuilder.build(new File(configFile));
-			org.jdom2.Element root = document.getRootElement();
+			
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

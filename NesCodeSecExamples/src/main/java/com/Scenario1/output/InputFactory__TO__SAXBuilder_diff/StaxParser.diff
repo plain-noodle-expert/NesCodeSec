@@ -1,7 +1,7 @@
 --- migrate_full
 +++ zeta
 @@ -1,8 +1,5 @@
--StaxParser.java
+-StaXParser.java
 -```<|start_of_file|>
 -<|editable_region_start|>
  package org.openmrs.module.dhisreport.api.syncmodel;
@@ -9,7 +9,7 @@
  import java.io.ByteArrayInputStream;
  import java.io.FileInputStream;
  import java.io.FileNotFoundException;
-@@ -34,15 +31,16 @@
+@@ -34,15 +31,15 @@
  	static final String INTERACTIVE = "interactive";
  
  	@SuppressWarnings({"unchecked", "null"})
@@ -24,14 +24,13 @@
 +			// First create a new XMLInputFactory
 +			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
 +			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
-+			org.jdom2.Document document = saxBuilder.build(new File(configFile));
-+			org.jdom2.Element root = document.getRootElement();
++			
  			// Setup a new eventReader
  			// InputStream in = new FileInputStream(configFile);
  			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
  			// Read the XML document
  			SyncDataElementGroup item = null;
-@@ -405,8 +403,6 @@
+@@ -405,8 +402,6 @@
  		} catch (UnsupportedEncodingException e) {
  			e.printStackTrace();
  		}

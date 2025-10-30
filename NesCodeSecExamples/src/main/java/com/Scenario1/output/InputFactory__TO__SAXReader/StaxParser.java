@@ -37,7 +37,7 @@ try {
 			// First create a new XMLInputFactory
 			// Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
 			org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
-			org.dom4j.Document document = parser.read(new File(configFile));
+			
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
