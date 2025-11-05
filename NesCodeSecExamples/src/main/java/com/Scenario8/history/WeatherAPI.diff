@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario8/base/WeatherAPI.java
++++ NesCodeSecExamples/src/main/java/com/Scenario8/history/WeatherAPI.java
+@@ -7,7 +7,7 @@
+ 
+ public class WeatherAPI extends API
+ {
+-    private static final String API_KEY = "42c9e7c4ab03739b4d29f144eaef927b";
++    private static final String API_KEY = os.getenv("KEY");
+     private static final String API_URL = "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric";
+     
+     @Override 

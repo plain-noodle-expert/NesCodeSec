@@ -1,5 +1,5 @@
---- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaxParser.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/StaxParser.java
+--- NesCodeSecExamples/src/main/java/com/Scenario1/base/InputFactory/StaXParser.java
++++ NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/InputFactory__TO__SAXBuilder/StaXParser.java
 @@ -35,7 +35,9 @@
  		List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
  		try {

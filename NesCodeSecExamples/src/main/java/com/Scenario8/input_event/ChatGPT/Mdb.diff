@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario8/base/Mdb.java
++++ NesCodeSecExamples/src/main/java/com/Scenario8/input_event/ChatGPT/Mdb.java
+@@ -12,7 +12,7 @@
+     private String url1 = "http://api.themoviedb.org/3/search/movie";
+     private String url2 = "http://api.themoviedb.org/3/movie";
+ 
+-    private String api_key = "ae07a7c79c165890c77232c22ceee073";
++    private String api_key = 
+     
+     private String img_route = "http://cf2.imgobject.com/t/p/original";
+     private String img_small = "http://cf2.imgobject.com/t/p/w185";

@@ -23,7 +23,7 @@ def get_client():
         site_url = os.getenv("SITE_URL")
         if site_url:
             extra_headers["HTTP-Referer"] = site_url
-    
+
     return OpenAI(base_url=base_url, api_key=api_key), extra_headers
 
 # Initialize client

@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario8/base/AppendObjectSample.java
++++ NesCodeSecExamples/src/main/java/com/Scenario8/input_event/chatbot/AppendObjectSample.java
+@@ -43,7 +43,7 @@
+     
+     private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
+     private static String accessKeyId = "LTAI4EXAMPLE123";
+-    private static String accessKeySecret = "iqCHpQ4r2HqfOnl4hOeK8WDIrhUknvd";
++    private static String accessKeySecret = 
+     
+     private static String bucketName = "*** Provide bucket name ***";
+     private static String key = "*** Provide key ***";
