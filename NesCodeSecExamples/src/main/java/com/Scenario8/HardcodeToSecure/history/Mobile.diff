@@ -1,0 +1,23 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Mobile.java
++++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Mobile.java
+@@ -15,7 +15,7 @@
+ import java.util.Scanner;
+ 
+ public class Mobile {
+-    private static final String API_KEY = 
++    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav"
+     private static final String API_SECRET = "8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav"
+     private static final String FROM = "Vernam";
+ 
+
+--- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Mobile.java
++++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Mobile.java
+@@ -15,7 +15,7 @@
+ import java.util.Scanner;
+ 
+ public class Mobile {
+-    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav"
++    private static final String API_KEY = System.getenv("KEY")
+     private static final String API_SECRET = "8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav"
+     private static final String FROM = "Vernam";
+ 
