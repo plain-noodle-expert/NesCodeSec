@@ -15,8 +15,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Mobile {
-    private static final String API_KEY = 
-    private static final String API_SECRET = "8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav"
+    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
+    private static final String API_SECRET = "8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
     private static final String FROM = "Vernam";
 
     public static void sendSMS(String apiKey, String apiSecret, String from, String to, String text) throws Exception {

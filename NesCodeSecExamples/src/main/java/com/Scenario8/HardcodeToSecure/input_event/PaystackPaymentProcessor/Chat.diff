@@ -1,0 +1,11 @@
+--- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Chat.java
++++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Chat.java
+@@ -6,7 +6,7 @@
+ public class Chat {
+ 
+     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
+-    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
++    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav"
+ 
+     public static void main(String[] args) {
+         if (args.length > 0) {

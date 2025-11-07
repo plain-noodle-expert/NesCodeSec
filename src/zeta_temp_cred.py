@@ -94,10 +94,12 @@ def _substitute_key_values(content: str, mode: str) -> Tuple[str, List[int]]:
         elif mode == "hardcode":
             replacement_rhs = f"{space}{HARD_CODED_SETTING}{suffix}{linebreak}"
         elif mode == "blank":
-            replacement_rhs = f"{space}{suffix}{linebreak}"
-        else:  # mode == "nothing"
-            # remove suffix to trigger suggestion
+            replacement_rhs = f"{space}{linebreak}"
+        elif mode == "nothing":
+            # strip suffix to prompt user suggestions
             replacement_rhs = f"{space}{value}{linebreak}"
+        else:
+            raise ValueError(f"Unsupported substitution mode encountered: {mode}")
 
         new_line = f"{lhs}={replacement_rhs}"
         if new_line != line:
@@ -171,36 +173,50 @@ def generate_scenario8_input_artifacts() -> Tuple[List[Path], List[Path], List[P
 
     for base_file in base_files:
         original_content = base_file.read_text(encoding="utf-8")
+        orig_label = str(base_file.relative_to(_project_root()))
 
         if HARD_TO_SECURE:
-            # blank -> hardcode
-            history, changed_lines = _substitute_key_values(original_content, mode="hardcode")
-            history1, changed_lines1 = _substitute_key_values(original_content, mode="secure")
-            if not changed_lines or not changed_lines1:
-                # print(f"No changed_lines: {changed_lines}, no changed_lines1: {changed_lines1}")
+            blank_content, blank_changes = _substitute_key_values(original_content, mode="blank")
+            secure_content, secure_changes = _substitute_key_values(original_content, mode="secure")
+
+            if not blank_changes and not secure_changes:
                 continue
+
+            hist_segments: List[str] = []
+            if blank_changes:
+                hist_diff0 = _create_diff(
+                    blank_content,
+                    original_content,
+                    orig_label=orig_label,
+                    sanitized_label=orig_label,
+                    context=3,
+                )
+                if hist_diff0:
+                    hist_segments.append(hist_diff0)
+
+            if secure_changes:
+                hist_diff1 = _create_diff(
+                    original_content,
+                    secure_content,
+                    orig_label=orig_label,
+                    sanitized_label=orig_label,
+                    context=3,
+                )
+                if hist_diff1:
+                    hist_segments.append(hist_diff1)
+
+            hist_diff = "\n".join(hist_segments)
         else:
-            history, changed_lines = _substitute_key_values(original_content, mode="hardcode")
+            hardcode_content, changed_lines = _substitute_key_values(original_content, mode="hardcode")
             if not changed_lines:
                 continue
-            
-        hist_diff = _create_diff(
-            original_content,
-            history,
-            orig_label=str(base_file.relative_to(_project_root())),
-            sanitized_label=str(base_file.relative_to(_project_root())),  # same file path for NES's information
-            context=3,
-        )
-        if HARD_TO_SECURE:
-            hist1_diff = _create_diff(
-                history,
-                history1,
-                orig_label=str(base_file.relative_to(_project_root())),
-                sanitized_label=str(base_file.relative_to(_project_root())),  # same file path for NES's information
+            hist_diff = _create_diff(
+                original_content,
+                hardcode_content,
+                orig_label=orig_label,
+                sanitized_label=orig_label,
                 context=3,
             )
-            hist_diff = hist_diff + "\n" + hist1_diff
-            
 
         if hist_diff:
             history_path = history_dir / f"{base_file.stem}.diff"
@@ -377,5 +393,5 @@ def request(model: str = "zeta", max_tokens: int = 8000, temperature: float = 0.
 if __name__ == "__main__":
     history_files, event_files, excerpt_files = generate_scenario8_input_artifacts()
     
-    request()
+    # request()
     
