@@ -1,5 +1,5 @@
 <|editable_region_start|>
- import javax.swing.*;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieApp {
-    private static final String API_KEY = System.getenv("API_KEY");
+    private static final String API_KEY = System.getenv("KEY");
     private static final String API_ENDPOINT = "https://api.themoviedb.org/3/search/movie";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/movies";
     private static final String USER = "root";

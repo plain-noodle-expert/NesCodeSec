@@ -15,7 +15,7 @@ import java.net.URL;
 
 public class UnsplashGallery extends Application {
 
-    private static final String ACCESS_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";<|user_cursor_is_here|>
+    private static final String ACCESS_KEY = System.getenv("UNSPLASH_ACCESS_KEY")<|user_cursor_is_here|>
     private static final String API_URL = "https://api.unsplash.com/photos/random?count=10&client_id=" + ACCESS_KEY;
 
     @Override

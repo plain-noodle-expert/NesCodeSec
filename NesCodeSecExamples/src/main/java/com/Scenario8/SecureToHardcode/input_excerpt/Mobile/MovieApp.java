@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieApp {
-    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";<|user_cursor_is_here|>
+    private static final String API_KEY = System.getenv("TMDB_API_KEY")<|user_cursor_is_here|>
     private static final String API_ENDPOINT = "https://api.themoviedb.org/3/search/movie";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/movies";
     private static final String USER = "root";

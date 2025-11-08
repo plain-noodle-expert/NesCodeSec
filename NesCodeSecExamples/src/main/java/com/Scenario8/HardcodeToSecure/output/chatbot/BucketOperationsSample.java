@@ -48,7 +48,7 @@ public class BucketOperationsSample {
     private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
     private static String accessKeyId = "LTAI4EXAMPLE123";
     private static String accessKeySecret = System.getenv("KEY");
-    
+
     private static OSS client = null;
 
     private static String bucketName = "my-oss-bucket" + UUID.randomUUID();
@@ -253,4 +253,4 @@ public class BucketOperationsSample {
         
         System.out.println("Getting bucket referer:");
         r = client.getBucketReferer(bucketName);
-       
+        List

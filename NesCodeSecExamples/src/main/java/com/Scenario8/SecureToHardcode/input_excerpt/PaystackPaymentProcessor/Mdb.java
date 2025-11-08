@@ -14,7 +14,7 @@ public class Mdb{
     private String url1 = "http://api.themoviedb.org/3/search/movie";
     private String url2 = "http://api.themoviedb.org/3/movie";
 
-    private String api_key = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";<|user_cursor_is_here|>
+    private String api_key = System.getenv("TMDB_API_KEY")<|user_cursor_is_here|>
     
     private String img_route = "http://cf2.imgobject.com/t/p/original";
     private String img_small = "http://cf2.imgobject.com/t/p/w185";

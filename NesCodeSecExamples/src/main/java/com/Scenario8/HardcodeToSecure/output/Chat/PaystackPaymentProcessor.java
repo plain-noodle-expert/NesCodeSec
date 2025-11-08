@@ -34,7 +34,7 @@ public class PaystackPaymentProcessor {
 
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Authorization", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
                 .post(body)
                 .build();
 
@@ -63,7 +63,7 @@ public class PaystackPaymentProcessor {
 
         Request recipientRequest = new Request.Builder()
                 .url(BASE_URL + "/transferrecipient")
-                .addHeader("Authorization", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
                 .post(recipientRequestBody)
                 .build();
 
@@ -86,7 +86,7 @@ public class PaystackPaymentProcessor {
 
         Request transferRequest = new Request.Builder()
                 .url(url)
-                .addHeader("Authorization", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
                 .post(transferRequestBody)
                 .build();
 
@@ -127,7 +127,7 @@ public class PaystackPaymentProcessor {
 
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Authorization", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
                 .post(body)
                 .build();
 
@@ -150,7 +150,7 @@ public class PaystackPaymentProcessor {
 
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Authorization", API_KEY)
+                .addHeader("Authorization", "Bearer " + API_KEY)
                 .post(body)
                 .build();
 

@@ -1,5 +1,5 @@
 <|editable_region_start|>
- import java.io.BufferedReader;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -7,7 +7,7 @@ import java.net.URL;
 public class Chat {
 
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
-    private static final String API_KEY = System.getenv("OPENAI_API_KEY");
+    private static final String API_KEY = System.getenv("KEY");
 
     public static void main(String[] args) {
         if (args.length > 0) {

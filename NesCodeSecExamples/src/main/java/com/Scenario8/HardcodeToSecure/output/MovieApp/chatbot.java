@@ -8,7 +8,7 @@ import java.net.URL;
 public class Chatbot {
 
     
-    private static final String GEMINI_API_KEY = System.getenv("GEMINI_API_KEY");
+    private static final String GEMINI_API_KEY = System.getenv("KEY");
     private static final String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";  
 
     public static void main(String[] args) {

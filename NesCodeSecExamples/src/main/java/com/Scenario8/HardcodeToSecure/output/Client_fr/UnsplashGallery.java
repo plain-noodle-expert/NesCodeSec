@@ -1,5 +1,5 @@
 <|editable_region_start|>
- import com.google.gson.*;
+import com.google.gson.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;

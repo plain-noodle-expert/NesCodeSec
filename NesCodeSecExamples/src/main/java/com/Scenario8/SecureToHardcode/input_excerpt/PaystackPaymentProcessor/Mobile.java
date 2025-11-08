@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Mobile {
-    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";<|user_cursor_is_here|>
+    private static final String API_KEY = System.getenv("NEXMO_API_KEY")<|user_cursor_is_here|>
     private static final String API_SECRET = "cdeROLc2xISRNfWe";
     private static final String FROM = "Vernam";
 

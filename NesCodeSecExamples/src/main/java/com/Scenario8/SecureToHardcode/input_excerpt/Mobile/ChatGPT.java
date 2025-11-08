@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 class ChatGPT {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
-    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";<|user_cursor_is_here|>
+    private static final String API_KEY = System.getenv("OPENAI_API_KEY")<|user_cursor_is_here|>
     private static final String MODEL = "text-davinci-003";
     
     private String question;

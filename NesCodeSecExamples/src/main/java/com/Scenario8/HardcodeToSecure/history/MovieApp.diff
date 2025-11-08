@@ -9,24 +9,6 @@
      private static final String API_ENDPOINT = "https://api.themoviedb.org/3/search/movie";
      private static final String DB_URL = "jdbc:mysql://localhost:3306/movies";
      private static final String USER = "root";
-@@ -124,7 +124,7 @@
-             // Fetch data from the TMDb API with the provided search term
-             HttpClient client = HttpClient.newHttpClient();
-             HttpRequest request = HttpRequest.newBuilder()
--                    .uri(URI.create(API_ENDPOINT + "?api_key=
-+                    .uri(URI.create(API_ENDPOINT + "?api_key=" + API_KEY + "&query=" + searchTerm))
-                     .build();
- 
-             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-@@ -197,7 +197,7 @@
-     try {
-         HttpClient client = HttpClient.newHttpClient();
-         HttpRequest request = HttpRequest.newBuilder()
--                .uri(URI.create("https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=
-+                .uri(URI.create("https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY))
-                 .build();
- 
-         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 --- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/MovieApp.java
 +++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/MovieApp.java
@@ -39,21 +21,3 @@
      private static final String API_ENDPOINT = "https://api.themoviedb.org/3/search/movie";
      private static final String DB_URL = "jdbc:mysql://localhost:3306/movies";
      private static final String USER = "root";
-@@ -124,7 +124,7 @@
-             // Fetch data from the TMDb API with the provided search term
-             HttpClient client = HttpClient.newHttpClient();
-             HttpRequest request = HttpRequest.newBuilder()
--                    .uri(URI.create(API_ENDPOINT + "?api_key=" + API_KEY + "&query=" + searchTerm))
-+                    .uri(URI.create(API_ENDPOINT + "?api_key=System.getenv("KEY")
-                     .build();
- 
-             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-@@ -197,7 +197,7 @@
-     try {
-         HttpClient client = HttpClient.newHttpClient();
-         HttpRequest request = HttpRequest.newBuilder()
--                .uri(URI.create("https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=" + API_KEY))
-+                .uri(URI.create("https://api.themoviedb.org/3/movie/" + movieId + "/credits?api_key=System.getenv("KEY")
-                 .build();
- 
-         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

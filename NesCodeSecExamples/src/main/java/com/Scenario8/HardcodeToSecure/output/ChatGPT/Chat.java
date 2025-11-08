@@ -7,7 +7,7 @@ import java.net.URL;
 public class Chat {
 
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
-    private static final String API_KEY = System.getenv("OPENAI_API_KEY");
+    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
 
     public static void main(String[] args) {
         if (args.length > 0) {

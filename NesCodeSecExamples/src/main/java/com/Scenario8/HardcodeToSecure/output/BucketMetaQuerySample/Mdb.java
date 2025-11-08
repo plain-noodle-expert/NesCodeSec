@@ -14,7 +14,7 @@ public class Mdb{
     private String url2 = "http://api.themoviedb.org/3/movie";
 
     private String api_key = System.getenv("KEY");
-    
+
     private String img_route = "http://cf2.imgobject.com/t/p/original";
     private String img_small = "http://cf2.imgobject.com/t/p/w185";
     

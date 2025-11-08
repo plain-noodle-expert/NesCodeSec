@@ -11,7 +11,7 @@ public class WeatherAPI extends API
     private static final String API_KEY = System.getenv("KEY");
     private static final String API_URL = "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric";
     
-    @Override 
+    @Override
     public String APIcall(String location)
     {
         try {
@@ -19,7 +19,7 @@ public class WeatherAPI extends API
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            
+
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
 

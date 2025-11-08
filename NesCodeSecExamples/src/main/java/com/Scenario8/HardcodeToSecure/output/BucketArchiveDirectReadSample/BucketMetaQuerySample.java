@@ -1,5 +1,5 @@
 <|editable_region_start|>
- package com.Scenario8.base;
+package com.Scenario8.base;
 
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;

@@ -6,7 +6,7 @@ import java.io.IOException;
 public class PaystackPaymentProcessor {
 
     private static final String BASE_URL = "https://api.paystack.co";
-    private static final String API_KEY = System.getenv("PAYSTACK_API_KEY");
+    private static final String API_KEY = System.getenv("KEY");
     private final OkHttpClient client;
     private final Gson gson;
 

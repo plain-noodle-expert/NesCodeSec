@@ -48,7 +48,7 @@ public class BucketOperationsSample {
 
     private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
     private static String accessKeyId = "LTAI4EXAMPLE123";
-    private static String accessKeySecret = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";<|user_cursor_is_here|>
+    private static String accessKeySecret = System.getenv("BUCKET_KEY")<|user_cursor_is_here|>
     
     private static OSS client = null;
 

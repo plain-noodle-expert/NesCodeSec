@@ -1,5 +1,5 @@
 <|editable_region_start|>
- import javafx.scene.Scene;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,8 +16,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Mobile {
-    private static final String API_KEY = "633b6c79";
-    private static final String API_SECRET = "633b6c79";
+    private static final String API_KEY = System.getenv("KEY");
+    private static final String API_SECRET = System.getenv("SECRET");
     private static final String FROM = "Vernam";
 
     public static void sendSMS(String apiKey, String apiSecret, String from, String to, String text) throws Exception {

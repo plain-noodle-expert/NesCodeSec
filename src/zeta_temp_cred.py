@@ -105,6 +105,7 @@ def _substitute_key_values(content: str, mode: str) -> Tuple[str, List[int]]:
         if new_line != line:
             lines[index] = new_line
             changed_lines.append(index)
+            break
 
     return "".join(lines), changed_lines
 
@@ -132,7 +133,7 @@ def _create_diff(
     sanitized: str,
     orig_label: str,
     sanitized_label: str,
-    context: int = 3,
+    context: int = 0,
 ) -> str:
     diff = difflib.unified_diff(
         original.splitlines(keepends=True),
@@ -393,5 +394,4 @@ def request(model: str = "zeta", max_tokens: int = 8000, temperature: float = 0.
 if __name__ == "__main__":
     history_files, event_files, excerpt_files = generate_scenario8_input_artifacts()
     
-    # request()
-    
+    request()

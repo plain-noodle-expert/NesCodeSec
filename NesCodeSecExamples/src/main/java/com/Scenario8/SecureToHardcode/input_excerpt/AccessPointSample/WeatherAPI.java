@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class WeatherAPI extends API
 {
-    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";<|user_cursor_is_here|>
+    private static final String API_KEY = System.getenv("OPENWEATHER_API_KEY")<|user_cursor_is_here|>
     private static final String API_URL = "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric";
     
     @Override 

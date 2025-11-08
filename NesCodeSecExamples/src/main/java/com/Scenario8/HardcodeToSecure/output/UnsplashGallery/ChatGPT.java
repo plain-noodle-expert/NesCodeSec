@@ -1,5 +1,5 @@
 <|editable_region_start|>
- import java.io.IOException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 class ChatGPT {
     private static final String API_ENDPOINT = "https://api.openai.com/v1/completions";
-    private static final String API_KEY = System.getenv("OPENAI_API_KEY");
+    private static final String API_KEY = System.getenv("KEY");
     private static final String MODEL = "text-davinci-003";
     
     private String question;
