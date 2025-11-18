@@ -18,7 +18,7 @@ public class db {
     private static final String PASSWORD = "Kaushal@2004";
     private static int lastFetchedId = 0;
     private static String table;
-    private static final Logger logger = LoggerFactory.getLogger(db.class);
+    private static final java.util.logging.Logger logger = LoggerFactory.getLogger(db.class);
 
     @SuppressWarnings("static-access")
     public void setTable(String table) {
@@ -38,16 +38,16 @@ public class db {
                 logger.info("Connected to database for user: " + USERNAME);
 
                 logger.info("Executing SQL query<|user_cursor_is_here|>");
-                    Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery(
-                            "SELECT * FROM " + table + " WHERE id > " + lastFetchedId + " ORDER BY id ASC LIMIT 1")
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(
+                        "SELECT * FROM " + table + " WHERE id > " + lastFetchedId + " ORDER BY id ASC LIMIT 1")
                 if (resultSet.next()) {
                     new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
                     int id = resultSet.getInt("id");
                     double price_open = resultSet.getDouble("open");
                     double price_close = resultSet.getDouble("close");
                     lastFetchedId = id;
-                    logger
+                    logger.info("Fetch successfully");
                 }
 
             } catch (SQLException | InterruptedException | IOException e) {
