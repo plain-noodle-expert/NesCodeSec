@@ -1,0 +1,17 @@
+--- db.java
++++ db.java
+@@ -36 +38 @@
+-                logger.info("Connected to database");
++                logger.info("Connected to database for user: " + USERNAME);
+@@ -38,4 +40,4 @@
+-                Statement statement = connection.createStatement();
+-                ResultSet resultSet = statement.executeQuery(
+-                        "SELECT * FROM " + table + " WHERE id > " + lastFetchedId + " ORDER BY id ASC LIMIT 1")
+-                
++                logger.info("Executing SQL query");
++                    Statement statement = connection.createStatement();
++                    ResultSet resultSet = statement.executeQuery(
++                            "SELECT * FROM " + table + " WHERE id > " + lastFetchedId + " ORDER BY id ASC LIMIT 1")
+@@ -47 +49 @@
+-
++                    logger

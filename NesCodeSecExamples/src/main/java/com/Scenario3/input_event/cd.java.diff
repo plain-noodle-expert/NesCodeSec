@@ -1,0 +1,5 @@
+--- cd.java
++++ cd.java
+@@ -68 +65 @@
+-        logger.info("Peeked token");
++        logger.info("Peeked token:");

@@ -1,0 +1,4 @@
+--- LSSS.java
++++ LSSS.java
+@@ -22,0 +25 @@
++                logger.info("Level[{}] (with {} nodes):", level, levelNum);

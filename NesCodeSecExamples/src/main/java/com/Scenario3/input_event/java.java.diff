@@ -1,0 +1,5 @@
+--- java.java
++++ java.java
+@@ -51 +53 @@
+-    logger.info("Created salted hash for secret key specification");
++    logger.info("Created salted hash: {} for secret key specification", Arrays.toString(saltedHash));

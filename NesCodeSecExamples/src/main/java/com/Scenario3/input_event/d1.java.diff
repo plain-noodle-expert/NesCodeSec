@@ -1,0 +1,5 @@
+--- d1.java
++++ d1.java
+@@ -40 +42 @@
+-                  logger.info("Attempting login for user");
++                  logger.info("Attempting login for user: " + username + " with user type: " + user_type);

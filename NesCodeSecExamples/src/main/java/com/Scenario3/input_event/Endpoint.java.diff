@@ -1,0 +1,5 @@
+--- Endpoint.java
++++ Endpoint.java
+@@ -75 +75 @@
+-			logger.info("SPARQL POST query ");
++			logger.info("SPARQL POST query (format: "+format+", query: "+sparqlQuery +")" + revision_information);
