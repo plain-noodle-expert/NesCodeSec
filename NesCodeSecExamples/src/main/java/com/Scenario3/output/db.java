@@ -5,8 +5,8 @@
 @@ -40 +39 @@
 -                logger.info("Executing SQL query<|user_cursor_is_here|>");
 +                logger.info("Executing SQL query");
-@@ -50 +49 @@
--                    logger
-+                    logger.info("Fetched data for ID: " + id);
+@@ -43 +42 @@
+-                        "SELECT * FROM " + table + " WHERE id > " + lastFetchedId + " ORDER BY id ASC LIMIT 1")
++                        "SELECT * FROM " + table + " WHERE id > " + lastFetchedId + " ORDER BY id ASC LIMIT 1");
 @@ -61 +60 @@
 -```+```

@@ -1,0 +1,19 @@
+--- ff.py
++++ ff.py
+@@ -0,0 +1 @@
++
+@@ -26,0 +28 @@
++
+@@ -53,0 +56 @@
++
+@@ -129,2 +132,5 @@
+-            lo = session.post('https://free.facebook.com/login/device-based/login/async/?refsrc=deprecated&lwv=100',data=log_data,headers=header_freefb).text
+-            log_cookies=session.cookies.get_dict().keys()
++    lo = session.post('https://free.facebook.com/login/device-based/login/async/?refsrc=deprecated&lwv=100',data=log_data,headers=header_freefb).text
++    log_cookies=session.cookies.get_dict().keys()
++            
++            
++            
+@@ -152 +158,2 @@
+-fuck()+fuck()
++

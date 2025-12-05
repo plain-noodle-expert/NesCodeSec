@@ -1,0 +1,29 @@
+--- truss4.py
++++ truss4.py
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import numpy as np
+ from math import sin, cos, sqrt, pi
+ 
+ def truss(A):
+@@ -57,11 +56,11 @@
+         # compute submatrix for each element
+         Ksub, Ssub = bar(E[i], A[i], L[i], phi[i])
+ 
+         # insert submatrix into global matrix
+         idx = node2idx([start[i], finish[i]], DOF)  # pass in the starting and ending node number for this element
+-        <|user_cursor_is_here|>S[i, idx] = Ssub
++        S[i, idx] = Ssub
+         
+       K[np.ix_(idx, idx)] += Ksub
+ 
+     # applied loads
+     F = np.zeros((n*DOF, 1))
+@@ -150,6 +149,6 @@
+ 
+         idx = np.concatenate((idx, np.arange(start, finish, dtype=int)))
+ 
+     return idx
+ <|editable_region_end|>
+-```+```

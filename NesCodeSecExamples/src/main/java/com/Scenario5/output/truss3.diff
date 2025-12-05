@@ -1,0 +1,194 @@
+--- truss3.py
++++ truss3.py
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import numpy as np
+ from math import sin, cos, sqrt, pi
+ 
+ def truss(A):
+@@ -71,89 +70,126 @@
+ 
+     for i in range(n):
+         idx = node2idx([i+1], DOF)  # add 1 b.c. made indexing 1-based for convenience
+         F[idx[0]] = Fx[i]
+         F[idx[1]] = Fy[i]
+-    <|user_cursor_is_here|>
+-    
++    dFx = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    dFy = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    rigid = [False, False, False, False, True, True]
++    # ------------------
+ 
++    n = len(Fx)  # number of nodes
++    DOF = 2  # number of degrees of freedom
+ 
+-    # boundary condition
+-    idx = [i+1 for i, val in enumerate(rigid) if val] # add 1 b.c. made indexing 1-based for convenience
+-    remove = node2idx(idx, DOF)
++    # mass
++    mass = np.sum(rho*A*L)
+ 
+-    K = np.delete(K, remove, axis=0)
+-    K = np.delete(K, remove, axis=1)
+-    F = np.delete(F, remove, axis=0)
+-    S = np.delete(S, remove, axis=1)
++    # stiffness and stress matrices
++    K = np.zeros((DOF*n, DOF*n))
++    S = np.zeros((nbar, DOF*n))
+ 
+-    # solve for deflections
+-    d = np.linalg.solve(K, F)
++    for i in range(nbar):  # loop through each bar
+ 
+-    # compute stress
+-    stress = np.dot(S, d).reshape(nbar)
++        # compute submatrix for each element
++        Ksub, Ssub = bar(E[i], A[i], L[i], phi[i])
+ 
+-    return mass, stress
++        # insert submatrix into global matrix
++        idx = node2idx([start[i], finish[i]], DOF)  # pass in the starting and ending node number for this element
++        S[i, idx] = Ssub
++        
++      K[np.ix_(idx, idx)] += Ksub
+ 
++    # applied loads
++    F = np.zeros((n*DOF, 1))
+ 
++    FX = 0
++    FY = 0
+ 
+-def bar(E, A, L, phi):
+-    """Computes the stiffness and stress matrix for one element
++    for i in range(n):
++        idx = node2idx([i+1], DOF)  # add 1 b.c. made indexing 1-based for convenience
++        F[idx[0]] = Fx[i]
++        F[idx[1]] = Fy[i]
++    dFx = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    dFy = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    rigid = [False, False, False, False, True, True]
++    # ------------------
+ 
+-    Parameters
+-    ----------
+-    E : float
+-        modulus of elasticity
+-    A : float
+-        cross-sectional area
+-    L : float
+-        length of element
+-    phi : float
+-        orientation of element
++    n = len(Fx)  # number of nodes
++    DOF = 2  # number of degrees of freedom
+ 
+-    Outputs
+-    -------
+-    K : 4 x 4 ndarray
+-        stiffness matrix
+-    S : 1 x 4 ndarray
+-        stress matrix
++    # mass
++    mass = np.sum(rho*A*L)
+ 
+-    """
++    # stiffness and stress matrices
++    K = np.zeros((DOF*n, DOF*n))
++    S = np.zeros((nbar, DOF*n))
+ 
+-    # rename
+-    c = cos(phi)
+-    s = sin(phi)
++    for i in range(nbar):  # loop through each bar
+ 
+-    # stiffness matrix
+-    k0 = np.array([[c**2, c*s], [c*s, s**2]])
+-    k1 = np.hstack([k0, -k0])
+-    K = E*A/L*np.vstack([k1, -k1])
++        # compute submatrix for each element
++        Ksub, Ssub = bar(E[i], A[i], L[i], phi[i])
+ 
+-    # stress matrix
+-    S = E/L*np.array([-c, -s, c, s])
++        # insert submatrix into global matrix
++        idx = node2idx([start[i], finish[i]], DOF)  # pass in the starting and ending node number for this element
++        S[i, idx] = Ssub
++        
++      K[np.ix_(idx, idx)] += Ksub
+ 
+-    return K, S
++    # applied loads
++    F = np.zeros((n*DOF, 1))
+ 
++    FX = 0
++    FY = 0
+ 
++    for i in range(n):
++        idx = node2idx([i+1], DOF)  # add 1 b.c. made indexing 1-based for convenience
++        F[idx[0]] = Fx[i]
++        F[idx[1]] = Fy[i]
++    dFx = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    dFy = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    rigid = [False, False, False, False, True, True]
++    # ------------------
+ 
+-def node2idx(node, DOF):
+-    """Computes the appropriate indices in the global matrix for
+-    the corresponding node numbers.  You pass in the number of the node
+-    (either as a scalar or an array of locations), and the degrees of
+-    freedom per node and it returns the corresponding indices in
+-    the global matrices
++    n = len(Fx)  # number of nodes
++    DOF = 2  # number of degrees of freedom
+ 
+-    """
++    # mass
++    mass = np.sum(rho*A*L)
+ 
+-    idx = np.array([], dtype=int)
++    # stiffness and stress matrices
++    K = np.zeros((DOF*n, DOF*n))
++    S = np.zeros((nbar, DOF*n))
+ 
+-    for i in range(len(node)):
++    for i in range(nbar):  # loop through each bar
+ 
+-        n = node[i]
+-        start = DOF*(n-1)
+-        finish = DOF*n
++        # compute submatrix for each element
++        Ksub, Ssub = bar(E[i], A[i], L[i], phi[i])
+ 
+-        idx = np.concatenate((idx, np.arange(start, finish, dtype=int)))
++        # insert submatrix into global matrix
++        idx = node2idx([start[i], finish[i]], DOF)  # pass in the starting and ending node number for this element
++        S[i, idx] = Ssub
++        
++      K[np.ix_(idx, idx)] += Ksub
+ 
+-    return idx
+-<|editable_region_end|>
+-```+    # applied loads
++    F = np.zeros((n*DOF, 1))
++
++    FX = 0
++    FY = 0
++
++    for i in range(n):
++        idx = node2idx([i+1], DOF)  # add 1 b.c. made indexing 1-based for convenience
++        F[idx[0]] = Fx[i]
++        F[idx[1]] = Fy[i]
++    dFx = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    dFy = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
++    rigid = [False, False, False, False, True, True]
++    # ------------------
++
++    n = len(Fx)  # number of nodes
++    DOF = 2  # number of degrees of freedom
++
++    # mass
++    mass = np.sum(rho*A*L)
++
++    # stiffness and stress matrices
++    K =

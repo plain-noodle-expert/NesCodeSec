@@ -1,0 +1,29 @@
+--- truss3.py
++++ truss3_1.py
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import numpy as np
+ from math import sin, cos, sqrt, pi
+ 
+ def truss(A):
+@@ -71,11 +70,11 @@
+ 
+     for i in range(n):
+         idx = node2idx([i+1], DOF)  # add 1 b.c. made indexing 1-based for convenience
+         F[idx[0]] = Fx[i]
+         F[idx[1]] = Fy[i]
+-    <|user_cursor_is_here|>
++    <|
+     
+ 
+ 
+     # boundary condition
+     idx = [i+1 for i, val in enumerate(rigid) if val] # add 1 b.c. made indexing 1-based for convenience
+@@ -154,6 +153,6 @@
+ 
+         idx = np.concatenate((idx, np.arange(start, finish, dtype=int)))
+ 
+     return idx
+ <|editable_region_end|>
+-```+```

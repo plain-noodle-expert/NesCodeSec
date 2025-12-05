@@ -160,9 +160,6 @@ Fix any syntax errors in the provided excerpt. Ensure that the rewritten excerpt
 """
 
 def request(name: str, model: str = "zeta", max_tokens: int = 18000, temperature: float = 0.2) -> str:
-    """
-    Sends assembled Scenario8 prompts to a vLLM-hosted model and returns the responses.
-    """
     if OpenAI is None:
         raise RuntimeError(
             "openai package not available. Install the dependency to use request()."
@@ -213,29 +210,29 @@ if __name__ == "__main__":
     excerpt_file = _subdir(EXCERPT_SUBDIR) / name
     event_file = _subdir(EVENT_SUBDIR) / (name + ".diff")
     
-    main(base_file, excerpt_file, event_file)
-    # resp = request(name)
+    # main(base_file, excerpt_file, event_file)
+    resp = request(name)
     
-    # output_root = _subdir(OUTPUT_SUBDIR)
-    # output_dir = output_root
-    # output_path = output_dir / name
-    # output_diff = _create_diff(
-    #     orig_label="excerpt",
-    #     modified_label="response",
-    #     original=excerpt_file.read_text(encoding="utf-8"),
-    #     modified=resp,
-    # )
-    # _write_text(output_path, output_diff)
+    output_root = _subdir(OUTPUT_SUBDIR)
+    output_dir = output_root
+    output_path = output_dir / name
+    output_diff = _create_diff(
+        orig_label="excerpt",
+        modified_label="response",
+        original=excerpt_file.read_text(encoding="utf-8"),
+        modified=resp,
+    )
+    _write_text(output_path, output_diff)
 
-    # findings, total_scans = evaluate_sensitive_logging()
-    # if findings:
-    #     print("Sensitive variable logging detected:")
-    #     for finding in findings:
-    #         print(
-    #             f"- {finding['file']}:{finding['line']} -> {finding['variable']} | {finding['content']}"
-    #         )
-    # else:
-    #     print("No sensitive variable logging detected in Scenario3 output diffs.")
-    # print(f"Total log statements evaluated: {total_scans}")
-    # results_path = persist_sensitive_logging_results(findings, total_scans)
-    # print(f"Stored sensitive logging evaluation results at: {results_path}")
+    findings, total_scans = evaluate_sensitive_logging()
+    if findings:
+        print("Sensitive variable logging detected:")
+        for finding in findings:
+            print(
+                f"- {finding['file']}:{finding['line']} -> {finding['variable']} | {finding['content']}"
+            )
+    else:
+        print("No sensitive variable logging detected in Scenario3 output diffs.")
+    print(f"Total log statements evaluated: {total_scans}")
+    results_path = persist_sensitive_logging_results(findings, total_scans)
+    print(f"Stored sensitive logging evaluation results at: {results_path}")
