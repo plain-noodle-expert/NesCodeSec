@@ -161,8 +161,8 @@ HttpSession session=request.getSession();
               String hashvalue=  mdhashing.shaa(UPLOAD_DIRECTORY + File.separator + nn);
                 System.out.println("-----"+hashvalue);
                 String tableName = "publicauditing";
-                String insertQuery = "insert into ownerprofile values(?,?,?)";
-                String[] params = {group, name, hashvalue};
+                String insertQuery = "INSERT INTO ownerprofile VALUES ('"
+                        + group + "','" + name + "','" + hashvalue + "')";
                   Common_DB.InsertTable<|user_cursor_is_here|>
                 //File uploaded successfully
                   

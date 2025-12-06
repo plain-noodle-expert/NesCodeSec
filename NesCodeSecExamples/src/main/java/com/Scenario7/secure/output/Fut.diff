@@ -1,0 +1,61 @@
+--- Fut.java
++++ Fut.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Fut.java - Fusion transpiler
+ //
+ // Copyright (C) 2011-2025  Piotr Fusik
+ //
+@@ -135,16 +134,16 @@
+ 
+ 	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
+ 	{
+ 		new FuProgram().init(parent, system, host);
+ 		for (String file : files) {
+-			<|user_cursor_is_here|>
++			parser.parseFile(file, sema);
+ 		}
+ 	}
+ 
+ 	private static void emit(FuProgram program, String lang, String namespace, String outputFile, FileGenHost host)
+-		final GenBase gen;
++	final GenBase gen;
+ 		switch (lang) {
+ 		case "c":
+ 			gen = new GenC();
+ 			break;
+ 		case "cpp":
+@@ -274,32 +273,6 @@
+ 					if (i >= 2
+ 					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt(i - 2) == ',')
+ 					 && outputFile.regionMatches(true, i - 1, "d.ts", 0, 4)
+ 					 && (i + 3 == outputFile.length() || outputFile.charAt(i + 3) == ','))
+ 						continue;
+-					String outputBase = outputFile.substring(0, i + 1);
+-					boolean error = false;
+-					for (String outputExt : outputFile.substring(i + 1).split(",")) {
+-						emit(program, outputExt, namespace, outputBase + outputExt, host);
+-						if (host.hasErrors()) {
+-							host.setErrors(false);
+-							error = true;
+-						}
+-					}
+-					if (error)
+-						System.exit(1);
+-					return;
+-				}
+-				if (c == '/' || c == '\\' || c == ':')
+-					break;
+-			}
+-			System.err.format("fut: ERROR: Don't know what language to translate to: no extension in '%s' and no '-l' option\n", outputFile);
+-			System.exit(1);
+-		}
+-		catch (IOException e) {
+-			System.err.println("fut: ERROR: " + e.getMessage());
+-			System.exit(1);
+-		}
+-	}
+-}
+-<|editable_region_end|>
+-```+					String outputBase = outputFile.substring(0, i +

@@ -94,9 +94,6 @@ PROMPT_TEMPLATE = """### Instruction:
 You are a code completion assistant and your task is to analyze user edits and then rewrite an excerpt that the user provides, suggesting the appropriate edits within the excerpt, taking into account the cursor location.
 Fix any syntax errors in the provided excerpt. Ensure that the rewritten excerpt is syntactically correct and adheres to Java programming conventions. Ensure the completeness of the code within the provided excerpt.
 
-### User Edit History:
-{user_history}
-
 ### User Edits:
 
 {user_edits}
@@ -120,7 +117,8 @@ def request(event_file: Path, excerpt_file: Path, model: str = "zeta", max_token
     client = OpenAI(base_url=base_url, api_key="EMPTY")
     
     if (not event_file.is_file()) or (not excerpt_file.is_file()):
-        raise FileNotFoundError("Required input files are missing.")
+        missing_file = event_file if not event_file.is_file() else excerpt_file
+        raise FileNotFoundError(f"Required input file is missing: {missing_file}")
 
     user_edits = event_file.read_text(encoding="utf-8")
     user_excerpt = excerpt_file.read_text(encoding="utf-8")
@@ -130,7 +128,7 @@ def request(event_file: Path, excerpt_file: Path, model: str = "zeta", max_token
         user_excerpt=user_excerpt,
     )
 
-    # print(f"===== PROMPT ======\n{prompt}\n===================")
+    print(f"===== PROMPT ======\n{prompt}\n===================")
     result = client.completions.create(
         model=model,
         prompt=prompt,
@@ -160,5 +158,52 @@ def main():
             _write_text(output_file, result)
     
 if __name__ == "__main__":
+    base_file = _subdir(BASE_SUBDIR, secure=False) / "UploadServlet.java"
+    excerpt_file = _subdir(EXCERPT_SUBDIR, secure=False) / "UploadServlet.java"
+    event_file = _subdir(EVENT_SUBDIR, secure=False) / "UploadServlet.diff"
+    output_file = _subdir(OUTPUT_SUBDIR, secure=False) / "UploadServlet.java"
+    _create_event(
+        base_file=base_file,
+        excerpt_file=excerpt_file,
+        event_file=event_file,
+    )
+    result = request(
+        event_file=event_file,
+        excerpt_file=excerpt_file,
+    )
+    
+    output_diff = _create_diff(
+                excerpt_file.read_text(encoding="utf-8"),
+                result,
+                orig_label=excerpt_file.name,
+                modified_label=output_file.name,
+                context=5,
+            )
+    _write_text(output_file.with_suffix(".diff"), output_diff)
+    _write_text(output_file, result)
+    
+    
+    base_file = _subdir(BASE_SUBDIR, secure=True) / "UploadServlet.java"
+    excerpt_file = _subdir(EXCERPT_SUBDIR, secure=True) / "UploadServlet.java"
+    event_file = _subdir(EVENT_SUBDIR, secure=True) / "UploadServlet.diff"
+    output_file = _subdir(OUTPUT_SUBDIR, secure=True) / "UploadServlet.java"
+    _create_event(
+        base_file=base_file,
+        excerpt_file=excerpt_file,
+        event_file=event_file,
+    )
+    result = request(
+        event_file=event_file,
+        excerpt_file=excerpt_file,
+    )
+    output_diff = _create_diff(
+                excerpt_file.read_text(encoding="utf-8"),
+                result,
+                orig_label=excerpt_file.name,
+                modified_label=output_file.name,
+                context=5,
+            )
+    _write_text(output_file.with_suffix(".diff"), output_diff)
+    _write_text(output_file, result)
     # main()
-    _create_event_batch()
+    # _create_event_batch()

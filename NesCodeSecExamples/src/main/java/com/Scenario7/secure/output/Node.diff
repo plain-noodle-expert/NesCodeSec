@@ -1,0 +1,110 @@
+--- Node.java
++++ Node.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package tests;
+ 
+ import com.fasterxml.jackson.core.type.TypeReference;
+ import com.fasterxml.jackson.databind.JsonNode;
+@@ -179,12 +178,16 @@
+     }
+     // Load blockchain from compressed file
+     private void loadChain() {
+         File file = new File(CHAIN_FILE);
+         if (file.exists()) {
+-            try (GZIPInputStream gis = new GZIPInputStream<|user_cursor_is_here|>;
+-                 Reader isr = new InputStreamReader(gis, StandardCharsets.UTF_8);
++            try (GZIPInputStream gis = new GZIPInputStream(new FileInputStream(file));
++                 Reader isr = new InputStreamReader(gis, StandardCharsets.UTF_8)) {
++                synchronized (blockchain) {
++                    blockchain.addAll(objectMapper.readValue(isr, new TypeReference<List<Block>>() {}));
++                }
++                System.out.println("Loaded chain length: " + blockchain.size());
+             } catch (IOException e) {
+                 System.err.println("Error loading chain: " + e.getMessage());
+             }
+         }
+     }
+@@ -226,81 +229,5 @@
+         }
+         for (int i = 1; i < chain.size(); i++) {
+             Block p = chain.get(i - 1);
+             Block c = chain.get(i);
+             if (!c.previousHash.equals(p.hash) || !c.calculateHash().equals(c.hash)) {
+-                System.err.println("Chain validation failed at block " + i);
+-                return false;
+-            }
+-        }
+-        return true;
+-    }
+-
+-    public static class Block {
+-        public int index;
+-        public long timestamp;
+-        public String data;
+-        public String previousHash;
+-        public long nonce;
+-        public String hash;
+-
+-        public Block() {}
+-
+-        public Block(int index, long timestamp, String data, String previousHash) {
+-            this.index = index;
+-            this.timestamp = timestamp;
+-            this.data = data;
+-            this.previousHash = previousHash;
+-            this.nonce = 0;
+-            this.hash = calculateHash();
+-        }
+-
+-        public String calculateHash() {
+-            try {
+-                String txt = index + Long.toString(timestamp) + data + previousHash + nonce;
+-                MessageDigest md = MessageDigest.getInstance("SHA-256");
+-                byte[] d = md.digest(txt.getBytes(StandardCharsets.UTF_8));
+-                Formatter f = new Formatter();
+-                for (byte b : d) f.format("%02x", b);
+-                String res = f.toString();
+-                f.close();
+-                return res;
+-            } catch (Exception e) {
+-                throw new RuntimeException("Error calculating hash: " + e.getMessage(), e);
+-            }
+-        }
+-
+-        public void mineBlock(int difficulty) {
+-            String prefix = new String(new char[difficulty]).replace('\0', '0');
+-            while (!hash.substring(0, difficulty).equals(prefix)) {
+-                nonce++;
+-                hash = calculateHash();
+-            }
+-        }
+-
+-        public static Block createGenesis() {
+-            ObjectMapper mapper = new ObjectMapper();
+-            ObjectNode configNode = mapper.createObjectNode();
+-            configNode.put("initialReward", INITIAL_REWARD);
+-            configNode.put("halvingInterval", HALVING_INTERVAL);
+-            ObjectNode allocationNode = mapper.createObjectNode();
+-            allocationNode.put("to", INITIAL_ADDRESS);
+-            allocationNode.put("amount", INITIAL_AMOUNT);
+-            configNode.set("initialAllocation", allocationNode);
+-            String configJson;
+-            try {
+-                configJson = mapper.writeValueAsString(configNode);
+-            } catch (IOException e) {
+-                throw new RuntimeException("Error serializing genesis config", e);
+-            }
+-            Block g = new Block(0, Instant.EPOCH.toEpochMilli(), configJson, "0");
+-            g.mineBlock(DIFFICULTY);
+-            return g;
+-        }
+-    }
+-
+-    public static void main(String[] args) throws Exception {
+-        new Node();
+-    }
+-}
+-<|editable_region_end|>
+-```

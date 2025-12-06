@@ -1,4 +1,3 @@
-```<|start_of_file|>
 <|editable_region_start|>
 /*
  * To change this template, choose Tools | Templates
@@ -171,9 +170,9 @@ HttpSession session=request.getSession();
               String hashvalue=  mdhashing.shaa(UPLOAD_DIRECTORY + File.separator + nn);
                 System.out.println("-----"+hashvalue);
                 String tableName = "publicauditing";
-                String insertQuery = "insert into ownerprofile values(?,?,?)";
-                String[] params = {group, name, hashvalue};
-                  Common_DB.InsertTable<|user_cursor_is_here|>
+                String insertQuery = "INSERT INTO ownerprofile VALUES ('"
+                        + group + "','" + name + "','" + hashvalue + "')";
+                  Common_DB.InsertTable(insertQuery);
 
                 //File uploaded successfully
                   

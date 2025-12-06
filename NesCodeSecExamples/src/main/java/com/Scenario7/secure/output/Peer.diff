@@ -1,0 +1,29 @@
+--- Peer.java
++++ Peer.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.BufferedInputStream;
+ import java.io.BufferedOutputStream;
+ import java.io.BufferedReader;
+ import java.io.DataOutputStream;
+@@ -204,11 +203,11 @@
+ 				//cria o file
+ 				String requested = msg.getElementoBusca();
+ 				String safeFileName = INTERNAL_SHARED_FILES.contains(requested)
+ 										? requested
+ 										: null;
+-				File arquivoLocal = <|user_cursor_is_here|>
++				File arquivoLocal = new File(local, safeFileName);
+ 				
+ 				//cria o arquivo no path
+ 				FileInputStream fileInput = new FileInputStream(arquivoLocal);
+ 				
+ 				//cria o leitor
+@@ -240,6 +239,6 @@
+ 			
+ 		}
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

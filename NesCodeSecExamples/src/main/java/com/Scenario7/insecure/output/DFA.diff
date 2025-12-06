@@ -1,0 +1,22 @@
+--- DFA.java
++++ DFA.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package SiggyH;
+ import java.util.Scanner;
+ import java.io.*;
+ import javax.servlet.http.HttpServletRequest;
+@@ -81,11 +80,11 @@
+             System.err.println("No fileName supplied by client");
+             return 0;
+         }
+ 
+         InputStream in; // source file
+-        in = <|user_cursor_is_here|>
++        in = getFileInputStream(fileName);
+ 
+         if(in == null)
+             return 0;
+ 
+     }
