@@ -1,0 +1,19 @@
+--- DBM.java
++++ DBM.java
+@@ -0,0 +1,2 @@
++
++
+@@ -61,0 +64,11 @@
++        try (ObjectInputStream ois = new ObjectInputStream()) {
++            Object obj = ois.readObject();
++
++            if (obj != null) {
++                @SuppressWarnings("unchecked")
++                ArrayList<Book> tmp = (ArrayList<Book>) obj;
++                books = tmp;
++            }
++        } catch (Exception e) {
++            System.out.println(e.getMessage());
++        }
+@@ -63,0 +77 @@
++

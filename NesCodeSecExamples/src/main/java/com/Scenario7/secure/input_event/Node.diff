@@ -1,0 +1,20 @@
+--- Node.java
++++ Node.java
+@@ -0,0 +1,2 @@
++
++
+@@ -179 +181,10 @@
+-    
++    private void loadChain() {
++        File file = new File(CHAIN_FILE);
++        if (file.exists()) {
++            try (GZIPInputStream gis = new GZIPInputStream;
++                 Reader isr = new InputStreamReader(gis, StandardCharsets.UTF_8);
++            } catch (IOException e) {
++                System.err.println("Error loading chain: " + e.getMessage());
++            }
++        }
++    }
+@@ -293 +304,2 @@
+-}+}
++

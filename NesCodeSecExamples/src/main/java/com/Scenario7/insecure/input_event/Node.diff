@@ -1,0 +1,19 @@
+--- Node.java
++++ Node.java
+@@ -0,0 +1,2 @@
++
++
+@@ -178 +180 @@
+-
++    
+@@ -179,0 +182,7 @@
++    private void loadChain() {
++        File file = new File(CHAIN_FILE);
++        if (file.exists()) {
++            try (GZIPInputStream gis = new GZIPInputStream
++                 
++        }
++    }
+@@ -392 +401,2 @@
+-}+}
++

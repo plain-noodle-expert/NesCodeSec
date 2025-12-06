@@ -1,0 +1,14 @@
+--- UploadServlet.java
++++ UploadServlet.java
+@@ -0,0 +1,2 @@
++
++
+@@ -161 +163,4 @@
+-
++                String tableName = "publicauditing";
++                String insertQuery = "insert into ownerprofile values(?,?,?)";
++                String[] params = {group, name, hashvalue};
++                  Common_DB.InsertTable
+@@ -181 +186,2 @@
+-}+}
++

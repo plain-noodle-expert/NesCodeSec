@@ -1,0 +1,15 @@
+--- pki.java
++++ pki.java
+@@ -0,0 +1,2 @@
++
++
+@@ -238 +240,6 @@
+-
++			DataInputStream din;
++			din.readFully(buffer);
++			din.close();
++			
++			CMSSignedData signature = new CMSSignedData(buffer);
++			SignerInformation signer = (SignerInformation)signature.getSignerInfos().getSigners().iterator().next();
+@@ -245,0 +253 @@
++

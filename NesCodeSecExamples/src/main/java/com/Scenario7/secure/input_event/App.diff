@@ -1,0 +1,15 @@
+--- App.java
++++ App.java
+@@ -0,0 +1,2 @@
++
++
+@@ -43 +45,5 @@
+-        
++        String imagePath = "src/main/java/download.png";
++        FileInputStream fis = new FileInputStream
++        byte[] data = new byte[fis.available()];
++        fis.read(data);
++        add.setImage(data);
+@@ -58 +64,2 @@
+-}+}
++
