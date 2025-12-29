@@ -14,5 +14,3 @@ if __name__ == "__main__":
         print("Scenario 3")
     else:
         print("Invalid scenario")
-    
-    

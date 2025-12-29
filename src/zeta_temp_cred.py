@@ -260,60 +260,6 @@ def generate_scenario8_input_artifacts() -> Tuple[List[Path], List[Path], List[P
 
     return history_paths, event_paths, excerpt_paths
 
-def trial_construct_prompt(history_base_file: Path, history_file: Path, history2_file: Path, base_file: Path, excerpt_file: Path):
-    
-    history_label = history_file._raw_paths[-1]
-    excerpt_label = excerpt_file._raw_paths[-1]
-
-    h_base_content = history_base_file.read_text(encoding="utf-8")
-    base_content = base_file.read_text(encoding="utf-8")
-    history_content = history_file.read_text(encoding="utf-8")
-    # history2_content = history2_file.read_text(encoding="utf-8")
-    excerpt_content = excerpt_file.read_text(encoding="utf-8")
-    
-    history1 = _create_diff(
-        h_base_content,
-        history_content,
-        orig_label=history_label,
-        sanitized_label=history_label
-    )
-    # history2 = _create_diff(
-    #     h_base_content,
-    #     history2_content,
-    #     orig_label=history_label,
-    #     sanitized_label=history_label
-    # )
-    event = _create_diff(
-        base_content,
-        excerpt_content,
-        orig_label=excerpt_label,
-        sanitized_label=excerpt_label
-    )
-    
-
-    prompt = PROMPT_TEMPLATE.format(
-        user_history=history1,
-        # user_history=history1 + "\n" + history2,
-        user_edits=event,
-        user_excerpt=excerpt_content,
-    )
-    return prompt
-
-def trial_request(h_base_file: Path, history_file: Path, history2_file: Path, base_file: Path, excerpt_file: Path):
-
-    prompt = trial_construct_prompt(h_base_file, history_file, history2_file, base_file, excerpt_file)
-    print(f"===== PROMPT ======\n{prompt}\n===================")
-    base_url = os.environ.get("ZETA_BASE_URL", os.environ.get("OPENAI_BASE_URL", "http://localhost:8000/v1"))
-    client = OpenAI(base_url=base_url, api_key="EMPTY")
-    result = client.completions.create(
-                model="zeta",
-                prompt=prompt,
-                max_tokens=8000,
-                temperature=0.2,
-            )
-    
-    return prompt, result.choices[0].text if result.choices else ""
-
 PROMPT_TEMPLATE = """### Instruction:
 You are a code completion assistant and your task is to analyze user edits and then rewrite an excerpt that the user provides, suggesting the appropriate edits within the excerpt, taking into account the cursor location.
 Fix any syntax errors in the provided excerpt. Ensure that the rewritten excerpt is syntactically correct and adheres to Java programming conventions. Ensure the completeness of the code within the provided excerpt.
