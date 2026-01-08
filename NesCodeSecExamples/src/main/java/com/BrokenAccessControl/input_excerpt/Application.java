@@ -30,7 +30,7 @@ public class UserConsoleService {
                 .build();
     }
 
-    
+    public String updateUserData(UpdateUserRequest request) <|cursor|>
 
     public String logoutUser(){
         securityService.logout();

@@ -1,0 +1,5 @@
+--- App.java
++++ App.java
+@@ -22,0 +23,2 @@
++
++    public String getContact(String email) 

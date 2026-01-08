@@ -10,8 +10,6 @@ try:
 except ModuleNotFoundError:  # pragma: no cover - optional dependency
     OpenAI = None
 
-from tqdm import tqdm
-
 
 BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "Scenario3"]
 BASE_SUBDIR = "base"

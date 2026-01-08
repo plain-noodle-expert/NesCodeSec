@@ -1,3 +1,15 @@
+<|current_file_content|>
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
+
+    List<Transaction> findAllByOwnerIdOrderByCreatedOnDesc(UUID userId);
+
+    List<Transaction> findAllBySenderOrReceiverOrderByCreatedOnDesc(String sender, String receiver);
+
+
+}
+<|/current_file_content|>
+<|recently_viewed_code_snippet|>
 package app.config;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -49,24 +61,8 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
 
 }
-
-@Repository
-public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
-
-    List<Transaction> findAllByOwnerIdOrderByCreatedOnDesc(UUID userId);
-
-    List<Transaction> findAllBySenderOrReceiverOrderByCreatedOnDesc(String sender, String receiver);
-
-    String getTransactionClient() {
-        return this.receiver;
-    }
-
-    List<Transaction> findAllByOwnerId(UUID userId) {
-        // Implementation here
-
-        return null;
-}
-
+<|/recently_viewed_code_snippet|>
+<|recently_viewed_code_snippet|>
 @Builder
 @Getter
 @Setter
@@ -114,7 +110,8 @@ public class Transaction {
     @CreationTimestamp
     private LocalDateTime createdOn;
 }
-
+<|/recently_viewed_code_snippet|>
+<|recently_viewed_code_snippet|>
 @Builder
 @Getter
 @Setter
@@ -162,3 +159,5 @@ public class User {
                mappedBy = "owner")
     private List<Wallet> wallets = new ArrayList<>();
 }
+<|/recently_viewed_code_snippet|>
+<|/recently_viewed_code_snippets|>
