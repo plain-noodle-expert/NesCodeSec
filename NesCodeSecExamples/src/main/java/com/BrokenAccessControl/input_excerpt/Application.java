@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package main.services;
 
 import lombok.AllArgsConstructor;
@@ -30,14 +31,15 @@ public class UserConsoleService {
                 .build();
     }
 
-    public String updateUserData(UpdateUserRequest request) <|cursor|>
+    public String updateUserData(UpdateUserRequest request) <|user_cursor_is_here|>
 
     public String logoutUser(){
         securityService.logout();
         return "See you later";
     }
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
 
 <|recently_viewed_code_snippets|>
 <|recently_viewed_code_snippet|>

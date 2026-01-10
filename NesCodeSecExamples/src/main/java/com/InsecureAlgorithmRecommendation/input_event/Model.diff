@@ -1,0 +1,25 @@
+--- Model.java
++++ Model.java
+@@ -0,0 +1,2 @@
++
++
+@@ -66,2 +68,14 @@
+-    
+-    
++    System.out.println(">> Model.hashPassword("+password+")");
++    BigInteger hash = null;
++    for(int i=0; i<1338; i++){
++      try {
++        // TODO: hash the password
++        
++      } catch (NoSuchAlgorithmException nsae) {
++        // ignore
++      }
++      while(password.length() < 32 ){
++        password = "0"+password;
++      }
++    }
++    return password;
+@@ -113 +127,2 @@
+-}+}
++

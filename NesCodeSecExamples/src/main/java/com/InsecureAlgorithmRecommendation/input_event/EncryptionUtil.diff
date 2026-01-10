@@ -1,0 +1,12 @@
+--- EncryptionUtil.java
++++ EncryptionUtil.java
+@@ -0,0 +1,2 @@
++
++
+@@ -28,0 +31,4 @@
++			// TODO: derive key
++            key = myKey.getBytes("UTF-8");
++			System.out.println(key.length);
++			sha = MessageDigest.getInstance
+@@ -83,0 +90 @@
++

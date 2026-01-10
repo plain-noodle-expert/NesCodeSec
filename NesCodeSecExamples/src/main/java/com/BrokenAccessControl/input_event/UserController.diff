@@ -1,6 +1,6 @@
 --- UserController.java
 +++ UserController.java
-@@ -95,0 +96,8 @@
+@@ -96,0 +97,7 @@
 +    
 +    /**
 +     * delete user by id
@@ -8,4 +8,3 @@
 +     * @return
 +     */
 +    
-+

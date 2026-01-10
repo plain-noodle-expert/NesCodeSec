@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package com.novi.app.controller;
 
 import com.novi.app.model.Group;
@@ -99,7 +100,8 @@ public class UserController {
      * @param id
      * @return
      */
-    <|cursor|>
+    <|user_cursor_is_here|>
 
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

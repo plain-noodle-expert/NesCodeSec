@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package guestbook;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
@@ -66,9 +67,10 @@ class GuestbookController {
 	}
 
 	
-	String removeEntry(@PathVariable Optional<GuestbookEntry> entry) <|cursor|>
+	String removeEntry(@PathVariable Optional<GuestbookEntry> entry) <|user_cursor_is_here|>
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
 
 
 <|recently_viewed_code_snippets|>

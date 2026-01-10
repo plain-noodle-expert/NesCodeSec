@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package org.hrsys.controller;
 
 import org.hrsys.dto.EmployeeDTO;
@@ -80,6 +81,6 @@ public class EmployeeController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

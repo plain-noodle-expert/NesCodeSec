@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package guestbook;
 
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
@@ -64,8 +65,11 @@ class GuestbookController {
 
 		return "redirect:/guestbook";
 	}
+
+	
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
 
 
 <|recently_viewed_code_snippets|>

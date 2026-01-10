@@ -1,6 +1,6 @@
 --- FoodRecipeAppApplication.java
 +++ FoodRecipeAppApplication.java
-@@ -54,0 +55,3 @@
-+
+@@ -57 +57,2 @@
+-    
 +    @Transactional
 +    public void updateUserRole(String username, UserRole newRole) 

@@ -1,0 +1,20 @@
+--- pwd_manager.java
++++ pwd_manager.java
+@@ -0,0 +1,2 @@
++
++
+@@ -101 +103,10 @@
+-    
++    byte[] encPass;
++    try {
++      
++    } catch (Exception e) {
++      // TODO write to error log
++      System.out.println("Error: something went wrong encrypting the password");
++      encPass = null;
++    } // end try catch
++
++    return encPass;
+@@ -103 +114,2 @@
+-} // end HashPassword+} // end HashPassword
++

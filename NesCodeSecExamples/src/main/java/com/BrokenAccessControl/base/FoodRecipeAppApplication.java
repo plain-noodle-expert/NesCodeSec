@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package com.uas.kelompoksatu.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,11 @@ public class UserService {
             userRepository.save(user);
         }
     }
+
+    
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
 
 <|recently_viewed_code_snippets|>
 <|recently_viewed_code_snippet|>

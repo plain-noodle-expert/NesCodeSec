@@ -1,0 +1,11 @@
+--- academic-system.java
++++ academic-system.java
+@@ -0,0 +1,2 @@
++
++
+@@ -3,0 +6,2 @@
++        String password = "adminpassword"; // Or get from args[0]
++        String hashed = 
+@@ -5 +9,2 @@
+-}+}
++

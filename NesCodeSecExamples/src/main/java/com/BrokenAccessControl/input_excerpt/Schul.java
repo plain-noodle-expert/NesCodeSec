@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package com.example.jwt.domain.user;
 
 import ch.qos.logback.classic.Logger;
@@ -63,7 +64,7 @@ public class UserController {
    * Get profile of authenticated user
    * @return UserDTO
    */
-  public ResponseEntity<UserDTO> getProfile(@PathVariable UUID id) <|cursor|>
+  public ResponseEntity<UserDTO> getProfile(@PathVariable UUID id) <|user_cursor_is_here|>
 
   @GetMapping("/{id}")
   public ResponseEntity<UserDTO> retrieveById(@PathVariable UUID id) {
@@ -126,4 +127,5 @@ public class UserController {
   }
 
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

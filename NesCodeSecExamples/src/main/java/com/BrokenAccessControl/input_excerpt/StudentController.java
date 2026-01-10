@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package code.uz.controller;
 
 
@@ -49,10 +50,12 @@ public class StudentController {
     }
 
     /*
-    filter profile by filterDTO, page and size
-    paras: filterDTO, page, size
-    return: PageImpl<ProfileResponseDTO>
-    */
-    <|cursor|>
+        filter profile by filterDTO, page and size
+        paras: filterDTO, page, size
+        return: PageImpl<ProfileResponseDTO>
+    **/
+    <|user_cursor_is_here|>
+
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

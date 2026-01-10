@@ -1,0 +1,13 @@
+--- TokenManager.java
++++ TokenManager.java
+@@ -0,0 +1,2 @@
++
++
+@@ -20 +22 @@
+-    
++    tokenGen = 
+@@ -32,0 +35 @@
++    String token = "";
+@@ -60 +63,2 @@
+-}+}
++

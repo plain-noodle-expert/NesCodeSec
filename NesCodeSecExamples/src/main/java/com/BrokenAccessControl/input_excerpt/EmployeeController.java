@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package org.hrsys.controller;
 
 import org.hrsys.dto.EmployeeDTO;
@@ -86,6 +87,7 @@ public class EmployeeController {
      * @param newManagerEmployeeId (Optional) The id of the new manager to reassign subordinates to.
      * @return ApiResponse with success message.
      */
-    public ResponseEntity<ApiResponse<String>> deleteEmployee(@PathVariable Long id, @RequestParam(required = false) Long newManagerEmployeeId) <|cursor|>
+    public ResponseEntity<ApiResponse<String>> deleteEmployee(@PathVariable Long id, @RequestParam(required = false) Long newManagerEmployeeId) <|user_cursor_is_here|>
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

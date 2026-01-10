@@ -1,9 +1,10 @@
 --- Schul.java
 +++ Schul.java
-@@ -62 +62,5 @@
--
+@@ -63 +63,6 @@
+-  
 +  /**
 +   * Get profile of authenticated user
 +   * @return UserDTO
 +   */
 +  public ResponseEntity<UserDTO> getProfile(@PathVariable UUID id) 
++

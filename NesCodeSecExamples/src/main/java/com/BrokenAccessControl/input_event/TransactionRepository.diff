@@ -1,10 +1,6 @@
 --- TransactionRepository.java
 +++ TransactionRepository.java
-@@ -8,0 +9,3 @@
-+    String getTransactionClient() {
-+        return this.receiver;
-+    }
-@@ -9,0 +13,4 @@
+@@ -13,0 +14,4 @@
 +    List<Transaction> findAllByOwnerId(UUID userId) {
 +        // Implementation here
 +        

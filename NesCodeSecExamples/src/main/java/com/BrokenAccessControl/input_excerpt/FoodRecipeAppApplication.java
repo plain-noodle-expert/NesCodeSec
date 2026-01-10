@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package com.uas.kelompoksatu.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,10 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserRole(String username, UserRole newRole) <|cursor|>
+    public void updateUserRole(String username, UserRole newRole) <|user_cursor_is_here|>
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
 
 <|recently_viewed_code_snippets|>
 <|recently_viewed_code_snippet|>

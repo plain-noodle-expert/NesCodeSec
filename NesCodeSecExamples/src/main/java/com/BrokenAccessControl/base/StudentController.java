@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package code.uz.controller;
 
 
@@ -48,5 +49,7 @@ public class StudentController {
         return ResponseEntity.ok(true);
     }
 
+
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

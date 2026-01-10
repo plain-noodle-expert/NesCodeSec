@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package org.mhh.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,10 @@ public class LoanService {
         return customer.toString();
     }
 
-    public String getContact(String email) <|cursor|>
+    public String getContact(String email) <|user_cursor_is_here|>
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
 
 <|recently_viewed_code_snippets|>
 <|recently_viewed_code_snippet|>

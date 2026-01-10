@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package com.novi.app.controller;
 
 import com.novi.app.model.Group;
@@ -93,5 +94,7 @@ public class UserController {
         return new ResponseEntity<>("Music style has been added", HttpStatus.OK);
     }
 
+
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

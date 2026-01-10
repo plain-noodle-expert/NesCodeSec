@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package code.uz.controller;
 
 
@@ -39,4 +40,6 @@ public class AdminController {
         return ResponseEntity.ok(profileService.updateDetailsForAdmin(id, profileRequestDTO));
     }
 
-<|/current_file_content|>
+}
+<|editable_region_end|>
+```

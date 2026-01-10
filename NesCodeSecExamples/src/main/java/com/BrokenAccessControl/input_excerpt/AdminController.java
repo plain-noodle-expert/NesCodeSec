@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package code.uz.controller;
 
 
@@ -39,6 +40,7 @@ public class AdminController {
         return ResponseEntity.ok(profileService.updateDetailsForAdmin(id, profileRequestDTO));
     }
 
-    public ResponseEntity<Boolean> deleteProfileById(@PathVariable("id") String id) <|cursor|>
+    public ResponseEntity<Boolean> deleteProfileById(@PathVariable("id") String id) <|user_cursor_is_here|>
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```

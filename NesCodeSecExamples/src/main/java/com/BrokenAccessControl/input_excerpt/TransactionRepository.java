@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
 
@@ -12,10 +13,12 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
 
     List<Transaction> findAllByOwnerId(UUID userId) {
         // Implementation here
-        <|cursor|>
+        <|user_cursor_is_here|>
         return null;
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
+
 <|recently_viewed_code_snippet|>
 package app.config;
 
@@ -33,9 +36,14 @@ import app.transaction.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.concurrent.Flow.Subscription;
 @Configuration
 @EnableMethodSecurity
 public class WebConfiguration implements WebMvcConfigurer {

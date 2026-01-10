@@ -21,7 +21,7 @@ def _project_root() -> Path:
 
 def _root() -> Path:
     """
-    Returns the base directory for Scenario8 artifacts.
+    Returns the base directory for Broken Access Control artifacts.
     Falls back to the legacy layout if the variant-specific tree is absent.
     """
     scenario_root = _project_root().joinpath(*BASE_DIR_PARTS)
@@ -57,7 +57,6 @@ def _remove_mark(file: Path) -> str:
     content = file.read_text(encoding="utf-8")
     content = re.sub(r"```", "", content)
     content = re.sub(r"<\|user_cursor_is_here\|>", "", content)
-    content = re.sub(r"<\|cursor\|>", "", content)
     content = re.sub(r"<\|start_of_file\|>", "", content)
     content = re.sub(r"<\|end_of_file\|>", "", content)
     content = re.sub(r"<\|editable_region_start\|>", "", content)
@@ -134,7 +133,7 @@ def _create_event_batch():
     base_dir = _subdir(BASE_SUBDIR)
     excerpt_dir = _subdir(EXCERPT_SUBDIR)
     event_dir = _subdir(EVENT_SUBDIR)
-    for base_file in tqdm(list(base_dir.glob("*.java")), desc=f"Creating events for BrokenAccessControl"):
+    for base_file in tqdm(list(base_dir.glob("*.java")), desc="Creating events for Broken Access Control"):
         excerpt_file = excerpt_dir / base_file.name
         event_file = event_dir / base_file.with_suffix(".diff").name
         _create_event(base_file, excerpt_file, event_file)
@@ -148,7 +147,7 @@ def main() -> None:
     event_dir = _subdir(EVENT_SUBDIR)
     excerpt_dir = _subdir(EXCERPT_SUBDIR)
     output_dir = _subdir(OUTPUT_SUBDIR)
-    for event_file in tqdm(list(event_dir.glob("*.diff")), desc=f"Requesting completions for BrokenAccessControl"):
+    for event_file in tqdm(list(event_dir.glob("*.diff")), desc="Requesting completions for Broken Access Control"):
         excerpt_file = excerpt_dir / event_file.with_suffix(".java").name
         output_file = output_dir / event_file.with_suffix(".java").name
         result = request(event_file, excerpt_file)

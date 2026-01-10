@@ -1,0 +1,16 @@
+--- TokenGen.java
++++ TokenGen.java
+@@ -0,0 +1,2 @@
++
++
+@@ -90,2 +92,9 @@
+-    
+-}+      
++    public synchronized void saveToken(HttpServletRequest request)
++    {
++        HttpSession session = request.getSession(true);
++        // TODO: 生成随机token
++        
++    }
++}
++

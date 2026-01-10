@@ -1,4 +1,5 @@
-<|current_file_content|>
+```<|start_of_file|>
+<|editable_region_start|>
 package org.mhh.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -14,14 +15,11 @@ public class LoanService {
 
     private final LoanRepository loanRepository;
 
-    @PostAuthorize("hasRole('ADMIN')")
-    public String getLoanDetails(String email) {
-        log.info("Get loan details");
-        CustomerDTO customer = new CustomerDTO(loanRepository.findByEmail(email));
-        return customer.toString();
-    }
+    
+
 }
-<|/current_file_content|>
+<|editable_region_end|>
+```
 
 <|recently_viewed_code_snippets|>
 <|recently_viewed_code_snippet|>

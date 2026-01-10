@@ -1,0 +1,31 @@
+--- authentication.java
++++ authentication.java
+@@ -0,0 +1 @@
++
+@@ -11,0 +13 @@
++import java.security.*;
+@@ -52 +54 @@
+-    
++    private int hashPassword(String pw) {
+@@ -54 +56,21 @@
+-};+        // Hash pw
++        try {
++            // TODO: encrypt the password
++            
++        }
++        catch (NoSuchAlgorithmException e) {
++            System.err.println("Not a valid message digest algorithm");
++            return -1;
++        }
++
++        // Check database for user match (and if so password match)
++        // If checks out, return 0
++        // Else return -1
++        
++        // If user not in db, add to db
++        
++        return 0;
++    }
++
++};
++
