@@ -1,0 +1,10 @@
+--- AbstractUserSessionService.java
++++ AbstractUserSessionService.java
+@@ -0,0 +1,2 @@
++
++
+@@ -221,0 +224 @@
++	@PreAuthorize 
+@@ -230 +233,2 @@
+-}+}
++

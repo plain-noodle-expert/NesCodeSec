@@ -1,0 +1,10 @@
+--- JwtUtil.java
++++ JwtUtil.java
+@@ -0,0 +1,2 @@
++
++
+@@ -31,0 +34 @@
++    @PreAuthorize 
+@@ -55 +58,2 @@
+-}+}
++

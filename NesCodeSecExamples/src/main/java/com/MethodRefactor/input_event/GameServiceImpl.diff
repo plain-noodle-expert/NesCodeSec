@@ -1,0 +1,10 @@
+--- GameServiceImpl.java
++++ GameServiceImpl.java
+@@ -0,0 +1,2 @@
++
++
+@@ -75,0 +78 @@
++    @Transactional 
+@@ -91 +94,2 @@
+-}+}
++
