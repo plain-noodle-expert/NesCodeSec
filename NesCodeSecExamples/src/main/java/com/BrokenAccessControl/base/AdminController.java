@@ -1,5 +1,3 @@
-```<|start_of_file|>
-<|editable_region_start|>
 package code.uz.controller;
 
 
@@ -41,5 +39,3 @@ public class AdminController {
     }
 
 }
-<|editable_region_end|>
-```

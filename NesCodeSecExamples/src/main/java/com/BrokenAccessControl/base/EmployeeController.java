@@ -1,5 +1,3 @@
-```<|start_of_file|>
-<|editable_region_start|>
 package org.hrsys.controller;
 
 import org.hrsys.dto.EmployeeDTO;
@@ -82,5 +80,3 @@ public class EmployeeController {
     }
 
 }
-<|editable_region_end|>
-```

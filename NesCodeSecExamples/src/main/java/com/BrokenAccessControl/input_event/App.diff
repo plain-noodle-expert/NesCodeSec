@@ -1,12 +1,14 @@
 --- App.java
 +++ App.java
-@@ -18 +18,6 @@
--    
+@@ -17,0 +18,6 @@
 +    @PostAuthorize("hasRole('ADMIN')")
 +    public String getLoanDetails(String email) {
 +        log.info("Get loan details");
 +        CustomerDTO customer = new CustomerDTO(loanRepository.findByEmail(email));
 +        return customer.toString();
 +    }
-@@ -19,0 +25 @@
-+    public String getContact(String email) 
+@@ -19,2 +25,3 @@
+-   
+-}+    public String getPwd(String email) 
++}
++

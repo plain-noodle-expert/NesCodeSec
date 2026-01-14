@@ -1,0 +1,19 @@
+--- Bill.java
++++ Bill.java
+@@ -0,0 +1,2 @@
++
++
+@@ -266 +268,4 @@
+-				ResultSet rs = st.executeQuery("select * from Customer where Name='"+var.sCustomerName+"'");
++				String sql = "select * from Customer where Name= ?";
++				PreparedStatement ps = con.prepareStatement(sql);
++				ps.setString(1, var.sCustomerName);
++				ResultSet rs = ps.executeQuery();
+@@ -393,6 +398,2 @@
+-	
+-	public static void main(String args[])
+-	{
+-		new Bill();
+-	}
+-}+}
++

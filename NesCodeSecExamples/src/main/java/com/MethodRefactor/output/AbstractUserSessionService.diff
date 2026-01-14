@@ -1,0 +1,28 @@
+--- AbstractUserSessionService.java
++++ AbstractUserSessionService.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package hiconic.platform.reflex.security.processor;
+ 
+ import java.net.URLDecoder;
+ import java.net.URLEncoder;
+@@ -219,17 +218,17 @@
+ 		for (Hub<UserSession> userSessionHolder : this.internalUserSessionHolders) {
+ 			deleteInternalUserSession(userSessionHolder);
+ 		}
+ 	}
+ 
+-	@PreAuthorize <|user_cursor_is_here|>
++	@PreAuthorize("hasRole('ADMIN')")
+ 	private void deleteInternalUserSession(Hub<UserSession> userSessionHolder) {
+ 		UserSession userSession = userSessionHolder.get();
+ 		if (userSession == null) {
+ 			return;
+ 		}
+ 		deletePersistenceUserSession(userSession.getSessionId());
+ 	}
+ 
+ }
+ <|editable_region_end|>
+-```+```

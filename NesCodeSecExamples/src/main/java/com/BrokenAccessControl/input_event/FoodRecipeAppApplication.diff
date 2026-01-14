@@ -1,6 +1,12 @@
 --- FoodRecipeAppApplication.java
 +++ FoodRecipeAppApplication.java
-@@ -57 +57,2 @@
+@@ -0,0 +1,2 @@
++
++
+@@ -55,2 +57,5 @@
 -    
-+    @Transactional
+-}+    @Transactional
++    // Vulnerable method: No access control checks
 +    public void updateUserRole(String username, UserRole newRole) 
++}
++

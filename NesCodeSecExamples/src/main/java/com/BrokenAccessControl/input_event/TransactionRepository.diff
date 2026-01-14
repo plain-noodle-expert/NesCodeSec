@@ -1,7 +1,0 @@
---- TransactionRepository.java
-+++ TransactionRepository.java
-@@ -13,0 +14,4 @@
-+    List<Transaction> findAllByOwnerId(UUID userId) {
-+        // Implementation here
-+        
-+        return null;

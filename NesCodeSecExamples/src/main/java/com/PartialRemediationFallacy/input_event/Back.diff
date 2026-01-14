@@ -1,0 +1,38 @@
+--- Back.java
++++ Back.java
+@@ -0,0 +1,2 @@
++
++
+@@ -3,0 +6 @@
++import java.io.Reader;
+@@ -110,6 +113,17 @@
+-			String sql = "update borrow set back_date='"+borrowbackdate+"',if_back='是'";
+-			sql=sql+"where book_id='"+bookid+"'and reader_id='"+readerid+"'and if_back='否'";
+-			String sql1 = "update book set stock='"
+-					+ (Integer.parseInt(showoption[5].getText()) + 1) + "'"
+-					+ "where id='" + bookid + "'";
+-			int success = DbOp.executeUpdate(sql);
++			String sql = "UPDATE borrow " +
++						"SET back_date = ?, if_back = ? " +
++						"WHERE book_id = ? AND reader_id = ? AND if_back = ?";
++			String sql1 = "UPDATE book " +
++							"SET stock = ? " +
++							"WHERE id = ?";
++			Connection conn = DbOp.getConnection();
++			PreparedStatement psBorrow = conn.prepareStatement(sql);
++			psBorrow.setDate(1, borrowbackdate);
++			psBorrow.setString(2, "是");
++			psBorrow.setString(3, bookid);
++			psBorrow.setString(4, readerid);
++			psBorrow.setString(5, "否");
++         	PreparedStatement psBook = conn.prepareStatement(sql1);
++			psBook.setInt(1, Integer.parseInt(showoption[5].getText()) + 1);
++			psBook.setString(2, bookid);
++			int success = psBorrow.executeUpdate();
+@@ -117 +131 @@
+-				DbOp.executeUpdate(sql1);
++				psBook.executeUpdate();
+@@ -261 +275,3 @@
+-}+}
++
++

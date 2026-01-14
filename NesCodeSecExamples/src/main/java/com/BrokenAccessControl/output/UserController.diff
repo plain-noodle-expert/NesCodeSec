@@ -1,0 +1,28 @@
+--- UserController.java
++++ UserController.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.novi.app.controller;
+ 
+ import com.novi.app.model.Group;
+ import com.novi.app.model.MusicInstrument;
+@@ -98,10 +97,17 @@
+     /**
+      * delete user by id
+      * @param id
+      * @return
+      */
+-    <|user_cursor_is_here|>
++    @Operation(summary = "Удалить пользователя по id")
++    @DeleteMapping("/{id}")
++    @PreAuthorize("hasRole('USER'+#id)")
++    public ResponseEntity<String> deleteUser(@Parameter(description = "id пользователя")
++                                             @PathVariable("id") Long id){
++        userService.deleteUser(id);
++        return new ResponseEntity<>("User has been deleted", HttpStatus.OK);
++    }
+ 
+ }
+ <|editable_region_end|>
+-```+```

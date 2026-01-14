@@ -1,0 +1,16 @@
+--- FBS.java
++++ FBS.java
+@@ -0,0 +1,2 @@
++
++
+@@ -10,0 +13 @@
++import java.sql.PreparedStatement;
+@@ -76,3 +79,3 @@
+-                Statement stmt1 = con.createStatement();
+-                String seatQuery = "Select * from Seats where flightName = '" + flightName + "'";
+-                ResultSet r = stmt1.executeQuery(seatQuery);
++                PreparedStatement stmt1 = con.prepareStatement("Select * from Seats where flightName = ?");
++                stmt1.setString(1, flightName);
++                ResultSet r = stmt1.executeQuery();
+@@ -283,0 +287 @@
++

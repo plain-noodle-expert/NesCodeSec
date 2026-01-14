@@ -1,0 +1,23 @@
+--- Park.java
++++ Park.java
+@@ -0,0 +1,2 @@
++
++
+@@ -12,0 +15,3 @@
++import java.sql.Connection;
++import java.sql.PreparedStatement;
++import java.sql.SQLException;
+@@ -26 +31,8 @@
+-        boolean r = DBRequest.RQt(DBconnexion.getInstance(),"INSERT INTO listvehicule(id,type,mark)VALUES(NULL,'"+type+"','"+makr+"')");
++        boolean r = false;
++        String insertSql = "INSERT INTO listvehicule(id,type,mark) VALUES (NULL, ?, ?)";
++        Connection conn = DBconnexion.getInstance();
++        try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
++            ps.setString(1, type);
++            ps.setString(2, makr);
++            r = ps.executeUpdate() > 0;
++        }
+@@ -104 +116,3 @@
+-}+}
++
++

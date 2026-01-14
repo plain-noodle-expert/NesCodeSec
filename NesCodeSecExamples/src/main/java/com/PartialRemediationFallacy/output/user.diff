@@ -1,0 +1,93 @@
+--- user.java
++++ user.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ //NEW COLUMN IN USER.SQL
+ //UPDATING TOTAL OF USER  AT TIME OF UPDATING
+ 
+ import javax.swing.JButton;
+@@ -216,11 +215,11 @@
+                     ResultSet res = null;
+                     int id  = pid;
+                     preparedStmt = Con.prepareStatement(query);
+                     preparedStmt.setInt   (1, id);
+                     res = preparedStmt.executeQuery();
+-            		res.next();<|user_cursor_is_here|>
++            		res.next();
+                     goals += res.getInt("Goal");
+                     as += res.getInt("Assist");
+                     ycard += res.getInt("Yellow_Card");
+                     rcard += res.getInt("Red_Card");
+                     sav += res.getInt("Saves");
+@@ -265,70 +264,6 @@
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+ 		}
+ 		
+-		public boolean check(int id)//TO CHECK IF PLAYER IS IN USERS SQUAD
+-		{							//TRUE IF FOUND
+-			ResultSet res = null;
+-			String query = "SELECT * FROM user";
+-			try {
+-				
+-				res = ((java.sql.Statement) st).executeQuery(query);
+-				res.next();
+-			
+-			int i = 1;
+-			while(i < 6)
+-			{
+-				String a = "P_"+i;
+-				int x = res.getInt(a);
+-				
+-				if(x == id)
+-				{
+-					res.close();
+-					return true;	
+-				}
+-				i++;
+-			}
+-		} catch (SQLException e) {
+-			// TODO Auto-generated catch block
+-			e.printStackTrace();
+-		}
+-			try {
+-				res.close();
+-			} catch (SQLException e) {
+-				// TODO Auto-generated catch block
+-				e.printStackTrace();
+-			}
+-			return false;
+-		}
+-       }
+-       
+-    		   
+-    		   );
+-
+-       b3.addActionListener(new ActionListener() {
+-           public void actionPerformed(ActionEvent e)
+-           {
+-               close();
+-           }
+-           private void close() {
+-               frame1.setVisible(false);
+-               frame.setVisible(true);
+-           }
+-       });
+-
+-       quitgame.addActionListener(new ActionListener() {
+-           public void actionPerformed(final ActionEvent e) {
+-               tclose();
+-           }
+-
+-           private void tclose() {
+-               frame1.setVisible(false);
+-               System.exit(0);
+-           }
+-       });
+-
+-   }
+-}
+-<|editable_region_end|>
+-```+		public boolean check(int id

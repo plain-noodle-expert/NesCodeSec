@@ -1,0 +1,15 @@
+--- Race.java
++++ Race.java
+@@ -0,0 +1,2 @@
++
++
+@@ -131,2 +133,4 @@
+-                                    sql = "create table if not exists " + newRunnerTableName + "(gamemode varchar(255) PRIMARY KEY, best_time INTEGER NOT NULL, score INTEGER NOT NULL)";
+-                                    statement.execute(sql);
++                                    sql = "create table if not exists ? (gamemode varchar(255) PRIMARY KEY, best_time INTEGER NOT NULL, score INTEGER NOT NULL)";
++                                    PreparedStatement statement = Racebot.database.prepareStatement(sql);
++                                    statement.setString(1, newRunnerTableName);
++                                    statement.execute();
+@@ -268 +272,2 @@
+-}+}
++

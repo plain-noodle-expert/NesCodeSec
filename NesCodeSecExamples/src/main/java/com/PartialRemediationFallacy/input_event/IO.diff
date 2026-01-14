@@ -1,0 +1,16 @@
+--- IO.java
++++ IO.java
+@@ -0,0 +1,2 @@
++
++
+@@ -91,2 +93,5 @@
+-                    String update = "DELETE FROM transactions WHERE name = \'" + accNameCheck + "\' AND typeAcc = "+ "\'" + accTypeCheck + "\'";
+-                    stmt3.executeUpdate(update);
++                    String update = "DELETE FROM transactions WHERE name = \'? \' AND typeAcc = \'?\'";
++                    PreparedStatement pstmt = conn.prepareStatement(update);
++                    pstmt.setString(1, accNameCheck);
++                    pstmt.setString(2, accTypeCheck);
++                    pstmt.executeUpdate();
+@@ -364 +369,2 @@
+-} // class+} // class
++

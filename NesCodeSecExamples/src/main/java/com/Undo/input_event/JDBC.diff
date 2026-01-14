@@ -1,0 +1,11 @@
+--- JDBC.java
++++ JDBC.java
+@@ -0,0 +1,2 @@
++
++
+@@ -27 +29 @@
+-			rs = st.executeQuery("SELECT * FROM events where organizer_id='"+ID+"'");
++			rs = st.executeQuery
+@@ -150 +152,2 @@
+-}+}
++

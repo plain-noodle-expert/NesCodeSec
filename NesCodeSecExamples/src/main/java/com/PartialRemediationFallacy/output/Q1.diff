@@ -1,0 +1,29 @@
+--- Q1.java
++++ Q1.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.Connection;
+ import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+ import java.sql.SQLException;
+@@ -89,11 +88,11 @@
+                         cnt += 1;
+                     }
+ 
+                     for(int i=0; i < values.size(); i++) {
+                         int res = stmt.executeUpdate(values.get(i));
+-                    }<|user_cursor_is_here|>
++                    }
+                 }
+             }
+ 
+             conn.commit();
+         } catch (SQLException e){
+@@ -221,6 +220,6 @@
+             e.printStackTrace();
+         }
+     }
+ }
+ <|editable_region_end|>
+-```+```

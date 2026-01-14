@@ -1,0 +1,12 @@
+--- Cl.java
++++ Cl.java
+@@ -0,0 +1,3 @@
++
++
++
+@@ -27 +30 @@
+-				String sql = "UPDATE INVOICE SET data = " + data + " WHERE ID = " + id;
++				String sql = 
+@@ -35 +38,2 @@
+-}+}
++

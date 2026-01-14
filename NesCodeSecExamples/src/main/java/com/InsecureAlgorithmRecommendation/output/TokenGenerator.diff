@@ -1,0 +1,30 @@
+--- TokenGenerator.java
++++ TokenGenerator.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.uservoice;
+ 
+ import java.io.ByteArrayInputStream;
+ import java.io.ByteArrayOutputStream;
+@@ -46,11 +45,12 @@
+     String salted = API_KEY + ACCOUNT_KEY;
+     byte[] hash = DigestUtils.sha(salted);
+     byte[] saltedHash = new byte[16];
+     System.arraycopy(hash, 0, saltedHash, 0, 16);
+ 
+-    secretKeySpec = new SecretKeySpec<|user_cursor_is_here|>
++    secretKeySpec = new SecretKeySpec(saltedHash, "AES");
++    ivSpec = new IvParameterSpec(INIT_VECTOR);
+   }
+ 
+   private void encrypt(InputStream in, OutputStream out) throws Exception {
+     try {
+       byte[] buf = new byte[1024];
+@@ -98,6 +98,6 @@
+       e.printStackTrace();
+     }
+   }
+ }
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,15 @@
+--- Item.java
++++ Item.java
+@@ -0,0 +1 @@
++
+@@ -29 +30 @@
+-    public Item(Connection con, int upc, String title)
++    public Item(Connection con, int upc)
+@@ -34,3 +35 @@
+-            rs = stmt.executeQuery("SELECT upc, title, type, category, company, year, sellPrice, quantity "
+-                    + "FROM item "
+-                    + "WHERE upc = " + upc + " AND title = '" + title + "'");
++            rs = stmt.executeQuery
+@@ -125 +124,2 @@
+-}+}
++

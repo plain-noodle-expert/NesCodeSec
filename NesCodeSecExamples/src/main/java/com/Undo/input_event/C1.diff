@@ -1,0 +1,11 @@
+--- C1.java
++++ C1.java
+@@ -0,0 +1,2 @@
++
++
+@@ -26 +28 @@
+-			statement.execute("INSERT INTO url_shortner_table_1 VALUES ('" + longUrl + "', '" + shortenedUrl + "')");
++			statement.execute();
+@@ -35 +37,2 @@
+-}+}
++

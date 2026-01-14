@@ -143,7 +143,7 @@ def main() -> None:
     Processes all excerpt files in BrokenAccessControl (or the provided subset)
     and writes output plus diffs for each of them.
     """
-    
+    _create_event_batch()
     event_dir = _subdir(EVENT_SUBDIR)
     excerpt_dir = _subdir(EXCERPT_SUBDIR)
     output_dir = _subdir(OUTPUT_SUBDIR)
@@ -162,4 +162,4 @@ def main() -> None:
         _write_text(output_file, result)
         
 if __name__ == "__main__":
-    _create_event_batch()
+    main()

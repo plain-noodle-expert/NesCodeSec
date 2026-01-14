@@ -1,5 +1,3 @@
-```<|start_of_file|>
-<|editable_region_start|>
 package com.example.jwt.domain.user;
 
 import ch.qos.logback.classic.Logger;
@@ -122,5 +120,3 @@ public class UserController {
   }
 
 }
-<|editable_region_end|>
-```

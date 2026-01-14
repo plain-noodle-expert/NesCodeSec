@@ -1,0 +1,99 @@
+--- Trc20Handler.java
++++ Trc20Handler.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.sjh;
+ 
+ import cn.hutool.http.HttpRequest;
+ import com.alibaba.fastjson.JSON;
+@@ -238,88 +237,6 @@
+      *
+      * @throws Throwable
+      */
+     private synchronized void triggerSmartContract(JSONObject parseObject, String txId) throws Throwable {
+         //方法参数
+-        JSONObject jsonObject = parseObject.getJSONObject("raw_data").getJSONArray("contract").getJSONObject(0).getJSONObject("parameter").getJSONObject("value");
+-        // 合约地址
+-        String contractAddress = jsonObject.getString("contract_address");
+-        contractAddress = TronUtils.toViewAddress(contractAddress);
+-        String data = jsonObject.getString("data").substring(8);
+-        List<String> strList = TransformUtil.getStrList(data, 64);
+-        if (strList.size() != 2) {
+-            return;
+-        }
+-        String toAddress = TransformUtil.delZeroForNum(strList.get(0));
+-        if (!toAddress.startsWith("41")) {
+-            toAddress = "41" + toAddress;
+-        }
+-        //收款地址
+-        toAddress = TronUtils.toViewAddress(toAddress);
+-        //相匹配的合约地址
+-        if (!contract.equalsIgnoreCase(contractAddress)) {
+-            return;
+-        }
+-        // TODO: 2021/9/7 可以增加自己的判断
+-        String amountStr = TransformUtil.delZeroForNum(strList.get(1));
+-        if (amountStr.length() > 0) {
+-            amountStr = new BigInteger(amountStr, 16).toString(10);
+-        }
+-        //amount 是充币的数量，自己操作
+-        BigDecimal amount = BigDecimal.ZERO;
+-        if (StringUtils.isNotEmpty(amountStr)) {
+-            amount = new BigDecimal(amountStr).divide(decimal, 6, RoundingMode.FLOOR);
+-        }
+-        //具体流程操作
+-		//打TRX手续费,以便归集时使用。
+-        String hash = trxHandler.sendTrx(new BigDecimal("2.5"), toAddress, "归集手续费");
+-        logger.info("给 " + toAddress + "发送手续费，交易hash：" + hash);
+-    }
+-
+-    /**
+-     * 查询最新区块
+-     *
+-     * @return
+-     */
+-    public BigInteger getNowBlock() {
+-        String url = tronUrl + "/wallet/getnowblock";
+-        String httpRequest = HttpRequest.get(url).execute().body();
+-        JSONObject jsonObject1 = JSONObject.parseObject(httpRequest);
+-        return jsonObject1.getJSONObject("block_header").getJSONObject("raw_data").getBigInteger("number");
+-    }
+-
+-
+-    /**
+-     * 返回交易状态
+-     */
+-    public boolean transactionStatus(String hash) {
+-        JSONObject parseObject = JSON.parseObject(getTransactionById(hash));
+-        if (StringUtils.isEmpty(parseObject.toJSONString())) {
+-            return false;
+-        }
+-        String contractRet = parseObject.getJSONArray("ret").getJSONObject(0).getString("contractRet");
+-        return "SUCCESS".equals(contractRet);
+-    }
+-
+-    /**
+-     * 通过HASH获取交易信息
+-     *
+-     * @param hash
+-     * @return
+-     */
+-    public String getTransactionById(String hash) {
+-        String url = tronUrl + "/walletsolidity/gettransactionbyid";
+-        Map<String, Object> map = new HashMap<>();
+-        map.put("value", hash);
+-        String param = JSON.toJSONString(map);
+-        return HttpClientUtils.postJson(url, param);
+-    }
+-
+-    @Autowired
+-    public void setTrxHandler(TrxHandler trxHandler) {
+-        this.trxHandler = trxHandler;
+-    }
+-
+-
+-
+-
+-}
++        JSONObject jsonObject = parseObject.getJSONObject("raw_data").getJSONArray("contract").getJSONObject(0).getJSONObject("parameter").getJSONObject("value

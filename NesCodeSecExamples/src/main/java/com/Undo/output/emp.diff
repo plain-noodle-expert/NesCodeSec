@@ -1,0 +1,29 @@
+--- emp.java
++++ emp.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.awt.*;
+ import javax.swing.*;
+ import java.awt.event.*;
+ import java.sql.*;
+@@ -119,11 +118,11 @@
+ 
+     try{
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+      Connection conn=DriverManager.getConnection("jdbc:odbc:go");
+      Statement pst=conn.createStatement();
+-     pst.executeUpdate<|user_cursor_is_here|>
++     pst.executeUpdate("INSERT INTO Company VALUES('" + tname.getText() + "','" + textra.getText() + "','" + (String)sal + "','" + field + "','" + tusr.getText() + "','" + tpwd.getText() + "')");
+      conn.close();
+      String msg="Your Details are Stored. Login again to View Related applicants!  Thank You!!";
+      JOptionPane.showMessageDialog(null,msg);
+      setVisible(false);
+      new login();
+@@ -136,6 +135,6 @@
+    }
+   }
+  }
+ }
+ <|editable_region_end|>
+-```+```

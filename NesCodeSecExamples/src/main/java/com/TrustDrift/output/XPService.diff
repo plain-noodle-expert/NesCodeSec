@@ -1,0 +1,29 @@
+--- XPService.java
++++ XPService.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.mavpal.service;
+ 
+ import com.mavpal.entity.User;
+ import com.mavpal.entity.XpEvent;
+@@ -91,11 +90,11 @@
+                 return (int) (baseAmount * REPEAT_XP_MULTIPLIER);
+             }
+         }
+     }
+ 
+-    public<|user_cursor_is_here|> int getXpForQuizCompletion(double score) {
++    public int getXpForQuizCompletion(double score) {
+         // Only award XP if score is 100%
+         if (score >= 100.0) {
+             return 100;
+         }
+         return 0; // No XP for incomplete quizzes
+@@ -109,6 +108,6 @@
+     public int getXpForDailyBonus() {
+         return 100; // Bonus for completing all daily tasks
+     }
+ }
+ <|editable_region_end|>
+-```+```

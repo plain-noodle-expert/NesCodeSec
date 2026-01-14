@@ -1,0 +1,41 @@
+--- IO.java
++++ IO.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /**
+  * This class will handle all of the file IO. 
+  * Keeping it separate will clean up the main code and make it easier to track down bugs.
+  */
+@@ -88,15 +87,15 @@
+                 }
+                 
+                 if(deleteAccTransData)
+                 {
+                     Statement stmt3 = conn.createStatement();
+-                    String update = "DELETE FROM transactions WHERE name = \'? \' AND typeAcc = \'?\'";
++                    String update = "DELETE FROM transactions WHERE name = ? AND typeAcc = ?";
+                     PreparedStatement pstmt = conn.prepareStatement(update);
+                     pstmt.setString(1, accNameCheck);
+                     pstmt.setString(2, accTypeCheck);
+-                    pstmt.executeUpdate(<|user_cursor_is_here|>);
++                    pstmt.executeUpdate();
+                 }
+ 
+             }
+             conn.close();
+         }
+@@ -359,13 +358,6 @@
+ 		}
+ 		
+ 		catch(SQLException se) {
+             se.printStackTrace();
+         }
+-		catch(Exception e) {
+-            e.printStackTrace();
+-        }
+-    } // updateTranDataName
+-    
+-} // class
+-<|editable_region_end|>
+-```+		catch(Exception e)

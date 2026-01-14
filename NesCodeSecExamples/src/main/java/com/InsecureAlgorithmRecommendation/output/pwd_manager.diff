@@ -1,0 +1,29 @@
+--- pwd_manager.java
++++ pwd_manager.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.security.SecureRandom;
+ import java.util.Arrays;
+ import java.util.Date;
+ import java.util.Scanner;
+@@ -100,17 +99,18 @@
+   } // end getDate
+ 
+   public byte[] encrypt(String pass) {
+     byte[] encPass;
+     try {
+-      <|user_cursor_is_here|>
++      // TODO: implement encryption algorithm
++      encPass = pass.getBytes();
+     } catch (Exception e) {
+       // TODO write to error log
+       System.out.println("Error: something went wrong encrypting the password");
+       encPass = null;
+     } // end try catch
+ 
+     return encPass;
+   }
+ } // end HashPassword
+ <|editable_region_end|>
+-```+```

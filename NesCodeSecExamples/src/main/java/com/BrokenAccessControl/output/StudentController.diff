@@ -1,0 +1,25 @@
+--- StudentController.java
++++ StudentController.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package code.uz.controller;
+ 
+ 
+ import code.uz.dto.*;
+@@ -52,10 +51,14 @@
+     /*
+         filter profile by filterDTO, page and size
+         paras: filterDTO, page, size
+         return: PageImpl<ProfileResponseDTO>
+     **/
+-    <|user_cursor_is_here|>
++    @GetMapping("/filter")
++    @PreAuthorize("hasRole('ROLE_STUDENT')")
++    public ResponseEntity<PageImpl<ProfileResponseDTO>> filterProfile(@RequestBody ProfileFilterDTO filterDTO, @RequestParam("page") int page, @RequestParam("size") int size) {
++        return ResponseEntity.ok(profileService.filter(filterDTO, PageUtil.getPageable(page, size)));
++    }
+ 
+ }
+ <|editable_region_end|>
+-```+```

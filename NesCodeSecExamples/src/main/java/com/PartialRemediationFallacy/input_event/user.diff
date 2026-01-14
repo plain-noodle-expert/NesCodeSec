@@ -1,0 +1,22 @@
+--- user.java
++++ user.java
+@@ -0,0 +1,2 @@
++
++
+@@ -14,0 +17 @@
++import java.sql.PreparedStatement;
+@@ -211 +214,2 @@
+-                    String query = "SELECT * FROM league WHERE player_id = " + pid;
++                    String query = "SELECT * FROM league WHERE player_id = ?";
++                    PreparedStatement preparedStmt;
+@@ -213,3 +217,5 @@
+-                    Statement stmt = Con.createStatement();
+-                    res = stmt.executeQuery(query);
+-                    res.next();
++                    int id  = pid;
++                    preparedStmt = Con.prepareStatement(query);
++                    preparedStmt.setInt   (1, id);
++                    res = preparedStmt.executeQuery();
++            		res.next();
+@@ -326,0 +333 @@
++

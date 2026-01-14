@@ -93,7 +93,7 @@ public class XPService {
         }
     }
 
-    private int getXpForQuizCompletion(double score) {
+    public<|user_cursor_is_here|> int getXpForQuizCompletion(double score) {
         // Only award XP if score is 100%
         if (score >= 100.0) {
             return 100;
@@ -101,7 +101,7 @@ public class XPService {
         return 0; // No XP for incomplete quizzes
     }
 
-    public<|user_cursor_is_here|> int getXpForFlashcardReview(int cardsReviewed) {
+    public int getXpForFlashcardReview(int cardsReviewed) {
         // Fixed 100 XP for completing any flashcard review session
         return 100;
     }

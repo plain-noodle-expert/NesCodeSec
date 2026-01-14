@@ -1,4 +1,9 @@
 --- guessbook.java
 +++ guessbook.java
-@@ -69,0 +70 @@
-+	String removeEntry(@PathVariable Optional<GuestbookEntry> entry) 
+@@ -0,0 +1,2 @@
++
++
+@@ -68 +70,3 @@
+-}+	String removeEntry(@PathVariable Optional<GuestbookEntry> entry) 
++}
++

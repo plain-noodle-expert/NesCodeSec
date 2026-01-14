@@ -1,0 +1,17 @@
+--- TodoService.java
++++ TodoService.java
+@@ -0,0 +1,2 @@
++
++
+@@ -37 +39 @@
+-    protected boolean removeTodo(int id) {
++    public boolean removeTodo(int id) {
+@@ -41 +43 @@
+-    protected boolean markAsCompleted(int id) {
++    public boolean markAsCompleted(int id) {
+@@ -52 +54 @@
+-    protected boolean updateTodo(int id, String title, String description) {
++    public boolean updateTodo(int id, String title, String description) {
+@@ -63 +65,2 @@
+-} +}
++

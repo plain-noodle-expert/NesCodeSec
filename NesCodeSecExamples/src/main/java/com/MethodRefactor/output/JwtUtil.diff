@@ -1,0 +1,29 @@
+--- JwtUtil.java
++++ JwtUtil.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.example.forumhub.util;
+ 
+ import io.jsonwebtoken.Claims;
+ import io.jsonwebtoken.Jwts;
+@@ -29,11 +28,11 @@
+     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+         final Claims claims = extractAllClaims(token);
+         return claimsResolver.apply(claims);
+     }
+ 
+-    @PreAuthorize <|user_cursor_is_here|>
++    @PreAuthorize("hasRole('ADMIN')")
+     private Claims extractAllClaims(String token) {
+         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+     }
+ 
+     private Boolean isTokenExpired(String token) {
+@@ -55,6 +54,6 @@
+         final String username = extractUsername(token);
+         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+     }
+ }
+ <|editable_region_end|>
+-```+```

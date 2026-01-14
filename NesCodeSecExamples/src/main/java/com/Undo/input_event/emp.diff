@@ -1,0 +1,11 @@
+--- emp.java
++++ emp.java
+@@ -0,0 +1,2 @@
++
++
+@@ -122 +124 @@
+-     pst.executeUpdate("INSERT INTO Company VALUES('" + tname.getText() + "','" + textra.getText() + "','" + (String)sal + "','" + field + "','" + tusr.getText() + "','" + tpwd.getText() + "')");
++     pst.executeUpdate
+@@ -137 +139,2 @@
+-}+}
++

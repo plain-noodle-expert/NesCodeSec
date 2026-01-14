@@ -1,0 +1,67 @@
+--- DAO.java
++++ DAO.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package myproject;
+ 
+ import java.sql.Connection;
+ import java.sql.DriverManager;
+@@ -94,12 +93,14 @@
+         }
+     }
+     
+      public int selectAdmin(String prn,String password) throws VoteException {
+         try {                                                                                   //check id password of admin in admin table
+-            String query = "SELECT * FROM admin WHERE username="+prn+" AND password="+password;
++            String query = "SELECT * FROM admin WHERE username=? AND password=?";
+             PreparedStatement ps1 = con.prepareStatement(query);
++            ps1.setString(1, prn);
++            ps1.setString(2, password);
+             ResultSet rs = ps1.executeQuery();
+             if(!rs.next()) {                                           // if admin not found
+                 return 0;
+             }
+             return 1;
+@@ -137,13 +138,14 @@
+         }
+     }
+     public int getVotes(int opt_id)                                                                           //ResultService class
+     {
+         try{
+-            String query = "SELECT COUNT(*) FROM VOTES WHERE optid="+opt_id;                            //adding the votes for each option
+-            Statement st = con.createStatement();
+-            ResultSet rs = st.executeQuery(query);
++            String query = "SELECT COUNT(*) FROM VOTES WHERE optid=?";                            //adding the votes for each option
++            PreparedStatement ps1 = con.prepareStatement(query);
++            ps1.setInt(1, opt_id);
++            ResultSet rs = ps1.executeQuery();
+             rs.next();
+             int nvotes= rs.getInt(1);
+             return nvotes;
+         }
+         catch (SQLException ex) {
+@@ -166,12 +168,14 @@
+              String query = "SELECT * FROM votes GROUP BY optid ORDER BY count(*) DESC LIMIT 1";            //getting id with max votes
+              Statement st = con.createStatement();
+              ResultSet rs = st.executeQuery(query);
+              rs.next();
+              int woptid= rs.getInt(1);
+-             String query1 = "SELECT * FROM options WHERE optid = " + woptid;                               //retrieving the option name with max votes
+-             ResultSet rs1 = st.executeQuery(query1);
++             String query1 = "SELECT * FROM options WHERE optid = ?";                               //retrieving the option name with max votes
++             PreparedStatement ps1 = con.prepareStatement(query1);
++             ps1.setInt(1, woptid);
++             ResultSet rs1 = ps1.executeQuery();
+              rs1.next();
+ 
+              return rs1.getString("optname");
+ 
+          }
+@@ -189,6 +193,6 @@
+         }
+ 
+      }
+ }
+ <|editable_region_end|>
+-```+```

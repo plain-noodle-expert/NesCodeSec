@@ -1,0 +1,130 @@
+--- GP.java
++++ GP.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.net.*;
+ import java.io.*;
+ import java.util.*;
+@@ -37,11 +36,11 @@
+ 						"WHERE id = ?";
+ 
+ 				try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
+ 					ps.setInt(1, gpfdistPort);
+ 					ps.setInt(2, id);
+-					ps.executeUpdate();<|user_cursor_is_here|>
++					ps.executeUpdate();
+ 				}
+ 			}
+ 		}
+ 		catch (SQLException ex)
+ 		{
+@@ -240,107 +239,6 @@
+ 			location = 2400;
+ 			return numRows;
+ 		}
+ 		catch (SQLException ex)
+ 		{
+-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
+-		}
+-	}
+-
+-	public static int insertReplTable(Connection conn, String targetSchema, String targetTable) throws SQLException 
+-	{
+-		String method = "insertReplTable";
+-		int location = 1000;
+-
+-		int numRows = 0;
+-		try
+-		{
+-			location = 2000;
+-			String replTargetSchema = externalSchema;
+-
+-			location = 2100;
+-			String replTargetTable = getStageTableName(targetSchema, targetTable);
+-
+-			location = 2200;
+-			String externalTable = getExternalTableName(replTargetSchema, replTargetTable);
+-
+-			location = 2305;
+-			//truncate the stage table before loading
+-			truncateTable(conn, replTargetSchema, replTargetTable);
+-
+-			location = 2400;
+-			Statement stmt = conn.createStatement();
+-
+-			location = 2500;
+-			String strSQL = "INSERT INTO \"" + replTargetSchema + "\".\"" + replTargetTable + "\" \n" +
+-					"SELECT * FROM \"" + externalSchema + "\".\"" + externalTable + "\"";
+-			if (debug)
+-				Logger.printMsg("Executing SQL: " + strSQL);
+-
+-			location = 2600;
+-			numRows = stmt.executeUpdate(strSQL);
+-
+-			location = 2700;
+-			return numRows;
+-		}
+-		catch (SQLException ex)
+-		{
+-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
+-		}
+-	}
+-
+-	public static void truncateTable(Connection conn, String schema, String table) throws SQLException 
+-	{
+-		String method = "truncateTable";
+-		int location = 1000;
+-	 	try
+-		{
+-			location = 2000;
+-			Statement stmt = conn.createStatement();
+-
+-			location = 2100;
+-			String strSQL = "truncate table \"" + schema + "\".\"" + table + "\"";
+-		
+-			if (debug)
+-				Logger.printMsg("Truncating table: " + strSQL);
+-	
+-			location = 2200;	
+-			stmt.executeUpdate(strSQL);
+-		}
+-		catch (SQLException ex)
+-		{
+-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
+-		}
+-	}
+-
+-	public static void setupReplicationTables(Connection conn, String targetSchema, String targetTable, String columnName) throws SQLException
+-	{
+-		String method = "setupReplicationTables";
+-		int location = 1000;
+-
+-		try
+-		{
+-			location = 2000;
+-			String archTable = getArchTableName(targetSchema, targetTable);
+-
+-			location = 2100;
+-			String stageTable = getStageTableName(targetSchema, targetTable);
+-
+-			location = 2200;
+-			String strSQL = "SELECT os.fn_replication_setup('" + targetSchema + "', '" + targetTable + "', '" +
+-					externalSchema + "', '" + stageTable + "', '" + archTable + "', '" + columnName + "')";
+-
+-			location = 2312;
+-			Statement stmt = conn.createStatement();
+-
+-			location = 2400;
+-			stmt.executeQuery(strSQL);
+-		}
+-		catch (SQLException ex)
+-		{
+-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
+-		}
+-	}
+-	
+-}
+-<|editable_region_end|>
+-```+		

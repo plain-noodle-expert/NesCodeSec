@@ -1,0 +1,11 @@
+--- User.java
++++ User.java
+@@ -0,0 +1,2 @@
++
++
+@@ -40 +42 @@
+-				ResultSet rs = search.executeQuery("select uid, name, address from User where uid='"+id+"'");
++				ResultSet rs = search.executeQuery();
+@@ -67 +69,2 @@
+-}+}
++
