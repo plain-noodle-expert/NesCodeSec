@@ -1,5 +1,3 @@
-```<|start_of_file|>
-<|editable_region_start|>
 package tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -95,9 +93,8 @@ public class Node {
         int port = server.getAddress().getPort();
         myAddress = localIP + ":" + port;
 
-        // server.createContext("/nodes", new NodesHandler());
-        // server.createContext("/chain", new ChainHandler());
         server.createContext("/add", new AddHandler());
+        server.createContext("/read-file", new ReadFileHandler());
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
         System.out.println("Server at " + myAddress);
@@ -177,15 +174,8 @@ public class Node {
             throw e;
         }
     }
-    
+
     // Load blockchain from compressed file
-    private void loadChain() {
-        File file = new File(CHAIN_FILE);
-        if (file.exists()) {
-            try (GZIPInputStream gis = new GZIPInputStream<|user_cursor_is_here|>
-                 
-        }
-    }
 
     private void saveChain() {
         try (GZIPOutputStream gos = new GZIPOutputStream(new FileOutputStream(CHAIN_FILE));
@@ -253,6 +243,37 @@ public class Node {
                 System.err.println("Error processing add request: " + e.getMessage());
                 ex.sendResponseHeaders(400, -1);
             }
+        }
+    }
+
+    private class ReadFileHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(405, -1);
+                return;
+            }
+            String fileParam = null;
+            String rawQuery = exchange.getRequestURI().getRawQuery();
+            if (rawQuery != null) {
+                for (String part : rawQuery.split("&")) {
+                    String[] kv = part.split("=", 2);
+                    if (kv.length == 2 && kv[0].equals("path")) {
+                        fileParam = java.net.URLDecoder.decode(kv[1], StandardCharsets.UTF_8);
+                        break;
+                    }
+                }
+            }
+            if (fileParam == null || fileParam.isBlank()) {
+                byte[] msg = "missing path parameter".getBytes(StandardCharsets.UTF_8);
+                exchange.sendResponseHeaders(400, msg.length);
+                exchange.getResponseBody().write(msg);
+                exchange.close();
+                return;
+            }
+
+            // read file contentw
+            
         }
     }
 
@@ -399,5 +420,3 @@ public class Node {
         new Node();
     }
 }
-<|editable_region_end|>
-```

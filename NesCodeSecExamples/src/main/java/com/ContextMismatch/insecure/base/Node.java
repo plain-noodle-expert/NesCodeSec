@@ -93,9 +93,8 @@ public class Node {
         int port = server.getAddress().getPort();
         myAddress = localIP + ":" + port;
 
-        // server.createContext("/nodes", new NodesHandler());
-        // server.createContext("/chain", new ChainHandler());
         server.createContext("/add", new AddHandler());
+        server.createContext("/read-file", new ReadFileHandler());
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
         System.out.println("Server at " + myAddress);
@@ -244,6 +243,13 @@ public class Node {
                 System.err.println("Error processing add request: " + e.getMessage());
                 ex.sendResponseHeaders(400, -1);
             }
+        }
+    }
+
+    private class ReadFileHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            
         }
     }
 

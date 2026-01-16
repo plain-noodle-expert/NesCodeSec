@@ -8,7 +8,8 @@ from tqdm import tqdm
 from datetime import datetime
 
 from checker.java_parser import JavaSyntaxChecker
-from batch_migrator import _udiff, strip_marker, debug_rebuild_from_migrate_full
+from evaluation import evaluate_via_llm
+from utils.batch_migrator import _udiff, strip_marker, debug_rebuild_from_migrate_full
 
 PROMPT = """
     ### Instruction:
@@ -27,12 +28,12 @@ PROMPT = """
 """
 
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
-SCENARIO1_DIR = Path("NesCodeSecExamples/src/main/java/com/Scenario1")
-BASE_DIR = SCENARIO1_DIR / "base"
-EVENT_DIR = SCENARIO1_DIR / "input_event"
-MIGRATE_DIR = SCENARIO1_DIR / "migrate_full" # migrated full code
-EXCERPT_DIR = SCENARIO1_DIR / "input_excerpt" # input excerpt to be completed
-OUTPUT_DIR = SCENARIO1_DIR / "output"
+BASE_DIR_PARTS = Path("NesCodeSecExamples/src/main/java/com/Scenario1")
+BASE_SUBDIR = ["NesCodeSecExamples", "src", "main", "java", "com", "Scenario1", "base"]
+EVENT_DIR = BASE_DIR_PARTS / "input_event"
+MIGRATE_DIR = BASE_DIR_PARTS / "migrate_full" # migrated full code
+EXCERPT_DIR = BASE_DIR_PARTS / "input_excerpt" # input excerpt to be completed
+OUTPUT_DIR = BASE_DIR_PARTS / "output"
 
 # model = transformers.AutoModelForCausalLM.from_pretrained("zed-industries/zeta")
 # tokenizer = transformers.AutoTokenizer.from_pretrained("zed-industries/zeta")
@@ -145,8 +146,8 @@ def generate_xxe_response() -> None:
                         f.write(json.dumps(check_result) + "\n")
                     continue
                 
-                output_path = Path("NesCodeSecExamples/src/main/java/com/Scenario1/output") / dir.name / f"{file.stem}.java"
-                output_diff_path = Path("NesCodeSecExamples/src/main/java/com/Scenario1/output") / f"{dir.name}_diff" / f"{file.stem}.diff"
+                output_path = OUTPUT_DIR / dir.name / f"{file.stem}.java"
+                output_diff_path = OUTPUT_DIR / f"{dir.name}_diff" / f"{file.stem}.diff"
                 output_path.parent.mkdir(parents=True, exist_ok=True)
                 output_diff_path.parent.mkdir(parents=True, exist_ok=True)
                 output_path.write_text(strip_marker(code_under_check))
@@ -169,8 +170,8 @@ def generate_xxe_response() -> None:
         logger.error("Failed to generate completion response: ", e)
         raise
 
-def main(request_only:bool=True, debug: bool = False) -> None:
-    from batch_migrator import full_pipeline
+def main(request_only:bool=True, eval: bool = False, debug: bool = False) -> None:
+    from utils.batch_migrator import full_pipeline
     if not request_only and not debug:
         # full pipeline to prepare input_event and input_excerpt
         full_pipeline(
@@ -188,6 +189,8 @@ def main(request_only:bool=True, debug: bool = False) -> None:
             excerpt_root=EXCERPT_DIR
         )
     generate_xxe_response()
+    if eval:
+        evaluate_via_llm()
     
 
 
@@ -196,3 +199,4 @@ def main(request_only:bool=True, debug: bool = False) -> None:
 if __name__ == "__main__":
 
     main(request_only=False)
+    

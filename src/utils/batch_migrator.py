@@ -23,7 +23,7 @@ except Exception:
 
 # 依赖你的迁移引擎（需要 xml_any2any_migrator.py 与之同目录或在 PYTHONPATH 中）
 try:
-    from xml_any2any_migrator import run_recipe  # 只用这个函数
+    from utils.xml_any2any_migrator import run_recipe  # 只用这个函数
 except Exception as e:
     print("[ERR] 请确保 xml_any2any_migrator.py 在 PYTHONPATH 中，并包含 run_recipe()", file=sys.stderr)
     raise

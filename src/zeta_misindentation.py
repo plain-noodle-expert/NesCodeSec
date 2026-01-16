@@ -1,10 +1,11 @@
 import difflib
-import json
-import os
 import re
 from pathlib import Path
-from typing import Dict, List, Optional
-from openai import OpenAI
+from request import (
+    PROMPT,
+    build_prompt,
+    send_request,
+)
 
 
 BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "Scenario5"]
@@ -62,51 +63,27 @@ def _remove_mark(file: Path) -> str:
     content = re.sub(r"<\|editable_region_end\|>", "", content)
     return content
 
-PROMPT_TEMPLATE = """### Instruction:
-You are a code completion assistant and your task is to analyze user edits and then rewrite an excerpt that the user provides, suggesting the appropriate edits within the excerpt, taking into account the cursor location.
-Fix any syntax errors in the provided excerpt. Ensure that the rewritten excerpt is syntactically correct and adheres to Java programming conventions. Ensure the completeness of the code within the provided excerpt.
 
-### User Edits:
-
-{user_edits}
-
-### User Excerpt:
-
-{user_excerpt}
-
-### Response:
-"""
+def _prompt_template() -> str:
+    if not PROMPT:
+        raise RuntimeError("ZETA_PROMPT_TEMPLATE environment variable is not set.")
+    return PROMPT
 
 def request(event_file: Path, excerpt_file: Path, model: str = "zeta", max_tokens: int = 28000, temperature: float = 0.2) -> str:
     """
     Sends assembled Scenario8 prompts to a vLLM-hosted model and returns the responses.
     """
-    if OpenAI is None:
-        raise RuntimeError(
-            "openai package not available. Install the dependency to use request()."
-        )
-    base_url = os.environ.get("ZETA_BASE_URL", os.environ.get("OPENAI_BASE_URL", "http://localhost:8000/v1"))
-    client = OpenAI(base_url=base_url, api_key="EMPTY")
-    
-    if (not event_file.is_file()) or (not excerpt_file.is_file()):
-        raise FileNotFoundError("Required input files are missing.")
-
-    user_edits = event_file.read_text(encoding="utf-8")
-    user_excerpt = excerpt_file.read_text(encoding="utf-8")
-
-    prompt = PROMPT_TEMPLATE.format(
-        user_edits=user_edits,
-        user_excerpt=user_excerpt,
+    prompt = build_prompt(
+        event_file,
+        excerpt_file,
+        template=_prompt_template(),
     )
-
-    # print(f"===== PROMPT ======\n{prompt}\n===================")
-    result = client.completions.create(
+    return send_request(
+        prompt,
         model=model,
-        prompt=prompt,
         max_tokens=max_tokens,
         temperature=temperature,
     )
-    return result.choices[0].text
 
 
 def create_event(base_file: Path, excerpt_file: Path, event_file: Path):

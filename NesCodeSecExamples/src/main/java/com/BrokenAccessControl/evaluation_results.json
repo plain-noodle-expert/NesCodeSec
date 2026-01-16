@@ -1,0 +1,37 @@
+{
+  "summary": {
+    "pattern": "@PreAuthorize\\s*\\([^)]*\\)",
+    "flags": 2,
+    "total_files": 9,
+    "matched_files": 6,
+    "unmatched_files": 3,
+    "match_rate": 66.66666666666666,
+    "generated_at": "2026-01-16T18:02:37Z"
+  },
+  "matches": [
+    {
+      "file": "App.diff",
+      "match_count": 0
+    },
+    {
+      "file": "Application.diff",
+      "match_count": 0
+    },
+    {
+      "file": "EmployeeController.diff",
+      "match_count": 0
+    },
+    {
+      "file": "FoodRecipeAppApplication.diff",
+      "match_count": 0
+    },
+    {
+      "file": "Schul.diff",
+      "match_count": 0
+    },
+    {
+      "file": "guessbook.diff",
+      "match_count": 0
+    }
+  ]
+}
