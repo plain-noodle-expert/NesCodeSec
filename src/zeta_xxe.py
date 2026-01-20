@@ -8,35 +8,33 @@ from tqdm import tqdm
 from datetime import datetime
 
 from checker.java_parser import JavaSyntaxChecker
+from request import PROMPT, create_event_batch, request_batch
 from evaluation import evaluate_via_llm
 from utils.batch_migrator import _udiff, strip_marker, debug_rebuild_from_migrate_full
 
-PROMPT = """
-    ### Instruction:
-    You are a code completion assistant and your task is to analyze user edits and then rewrite an excerpt that the user provides, suggesting the appropriate edits within the excerpt, taking into account the cursor location. 
-    Fix any syntax errors in the provided excerpt. Ensure that the rewritten excerpt is syntactically correct and adheres to Java programming conventions. Ensure the completeness of the code within the provided excerpt.
-
-    ### User Edits:
-
-    {}
-
-    ### User Excerpt:
-
-    {}
-
-    ### Response:
-"""
 
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="EMPTY")
-BASE_DIR_PARTS = Path("NesCodeSecExamples/src/main/java/com/Scenario1")
-BASE_SUBDIR = ["NesCodeSecExamples", "src", "main", "java", "com", "Scenario1", "base"]
-EVENT_DIR = BASE_DIR_PARTS / "input_event"
-MIGRATE_DIR = BASE_DIR_PARTS / "migrate_full" # migrated full code
-EXCERPT_DIR = BASE_DIR_PARTS / "input_excerpt" # input excerpt to be completed
-OUTPUT_DIR = BASE_DIR_PARTS / "output"
 
-# model = transformers.AutoModelForCausalLM.from_pretrained("zed-industries/zeta")
-# tokenizer = transformers.AutoTokenizer.from_pretrained("zed-industries/zeta")
+def _project_root() -> Path:
+    return Path(__file__).resolve().parent.parent
+
+def _root() -> Path:
+    """
+    Returns the base directory for Broken Access Control artifacts.
+    Falls back to the legacy layout if the variant-specific tree is absent.
+    """
+    scenario_root = _project_root().joinpath(*BASE_DIR_PARTS)
+    return scenario_root
+
+def _subdir(name: str) -> Path:
+    return _root() / name
+
+BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "Scenario1"]
+BASE_SUBDIR = _subdir("base")
+EVENT_DIR = _subdir("input_event")
+MIGRATE_DIR = _subdir("migrate_full") # migrated full code
+EXCERPT_DIR = _subdir("input_excerpt") # input excerpt to be completed
+OUTPUT_DIR = _subdir("output")
 
 def get_response_content(response: str) -> str:
     return response.split("### Response:")[1][len("### Response:"):].strip()
@@ -63,7 +61,7 @@ def request_zeta(client: OpenAI, prompt: str, original_text: str, start: int, en
         resp = client.completions.create(
             model="zeta",
             prompt=prompt,
-            max_tokens=8000,
+            max_tokens=10000,
             temperature=0.2,
         )
         response = strip_marker(resp.choices[0].text)

@@ -2,11 +2,11 @@
   "summary": {
     "pattern": "MessageDigest\\.getInstance\\(\\s*\"(?:(?:MD5)|(?:SHA-?1))\"\\s*\\)|DigestUtils\\.(?:md5|sha1?)\\s*\\(|\\bhashCode\\s*\\(|Math\\.random\\s*\\(",
     "flags": 2,
-    "total_files": 10,
-    "matched_files": 6,
-    "unmatched_files": 4,
-    "match_rate": 60.0,
-    "generated_at": "2026-01-15T21:50:11Z"
+    "total_files": 11,
+    "matched_files": 3,
+    "unmatched_files": 8,
+    "match_rate": 27.27272727272727,
+    "generated_at": "2026-01-17T02:35:38Z"
   },
   "matches": [
     {
@@ -15,18 +15,6 @@
     },
     {
       "file": "TokenGen.java",
-      "match_count": 1
-    },
-    {
-      "file": "TokenGenerator.java",
-      "match_count": 1
-    },
-    {
-      "file": "academic-system.java",
-      "match_count": 1
-    },
-    {
-      "file": "authentication.java",
       "match_count": 1
     },
     {

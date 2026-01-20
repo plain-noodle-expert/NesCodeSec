@@ -145,7 +145,8 @@ public class Fut extends HttpServlet
 	{
 		new FuProgram().init(parent, system, host);
 		for (String file : files) {
-			parser.parseFile(file, sema);
+			parser.parseFile(file);
+			sema.resolveFile(file);
 		}
 		return new FuProgram().init(parent, system, host);
 	}
@@ -282,4 +283,4 @@ public class Fut extends HttpServlet
 				char c = outputFile.charAt(i);
 				if (c == '.') {
 					if (i >= 2
-					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt(i - 2
+					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt

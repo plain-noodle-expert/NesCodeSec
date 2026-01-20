@@ -205,7 +205,7 @@ public class Peer {
 				String safeFileName = INTERNAL_SHARED_FILES.contains(requested)
 										? requested
 										: null;
-				File arquivoLocal = new File(local, safeFileName);
+				File arquivoLocal = new File(local + File.separator + safeFileName);
 				
 				//cria o arquivo no path
 				FileInputStream fileInput = new FileInputStream(arquivoLocal);

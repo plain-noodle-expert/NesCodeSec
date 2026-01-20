@@ -52,19 +52,19 @@ def main() -> None:
         pattern=PATTERN, # secure coding pattern to search for
         positive_match=False, # count files that do NOT match the pattern
         output_dir=output_dir,
-        eval_file_type="java",
+        excerpt_dir=excerpt_dir,
         results_path=_root() / "evaluation_results.json",
         flags=re.IGNORECASE,
     )
 
         
 if __name__ == "__main__":
-    main()
+    # main()
     evaluate_via_regex(
         pattern=PATTERN, # secure coding pattern to search for
         positive_match=False, # count files that do NOT match the pattern
         output_dir=_subdir(OUTPUT_SUBDIR),
-        eval_file_type="diff",
+        excerpt_dir=_subdir(EXCERPT_SUBDIR),
         results_path=_root() / "evaluation_results.json",
         flags=re.IGNORECASE,
     )

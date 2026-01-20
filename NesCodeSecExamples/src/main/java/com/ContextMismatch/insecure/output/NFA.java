@@ -267,6 +267,7 @@ class NFAUploadServlet extends HttpServlet {
 
 		try {
 			filePath = filePath.trim();
+			
 			ArrayList<String> lines = getFileInputStream(filePath);
 			StringBuilder body = new StringBuilder();
 			for (String line : lines) {

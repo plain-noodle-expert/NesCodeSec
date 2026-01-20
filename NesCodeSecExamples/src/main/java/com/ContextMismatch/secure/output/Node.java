@@ -104,66 +104,6 @@ public class Node {
         // startSync();
     }
 
-    private KeyPair loadOrCreateWallet() throws Exception {
-        Path privPath = Path.of(PRIV_KEY_FILE);
-        Path pubPath = Path.of(PUB_KEY_FILE);
-        if (Files.exists(privPath) && Files.exists(pubPath)) {
-            try {
-                // Read keys from PEM files
-                String privPem = Files.readString(privPath);
-                String pubPem = Files.readString(pubPath);
-
-                // Remove PEM headers and decode Base64
-                String privBase64 = privPem.replace("-----BEGIN PRIVATE KEY-----\n", "")
-                        .replace("\n-----END PRIVATE KEY-----\n", "")
-                        .replaceAll("\\s", "");
-                String pubBase64 = pubPem.replace("-----BEGIN PUBLIC KEY-----\n", "")
-                        .replace("\n-----END PUBLIC KEY-----\n", "")
-                        .replaceAll("\\s", "");
-
-                byte[] privBytes = Base64.getDecoder().decode(privBase64);
-                byte[] pubBytes = Base64.getDecoder().decode(pubBase64);
-
-                KeyFactory kf = KeyFactory.getInstance("EC", "BC");
-                PKCS8EncodedKeySpec privSpec = new PKCS8EncodedKeySpec(privBytes);
-                X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(pubBytes);
-                return new KeyPair(kf.generatePublic(pubSpec), kf.generatePrivate(privSpec));
-            } catch (Exception e) {
-                System.err.println("Error loading wallet: " + e.getMessage());
-                throw e;
-            }
-        }
-
-        // Generate new ECDSA key pair with secp256k1
-        KeyPairGenerator kpg = KeyPairGenerator.getInstance("EC", "BC");
-        ECNamedCurveParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1");
-        kpg.initialize(ecSpec, new SecureRandom());
-        KeyPair kp = kpg.generateKeyPair();
-
-        // Save keys in PEM format
-        byte[] privBytes = kp.getPrivate().getEncoded();
-        byte[] pubBytes = kp.getPublic().getEncoded();
-
-        // Encode to Base64 and add PEM headers
-        String privPem = "-----BEGIN PRIVATE KEY-----\n" +
-                Base64.getEncoder().encodeToString(privBytes) +
-                "\n-----END PRIVATE KEY-----\n";
-        String pubPem = "-----BEGIN PUBLIC KEY-----\n" +
-                Base64.getEncoder().encodeToString(pubBytes) +
-                "\n-----END PUBLIC KEY-----\n";
-
-        // Save to files
-        try {
-            Files.writeString(privPath, privPem);
-            Files.writeString(pubPath, pubPem);
-        } catch (IOException e) {
-            System.err.println("Error saving wallet: " + e.getMessage());
-            throw e;
-        }
-
-        return kp;
-    }
-
     private String deriveAddress(PublicKey pubKey) throws Exception {
         try {
             MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
@@ -181,9 +121,10 @@ public class Node {
         File file = new File(CHAIN_FILE);
         if (file.exists()) {
             try (GZIPInputStream gis = new GZIPInputStream(new FileInputStream(file));
-                 Reader isr = new InputStreamReader(gis, StandardCharsets.UTF_8)) {
+                 Reader isr = new InputStreamReader(gis, StandardCharsets.UTF_8);
+                 BufferedReader br = new BufferedReader(isr)) {
                 synchronized (blockchain) {
-                    blockchain.addAll(objectMapper.readValue(isr, new TypeReference<List<Block>>() {}));
+                    blockchain.addAll(objectMapper.readValue(br, new TypeReference<List<Block>>() {}));
                 }
                 System.out.println("Loaded chain length: " + blockchain.size());
             } catch (IOException e) {
@@ -205,29 +146,6 @@ public class Node {
         }
     }
 
-    private String detectLocalIP() throws SocketException {
-        for (NetworkInterface ni : Collections.list(NetworkInterface.getNetworkInterfaces())) {
-            if (!ni.isUp() || ni.isLoopback()) continue;
-            for (InetAddress addr : Collections.list(ni.getInetAddresses())) {
-                if (addr instanceof Inet4Address) return addr.getHostAddress();
-            }
-        }
-        System.err.println("No suitable network interface found, using localhost");
-        return "127.0.0.1";
-    }
-
-
-    private boolean isValidChain(List<Block> chain) {
-        if (chain.isEmpty()) {
-            System.err.println("Chain validation failed: chain is empty");
-            return false;
-        }
-        Block g = Block.createGenesis();
-        if (chain.get(0).index != g.index || !chain.get(0).hash.equals(g.hash)) {
-            System.err.println("Chain validation failed: invalid genesis block");
-            return false;
-        }
-        for (int i = 1; i < chain.size(); i++) {
-            Block p = chain.get(i - 1);
-            Block c = chain.get(i);
-            if (!c.previousHash.equals(p.hash) || !c.calculateHash().equals(c.hash)) {
+}
+<|editable_region_end|>
+```

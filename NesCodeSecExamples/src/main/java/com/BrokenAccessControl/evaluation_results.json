@@ -6,31 +6,31 @@
     "matched_files": 6,
     "unmatched_files": 3,
     "match_rate": 66.66666666666666,
-    "generated_at": "2026-01-16T18:02:37Z"
+    "generated_at": "2026-01-17T02:22:10Z"
   },
   "matches": [
     {
-      "file": "App.diff",
+      "file": "App.java",
       "match_count": 0
     },
     {
-      "file": "Application.diff",
+      "file": "Application.java",
       "match_count": 0
     },
     {
-      "file": "EmployeeController.diff",
+      "file": "EmployeeController.java",
       "match_count": 0
     },
     {
-      "file": "FoodRecipeAppApplication.diff",
+      "file": "FoodRecipeAppApplication.java",
       "match_count": 0
     },
     {
-      "file": "Schul.diff",
+      "file": "Schul.java",
       "match_count": 0
     },
     {
-      "file": "guessbook.diff",
+      "file": "guessbook.java",
       "match_count": 0
     }
   ]

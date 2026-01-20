@@ -3,7 +3,12 @@ from pathlib import Path
 import difflib
 import re
 from tqdm import tqdm
-from typing import Any, Mapping, Optional
+from typing import Mapping, Optional
+from loguru import logger
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 try:
     from openai import OpenAI
@@ -72,7 +77,7 @@ def create_event(base_file: Path, excerpt_file: Path, event_file: Path):
 def create_event_batch(base_dir: Path,
                        excerpt_dir: Path,
                        event_dir: Path):
-    for base_file in tqdm(list(base_dir.glob("*.java")), desc=f"Creating events for {base_dir.name}"):
+    for base_file in tqdm(list(base_dir.glob("*.java")), desc=f"Creating events for {base_dir.parent.parent.name}/{base_dir.parent.name}"):
         excerpt_file = excerpt_dir / base_file.name
         event_file = event_dir / base_file.with_suffix(".diff").name
         create_event(base_file, excerpt_file, event_file)
@@ -153,7 +158,7 @@ def request_batch(
     """
     High-level helper that builds the prompt from files and sends the completion request.
     """
-    for event_file, excerpt_file in zip(sorted(list(event_dir.glob("*.diff"))), sorted(list(excerpt_dir.glob("*.java")))):
+    for event_file, excerpt_file in tqdm(zip(sorted(list(event_dir.glob("*.diff"))), sorted(list(excerpt_dir.glob("*.java")))), total=len(list(event_dir.glob("*"))), desc=f"Requesting batch for {event_dir.parent.parent.name}/{event_dir.parent.name}"):
         prompt = build_prompt(
             event_file,
             excerpt_file,
@@ -223,17 +228,28 @@ def merge_response_into_excerpt(excerpt_content: str, response_content: str) -> 
     This function computes a line-based diff between the excerpt and the model response,
     then replaces only the modified regions with the model's version. Lines that the
     model did not touch remain identical to the original excerpt.
+    
+    If excerpt has more lines than response, the extra lines are preserved.
     """
     excerpt_lines = excerpt_content.splitlines(keepends=True)
     response_lines = response_content.splitlines(keepends=True)
 
     matcher = difflib.SequenceMatcher(a=excerpt_lines, b=response_lines)
     merged: list[str] = []
+    last_excerpt_idx = 0
+    
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
         if tag == "equal":
             merged.extend(excerpt_lines[i1:i2])
         else:
             merged.extend(response_lines[j1:j2])
+        last_excerpt_idx = i2
+    
+    # Append any remaining lines from excerpt that weren't covered by the diff
+    if last_excerpt_idx < len(excerpt_lines):
+        
+        merged.extend(excerpt_lines[last_excerpt_idx:-2])
+    
     return "".join(merged)
 
 

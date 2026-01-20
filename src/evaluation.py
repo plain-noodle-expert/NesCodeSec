@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import difflib
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
@@ -25,10 +26,10 @@ def _load_eval_prompt(_: Optional[Path] = None) -> str:
 
 def _get_eval_models() -> List[str]:
     """Return evaluation models configured via environment variables."""
-    custom = os.getenv("ZETA_EVAL_MODELS") or os.getenv("CUSTOM_JUDGER_MODELS")
-    if not custom:
-        raise ValueError("Set ZETA_EVAL_MODELS (comma-separated) in your environment.")
-    return [model.strip() for model in custom.split(",") if model.strip()]
+    judges = os.getenv("JUDGER_MODELS")
+    if not judges:
+        raise ValueError("Set JUDGER_MODELS (comma-separated) in your environment.")
+    return [model.strip() for model in judges.split(",") if model.strip()]
 
 def _build_eval_client() -> Tuple[OpenAI, dict]:
     """Instantiate an OpenAI-compatible client for evaluation requests."""
@@ -70,13 +71,11 @@ def _extract_eval_vote(response_text: str) -> int:
         return 0
     return 0
 
-EVAL_MODELS = _get_eval_models()
-EVAL_TEMPERATURE = float(os.getenv("ZETA_EVAL_TEMPERATURE", "0.1"))
-EVAL_MAX_TOKENS = int(os.getenv("ZETA_EVAL_MAX_TOKENS", "1500"))
-EVAL_MAX_RETRIES = int(os.getenv("ZETA_EVAL_MAX_RETRIES", "3"))
-EVAL_REQUEST_TIMEOUT = int(os.getenv("ZETA_EVAL_REQUEST_TIMEOUT", "30"))
-
-
+JUDGER_MODELS = _get_eval_models()
+JUDGER_EVAL_TEMPERATURE = float(os.getenv("JUDGER_EVAL_TEMPERATURE", "0.1"))
+JUDGER_EVAL_MAX_TOKENS = int(os.getenv("JUDGER_EVAL_MAX_TOKENS", "1500"))
+JUDGER_EVAL_MAX_RETRIES = int(os.getenv("JUDGER_EVAL_MAX_RETRIES", "3"))
+JUDGER_EVAL_REQUEST_TIMEOUT = int(os.getenv("JUDGER_EVAL_REQUEST_TIMEOUT", "30"))
 def evaluate_via_llm(
     output_dir: Optional[Path] = None,
     prompt_text: Optional[str] = None,
@@ -110,11 +109,11 @@ def evaluate_via_llm(
         total_files += 1
 
         votes: List[int] = []
-        for model in EVAL_MODELS:
+        for model in JUDGER_MODELS:
             retry_count = 0
             model_log = {"score": 0, "response": ""}
 
-            while retry_count < EVAL_MAX_RETRIES:
+            while retry_count < JUDGER_EVAL_MAX_RETRIES:
                 try:
                     request_payload = {
                         "model": model,
@@ -122,9 +121,9 @@ def evaluate_via_llm(
                             {"role": "system", "content": prompt},
                             {"role": "user", "content": file_content},
                         ],
-                        "temperature": EVAL_TEMPERATURE,
-                        "max_tokens": EVAL_MAX_TOKENS,
-                        "timeout": EVAL_REQUEST_TIMEOUT,
+                        "temperature": JUDGER_EVAL_TEMPERATURE,
+                        "max_tokens": JUDGER_EVAL_MAX_TOKENS,
+                        "timeout": JUDGER_EVAL_REQUEST_TIMEOUT,
                     }
 
                     if extra_headers:
@@ -146,11 +145,11 @@ def evaluate_via_llm(
                 except Exception as exc:  # pragma: no cover - network interaction
                     retry_count += 1
                     logger.warning(
-                        f"[{model}] evaluation attempt {retry_count}/{EVAL_MAX_RETRIES} failed: {exc}"
+                        f"[{model}] evaluation attempt {retry_count}/{JUDGER_EVAL_MAX_RETRIES} failed: {exc}"
                     )
-                    if retry_count >= EVAL_MAX_RETRIES:
+                    if retry_count >= JUDGER_EVAL_MAX_RETRIES:
                         model_log["score"] = 0
-                        model_log["response"] = f"Error after {EVAL_MAX_RETRIES} retries: {exc}"
+                        model_log["response"] = f"Error after {JUDGER_EVAL_MAX_RETRIES} retries: {exc}"
                         votes.append(-1)
                         file_log["models"][model] = model_log
 
@@ -175,7 +174,7 @@ def evaluate_via_llm(
         "unsafe_files": unsafe_files,
         "safe_files": total_files - unsafe_files,
         "risk_rate": (unsafe_files / total_files * 100) if total_files else 0,
-        "models": EVAL_MODELS,
+        "models": JUDGER_MODELS,
     }
 
     payload = {
@@ -194,19 +193,21 @@ def evaluate_via_llm(
 
 def evaluate_via_regex(
     pattern: str,
+    excerpt_dir: Optional[Path],
+    output_dir: Optional[Path],
     *,
     positive_match: bool = True,
-    output_dir: Optional[Path] = None,
-    eval_file_type: str = "java",
     results_path: Optional[Path] = None,
     flags: int = 0,
 ) -> dict:
     """
     Scan every file under the output directory and report how many contain the regex pattern.
+    Only searches the parts that differ between excerpt and output (i.e., the model's modifications).
 
     Args:
         pattern: Regular expression used to evaluate each file.
         output_dir: Optional override for the output directory to scan.
+        excerpt_dir: Optional path to the excerpt directory for diff comparison. If None, searches entire output.
         results_path: Optional path for the JSON report. Defaults to the scenario root.
         flags: Optional regex compilation flags (e.g., re.IGNORECASE).
         positive_match: If True, count files that match the pattern; if False, count files that do not match.
@@ -223,16 +224,39 @@ def evaluate_via_regex(
     matched_files = 0
     matches: List[Dict[str, object]] = []
 
-    for file_path in sorted(target_dir.rglob(f"*.{eval_file_type}")):
+    for file_path in sorted(target_dir.rglob(f"*.java")):
         if not file_path.is_file():
             continue
         total_files += 1
         try:
-            content = file_path.read_text(encoding="utf-8")
+            output_content = file_path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
-            content = file_path.read_text(encoding="utf-8", errors="ignore")
+            output_content = file_path.read_text(encoding="utf-8", errors="ignore")
 
-        found = regex.findall(content)
+        # If excerpt_dir is provided, extract only the diff portions
+        search_content = output_content
+        if excerpt_dir:
+            excerpt_file = excerpt_dir / file_path.name
+            if excerpt_file.exists():
+                try:
+                    excerpt_content = excerpt_file.read_text(encoding="utf-8")
+                except UnicodeDecodeError:
+                    excerpt_content = excerpt_file.read_text(encoding="utf-8", errors="ignore")
+                
+                # Compute diff and extract modified lines from output
+                excerpt_lines = excerpt_content.splitlines(keepends=True)
+                output_lines = output_content.splitlines(keepends=True)
+                matcher = difflib.SequenceMatcher(None, excerpt_lines, output_lines)
+                
+                modified_lines = []
+                for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+                    if tag != "equal":
+                        # Extract the modified portion from output
+                        modified_lines.extend(output_lines[j1:j2])
+                
+                search_content = "".join(modified_lines)
+        
+        found = regex.findall(search_content)
         if positive_match and not found:
             continue
         if not positive_match and found:

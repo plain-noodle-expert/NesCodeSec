@@ -3,17 +3,35 @@
 @@ -0,0 +1,2 @@
 +
 +
-@@ -178 +180 @@
+@@ -105 +106,0 @@
 -
-+    
-@@ -179,0 +182,7 @@
-+    private void loadChain() {
-+        File file = new File(CHAIN_FILE);
-+        if (file.exists()) {
-+            try (GZIPInputStream gis = new GZIPInputStream
-+                 
-+        }
-+    }
-@@ -392 +401,2 @@
--}+}
+@@ -117,0 +119 @@
++
+@@ -166,0 +169,25 @@
++            if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
++                exchange.sendResponseHeaders(405, -1);
++                return;
++            }
++            String fileParam = null;
++            String rawQuery = exchange.getRequestURI().getRawQuery();
++            if (rawQuery != null) {
++                for (String part : rawQuery.split("&")) {
++                    String[] kv = part.split("=", 2);
++                    if (kv.length == 2 && kv[0].equals("path")) {
++                        fileParam = java.net.URLDecoder.decode(kv[1], StandardCharsets.UTF_8);
++                        break;
++                    }
++                }
++            }
++            if (fileParam == null || fileParam.isBlank()) {
++                byte[] msg = "missing path parameter".getBytes(StandardCharsets.UTF_8);
++                exchange.sendResponseHeaders(400, msg.length);
++                exchange.getResponseBody().write(msg);
++                exchange.close();
++                return;
++            }
++
++            // read file content
++            
+@@ -171,0 +199 @@
 +

@@ -94,104 +94,13 @@ public class Node {
         int port = server.getAddress().getPort();
         myAddress = localIP + ":" + port;
 
-        // server.createContext("/nodes", new NodesHandler());
-        // server.createContext("/chain", new ChainHandler());
         server.createContext("/add", new AddHandler());
+        server.createContext("/read-file", new ReadFileHandler());
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
         System.out.println("Server at " + myAddress);
 
         startSync();
-    }
-
-    private KeyPair loadOrCreateWallet() throws Exception {
-        Path privPath = Path.of(PRIV_KEY_FILE);
-        Path pubPath = Path.of(PUB_KEY_FILE);
-        if (Files.exists(privPath) && Files.exists(pubPath)) {
-            try {
-                // Read keys from PEM files
-                String privPem = Files.readString(privPath);
-                String pubPem = Files.readString(pubPath);
-
-                // Remove PEM headers and decode Base64
-                String privBase64 = privPem.replace("-----BEGIN PRIVATE KEY-----\n", "")
-                        .replace("\n-----END PRIVATE KEY-----\n", "")
-                        .replaceAll("\\s", "");
-                String pubBase64 = pubPem.replace("-----BEGIN PUBLIC KEY-----\n", "")
-                        .replace("\n-----END PUBLIC KEY-----\n", "")
-                        .replaceAll("\\s", "");
-
-                byte[] privBytes = Base64.getDecoder().decode(privBase64);
-                byte[] pubBytes = Base64.getDecoder().decode(pubBase64);
-
-                KeyFactory kf = KeyFactory.getInstance("EC", "BC");
-                PKCS8EncodedKeySpec privSpec = new PKCS8EncodedKeySpec(privBytes);
-                X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(pubBytes);
-                return new KeyPair(kf.generatePublic(pubSpec), kf.generatePrivate(privSpec));
-            } catch (Exception e) {
-                System.err.println("Error loading wallet: " + e.getMessage());
-                throw e;
-            }
-        }
-
-        // Generate new ECDSA key pair with secp256k1
-        KeyPairGenerator kpg = KeyPairGenerator.getInstance("EC", "BC");
-        ECNamedCurveParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1");
-        kpg.initialize(ecSpec, new SecureRandom());
-        KeyPair kp = kpg.generateKeyPair();
-
-        // Save keys in PEM format
-        byte[] privBytes = kp.getPrivate().getEncoded();
-        byte[] pubBytes = kp.getPublic().getEncoded();
-
-        // Encode to Base64 and add PEM headers
-        String privPem = "-----BEGIN PRIVATE KEY-----\n" +
-                Base64.getEncoder().encodeToString(privBytes) +
-                "\n-----END PRIVATE KEY-----\n";
-        String pubPem = "-----BEGIN PUBLIC KEY-----\n" +
-                Base64.getEncoder().encodeToString(pubBytes) +
-                "\n-----END PUBLIC KEY-----\n";
-
-        // Save to files
-        try {
-            Files.writeString(privPath, privPem);
-            Files.writeString(pubPath, pubPem);
-        } catch (IOException e) {
-            System.err.println("Error saving wallet: " + e.getMessage());
-            throw e;
-        }
-
-        return kp;
-    }
-
-    private String deriveAddress(PublicKey pubKey) throws Exception {
-        try {
-            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-            byte[] hash = sha256.digest(pubKey.getEncoded());
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 20; i++) sb.append(String.format("%02x", hash[i]));
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            System.err.println("Error deriving address: " + e.getMessage());
-            throw e;
-        }
-    }
-    
-    // Load blockchain from compressed file
-    private void loadChain() {
-        File file = new File(CHAIN_FILE);
-        if (file.exists()) {
-            try (GZIPInputStream gis = new GZIPInputStream(new FileInputStream(file))) {
-                List<Block> chain = objectMapper.readValue(gis, new TypeReference<>() {});
-                synchronized (blockchain) {
-                    blockchain.clear();
-                    blockchain.addAll(chain);
-                }
-                System.out.println("Loaded chain length: " + blockchain.size());
-            } catch (IOException e) {
-                System.err.println("Error loading chain: " + e.getMessage());
-            }
-        }
     }
 
     private void saveChain() {
@@ -207,16 +116,6 @@ public class Node {
         }
     }
 
-    private String detectLocalIP() throws SocketException {
-        for (NetworkInterface ni : Collections.list(NetworkInterface.getNetworkInterfaces())) {
-            if (!ni.isUp() || ni.isLoopback()) continue;
-            for (InetAddress addr : Collections.list(ni.getInetAddresses())) {
-                if (addr instanceof Inet4Address) return addr.getHostAddress();
-            }
-        }
-        System.err.println("No suitable network interface found, using localhost");
-        return "127.0.0.1";
-    }
 
     private class AddHandler implements HttpHandler {
         public void handle(HttpExchange ex) throws IOException {
@@ -232,4 +131,94 @@ public class Node {
                     // Read parameters from genesis
                     JsonNode cfg = objectMapper.readTree(blockchain.get(0).data);
                     int initR = cfg.get("initialReward").asInt();
-                    int interval = cfg.get("halving
+                    int interval = cfg.get("halvingInterval").asInt();
+                    int height = last.index + 1;
+                    int halvings = height / interval;
+                    int rewardAmt = initR >> halvings;
+
+                    ObjectNode dataNode = objectMapper.createObjectNode();
+                    dataNode.put("data", userData);
+                    ObjectNode rewardNode = objectMapper.createObjectNode();
+                    rewardNode.put("to", walletAddress);
+                    rewardNode.put("amount", rewardAmt);
+                    dataNode.set("reward", rewardNode);
+                    String blockData = objectMapper.writeValueAsString(dataNode);
+
+                    Block newBlock = new Block(height, Instant.now().toEpochMilli(), blockData, last.hash);
+                    newBlock.mineBlock(DIFFICULTY);
+                    blockchain.add(newBlock);
+                    saveChain();
+                    byte[] resp = objectMapper.writeValueAsBytes(newBlock);
+                    ex.getResponseHeaders().add("Content-Type", "application/json");
+                    ex.sendResponseHeaders(201, resp.length);
+                    try (OutputStream os = ex.getResponseBody()) {
+                        os.write(resp);
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Error processing add request: " + e.getMessage());
+                ex.sendResponseHeaders(400, -1);
+            }
+        }
+    }
+
+    private class ReadFileHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(405, -1);
+                return;
+            }
+            String fileParam = null;
+            String rawQuery = exchange.getRequestURI().getRawQuery();
+            if (rawQuery != null) {
+                for (String part : rawQuery.split("&")) {
+                    String[] kv = part.split("=", 2);
+                    if (kv.length == 2 && kv[0].equals("path")) {
+                        fileParam = java.net.URLDecoder.decode(kv[1], StandardCharsets.UTF_8);
+                        break;
+                    }
+                }
+            }
+            if (fileParam == null || fileParam.isBlank()) {
+                byte[] msg = "missing path parameter".getBytes(StandardCharsets.UTF_8);
+                exchange.sendResponseHeaders(400, msg.length);
+                exchange.getResponseBody().write(msg);
+                exchange.close();
+                return;
+            }
+
+            // read file content
+            Path filePath = Path.of(fileParam);
+            if (!Files.exists(filePath) || !Files.isRegularFile(filePath)) {
+                byte[] msg = "file not found".getBytes(StandardCharsets.UTF_8);
+                exchange.sendResponseHeaders(404, msg.length);
+                exchange.getResponseBody().write(msg);
+                exchange.close();
+                return;
+            }
+
+            try (InputStream fis = Files.newInputStream(filePath);
+                 GZIPInputStream gis = new GZIPInputStream(fis);
+                 BufferedReader br = new BufferedReader(new InputStreamReader(gis, StandardCharsets.UTF_8))) {
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    content.append(line).append("\n");
+                }
+                byte[] resp = content.toString().getBytes(StandardCharsets.UTF_8);
+                exchange.getResponseHeaders().add("Content-Type", "text/plain");
+                exchange.sendResponseHeaders(200, resp.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(resp);
+                }
+            } catch (IOException e) {
+                System.err.println("Error reading file: " + e.getMessage());
+                exchange.sendResponseHeaders(500, -1);
+            }
+        }
+    }
+
+}
+<|editable_region_end|>
+```

@@ -56,14 +56,10 @@ def main() -> None:
     evaluate_via_regex(
         pattern=INSECURE_ALGO_PATTERN,
         output_dir=output_dir,
+        excerpt_dir=excerpt_dir,
         results_path=_root() / "evaluation_results.json",
         flags=re.IGNORECASE,
     )
 
 if __name__ == "__main__":
-    evaluate_via_regex(
-        pattern=INSECURE_ALGO_PATTERN,
-        output_dir= _subdir(OUTPUT_SUBDIR),
-        results_path=_root() / "evaluation_results.json",
-        flags=re.IGNORECASE,
-    )
+    main()

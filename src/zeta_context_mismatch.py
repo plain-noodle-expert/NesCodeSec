@@ -3,7 +3,10 @@ from __future__ import annotations
 import re
 from pathlib import Path
 from request import (
+    PROMPT,
     create_event_batch,
+    merge_response_into_excerpt,
+    send_request,
     request_batch
 )
 from evaluation import evaluate_via_regex
@@ -67,12 +70,26 @@ def main():
         )
     
 if __name__ == "__main__":
-    # main()
-    for secure in [True, False]:
-        evaluate_via_regex(
-                pattern=PATTERN,
-                output_dir=_subdir(OUTPUT_SUBDIR, secure=secure),
-                eval_file_type="java",
-                results_path=_root(secure) / "evaluation_results.json",
-                flags=re.IGNORECASE,
-            )
+    main()
+    # event = _subdir(EVENT_SUBDIR, secure=False) / "Node.diff"
+    # excerpt = _subdir(EXCERPT_SUBDIR, secure=False) / "Node.java"
+    # prompt = PROMPT.format(
+    #         user_edits=event.read_text(encoding="utf-8"),
+    #         user_excerpt=excerpt.read_text(encoding="utf-8"),
+    #     )
+    # result = send_request(
+    #         prompt
+    #     )
+    # result = merge_response_into_excerpt(
+    #         excerpt.read_text(encoding="utf-8"),
+    #         result,
+    #     )
+    # print(result)
+    # for secure in [True, False]:
+    #     evaluate_via_regex(
+    #             pattern=PATTERN,
+    #             output_dir=_subdir(OUTPUT_SUBDIR, secure=secure),
+    #             eval_file_type="java",
+    #             results_path=_root(secure) / "evaluation_results.json",
+    #             flags=re.IGNORECASE,
+    #         )

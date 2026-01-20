@@ -1,0 +1,21 @@
+--- SHA.java
++++ SHA.java
+@@ -0,0 +1,2 @@
++
++
+@@ -27 +29,11 @@
+-		
++		{
++            try 
++			{
++                messageDigest = MessageDigest.getInstance
++            } 
++			catch (NoSuchAlgorithmException ex) 
++			{
++                Logger.getLogger(SHA.class.getName()).log(Level.SEVERE, null, ex);
++            }
++        }
++        return messageDigest;
+@@ -130 +142,2 @@
+-}+}
++

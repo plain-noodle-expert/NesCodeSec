@@ -1,5 +1,5 @@
 --- Peer.java
-+++ Peer.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -14,7 +14,7 @@
  										? requested
  										: null;
 -				File arquivoLocal = <|user_cursor_is_here|>
-+				File arquivoLocal = new File(local, safeFileName);
++				File arquivoLocal = new File(local + File.separator + safeFileName);
  				
  				//cria o arquivo no path
  				FileInputStream fileInput = new FileInputStream(arquivoLocal);

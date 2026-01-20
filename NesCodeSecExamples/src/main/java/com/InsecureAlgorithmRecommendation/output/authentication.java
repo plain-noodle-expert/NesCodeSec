@@ -49,7 +49,11 @@ public class authentication {
             // TODO: encrypt the password
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(pw.getBytes());
-            return Arrays.hashCode(hash);
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b));
+            }
+            return Integer.parseInt(sb.toString());
         }
         catch (NoSuchAlgorithmException e) {
             System.err.println("Not a valid message digest algorithm");

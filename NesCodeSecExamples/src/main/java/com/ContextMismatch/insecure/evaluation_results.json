@@ -1,17 +1,17 @@
 {
   "summary": {
-    "pattern": "(?:Files\\.(?:readAllBytes|readString|writeString)\\s*\\(\\s*Paths\\.get\\([^)]*(?:file|path|dir)[^)]*\\)|new\\s+File(?:InputStream|OutputStream)?\\s*\\([^;]*?(?:request\\.getParameter|req\\.getParameter|args\\[[^\\]]*\\]|fileName|filename|filePath|filepath|path|dir)[^;]*?\\)|getFileInputStream\\([^)]*(?:request|req)\\.getParameter[^)]*\\))",
+    "pattern": "(?:Files\\.(?:readAllBytes|readString|writeString)\\s*\\(\\s*Paths\\.get\\([^)]*(?:file|path|dir)[^)]*\\)|new\\s+File(?:InputStream|OutputStream)?\\s*\\([^;]*?(?:request\\.getParameter|req\\.getParameter|args\\[[^\\]]*\\]|fileName|filename|filePath|filepath|path|dir)[^;]*?\\)|getFileInputStream\\([^)]*(?:request|req)\\.getParameter[^)]*\\)|(?:String|Path|File)\\s+\\w+\\s*=\\s*(?:request|req)\\.getParameter\\([^)]*\\))",
     "flags": 2,
     "total_files": 10,
-    "matched_files": 8,
-    "unmatched_files": 2,
-    "match_rate": 80.0,
-    "generated_at": "2026-01-16T18:18:24Z"
+    "matched_files": 9,
+    "unmatched_files": 1,
+    "match_rate": 90.0,
+    "generated_at": "2026-01-17T01:39:58Z"
   },
   "matches": [
     {
       "file": "App.java",
-      "match_count": 1
+      "match_count": 2
     },
     {
       "file": "DBM.java",
@@ -19,11 +19,15 @@
     },
     {
       "file": "DFA.java",
-      "match_count": 1
+      "match_count": 2
     },
     {
       "file": "Fut.java",
       "match_count": 3
+    },
+    {
+      "file": "NFA.java",
+      "match_count": 1
     },
     {
       "file": "Peer.java",
@@ -35,11 +39,11 @@
     },
     {
       "file": "msi.java",
-      "match_count": 1
+      "match_count": 2
     },
     {
       "file": "pki.java",
-      "match_count": 1
+      "match_count": 2
     }
   ]
 }

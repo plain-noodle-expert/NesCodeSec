@@ -69,7 +69,7 @@ class Model extends Observable {
     for(int i=0; i<1338; i++){
       try {
         // TODO: hash the password
-        hash = new BigInteger(1, hash.digest(password.getBytes()));
+        hash = new BigInteger(1, hash.getBytes());
       } catch (NoSuchAlgorithmException nsae) {
         // ignore
       }

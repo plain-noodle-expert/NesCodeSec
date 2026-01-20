@@ -1,5 +1,5 @@
 --- Fut.java
-+++ Fut.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,7 +7,7 @@
  //
  // Copyright (C) 2011-2025  Piotr Fusik
  //
-@@ -144,12 +143,13 @@
+@@ -144,12 +143,14 @@
  
  	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
  	{
@@ -15,7 +15,8 @@
  		for (String file : files) {
 -			<|user_cursor_is_here|>
 -		}
-+			parser.parseFile(file, sema);
++			parser.parseFile(file);
++			sema.resolveFile(file);
 +		}
 +		return new FuProgram().init(parent, system, host);
  	}
@@ -23,7 +24,7 @@
  	private static void emit(FuProgram program, String lang, String namespace, String outputFile, FileGenHost host)
  	{
  		final GenBase gen;
-@@ -280,175 +280,6 @@
+@@ -280,175 +281,6 @@
  			}
  			for (int i = outputFile.length(); --i >= 0; ) {
  				char c = outputFile.charAt(i);
@@ -198,4 +199,4 @@
 -	}
 -}
 -<|editable_region_end|>
--```+					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt(i - 2
+-```+					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt

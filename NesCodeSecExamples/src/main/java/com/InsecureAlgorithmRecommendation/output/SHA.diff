@@ -1,0 +1,29 @@
+--- SHA.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package MyDedup;
+ 
+ import java.io.IOException;
+ import java.io.ObjectInputStream;
+@@ -27,11 +26,11 @@
+ 	{
+         if (messageDigest == null) 
+ 		{
+             try 
+ 			{
+-                messageDigest = MessageDigest.getInstance<|user_cursor_is_here|>
++                messageDigest = MessageDigest.getInstance("SHA-256");
+             } 
+ 			catch (NoSuchAlgorithmException ex) 
+ 			{
+                 Logger.getLogger(SHA.class.getName()).log(Level.SEVERE, null, ex);
+             }
+@@ -139,6 +138,6 @@
+     }
+ 
+     
+ }
+ <|editable_region_end|>
+-```+```

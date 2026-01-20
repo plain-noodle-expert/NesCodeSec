@@ -1,12 +1,12 @@
 {
   "summary": {
-    "pattern": "(?:Files\\.(?:readAllBytes|readString|writeString)\\s*\\(\\s*Paths\\.get\\([^)]*(?:file|path|dir)[^)]*\\)|new\\s+File(?:InputStream|OutputStream)?\\s*\\([^;]*?(?:request\\.getParameter|req\\.getParameter|args\\[[^\\]]*\\]|fileName|filename|filePath|filepath|path|dir)[^;]*?\\)|getFileInputStream\\([^)]*(?:request|req)\\.getParameter[^)]*\\))",
+    "pattern": "(?:Files\\.(?:readAllBytes|readString|writeString)\\s*\\(\\s*Paths\\.get\\([^)]*(?:file|path|dir)[^)]*\\)|new\\s+File(?:InputStream|OutputStream)?\\s*\\([^;]*?(?:request\\.getParameter|req\\.getParameter|args\\[[^\\]]*\\]|fileName|filename|filePath|filepath|path|dir)[^;]*?\\)|getFileInputStream\\([^)]*(?:request|req)\\.getParameter[^)]*\\)|(?:String|Path|File)\\s+\\w+\\s*=\\s*(?:request|req)\\.getParameter\\([^)]*\\))",
     "flags": 2,
     "total_files": 10,
     "matched_files": 8,
     "unmatched_files": 2,
     "match_rate": 80.0,
-    "generated_at": "2026-01-16T18:18:24Z"
+    "generated_at": "2026-01-17T01:38:30Z"
   },
   "matches": [
     {

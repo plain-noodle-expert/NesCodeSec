@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 package tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -102,81 +104,6 @@ public class Node {
         startSync();
     }
 
-    private KeyPair loadOrCreateWallet() throws Exception {
-        Path privPath = Path.of(PRIV_KEY_FILE);
-        Path pubPath = Path.of(PUB_KEY_FILE);
-        if (Files.exists(privPath) && Files.exists(pubPath)) {
-            try {
-                // Read keys from PEM files
-                String privPem = Files.readString(privPath);
-                String pubPem = Files.readString(pubPath);
-
-                // Remove PEM headers and decode Base64
-                String privBase64 = privPem.replace("-----BEGIN PRIVATE KEY-----\n", "")
-                        .replace("\n-----END PRIVATE KEY-----\n", "")
-                        .replaceAll("\\s", "");
-                String pubBase64 = pubPem.replace("-----BEGIN PUBLIC KEY-----\n", "")
-                        .replace("\n-----END PUBLIC KEY-----\n", "")
-                        .replaceAll("\\s", "");
-
-                byte[] privBytes = Base64.getDecoder().decode(privBase64);
-                byte[] pubBytes = Base64.getDecoder().decode(pubBase64);
-
-                KeyFactory kf = KeyFactory.getInstance("EC", "BC");
-                PKCS8EncodedKeySpec privSpec = new PKCS8EncodedKeySpec(privBytes);
-                X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(pubBytes);
-                return new KeyPair(kf.generatePublic(pubSpec), kf.generatePrivate(privSpec));
-            } catch (Exception e) {
-                System.err.println("Error loading wallet: " + e.getMessage());
-                throw e;
-            }
-        }
-
-        // Generate new ECDSA key pair with secp256k1
-        KeyPairGenerator kpg = KeyPairGenerator.getInstance("EC", "BC");
-        ECNamedCurveParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1");
-        kpg.initialize(ecSpec, new SecureRandom());
-        KeyPair kp = kpg.generateKeyPair();
-
-        // Save keys in PEM format
-        byte[] privBytes = kp.getPrivate().getEncoded();
-        byte[] pubBytes = kp.getPublic().getEncoded();
-
-        // Encode to Base64 and add PEM headers
-        String privPem = "-----BEGIN PRIVATE KEY-----\n" +
-                Base64.getEncoder().encodeToString(privBytes) +
-                "\n-----END PRIVATE KEY-----\n";
-        String pubPem = "-----BEGIN PUBLIC KEY-----\n" +
-                Base64.getEncoder().encodeToString(pubBytes) +
-                "\n-----END PUBLIC KEY-----\n";
-
-        // Save to files
-        try {
-            Files.writeString(privPath, privPem);
-            Files.writeString(pubPath, pubPem);
-        } catch (IOException e) {
-            System.err.println("Error saving wallet: " + e.getMessage());
-            throw e;
-        }
-
-        return kp;
-    }
-
-    private String deriveAddress(PublicKey pubKey) throws Exception {
-        try {
-            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-            byte[] hash = sha256.digest(pubKey.getEncoded());
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 20; i++) sb.append(String.format("%02x", hash[i]));
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            System.err.println("Error deriving address: " + e.getMessage());
-            throw e;
-        }
-    }
-
-    // Load blockchain from compressed file
-
     private void saveChain() {
         try (GZIPOutputStream gos = new GZIPOutputStream(new FileOutputStream(CHAIN_FILE));
              Writer osw = new OutputStreamWriter(gos, StandardCharsets.UTF_8);
@@ -190,16 +117,6 @@ public class Node {
         }
     }
 
-    private String detectLocalIP() throws SocketException {
-        for (NetworkInterface ni : Collections.list(NetworkInterface.getNetworkInterfaces())) {
-            if (!ni.isUp() || ni.isLoopback()) continue;
-            for (InetAddress addr : Collections.list(ni.getInetAddresses())) {
-                if (addr instanceof Inet4Address) return addr.getHostAddress();
-            }
-        }
-        System.err.println("No suitable network interface found, using localhost");
-        return "127.0.0.1";
-    }
 
     private class AddHandler implements HttpHandler {
         public void handle(HttpExchange ex) throws IOException {
@@ -272,151 +189,12 @@ public class Node {
                 return;
             }
 
-            // read file contentw
+            // read file content
+            <|user_cursor_is_here|>
             
         }
     }
 
-    private void startSync() {
-        ScheduledExecutorService sch = Executors.newSingleThreadScheduledExecutor();
-        sch.scheduleAtFixedRate(() -> {
-            // syncPeers();
-            syncChain();
-        }, 0, 1, TimeUnit.MINUTES);
-    }
-
-    private void syncChain() {
-        List<List<Block>> chains = new ArrayList<>();
-        synchronized (blockchain) {
-            chains.add(new ArrayList<>(blockchain));
-        }
-        synchronized (peers) {
-            for (String peer : peers) {
-                if (peer.equals(myAddress)) continue;
-                try {
-                    String url = "http://" + peer + "/chain";
-                    HttpResponse<String> r = httpClient.send(
-                            HttpRequest.newBuilder().uri(URI.create(url)).GET().build(),
-                            HttpResponse.BodyHandlers.ofString());
-                    if (r.statusCode() == 200) {
-                        List<Block> c = objectMapper.readValue(r.body(), new TypeReference<>() {});
-                        chains.add(c);
-                    }
-                } catch (Exception e) {
-                    System.err.println("Error syncing chain from " + peer + ": " + e.getMessage());
-                }
-            }
-        }
-        List<Block> best = null;
-        for (List<Block> c : chains) {
-            if (isValidChain(c) && (best == null || c.size() > best.size())) {
-                best = c;
-            }
-        }
-        if (best == null) {
-            best = new ArrayList<>();
-            best.add(Block.createGenesis());
-        }
-        synchronized (blockchain) {
-            blockchain.clear();
-            blockchain.addAll(best);
-            saveChain();
-            System.out.println("Synced chain length: " + blockchain.size());
-            // Проверка содержимого генезис-блока
-            try {
-                JsonNode genesisData = objectMapper.readTree(blockchain.get(0).data);
-                System.out.println("Synced genesis config: " + genesisData.toString());
-            } catch (IOException e) {
-                System.err.println("Error reading synced genesis data: " + e.getMessage());
-            }
-        }
-    }
-
-    private boolean isValidChain(List<Block> chain) {
-        if (chain.isEmpty()) {
-            System.err.println("Chain validation failed: chain is empty");
-            return false;
-        }
-        Block g = Block.createGenesis();
-        if (chain.get(0).index != g.index || !chain.get(0).hash.equals(g.hash)) {
-            System.err.println("Chain validation failed: invalid genesis block");
-            return false;
-        }
-        for (int i = 1; i < chain.size(); i++) {
-            Block p = chain.get(i - 1);
-            Block c = chain.get(i);
-            if (!c.previousHash.equals(p.hash) || !c.calculateHash().equals(c.hash)) {
-                System.err.println("Chain validation failed at block " + i);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static class Block {
-        public int index;
-        public long timestamp;
-        public String data;
-        public String previousHash;
-        public long nonce;
-        public String hash;
-
-        public Block() {}
-
-        public Block(int index, long timestamp, String data, String previousHash) {
-            this.index = index;
-            this.timestamp = timestamp;
-            this.data = data;
-            this.previousHash = previousHash;
-            this.nonce = 0;
-            this.hash = calculateHash();
-        }
-
-        public String calculateHash() {
-            try {
-                String txt = index + Long.toString(timestamp) + data + previousHash + nonce;
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                byte[] d = md.digest(txt.getBytes(StandardCharsets.UTF_8));
-                Formatter f = new Formatter();
-                for (byte b : d) f.format("%02x", b);
-                String res = f.toString();
-                f.close();
-                return res;
-            } catch (Exception e) {
-                throw new RuntimeException("Error calculating hash: " + e.getMessage(), e);
-            }
-        }
-
-        public void mineBlock(int difficulty) {
-            String prefix = new String(new char[difficulty]).replace('\0', '0');
-            while (!hash.substring(0, difficulty).equals(prefix)) {
-                nonce++;
-                hash = calculateHash();
-            }
-        }
-
-        public static Block createGenesis() {
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectNode configNode = mapper.createObjectNode();
-            configNode.put("initialReward", INITIAL_REWARD);
-            configNode.put("halvingInterval", HALVING_INTERVAL);
-            ObjectNode allocationNode = mapper.createObjectNode();
-            allocationNode.put("to", INITIAL_ADDRESS);
-            allocationNode.put("amount", INITIAL_AMOUNT);
-            configNode.set("initialAllocation", allocationNode);
-            String configJson;
-            try {
-                configJson = mapper.writeValueAsString(configNode);
-            } catch (IOException e) {
-                throw new RuntimeException("Error serializing genesis config", e);
-            }
-            Block g = new Block(0, Instant.EPOCH.toEpochMilli(), configJson, "0");
-            g.mineBlock(DIFFICULTY);
-            return g;
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        new Node();
-    }
 }
+<|editable_region_end|>
+```

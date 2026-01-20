@@ -1,5 +1,5 @@
 --- NFA.java
-+++ NFA.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,7 +7,7 @@
  
  import java.io.BufferedReader;
  import java.io.FileNotFoundException;
-@@ -266,16 +265,19 @@
+@@ -266,16 +265,20 @@
  			return;
  		}
  
@@ -15,6 +15,7 @@
  			filePath = filePath.trim();
 -			<|user_cursor_is_here|>
 -			ArrayList<String> lines
++			
 +			ArrayList<String> lines = getFileInputStream(filePath);
  			StringBuilder body = new StringBuilder();
  			for (String line : lines) {

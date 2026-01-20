@@ -1,8 +1,5 @@
 <|editable_region_start|>
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * This interface implements hashing for password security
  */
@@ -16,8 +13,8 @@ public interface IHashPassword {
      */
     default String hashPassword(String password) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            // TODO: encrypt the password
+            byte[] hash = MessageDigest.getInstance("SHA-256").digest(password.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
             for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
@@ -25,7 +22,8 @@ public interface IHashPassword {
                 hexString.append(hex);
             }
             return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
+            
+        } catch (Exception e) {
             throw new RuntimeException("Error hashing password", e);
         }
     }
