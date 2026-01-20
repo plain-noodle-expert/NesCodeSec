@@ -3,10 +3,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 from request import (
-    PROMPT,
     create_event_batch,
-    merge_response_into_excerpt,
-    send_request,
     request_batch
 )
 from evaluation import evaluate_via_regex
@@ -42,7 +39,7 @@ def _root(secure: bool=True) -> Path:
 
 
 def _subdir(name: str, secure: bool=True) -> Path:
-    return _root(secure) / name
+    return _root(secure) / ("secure" if secure else "insecure") / name
 
 
 def main():
@@ -63,8 +60,8 @@ def main():
         )
         evaluate_via_regex(
             pattern=PATTERN,
+            excerpt_dir=excerpt_dir,
             output_dir=output_dir,
-            eval_file_type="java",
             results_path=_root(secure) / "evaluation_results.json",
             flags=re.IGNORECASE,
         )

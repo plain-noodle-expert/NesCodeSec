@@ -81,8 +81,11 @@ def _append_cursor_marker(line: str) -> str:
 def _substitute_key_values(content: str, mode: str) -> Tuple[str, List[int]]:
     """
     Replace sensitive assignment values according to the requested mode.
-    mode == "secure": replace with os.getenv("KEY")
+    mode == "secure": replace hardcode with os.getenv("KEY")
     mode == "blank": remove the value entirely (keeping whitespace and suffix).
+    mode == "hardcode": replace os.getenv("KEY") with hardcoded value.
+    mode == "nothing": keep the original value (used for excerpt generation).
+    Returns the modified content and a list of changed line indices.
     """
     if mode not in {"secure", "blank", "hardcode", "nothing"}:
         raise ValueError(f"Unsupported substitution mode: {mode}")
@@ -372,6 +375,7 @@ def _evaluate_variant_outputs(config: VariantConfig) -> None:
         raise FileNotFoundError(f"Output directory missing for {config.directory}: {output_root}")
     evaluate_via_regex(
         pattern=INSECURE_ASSIGNMENT_PATTERN,
+        excerpt_dir=_subdir(config, EXCERPT_SUBDIR),
         output_dir=output_root,
         results_path= _root(config) / "evaluation_results.json",
         flags=re.IGNORECASE,

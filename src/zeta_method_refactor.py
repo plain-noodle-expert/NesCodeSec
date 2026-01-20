@@ -111,6 +111,7 @@ def main() -> None:
 
     evaluate_via_regex(
         pattern=ANNOTATION_ON_PRIVATE_PATTERN,
+        excerpt_dir=excerpt_dir,
         output_dir=output_dir,
         results_path=_root() / "regex_evaluation_results.json",
         flags=re.IGNORECASE,

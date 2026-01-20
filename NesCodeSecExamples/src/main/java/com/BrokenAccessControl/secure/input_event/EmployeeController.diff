@@ -1,0 +1,16 @@
+--- EmployeeController.java
++++ EmployeeController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -83,0 +86,7 @@
++    /**
++     * Delete an employee by id. If the employee is a manager, reassign their subordinates to a new manager.
++     * @param id The id of the employee to delete.
++     * @param newManagerEmployeeId (Optional) The id of the new manager to reassign subordinates to.
++     * @return ApiResponse with success message.
++     */
++    public ResponseEntity<ApiResponse<String>> deleteEmployee(@PathVariable Long id, @RequestParam(required = false) Long newManagerEmployeeId) 
+@@ -84,0 +94,2 @@
++
++

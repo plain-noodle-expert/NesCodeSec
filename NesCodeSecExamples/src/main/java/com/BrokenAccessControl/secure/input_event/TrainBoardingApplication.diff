@@ -1,0 +1,11 @@
+--- TrainBoardingApplication.java
++++ TrainBoardingApplication.java
+@@ -0,0 +1,2 @@
++
++
+@@ -80 +82,5 @@
+-}+
++    @GetMapping("/users/all/{section}")
++    public ResponseEntity<Map<String, String>> getAllUsers(@PathVariable String section) 
++}
++

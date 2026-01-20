@@ -1,9 +1,0 @@
---- AdminController.java
-+++ AdminController.java
-@@ -0,0 +1,2 @@
-+
-+
-@@ -41 +43,3 @@
--}+    public ResponseEntity<Boolean> deleteProfileById(@PathVariable("id") String id) 
-+}
-+

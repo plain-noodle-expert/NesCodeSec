@@ -1,0 +1,16 @@
+--- UserController.java
++++ UserController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -63 +65,6 @@
+-  
++  /**
++   * Get profile of authenticated user
++   * @return UserDTO
++   */
++  public ResponseEntity<UserDTO> getAuthProfile(@PathVariable UUID id) 
++
+@@ -126,0 +134,2 @@
++
++

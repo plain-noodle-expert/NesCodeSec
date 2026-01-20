@@ -1,0 +1,14 @@
+--- UserConsoleService.java
++++ UserConsoleService.java
+@@ -0,0 +1,2 @@
++
++
+@@ -54 +56 @@
+-    
++
+@@ -58,0 +61,2 @@
++
++    public String deleteUser(UserRequest request) 
+@@ -59,0 +64,2 @@
++
++

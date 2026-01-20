@@ -1,0 +1,10 @@
+--- GuestbookController.java
++++ GuestbookController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -68,0 +71 @@
++	String removeEntry(@PathVariable Optional<GuestbookEntry> entry) 
+@@ -69,0 +73,2 @@
++
++

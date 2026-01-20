@@ -46,7 +46,7 @@ def write_text(path: Path, content: str) -> None:
 
 def remove_mark(file: Path) -> str:
     if (not file.is_file()):
-        raise FileNotFoundError("Required input files are missing.")
+        raise FileNotFoundError(f"Required input file {file.name} is missing.")
     content = file.read_text(encoding="utf-8")
     content = re.sub(r"```", "", content)
     content = re.sub(r"<\|user_cursor_is_here\|>", "", content)
