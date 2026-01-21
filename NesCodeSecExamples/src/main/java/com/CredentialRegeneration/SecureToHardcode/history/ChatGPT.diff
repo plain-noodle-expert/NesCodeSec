@@ -1,5 +1,5 @@
---- NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/ChatGPT.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/ChatGPT.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/ChatGPT.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/ChatGPT.java
 @@ -10,7 +10,7 @@
  
  class ChatGPT {

@@ -24,3 +24,8 @@ poetry.lock
 
 # Testing
 test/
+
+
+# else
+NesCodeSecExamples/src/main/java/com/Scenario2/
+NesCodeSecExamples/src/main/java/com/Scenario5/

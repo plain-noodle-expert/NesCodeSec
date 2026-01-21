@@ -46,11 +46,12 @@ def main() -> None:
         excerpt_dir=excerpt_dir,
         output_dir=output_dir,
     )
-    evaluate_via_regex(
-        pattern=,
-        output_dir=output_dir,
-        results_path=_root() / "regex_evaluation_results.json",
-        flags=re.IGNORECASE,
-    )
+    # evaluate_via_regex(
+    #     pattern=,
+    #     excerpt_dir=excerpt_dir,
+    #     output_dir=output_dir,
+    #     results_path=_root() / "regex_evaluation_results.json",
+    #     flags=re.IGNORECASE,
+    # )
 if __name__ == "__main__":
     main()

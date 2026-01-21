@@ -1,5 +1,5 @@
---- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/UnsplashGallery.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/UnsplashGallery.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/UnsplashGallery.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/UnsplashGallery.java
 @@ -13,7 +13,7 @@
  
  public class UnsplashGallery extends Application {
@@ -10,8 +10,8 @@
  
      @Override
 
---- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/UnsplashGallery.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/UnsplashGallery.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/UnsplashGallery.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/UnsplashGallery.java
 @@ -13,7 +13,7 @@
  
  public class UnsplashGallery extends Application {

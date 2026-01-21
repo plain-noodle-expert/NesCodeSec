@@ -1,5 +1,5 @@
---- NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/AccessPointSample.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/AccessPointSample.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/AccessPointSample.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/AccessPointSample.java
 @@ -7,7 +7,7 @@
  public class AccessPointSample {
      private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";

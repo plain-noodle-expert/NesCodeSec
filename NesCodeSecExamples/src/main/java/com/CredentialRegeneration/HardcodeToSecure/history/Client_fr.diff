@@ -1,5 +1,5 @@
---- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Client_fr.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Client_fr.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/Client_fr.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/Client_fr.java
 @@ -36,7 +36,7 @@
  public class Client_fr {
  
@@ -10,8 +10,8 @@
      static HashMap<String , Terme>Termes = new HashMap<String, Terme>();
      static Logger logRoot = Logger.getRootLogger();
 
---- NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Client_fr.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/HardcodeToSecure/base/Client_fr.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/Client_fr.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/HardcodeToSecure/base/Client_fr.java
 @@ -36,7 +36,7 @@
  public class Client_fr {
  

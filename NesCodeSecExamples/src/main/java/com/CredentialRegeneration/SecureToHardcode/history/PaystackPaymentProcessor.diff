@@ -1,5 +1,5 @@
---- NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/PaystackPaymentProcessor.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/PaystackPaymentProcessor.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/PaystackPaymentProcessor.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/PaystackPaymentProcessor.java
 @@ -5,7 +5,7 @@
  public class PaystackPaymentProcessor {
  

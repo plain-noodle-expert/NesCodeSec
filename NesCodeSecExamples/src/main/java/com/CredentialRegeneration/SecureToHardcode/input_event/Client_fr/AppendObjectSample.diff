@@ -1,5 +1,5 @@
---- NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/AppendObjectSample.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario8/SecureToHardcode/base/AppendObjectSample.java
+--- NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/AppendObjectSample.java
++++ NesCodeSecExamples/src/main/java/com/CredentialRegeneration/SecureToHardcode/base/AppendObjectSample.java
 @@ -43,7 +43,7 @@
      
      private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
