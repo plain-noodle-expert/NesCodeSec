@@ -14,7 +14,7 @@
      }
  
 -    @PreAuthorize <|user_cursor_is_here|>
-+    @PreAuthorize("hasRole('ADMIN')")
++    @PreAuthorize("hasRole('USER')")
      private Claims extractAllClaims(String token) {
          return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
      }

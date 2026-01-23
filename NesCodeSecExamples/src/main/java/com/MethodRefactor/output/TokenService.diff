@@ -1,0 +1,18 @@
+--- TokenService.java
++++ TokenService.java
+@@ -1,6 +1,7 @@
+-package com.hs.service;
++<|editable_region_begin|>
++}
+ 
+ import com.auth0.jwt.JWT;
+ import com.auth0.jwt.algorithms.Algorithm;
+ import com.hs.pojo.Users;
+ import org.springframework.stereotype.Service;
+@@ -19,6 +20,6 @@
+                 .sign(Algorithm.HMAC256(user.getPasswd()));
+         return token;
+     }
+ }
+ <|editable_region_end|>
+-```+```

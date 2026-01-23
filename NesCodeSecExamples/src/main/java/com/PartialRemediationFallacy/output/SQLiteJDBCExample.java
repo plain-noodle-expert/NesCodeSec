@@ -1,3 +1,4 @@
+<|editable_region_start|>
 import org.sqlite.SQLiteConfig;
 
 import java.sql.*;
@@ -222,4 +223,4 @@ public class SQLiteJDBCExample {
      * Page size must be an integer between 1 (inclusive) and 5 (inclusive).
      * Then, the method prints students in a table for each page. <br>
      * Pagination in SQLite can be done through LIMIT keyword and last id of the last page.
-     * Therefore, the method adopts the
+    

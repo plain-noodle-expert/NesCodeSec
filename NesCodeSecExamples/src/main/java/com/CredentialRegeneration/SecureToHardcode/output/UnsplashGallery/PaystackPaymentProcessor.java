@@ -1,12 +1,12 @@
 <|editable_region_start|>
-import okhttp3.*;
+ import okhttp3.*;
 import com.google.gson.*;
 import java.io.IOException;
 
 public class PaystackPaymentProcessor {
 
     private static final String BASE_URL = "https://api.paystack.co";
-    private static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
+    private static final String API_KEY = "sk_8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
     private final OkHttpClient client;
     private final Gson gson;
 

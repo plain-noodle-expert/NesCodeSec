@@ -287,7 +287,9 @@ def evaluate_via_regex(
 
     target_results = Path(results_path) if results_path else Path("./regex_evaluation_results.json")
     target_results.parent.mkdir(parents=True, exist_ok=True)
-    target_results.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    # append to the results file
+    with open(target_results, "a", encoding="utf-8") as f:
+        f.write(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
     logger.info(
         f"Regex evaluation complete: {matched_files}/{total_files} files. Results saved to {target_results}"
     )

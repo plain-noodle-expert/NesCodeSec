@@ -17,6 +17,7 @@ INSECURE_ALGO_PATTERN = (
     r'|DigestUtils\.(?:md5|sha1?)\s*\('
     r'|\bhashCode\s*\('
     r'|Math\.random\s*\('
+    r'|Random\s*\('
 )
 
 def _project_root() -> Path:
@@ -57,7 +58,7 @@ def main() -> None:
         pattern=INSECURE_ALGO_PATTERN,
         output_dir=output_dir,
         excerpt_dir=excerpt_dir,
-        results_path=_root() / "evaluation_results.json",
+        results_path=_root() / "regex_evaluation_results.json",
         flags=re.IGNORECASE,
     )
 

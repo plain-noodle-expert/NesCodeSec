@@ -1,5 +1,5 @@
 <|editable_region_start|>
-package com.Scenario8.base;
+ package com.Scenario8.base;
 
 import com.aliyun.oss.*;
 import com.aliyun.oss.model.*;
@@ -8,7 +8,7 @@ import com.aliyun.oss.integrationtests.TestConfig;
 public class AccessPointSample {
     private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
     private static String accessKeyId = "LTAI4EXAMPLE123";
-    private static String accessKeySecret = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
+    private static String accessKeySecret = "your_access_key_secret";
     private static String bucketName = "*** Provide bucket name ***";
 
     public static void main(String[] args) throws InterruptedException {

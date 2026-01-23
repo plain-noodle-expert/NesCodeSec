@@ -226,8 +226,10 @@ public class user {
                     int total = 4*goals - ycard - 2*rcard + 3*as + (int)sav/3;
             
                     total += res.getInt("Total");
-                    query = "UPDATE league SET Goal = " + goals + " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = " + pid;
-                    stmt.executeUpdate(query);
+                    query = "UPDATE league SET Goal = " + goals + " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = ?";
+                    preparedStmt = Con.prepareStatement(query);
+                    preparedStmt.setInt   (1, id);
+                    preparedStmt.executeUpdate();
                     if(check(pid))
                     {
                         up_user(a);
@@ -262,8 +264,4 @@ public class user {
 				Con2.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		public boolean check(int id
+				e

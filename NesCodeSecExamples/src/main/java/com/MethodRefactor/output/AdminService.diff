@@ -1,0 +1,42 @@
+--- AdminService.java
++++ AdminService.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package fr.ippon.tatami.service;
+ 
+ import fr.ippon.tatami.domain.Domain;
+ import fr.ippon.tatami.domain.Group;
+@@ -33,11 +32,11 @@
+  * Administration service. Only users with the "admin" role should access it.
+  *
+  * @author Julien Dubois
+  */
+ @Service
+-@EnableMethodSecurit
++@EnableMethodSecurity
+ public class AdminService {
+ 
+     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
+ 
+     @Inject
+@@ -83,11 +82,11 @@
+         log.trace("AdminService.getEnvProperties() return");
+         return properties;
+     }
+ 
+     // Refactor to allow other class to use this method
+-    <|user_cursor_is_here|>private void loadProperty(Map<String, String> properties, String key) {
++    public void loadProperty(Map<String, String> properties, String key) {
+         try {
+             properties.put(key, env.getProperty(key));
+         } catch (Throwable e) {
+             properties.put(key, "(Invalid value)");
+         }
+@@ -178,6 +177,6 @@
+         log.info("Search engine index rebuilt in " + (Calendar.getInstance().getTimeInMillis() - fullIndexStartTime) + " ms.");
+     }
+ 
+ }
+ <|editable_region_end|>
+-```+```

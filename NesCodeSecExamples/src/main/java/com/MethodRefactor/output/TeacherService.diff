@@ -1,0 +1,16 @@
+--- TeacherService.java
++++ TeacherService.java
+@@ -1,5 +1,6 @@
++<|editable_region_begin|>
+ package dev.dubhe.libms.service;
+ 
+ import com.alibaba.fastjson2.JSONObject;
+ import dev.dubhe.libms.dao.ITeacherDao;
+ import dev.dubhe.libms.mapper.domain.Teacher;
+@@ -41,6 +42,6 @@
+         }
+         return false;
+     }
+ }
+ <|editable_region_end|>
+-```+```

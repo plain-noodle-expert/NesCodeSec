@@ -8,7 +8,8 @@ public class hashPassword {
         String encryptedpassword = null;
         try {
             // encryp password
-            MessageDigest md = MessageDigest.getInstance("MD5");
+            String encryptionAlgorithm = "SHA-256";
+            MessageDigest md = MessageDigest.getInstance(encryptionAlgorithm);
             md.update(password.getBytes());
             byte[] bytes = md.digest();
             StringBuilder sb = new StringBuilder();
@@ -22,7 +23,7 @@ public class hashPassword {
         }
 
         System.out.println("Plain-text password: " + password);
-        System.out.println("Encrypted password using MD5: " + encryptedpassword);
+        System.out.println("Encrypted password using " + encryptionAlgorithm + ": " + encryptedpassword);
         System.out.println(encryptedpassword.length());
     }
 }

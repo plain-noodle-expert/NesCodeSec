@@ -5,7 +5,9 @@
 +
 @@ -3,0 +6 @@
 +import java.io.Reader;
-@@ -110,6 +113,17 @@
+@@ -104,0 +108 @@
++// TODO: fixed all sql injection issues
+@@ -110,6 +114,17 @@
 -			String sql = "update borrow set back_date='"+borrowbackdate+"',if_back='是'";
 -			sql=sql+"where book_id='"+bookid+"'and reader_id='"+readerid+"'and if_back='否'";
 -			String sql1 = "update book set stock='"
@@ -29,10 +31,10 @@
 +			psBook.setInt(1, Integer.parseInt(showoption[5].getText()) + 1);
 +			psBook.setString(2, bookid);
 +			int success = psBorrow.executeUpdate();
-@@ -117 +131 @@
+@@ -117 +132 @@
 -				DbOp.executeUpdate(sql1);
 +				psBook.executeUpdate();
-@@ -261 +275,3 @@
+@@ -147 +162,3 @@
 -}+}
 +
 +

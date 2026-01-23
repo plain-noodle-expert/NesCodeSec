@@ -1,0 +1,22 @@
+--- StudentController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package code.uz.controller;
+ 
+ 
+ import code.uz.dto.*;
+@@ -41,9 +40,11 @@
+     public ResponseEntity<ResponseDTO<ProfileResponseDTO>> updateProfile(@PathVariable("id") String id, @Validated(OnUpdate.class) @RequestBody ProfileRequestDTO profileRequestDTO) {
+         return ResponseEntity.ok(profileService.updateDetailsForStudent(id, profileRequestDTO));
+     }
+ 
+     @DeleteMapping("/delete/{id}")
+-    public ResponseEntity<Boolean> deleteProfileById(@PathVariable("id") String id) <|user_cursor_is_here|>
++    public ResponseEntity<Boolean> deleteProfileById(@PathVariable("id") String id) {
++        return ResponseEntity.ok(profileService.deleteProfile(id));
++    }
+ }
+ <|editable_region_end|>
+ ```

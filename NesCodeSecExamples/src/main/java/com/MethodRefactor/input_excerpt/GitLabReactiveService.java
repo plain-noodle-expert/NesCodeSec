@@ -41,7 +41,8 @@ public class GitLabReactiveService {
                 .flatMap(resp -> Flux.fromIterable(resp.body()));
     }
 
-    @PreAuthorize <|user_cursor_is_here|>
+// refactor to allow other methods to use it
+    <|user_cursor_is_here|>
     private Mono<ProjectPageResponse> fetchPage(int page) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder

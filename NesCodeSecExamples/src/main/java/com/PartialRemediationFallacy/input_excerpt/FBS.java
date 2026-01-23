@@ -78,7 +78,7 @@ public class FBS
                 
                 PreparedStatement stmt1 = con.prepareStatement("Select * from Seats where flightName = ?");
                 stmt1.setString(1, flightName);
-                ResultSet r = stmt1.executeQuery();<|user_cursor_is_here|>
+                ResultSet r = stmt1.executeQuery();
                 
                 while(r.next())
                 {
@@ -161,7 +161,7 @@ public class FBS
             
             Statement statement = con.createStatement();
             
-            String q = "SELECT * FROM FLIGHTS WHERE DEPARTURECITY = '" + origin + "' AND ARRIVALCITY = '" + destination + "' AND ECONOMYSEATS > 0";
+            <|user_cursor_is_here|>String q = "SELECT * FROM FLIGHTS WHERE DEPARTURECITY = '" + origin + "' AND ARRIVALCITY = '" + destination + "' AND ECONOMYSEATS > 0";
             
             ResultSet r = statement.executeQuery(q);
 

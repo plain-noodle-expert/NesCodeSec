@@ -1,0 +1,27 @@
+--- GuestbookController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package guestbook;
+ 
+ import io.github.wimdeblauwe.htmx.spring.boot.mvc.HtmxResponse;
+ import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
+@@ -65,10 +64,15 @@
+ 		guestbook.save(form.toNewEntry());
+ 
+ 		return "redirect:/guestbook";
+ 	}
+ 
+-	
+-	String removeEntry(@PathVariable Optional<GuestbookEntry> entry) <|user_cursor_is_here|>
++	@DeleteMapping(path = "/guestbook/{id}")
++	String removeEntry(@PathVariable Optional<GuestbookEntry> entry) {
++		if (entry.isPresent()) {
++			guestbook.delete(entry.get());
++		}
++		return "redirect:/guestbook";
++	}
+ }
+ <|editable_region_end|>
+ ```

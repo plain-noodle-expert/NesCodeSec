@@ -1,0 +1,20 @@
+--- CUser.java
++++ CUser.java
+@@ -0,0 +1,2 @@
++
++
+@@ -116,0 +119,2 @@
++	// refactor the method to allow other classes to use it
++	@PreAuthorize
+@@ -210,4 +214 @@
+-		final CUser loginUser = ((IUserRepository) repository).findByUsername(username).orElseThrow(() -> {
+-			LOGGER.warn("User not found with username: {}", username);
+-			return new UsernameNotFoundException("User not found with username: " + username);
+-		});
++		final CUser loginUser = getUser(username);
+@@ -224,0 +226,2 @@
++	// implement checkUser method
++	
+@@ -253 +256,2 @@
+-}+}
++

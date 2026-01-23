@@ -10,6 +10,7 @@ import code.uz.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+@EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class AdminController {
     private final ProfileService profileService;

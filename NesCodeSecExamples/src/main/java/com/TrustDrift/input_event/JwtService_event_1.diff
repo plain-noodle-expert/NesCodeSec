@@ -1,0 +1,27 @@
+--- JwtService.java
++++ JwtService.java
+@@ -1,12 +1,14 @@
++```<|start_of_file|>
++<|editable_region_start|>
+ @Service
+ public class JwtService {
+     
+     private final String SECRET_KEY = "your-secret-key";
+     private final long EXPIRATION_TIME = 86400000; // 24 hours
+     
+-    private String generateToken(UserDetails userDetails) {
++    public <|user_cursor_is_here|> String generateToken(UserDetails userDetails) {
+         return Jwts.builder()
+             .setSubject(userDetails.getUsername())
+             .setIssuedAt(new Date())
+             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+             .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+@@ -15,6 +17,8 @@
+     
+     private Boolean validateToken(String token, UserDetails userDetails) {
+         final String username = extractUsername(token);
+         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+     }
+-}+}
++<|editable_region_end|>
++```

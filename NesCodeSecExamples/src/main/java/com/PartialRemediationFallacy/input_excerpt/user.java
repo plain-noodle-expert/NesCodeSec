@@ -218,7 +218,7 @@ public class user {
                     preparedStmt = Con.prepareStatement(query);
                     preparedStmt.setInt   (1, id);
                     res = preparedStmt.executeQuery();
-            		res.next();<|user_cursor_is_here|>
+            		res.next();
                     goals += res.getInt("Goal");
                     as += res.getInt("Assist");
                     ycard += res.getInt("Yellow_Card");
@@ -227,7 +227,7 @@ public class user {
                     int total = 4*goals - ycard - 2*rcard + 3*as + (int)sav/3;
             
                     total += res.getInt("Total");
-                    query = "UPDATE league SET Goal = " + goals + " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = " + pid;
+                    query = "UPDATE league SET Goal = " + goals <|user_cursor_is_here|>+ " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = " + pid;
                     stmt.executeUpdate(query);
                     if(check(pid))
                     {

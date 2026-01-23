@@ -133,14 +133,14 @@ public class Race {
                                     sql = "create table if not exists ? (gamemode varchar(255) PRIMARY KEY, best_time INTEGER NOT NULL, score INTEGER NOT NULL)";
                                     PreparedStatement statement = Racebot.database.prepareStatement(sql);
                                     statement.setString(1, newRunnerTableName);
-                                    statement.execute();<|user_cursor_is_here|>
+                                    statement.execute();
 
                                     runnerTable = newRunnerTableName;
                                 }
 
                                 //Check if the runner's best time was beaten and pull their current rating
 
-                                sql = "select * from " + runnerTable + " where gamemode ='"+ dbGameMode + "'";
+                                sql = "select * from " + runnerTable <|user_cursor_is_here|>+ " where gamemode ='"+ dbGameMode + "'";
                                 ResultSet runnersTableResults = statement.executeQuery(sql); //TODO better name
 
                                 boolean result = false;

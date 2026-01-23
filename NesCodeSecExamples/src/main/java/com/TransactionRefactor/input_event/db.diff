@@ -1,0 +1,19 @@
+--- db.java
++++ db.java
+@@ -0,0 +1,2 @@
++
++
+@@ -36 +38 @@
+-                logger.info("Connected to database");
++                logger.info("Connected to database for user: " + USERNAME);
+@@ -37,0 +40 @@
++                logger.info("Executing SQL query");
+@@ -41 +43,0 @@
+-                
+@@ -47 +48,0 @@
+-
+@@ -48,0 +50 @@
++                    logger.info("Fetch successfully");
+@@ -57 +59,2 @@
+-}+}
++

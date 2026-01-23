@@ -18,9 +18,11 @@ SENSITIVE_VARIABLES: Dict[str, List[str]] = {
     "Buy.java": ["username", "API_KEY"],
     "Car.java": ["token", "email"],
     "JWT.java": ["token"],
-    "d1.java": ["username", "password", "user_type"],
+    "d1.java": ["username", "password", "user_type", "sqlquery"],
     "db.java": ["JDBC_URL", "USERNAME", "PASSWORD"],
+    "Endpoint.java": ["format", "API_KEY"],
     "java.java": ["ACCOUNT_KEY", "API_KEY"],
+    "LSSS.java": ["cur"],
     "vs.java": ["username_holder", "username"],
 }
 
@@ -67,17 +69,13 @@ def main() -> None:
 
     evaluate_via_regex(
         pattern=_insecure_log_regex(),
+        excerpt_dir=excerpt_dir,
         output_dir=output_dir,
-        results_path=_root() / "evaluation_results.json",
+        results_path=_root() / "regex_evaluation_results.json",
         flags=re.IGNORECASE,
     )
 
 
 if __name__ == "__main__":
-    evaluate_via_regex(
-        pattern=_insecure_log_regex(),
-        output_dir=_subdir(OUTPUT_SUBDIR),
-        results_path=_root() / "evaluation_results.json",
-        flags=re.IGNORECASE,
-    )
+    main()
 

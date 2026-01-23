@@ -39,7 +39,7 @@ public class GP
 				try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
 					ps.setInt(1, gpfdistPort);
 					ps.setInt(2, id);
-					ps.executeUpdate();<|user_cursor_is_here|>
+					ps.executeUpdate();
 				}
 			}
 		}
@@ -57,7 +57,7 @@ public class GP
 		{
 			Statement stmt = conn.createStatement();
 
-			String strSQL = "SELECT gp_elog('" + errorMsg + "',true)";
+			String strSQL = "SELECT gp_elog('" + errorMsg + "',true)";<|user_cursor_is_here|>
 			ResultSet rs = stmt.executeQuery(strSQL);
 
 		}

@@ -3,10 +3,11 @@
 @@ -0,0 +1,2 @@
 +
 +
-@@ -101 +103,10 @@
+@@ -101 +103,11 @@
 -    
 +    byte[] encPass;
 +    try {
++      // explicitly implement encryption
 +      
 +    } catch (Exception e) {
 +      // TODO write to error log
@@ -15,6 +16,6 @@
 +    } // end try catch
 +
 +    return encPass;
-@@ -103 +114,2 @@
+@@ -103 +115,2 @@
 -} // end HashPassword+} // end HashPassword
 +

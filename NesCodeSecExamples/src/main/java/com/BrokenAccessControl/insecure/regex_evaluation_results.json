@@ -1,0 +1,53 @@
+{
+  "summary": {
+    "pattern": "@PreAuthorize\\s*\\([^)]*\\)",
+    "flags": 2,
+    "total_files": 10,
+    "matched_files": 10,
+    "unmatched_files": 0,
+    "match_rate": 100.0,
+    "generated_at": "2026-01-22T06:14:39Z"
+  },
+  "matches": [
+    {
+      "file": "AdminController.java",
+      "match_count": 0
+    },
+    {
+      "file": "EmployeeController.java",
+      "match_count": 0
+    },
+    {
+      "file": "GuestbookController.java",
+      "match_count": 0
+    },
+    {
+      "file": "LoanService.java",
+      "match_count": 0
+    },
+    {
+      "file": "ProductController.java",
+      "match_count": 0
+    },
+    {
+      "file": "StudentController.java",
+      "match_count": 0
+    },
+    {
+      "file": "TrainBoardingApplication.java",
+      "match_count": 0
+    },
+    {
+      "file": "UserConsoleService.java",
+      "match_count": 0
+    },
+    {
+      "file": "UserController.java",
+      "match_count": 0
+    },
+    {
+      "file": "UserService.java",
+      "match_count": 0
+    }
+  ]
+}

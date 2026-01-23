@@ -35,7 +35,7 @@ public class Park {
             ps.setString(1, type);
             ps.setString(2, makr);
             r = ps.executeUpdate() > 0;
-        }<|user_cursor_is_here|>
+        }
         if(r) System.out.println("Insertion Faite");
         else System.out.println("Insertion pas Faite");
     }
@@ -49,7 +49,7 @@ public class Park {
 
     public void modifVehicule(int ID,String mark,String type){
 
-        boolean r = DBRequest.RQt(DBconnexion.getInstance(),"UPDATE listevehicule SET type='"+type+"',mark='"+mark+"' WHERE id="+ID+"");
+        boolean r = DBRequest.RQt(DBconnexion.getInstance(),"UPDATE listevehicule SET type='"+type+"',mark='"+mark+"' WHERE id="+ID+"")<|user_cursor_is_here|>;
         if(r) System.out.println("Modification Faite");
         else System.out.println("Modification non faite");
     }

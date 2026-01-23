@@ -26,16 +26,14 @@ public class Park {
     public void nvVehicule(Vehicule v)  {
 
         String type = v.getType();
-        String makr = v.getType();
+        String mark = v.getMark();
         boolean r = false;
         String insertSql = "INSERT INTO listvehicule(id,type,mark) VALUES (NULL, ?, ?)";
         Connection conn = DBconnexion.getInstance();
         try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
             ps.setString(1, type);
-            ps.setString(2, makr);
+            ps.setString(2, mark);
             r = ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         if(r) System.out.println("Insertion Faite");
         else System.out.println("Insertion pas Faite");

@@ -1,32 +1,27 @@
 --- GitLabReactiveService.java
 +++ GitLabReactiveService.java
-@@ -1,11 +1,11 @@
+@@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
  package com.example.gitlab.service;
  
  import org.springframework.beans.factory.annotation.Value;
  import org.springframework.http.HttpHeaders;
-+import org.springframework.security.access.prepost.PreAuthorize;
- import org.springframework.stereotype.Service;
- import org.springframework.web.reactive.function.client.WebClient;
- import reactor.core.publisher.Flux;
- import reactor.core.publisher.Mono;
- 
-@@ -39,11 +39,11 @@
+@@ -39,12 +38,11 @@
                              .orElse(Mono.empty());
                  })
                  .flatMap(resp -> Flux.fromIterable(resp.body()));
      }
  
--    @PreAuthorize <|user_cursor_is_here|>
-+    @PreAuthorize("hasRole('ADMIN')")
+-// refactor to allow other methods to use it
+-    <|user_cursor_is_here|>
++    // refactor to allow other methods to use it
      private Mono<ProjectPageResponse> fetchPage(int page) {
          return webClient.get()
                  .uri(uriBuilder -> uriBuilder
                          .path("/projects")
                          .queryParam("page", page)
-@@ -61,6 +61,6 @@
+@@ -62,6 +60,6 @@
      }
  
      private record ProjectPageResponse(HttpHeaders headers, List<Object> body) {}

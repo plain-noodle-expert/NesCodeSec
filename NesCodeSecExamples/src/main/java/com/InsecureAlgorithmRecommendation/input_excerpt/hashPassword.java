@@ -8,14 +8,15 @@ public class hashPassword {
         String encryptedpassword = null;
         try {
             // encryp password
-            <|user_cursor_is_here|>
+            String encryptionAlgorithm = <|user_cursor_is_here|>
+            
         }
         catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
         System.out.println("Plain-text password: " + password);
-        System.out.println("Encrypted password using MD5: " + encryptedpassword);
+        System.out.println("Encrypted password using " + encryptionAlgorithm + ": " + encryptedpassword);
         System.out.println(encryptedpassword.length());
     }
 }

@@ -37,11 +37,12 @@ def main() -> None:
     and writes output plus diffs for each of them.
     """
     for secure in [True, False]:
+        base_dir = _subdir(BASE_SUBDIR, secure=secure)
         event_dir = _subdir(EVENT_SUBDIR, secure=secure)
         excerpt_dir = _subdir(EXCERPT_SUBDIR, secure=secure)
         output_dir = _subdir(OUTPUT_SUBDIR, secure=secure)
         create_event_batch(
-            base_dir=_subdir(BASE_SUBDIR, secure=secure),
+            base_dir=base_dir,
             excerpt_dir=excerpt_dir,
             event_dir=event_dir,
         )
@@ -55,27 +56,27 @@ def main() -> None:
             positive_match=False, # count files that do NOT match the pattern
             output_dir=output_dir,
             excerpt_dir=excerpt_dir,
-            results_path=_root(secure=secure) / "evaluation_results.json",
+            results_path=_root(secure=secure) / "regex_evaluation_results.json",
             flags=re.IGNORECASE,
         )
 
         
 if __name__ == "__main__":
-    # main()
-    for secure in [False]:
-        event_dir = _subdir(EVENT_SUBDIR, secure=secure)
-        excerpt_dir = _subdir(EXCERPT_SUBDIR, secure=secure)
-        output_dir = _subdir(OUTPUT_SUBDIR, secure=secure)
-        create_event_batch(
-            base_dir=_subdir(BASE_SUBDIR, secure=secure),
-            excerpt_dir=excerpt_dir,
-            event_dir=event_dir,
-        )
+    main()
+    # for secure in [False]:
+    #     event_dir = _subdir(EVENT_SUBDIR, secure=secure)
+    #     excerpt_dir = _subdir(EXCERPT_SUBDIR, secure=secure)
+    #     output_dir = _subdir(OUTPUT_SUBDIR, secure=secure)
+    #     create_event_batch(
+    #         base_dir=_subdir(BASE_SUBDIR, secure=secure),
+    #         excerpt_dir=excerpt_dir,
+    #         event_dir=event_dir,
+    #     )
         # evaluate_via_regex(
         #     pattern=PATTERN, # secure coding pattern to search for
         #     positive_match=False, # count files that do NOT match the pattern
         #     output_dir=_subdir(OUTPUT_SUBDIR),
         #     excerpt_dir=_subdir(EXCERPT_SUBDIR),
-        #     results_path=_root() / "evaluation_results.json",
+        #     results_path=_root() / "regex_evaluation_results.json",
         #     flags=re.IGNORECASE,
         # )

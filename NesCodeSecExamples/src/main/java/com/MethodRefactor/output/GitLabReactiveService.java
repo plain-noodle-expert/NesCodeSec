@@ -3,7 +3,6 @@ package com.example.gitlab.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -41,7 +40,7 @@ public class GitLabReactiveService {
                 .flatMap(resp -> Flux.fromIterable(resp.body()));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    // refactor to allow other methods to use it
     private Mono<ProjectPageResponse> fetchPage(int page) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder

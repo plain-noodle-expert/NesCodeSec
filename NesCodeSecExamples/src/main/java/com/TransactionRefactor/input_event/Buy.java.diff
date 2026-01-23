@@ -1,5 +1,0 @@
---- NesCodeSecExamples/src/main/java/com/Scenario3/base/Buy.java
-+++ NesCodeSecExamples/src/main/java/com/Scenario3/base/Buy.java
-@@ -36 +38 @@
--        logger.info("Initializing Buy frame for user");
-+        logger.info("Initializing Buy frame for user: {}", username);

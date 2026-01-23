@@ -1,0 +1,8 @@
+--- vs.java
++++ vs.java
+@@ -0,0 +1,2 @@
++
++
+@@ -56 +58 @@
+-       logger.info("Created enemy");
++       logger.info("Created enemy for user: " + name);

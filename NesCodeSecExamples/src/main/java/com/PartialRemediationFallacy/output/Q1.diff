@@ -1,5 +1,5 @@
 --- Q1.java
-+++ Q1.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,19 +7,19 @@
  import java.sql.PreparedStatement;
  import java.sql.ResultSet;
  import java.sql.SQLException;
-@@ -89,11 +88,11 @@
-                         cnt += 1;
-                     }
+@@ -107,11 +106,11 @@
+         try {
+             // Create a statement
+             Statement stmt = conn.createStatement();
  
-                     for(int i=0; i < values.size(); i++) {
-                         int res = stmt.executeUpdate(values.get(i));
--                    }<|user_cursor_is_here|>
-+                    }
-                 }
-             }
+             // Execute the query to filter tuples based on the first condition
+-            String filterQuery = "SELECT * FROM " + FINAL_EXAM_JDBC_TABLE_NAME +<|user_cursor_is_here|>
++            String filterQuery = "SELECT * FROM " + FINAL_EXAM_JDBC_TABLE_NAME +
+                     " WHERE SUBSTR(postreq_id, 1, 2) = 'CS' OR SUBSTR(postreq_id, 1, 2) = 'DS'";
  
-             conn.commit();
-         } catch (SQLException e){
+             ResultSet rs = stmt.executeQuery(filterQuery);
+ 
+             // Display the filtered tuples
 @@ -221,6 +220,6 @@
              e.printStackTrace();
          }

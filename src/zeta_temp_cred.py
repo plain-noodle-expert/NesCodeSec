@@ -390,7 +390,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    # main()
-    for config in VARIANTS:
-        _generate_variant_artifacts(config)
+    main()
+    # for config in VARIANTS:
+    #     _generate_variant_artifacts(config)
         # _evaluate_variant_outputs(config)

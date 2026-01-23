@@ -1,5 +1,5 @@
 --- Race.java
-+++ Race.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,39 +7,25 @@
  import sx.blah.discord.handle.obj.IUser;
  
  import java.sql.PreparedStatement;
-@@ -131,11 +130,16 @@
- 
-                                     //Create new table for runner
-                                     sql = "create table if not exists ? (gamemode varchar(255) PRIMARY KEY, best_time INTEGER NOT NULL, score INTEGER NOT NULL)";
-                                     PreparedStatement statement = Racebot.database.prepareStatement(sql);
-                                     statement.setString(1, newRunnerTableName);
--                                    statement.execute();<|user_cursor_is_here|>
-+                                    statement.execute();
-+
-+                                    sql = "create table if not exists ? (gamemode varchar(255) PRIMARY KEY, best_time INTEGER NOT NULL, score INTEGER NOT NULL)";
-+                                    PreparedStatement statement = Racebot.database.prepareStatement(sql);
-+                                    statement.setString(1, newRunnerTableName);
-+                                    statement.execute();
- 
+@@ -138,11 +137,11 @@
                                      runnerTable = newRunnerTableName;
                                  }
  
                                  //Check if the runner's best time was beaten and pull their current rating
-@@ -241,34 +245,6 @@
-         return count;
-     }
  
-     public String getMulti(){
-         String link = "http://kadgar.net/live/";
--        boolean atLeastOne = false;
--
--        for (String r : racers.keySet()){
--            String sql = "SELECT stream FROM streams WHERE name='" + r + "'";
--            try {
--                Statement statement = Racebot.database.createStatement();
--                ResultSet rs = statement.executeQuery(sql);
--
--                while (rs.next()){
+-                                sql = "select * from " + runnerTable <|user_cursor_is_here|>+ " where gamemode ='"+ dbGameMode + "'";
++                                sql = "select * from " + runnerTable + " where gamemode ='"+ dbGameMode + "'";
+                                 ResultSet runnersTableResults = statement.executeQuery(sql); //TODO better name
+ 
+                                 boolean result = false;
+                                 while (runnersTableResults.next()){
+                                     result = true;
+@@ -250,25 +249,6 @@
+             try {
+                 Statement statement = Racebot.database.createStatement();
+                 ResultSet rs = statement.executeQuery(sql);
+ 
+                 while (rs.next()){
 -                    atLeastOne = true;
 -                    link += rs.getString("stream") + "/";
 -                }
@@ -59,4 +45,4 @@
 -    }
 -}
 -<|editable_region_end|>
--```+        boolean atLeastOne =
+-```+                    atLeast

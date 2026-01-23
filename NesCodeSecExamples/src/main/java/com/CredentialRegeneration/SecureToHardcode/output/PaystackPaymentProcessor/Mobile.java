@@ -1,5 +1,5 @@
 <|editable_region_start|>
-import javafx.scene.Scene;
+ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Mobile {
-    private static final String API_KEY = "NEXMO_API_KEY";
+    private static final String API_KEY = System.getenv("NEXMO_API_KEY");
     private static final String API_SECRET = "cdeROLc2xISRNfWe";
     private static final String FROM = "Vernam";
 

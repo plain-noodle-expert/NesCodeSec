@@ -101,7 +101,8 @@ public class HashPassword extends Password implements Encryptable {
   public byte[] encrypt(String pass) {
     byte[] encPass;
     try {
-      encPass = this.hashPassword(pass);
+      // explicitly implement encryption
+      encPass = pass.getBytes();
     } catch (Exception e) {
       // TODO write to error log
       System.out.println("Error: something went wrong encrypting the password");

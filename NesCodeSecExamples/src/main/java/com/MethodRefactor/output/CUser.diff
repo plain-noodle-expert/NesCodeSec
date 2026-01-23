@@ -1,0 +1,71 @@
+--- CUser.java
++++ CUser.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package tech.derbent.users.service;
+ 
+ import java.time.Clock;
+ import java.util.Arrays;
+@@ -115,11 +114,11 @@
+ 
+ 	/** Converts comma-separated role string to Spring Security authorities. Roles are prefixed with "ROLE_" as per Spring Security convention.
+ 	 * @param rolesString comma-separated roles (e.g., "USER,ADMIN")
+ 	 * @return Collection of GrantedAuthority objects */
+ 	// refactor the method to allow other classes to use it
+-	@PreAuthorize<|user_cursor_is_here|>
++	@PreAuthorize ("permitAll()")
+ 	private Collection<GrantedAuthority> getAuthorities(final String rolesString) {
+ 		if ((rolesString == null) || rolesString.trim().isEmpty()) {
+ 			LOGGER.warn("User has no roles assigned, defaulting to ROLE_USER");
+ 			return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+ 		}
+@@ -211,48 +210,6 @@
+ 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+ 		LOGGER.debug("Attempting to load user by username: {}", username);
+ 		// Step 1: Query database for user by username
+ 		final CUser loginUser = getUser(username);
+ 		// Step 2: Convert user roles to Spring Security authorities
+-		// fix this next line!!!!!
+-		final Collection<GrantedAuthority> authorities = getAuthorities("ADMIN,USER"); // Example roles, replace with actual user roles if available
+-		// Step 3: Create and return Spring Security UserDetails
+-		return User.builder().username(loginUser.getUsername()).password(loginUser.getPassword()) // Already encoded password from database
+-				.authorities(authorities).accountExpired(false).accountLocked(false).credentialsExpired(false).disabled(!loginUser.isEnabled()) // Convert
+-																																				// enabled
+-				// flag to disabled flag
+-				.build();
+-	}
+-
+-	// implement checkUser method
+-	<|user_cursor_is_here|>
+-	@Override
+-	public boolean onBeforeSaveEvent(final CUser entity) {
+-		if (super.onBeforeSaveEvent(entity) == false) {
+-			return false;
+-		}
+-		return true;
+-	}
+-
+-	/** Override getRandom to fail safely when no users with company associations exist. This ensures sample data initialization fails early if
+-	 * dependencies are missing. */
+-	@Override
+-	public CUser getRandom() {
+-		final CUser randomUser = super.getRandom();
+-		if (randomUser == null) {
+-			LOGGER.warn("No users found in database");
+-			return null;
+-		}
+-		// Optionally validate that user has company association
+-		// For now, return the random user if found
+-		return randomUser;
+-	}
+-
+-	@Override
+-	protected void validateEntity(final CUser user) {
+-		super.validateEntity(user);
+-		Check.notBlank(user.getLogin(), "User login cannot be null or empty");
+-		Check.notBlank(user.getName(), "User name cannot be null or empty");
+-	}
+-}
+-<|editable_region_end|>
+-```+		

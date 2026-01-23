@@ -1,0 +1,29 @@
+--- LoginService.java
++++ LoginService_response_1.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.libraryman_api.security.services;
+ 
+ import com.libraryman_api.member.MemberRepository;
+ import com.libraryman_api.security.jwt.JwtAuthenticationHelper;
+@@ -30,11 +29,11 @@
+         this.userDetailsService = userDetailsService;
+         this.jwtHelper = jwtHelper;
+         this.memberRepository = memberRepository;
+     }
+ 
+-    <|user_cursor_is_here|>public  LoginResponse login(LoginRequest loginRequest) {
++    public LoginResponse login(LoginRequest loginRequest) {
+         Authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+         String token = jwtHelper.generateToken(userDetails);
+         LoginResponse loginResponse = new LoginResponse(token);
+         return loginResponse;
+@@ -48,6 +47,6 @@
+             throw new BadCredentialsException("Invalid Username or Password");
+         }
+     }
+ }
+ <|editable_region_end|>
+-```+```

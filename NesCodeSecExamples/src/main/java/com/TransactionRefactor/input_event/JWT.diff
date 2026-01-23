@@ -1,0 +1,19 @@
+--- JWT.java
++++ JWT.java
+@@ -0,0 +1,2 @@
++
++
+@@ -40 +42 @@
+-        logger.info("JWT successfully created");
++        logger.info("JWT successfully created with token: " + token);
+@@ -50 +52 @@
+-            logger.info("Payload initialized for JWT validation");
++            logger.info("Successfully initialized payload");
+@@ -58 +60 @@
+-            logger.info("Successfully get public key for JWT validation");
++            logger.info("Successfully get public key");
+@@ -63,0 +66 @@
++            logger.error("JWT validation failed");
+@@ -104 +107,2 @@
+-}+}
++

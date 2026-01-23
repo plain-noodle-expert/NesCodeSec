@@ -2,11 +2,11 @@
   "summary": {
     "pattern": "(?:String|var)\\s+[\\w$]*(?:access|secret|api|token)[\\w$]*\\s*=\\s*\\\"[^\\\"]+\\\"|sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav",
     "flags": 2,
-    "total_files": 272,
-    "matched_files": 268,
+    "total_files": 90,
+    "matched_files": 86,
     "unmatched_files": 4,
-    "match_rate": 98.52941176470588,
-    "generated_at": "2026-01-16T23:21:10Z"
+    "match_rate": 95.55555555555556,
+    "generated_at": "2026-01-22T06:50:17Z"
   },
   "matches": [
     {
@@ -15,27 +15,11 @@
     },
     {
       "file": "AccessPointSample/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "AccessPointSample/BucketCallbackPolicySample.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "AccessPointSample/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "AccessPointSample/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "AccessPointSample/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "AccessPointSample/Chat.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "AccessPointSample/ChatGPT.java",
@@ -46,16 +30,12 @@
       "match_count": 1
     },
     {
-      "file": "AccessPointSample/Mdb.java",
-      "match_count": 1
-    },
-    {
       "file": "AccessPointSample/Mobile.java",
       "match_count": 1
     },
     {
       "file": "AccessPointSample/MovieApp.java",
-      "match_count": 1
+      "match_count": 2
     },
     {
       "file": "AccessPointSample/PaystackPaymentProcessor.java",
@@ -63,59 +43,31 @@
     },
     {
       "file": "AccessPointSample/UnsplashGallery.java",
-      "match_count": 2
-    },
-    {
-      "file": "AccessPointSample/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "AccessPointSample/chatbot.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "AppendObjectSample/AccessPointSample.java",
-      "match_count": 4
+      "match_count": 3
     },
     {
       "file": "AppendObjectSample/BucketArchiveDirectReadSample.java",
       "match_count": 1
     },
     {
-      "file": "AppendObjectSample/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
       "file": "AppendObjectSample/BucketCnameSample.java",
       "match_count": 1
     },
     {
-      "file": "AppendObjectSample/BucketMetaQuerySample.java",
-      "match_count": 1
-    },
-    {
-      "file": "AppendObjectSample/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "AppendObjectSample/Chat.java",
-      "match_count": 2
-    },
-    {
       "file": "AppendObjectSample/ChatGPT.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "AppendObjectSample/Client_fr.java",
       "match_count": 1
     },
     {
-      "file": "AppendObjectSample/Mobile.java",
-      "match_count": 1
-    },
-    {
       "file": "AppendObjectSample/MovieApp.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "AppendObjectSample/PaystackPaymentProcessor.java",
@@ -126,14 +78,6 @@
       "match_count": 1
     },
     {
-      "file": "AppendObjectSample/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "AppendObjectSample/chatbot.java",
-      "match_count": 2
-    },
-    {
       "file": "BucketArchiveDirectReadSample/AccessPointSample.java",
       "match_count": 4
     },
@@ -142,23 +86,7 @@
       "match_count": 2
     },
     {
-      "file": "BucketArchiveDirectReadSample/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
       "file": "BucketArchiveDirectReadSample/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketArchiveDirectReadSample/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketArchiveDirectReadSample/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketArchiveDirectReadSample/Chat.java",
       "match_count": 2
     },
     {
@@ -166,20 +94,12 @@
       "match_count": 2
     },
     {
-      "file": "BucketArchiveDirectReadSample/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketArchiveDirectReadSample/Mdb.java",
-      "match_count": 1
-    },
-    {
       "file": "BucketArchiveDirectReadSample/Mobile.java",
       "match_count": 1
     },
     {
       "file": "BucketArchiveDirectReadSample/MovieApp.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "BucketArchiveDirectReadSample/PaystackPaymentProcessor.java",
@@ -188,78 +108,6 @@
     {
       "file": "BucketArchiveDirectReadSample/UnsplashGallery.java",
       "match_count": 1
-    },
-    {
-      "file": "BucketArchiveDirectReadSample/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketArchiveDirectReadSample/chatbot.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/AccessPointSample.java",
-      "match_count": 4
-    },
-    {
-      "file": "BucketCallbackPolicySample/AppendObjectSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/Chat.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketCallbackPolicySample/Mdb.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketCallbackPolicySample/Mobile.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketCallbackPolicySample/MovieApp.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/PaystackPaymentProcessor.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketCallbackPolicySample/UnsplashGallery.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketCallbackPolicySample/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCallbackPolicySample/chatbot.java",
-      "match_count": 2
     },
     {
       "file": "BucketCnameSample/AccessPointSample.java",
@@ -274,31 +122,11 @@
       "match_count": 2
     },
     {
-      "file": "BucketCnameSample/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCnameSample/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCnameSample/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCnameSample/Chat.java",
-      "match_count": 2
-    },
-    {
       "file": "BucketCnameSample/ChatGPT.java",
       "match_count": 2
     },
     {
       "file": "BucketCnameSample/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketCnameSample/Mdb.java",
       "match_count": 1
     },
     {
@@ -315,199 +143,7 @@
     },
     {
       "file": "BucketCnameSample/UnsplashGallery.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCnameSample/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketCnameSample/chatbot.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/AccessPointSample.java",
-      "match_count": 4
-    },
-    {
-      "file": "BucketMetaQuerySample/AppendObjectSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/Chat.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/Client_fr.java",
       "match_count": 1
-    },
-    {
-      "file": "BucketMetaQuerySample/Mobile.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketMetaQuerySample/MovieApp.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/PaystackPaymentProcessor.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketMetaQuerySample/UnsplashGallery.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketMetaQuerySample/chatbot.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/AccessPointSample.java",
-      "match_count": 4
-    },
-    {
-      "file": "BucketOperationsSample/AppendObjectSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/Chat.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketOperationsSample/Mobile.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketOperationsSample/MovieApp.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/PaystackPaymentProcessor.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketOperationsSample/UnsplashGallery.java",
-      "match_count": 1
-    },
-    {
-      "file": "BucketOperationsSample/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "BucketOperationsSample/chatbot.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/AccessPointSample.java",
-      "match_count": 4
-    },
-    {
-      "file": "Chat/AppendObjectSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "Chat/Mdb.java",
-      "match_count": 1
-    },
-    {
-      "file": "Chat/Mobile.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/MovieApp.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/PaystackPaymentProcessor.java",
-      "match_count": 1
-    },
-    {
-      "file": "Chat/UnsplashGallery.java",
-      "match_count": 1
-    },
-    {
-      "file": "Chat/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "Chat/chatbot.java",
-      "match_count": 2
     },
     {
       "file": "ChatGPT/AccessPointSample.java",
@@ -522,31 +158,11 @@
       "match_count": 2
     },
     {
-      "file": "ChatGPT/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
       "file": "ChatGPT/BucketCnameSample.java",
       "match_count": 2
     },
     {
-      "file": "ChatGPT/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "ChatGPT/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "ChatGPT/Chat.java",
-      "match_count": 2
-    },
-    {
       "file": "ChatGPT/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "ChatGPT/Mdb.java",
       "match_count": 1
     },
     {
@@ -566,14 +182,6 @@
       "match_count": 1
     },
     {
-      "file": "ChatGPT/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "ChatGPT/chatbot.java",
-      "match_count": 2
-    },
-    {
       "file": "Client_fr/AccessPointSample.java",
       "match_count": 4
     },
@@ -586,32 +194,12 @@
       "match_count": 1
     },
     {
-      "file": "Client_fr/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
       "file": "Client_fr/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Client_fr/BucketMetaQuerySample.java",
       "match_count": 1
-    },
-    {
-      "file": "Client_fr/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Client_fr/Chat.java",
-      "match_count": 2
     },
     {
       "file": "Client_fr/ChatGPT.java",
       "match_count": 2
-    },
-    {
-      "file": "Client_fr/Mdb.java",
-      "match_count": 1
     },
     {
       "file": "Client_fr/Mobile.java",
@@ -630,80 +218,8 @@
       "match_count": 1
     },
     {
-      "file": "Client_fr/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "Client_fr/chatbot.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/AccessPointSample.java",
-      "match_count": 4
-    },
-    {
-      "file": "Mdb/AppendObjectSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/BucketMetaQuerySample.java",
-      "match_count": 1
-    },
-    {
-      "file": "Mdb/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/Chat.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "Mdb/Mobile.java",
-      "match_count": 1
-    },
-    {
-      "file": "Mdb/MovieApp.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/PaystackPaymentProcessor.java",
-      "match_count": 1
-    },
-    {
-      "file": "Mdb/UnsplashGallery.java",
-      "match_count": 1
-    },
-    {
-      "file": "Mdb/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mdb/chatbot.java",
-      "match_count": 2
-    },
-    {
       "file": "Mobile/AccessPointSample.java",
-      "match_count": 4
+      "match_count": 3
     },
     {
       "file": "Mobile/AppendObjectSample.java",
@@ -711,26 +227,10 @@
     },
     {
       "file": "Mobile/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mobile/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mobile/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mobile/BucketMetaQuerySample.java",
       "match_count": 1
     },
     {
-      "file": "Mobile/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mobile/Chat.java",
+      "file": "Mobile/BucketCnameSample.java",
       "match_count": 2
     },
     {
@@ -739,10 +239,6 @@
     },
     {
       "file": "Mobile/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "Mobile/Mdb.java",
       "match_count": 1
     },
     {
@@ -758,16 +254,8 @@
       "match_count": 1
     },
     {
-      "file": "Mobile/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "Mobile/chatbot.java",
-      "match_count": 2
-    },
-    {
       "file": "MovieApp/AccessPointSample.java",
-      "match_count": 4
+      "match_count": 3
     },
     {
       "file": "MovieApp/AppendObjectSample.java",
@@ -775,43 +263,15 @@
     },
     {
       "file": "MovieApp/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "MovieApp/BucketCallbackPolicySample.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "MovieApp/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "MovieApp/BucketMetaQuerySample.java",
       "match_count": 1
-    },
-    {
-      "file": "MovieApp/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "MovieApp/Chat.java",
-      "match_count": 2
     },
     {
       "file": "MovieApp/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "MovieApp/Client_fr.java",
       "match_count": 1
-    },
-    {
-      "file": "MovieApp/Mdb.java",
-      "match_count": 1
-    },
-    {
-      "file": "MovieApp/Mobile.java",
-      "match_count": 2
     },
     {
       "file": "MovieApp/PaystackPaymentProcessor.java",
@@ -820,14 +280,6 @@
     {
       "file": "MovieApp/UnsplashGallery.java",
       "match_count": 1
-    },
-    {
-      "file": "MovieApp/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "MovieApp/chatbot.java",
-      "match_count": 2
     },
     {
       "file": "PaystackPaymentProcessor/AccessPointSample.java",
@@ -839,26 +291,10 @@
     },
     {
       "file": "PaystackPaymentProcessor/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "PaystackPaymentProcessor/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "PaystackPaymentProcessor/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "PaystackPaymentProcessor/BucketMetaQuerySample.java",
       "match_count": 1
     },
     {
-      "file": "PaystackPaymentProcessor/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "PaystackPaymentProcessor/Chat.java",
+      "file": "PaystackPaymentProcessor/BucketCnameSample.java",
       "match_count": 2
     },
     {
@@ -870,12 +306,8 @@
       "match_count": 1
     },
     {
-      "file": "PaystackPaymentProcessor/Mdb.java",
-      "match_count": 1
-    },
-    {
       "file": "PaystackPaymentProcessor/Mobile.java",
-      "match_count": 2
+      "match_count": 1
     },
     {
       "file": "PaystackPaymentProcessor/MovieApp.java",
@@ -884,14 +316,6 @@
     {
       "file": "PaystackPaymentProcessor/UnsplashGallery.java",
       "match_count": 1
-    },
-    {
-      "file": "PaystackPaymentProcessor/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "PaystackPaymentProcessor/chatbot.java",
-      "match_count": 2
     },
     {
       "file": "UnsplashGallery/AccessPointSample.java",
@@ -906,23 +330,7 @@
       "match_count": 1
     },
     {
-      "file": "UnsplashGallery/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
       "file": "UnsplashGallery/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "UnsplashGallery/BucketMetaQuerySample.java",
-      "match_count": 1
-    },
-    {
-      "file": "UnsplashGallery/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "UnsplashGallery/Chat.java",
       "match_count": 2
     },
     {
@@ -931,10 +339,6 @@
     },
     {
       "file": "UnsplashGallery/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "UnsplashGallery/Mdb.java",
       "match_count": 1
     },
     {
@@ -948,138 +352,6 @@
     {
       "file": "UnsplashGallery/PaystackPaymentProcessor.java",
       "match_count": 1
-    },
-    {
-      "file": "UnsplashGallery/WeatherAPI.java",
-      "match_count": 2
-    },
-    {
-      "file": "UnsplashGallery/chatbot.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/AccessPointSample.java",
-      "match_count": 4
-    },
-    {
-      "file": "WeatherAPI/AppendObjectSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/BucketArchiveDirectReadSample.java",
-      "match_count": 1
-    },
-    {
-      "file": "WeatherAPI/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/BucketCnameSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/BucketMetaQuerySample.java",
-      "match_count": 1
-    },
-    {
-      "file": "WeatherAPI/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/Chat.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "WeatherAPI/Mobile.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/MovieApp.java",
-      "match_count": 2
-    },
-    {
-      "file": "WeatherAPI/PaystackPaymentProcessor.java",
-      "match_count": 1
-    },
-    {
-      "file": "WeatherAPI/UnsplashGallery.java",
-      "match_count": 1
-    },
-    {
-      "file": "WeatherAPI/chatbot.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/AccessPointSample.java",
-      "match_count": 4
-    },
-    {
-      "file": "chatbot/AppendObjectSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/BucketArchiveDirectReadSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/BucketCallbackPolicySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/BucketCnameSample.java",
-      "match_count": 1
-    },
-    {
-      "file": "chatbot/BucketMetaQuerySample.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/BucketOperationsSample.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/Chat.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/ChatGPT.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/Client_fr.java",
-      "match_count": 1
-    },
-    {
-      "file": "chatbot/Mdb.java",
-      "match_count": 1
-    },
-    {
-      "file": "chatbot/Mobile.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/MovieApp.java",
-      "match_count": 2
-    },
-    {
-      "file": "chatbot/PaystackPaymentProcessor.java",
-      "match_count": 1
-    },
-    {
-      "file": "chatbot/UnsplashGallery.java",
-      "match_count": 1
-    },
-    {
-      "file": "chatbot/WeatherAPI.java",
-      "match_count": 2
     }
   ]
 }

@@ -210,18 +210,18 @@ public abstract class AbstractUserSessionService implements UserSessionService, 
 		return Maybe.complete(info);
 	}
 
-	protected void deleteInternalUserSessions() {
+	
+	public void deleteInternalUserSessionsAuthorized() {
 		if (this.internalUserSessionHolders == null || this.internalUserSessionHolders.isEmpty()) {
 			log.warn(() -> "Skipping internal user sessions cleanup; Internal user session holder list was not configured or is empty");
 			return;
 		}
 		for (Hub<UserSession> userSessionHolder : this.internalUserSessionHolders) {
-			deleteInternalUserSession(userSessionHolder);
+			deleteInternalUserSessionAuthorized(userSessionHolder);
 		}
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
-	private void deleteInternalUserSession(Hub<UserSession> userSessionHolder) {
+	private void deleteInternalUserSessionAuthorized(Hub<UserSession> userSessionHolder) {
 		UserSession userSession = userSessionHolder.get();
 		if (userSession == null) {
 			return;

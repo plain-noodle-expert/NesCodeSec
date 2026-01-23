@@ -1,0 +1,23 @@
+--- Car.java
++++ Car.java
+@@ -0,0 +1,2 @@
++
++
+@@ -32 +34 @@
+-        logger.info("Initializing access token");
++        
+@@ -35 +37 @@
+-            logger.info("Get vehicle info");
++            logger.info("Get vehicle info: {}", PRETTY_PRINTER.toJson(json));
+@@ -40 +42 @@
+-            logger.info("Created car object");
++            logger.info("Successfully created car object");
+@@ -45 +47 @@
+-        
++        logger.info("Successfully initialize car object with token, id, vehicle_id, and option_codes");
+@@ -56 +58 @@
+-        logger.info("Added car");
++        logger.info("Successfully added car");
+@@ -96 +98,2 @@
+-}+}
++

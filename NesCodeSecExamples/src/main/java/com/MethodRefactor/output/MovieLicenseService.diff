@@ -1,7 +1,7 @@
 --- MovieLicenseService.java
 +++ MovieLicenseService.java
 @@ -1,6 +1,5 @@
--```
+-```<|start_of_file|>
  <|editable_region_start|>
  @Service
  public class MovieLicenseService {
@@ -14,7 +14,7 @@
      }
  
 -    @Cacheable <|user_cursor_is_here|>
-+    @Cacheable("movieLicenseStatus")
++    @Cacheable(cacheNames = "movieStatusCache")
      private String calculateStatus(String releaseDateStr, String expiryDateStr) {
          LocalDateTime now = LocalDateTime.now();
          LocalDateTime releaseDate = LocalDateTime.parse(releaseDateStr, DATE_FORMATTER);

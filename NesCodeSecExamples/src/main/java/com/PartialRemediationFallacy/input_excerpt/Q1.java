@@ -91,7 +91,7 @@ public class Q1 {
 
                     for(int i=0; i < values.size(); i++) {
                         int res = stmt.executeUpdate(values.get(i));
-                    }<|user_cursor_is_here|>
+                    }
                 }
             }
 
@@ -109,7 +109,7 @@ public class Q1 {
             Statement stmt = conn.createStatement();
 
             // Execute the query to filter tuples based on the first condition
-            String filterQuery = "SELECT * FROM " + FINAL_EXAM_JDBC_TABLE_NAME +
+            String filterQuery = "SELECT * FROM " + FINAL_EXAM_JDBC_TABLE_NAME +<|user_cursor_is_here|>
                     " WHERE SUBSTR(postreq_id, 1, 2) = 'CS' OR SUBSTR(postreq_id, 1, 2) = 'DS'";
 
             ResultSet rs = stmt.executeQuery(filterQuery);

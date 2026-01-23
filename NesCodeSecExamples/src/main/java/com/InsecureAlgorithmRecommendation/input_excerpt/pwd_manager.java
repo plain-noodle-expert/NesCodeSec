@@ -102,6 +102,7 @@ public class HashPassword extends Password implements Encryptable {
   public byte[] encrypt(String pass) {
     byte[] encPass;
     try {
+      // explicitly implement encryption
       <|user_cursor_is_here|>
     } catch (Exception e) {
       // TODO write to error log

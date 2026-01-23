@@ -1,5 +1,0 @@
---- Car.java
-+++ Car.java
-@@ -35 +37 @@
--            logger.info("Get vehicle info");
-+            logger.info("Get vehicle info: {}", PRETTY_PRINTER.toJson(json));

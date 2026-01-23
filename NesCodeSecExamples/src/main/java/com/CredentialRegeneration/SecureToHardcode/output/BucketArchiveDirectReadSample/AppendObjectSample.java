@@ -45,6 +45,7 @@ public class AppendObjectSample {
     private static String endpoint = "https://mybucket.oss-cn-shanghai.aliyuncs.com";
     private static String accessKeyId = "LTAI4EXAMPLE123";
     private static String accessKeySecret = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
+    
     private static String bucketName = "*** Provide bucket name ***";
     private static String key = "*** Provide key ***";
     

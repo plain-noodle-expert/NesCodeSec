@@ -94,7 +94,7 @@ public class IO extends GUI {
                     PreparedStatement pstmt = conn.prepareStatement(update);
                     pstmt.setString(1, accNameCheck);
                     pstmt.setString(2, accTypeCheck);
-                    pstmt.executeUpdate(<|user_cursor_is_here|>);
+                    pstmt.executeUpdate();
                 }
 
             }
@@ -198,7 +198,7 @@ public class IO extends GUI {
 				
 				Statement stmt = conn.createStatement();
 			  
-				String query = "Select * From transactions WHERE name = " + "\'" + nameHolder + "\' AND typeAcc = "+ "\'" + typeHolder + "\'";
+				String query = "Select * From transactions WHERE name = " + "\'" + nameHolder <|user_cursor_is_here|>+ "\' AND typeAcc = "+ "\'" + typeHolder + "\'";
 			  
 				ResultSet rslt = stmt.executeQuery(query);
 				Transaction trans;

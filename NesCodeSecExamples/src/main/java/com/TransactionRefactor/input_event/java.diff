@@ -1,0 +1,14 @@
+--- java.java
++++ java.java
+@@ -0,0 +1,2 @@
++
++
+@@ -51 +53 @@
+-    logger.info("Created salted hash for secret key specification");
++    logger.info("Created salted hash: {} for secret key specification", Arrays.toString(saltedHash));
+@@ -62 +64 @@
+-      logger.info("Cipher successfully initialized for encryption");
++      logger.info("Cipher successfully initialized");
+@@ -113 +115,2 @@
+-}+}
++

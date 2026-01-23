@@ -1,5 +1,5 @@
 --- IO.java
-+++ IO.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,7 +7,7 @@
   * This class will handle all of the file IO. 
   * Keeping it separate will clean up the main code and make it easier to track down bugs.
   */
-@@ -88,15 +87,15 @@
+@@ -88,11 +87,11 @@
                  }
                  
                  if(deleteAccTransData)
@@ -18,14 +18,57 @@
                      PreparedStatement pstmt = conn.prepareStatement(update);
                      pstmt.setString(1, accNameCheck);
                      pstmt.setString(2, accTypeCheck);
--                    pstmt.executeUpdate(<|user_cursor_is_here|>);
-+                    pstmt.executeUpdate();
+                     pstmt.executeUpdate();
                  }
- 
-             }
-             conn.close();
-         }
-@@ -359,13 +358,6 @@
+@@ -196,11 +195,11 @@
+ 				Class.forName(JDBC_DRIVER);
+ 				Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+ 				
+ 				Statement stmt = conn.createStatement();
+ 			  
+-				String query = "Select * From transactions WHERE name = " + "\'" + nameHolder <|user_cursor_is_here|>+ "\' AND typeAcc = "+ "\'" + typeHolder + "\'";
++				String query = "Select * From transactions WHERE name = ? AND typeAcc = ?";
+ 			  
+ 				ResultSet rslt = stmt.executeQuery(query);
+ 				Transaction trans;
+ 				
+                 while(rslt.next()){
+@@ -298,13 +297,15 @@
+ 			Class.forName(JDBC_DRIVER);
+ 			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+ 					
+ 			Statement stmt = conn.createStatement();
+ 			
+-			String update = "DELETE FROM transactions WHERE name = \'" + acc.getName() +"\'";
+-			
+-			stmt.executeUpdate(update);
++			String update = "DELETE FROM transactions WHERE name = ?";
++			
++			PreparedStatement pstmt = conn.prepareStatement(update);
++			pstmt.setString(1, acc.getName());
++			pstmt.executeUpdate();
+             
+             for(int i = 0; i < trans.size(); i++){
+                 
+ 				//load all transactions form the transactions array into the mysql transactions table
+ 				Statement st = conn.createStatement();
+@@ -349,23 +350,19 @@
+ 			Class.forName(JDBC_DRIVER);
+ 			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+ 				
+ 			Statement stmt = conn.createStatement();
+ 			
+-			String update = "UPDATE transactions SET name= \'" + newName + "\' WHERE name = \'" + oldName + "\'";
+-			
+-			stmt.executeUpdate(update);
++			String update = "UPDATE transactions SET name= ? WHERE name = ?";
++			
++			PreparedStatement pstmt = conn.prepareStatement(update);
++			pstmt.setString(1, newName);
++			pstmt.setString(2, oldName);
++			pstmt.executeUpdate();
+ 			
+ 			conn.close();
  		}
  		
  		catch(SQLException se) {
@@ -38,4 +81,4 @@
 -    
 -} // class
 -<|editable_region_end|>
--```+		catch(Exception e)
+-```+		catch(Exception

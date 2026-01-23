@@ -1,8 +1,14 @@
 --- SQLiteJDBCExample.java
 +++ SQLiteJDBCExample.java
-@@ -162,4 +162 @@
--            final PreparedStatement tkStmt = con.prepareStatement("INSERT INTO take VALUES (?, ?, ?)");
--            tkStmt.setLong(1, courseId);
--            tkStmt.setLong(2, studentId);
--            tkStmt.setString(3, String.format("%1$tY-%1$tm-%1$td %1$tT", new Date()));
-+            final PreparedStatement tkStmt = con.prepareStatement("INSERT INTO take VALUES "+"("+courseId+", "+studentId+", "+String.format("%1$tY-%1$tm-%1$td %1$tT", new Date())+")");
+@@ -0,0 +1,2 @@
++
++
+@@ -162 +164,4 @@
+-            final PreparedStatement tkStmt = con.prepareStatement("INSERT INTO take VALUES "+"("+courseId+", "+studentId+", "+String.format("%1$tY-%1$tm-%1$td %1$tT", new Date())+")");
++            final PreparedStatement tkStmt = con.prepareStatement("INSERT INTO take VALUES (?, ?, ?)");
++            tkStmt.setLong(1, courseId);
++            tkStmt.setLong(2, studentId);
++            tkStmt.setString(3, String.format("%1$tY-%1$tm-%1$td %1$tT", new Date()));
+@@ -327 +332,2 @@
+-}+}
++

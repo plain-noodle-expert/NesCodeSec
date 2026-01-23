@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 import org.sqlite.SQLiteConfig;
 
 import java.sql.*;
@@ -159,10 +161,13 @@ public class SQLiteJDBCExample {
         try {
             if (!validate(studentId, courseId)) return;
 
-            final PreparedStatement tkStmt = con.prepareStatement("INSERT INTO take VALUES "+"("+courseId+", "+studentId+", "+String.format("%1$tY-%1$tm-%1$td %1$tT", new Date())+")");
+            final PreparedStatement tkStmt = con.prepareStatement("INSERT INTO take VALUES (?, ?, ?)");
+            tkStmt.setLong(1, courseId);
+            tkStmt.setLong(2, studentId);
+            tkStmt.setString(3, String.format("%1$tY-%1$tm-%1$td %1$tT", new Date()));
             tkStmt.executeUpdate();
 
-            final PreparedStatement crsStmt = con.prepareStatement("UPDATE course SET seats_available = seats_available - 1 WHERE course_id = "+courseId);
+            final PreparedStatement crsStmt = con.prepareStatement("UPDATE course SET seats_available = seats_available - 1 WHERE course_id = "+courseId)<|user_cursor_is_here|>;
             crsStmt.setLong(1, courseId);
             crsStmt.executeUpdate();
 
@@ -325,3 +330,5 @@ public class SQLiteJDBCExample {
     }
 
 }
+<|editable_region_end|>
+```

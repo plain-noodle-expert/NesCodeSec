@@ -1,0 +1,14 @@
+--- Buy.java
++++ Buy.java
+@@ -0,0 +1,2 @@
++
++
+@@ -36 +38 @@
+-        logger.info("Initializing Buy frame for user");
++        logger.info("Initializing Buy frame for user: {}", username);
+@@ -128 +130 @@
+-                    e.printStackTrace();
++                    logger.error("Error fetching exchange rates");
+@@ -146 +148,2 @@
+-}+}
++

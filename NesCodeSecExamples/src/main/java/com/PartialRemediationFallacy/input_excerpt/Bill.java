@@ -42,7 +42,7 @@ class Bill extends JFrame implements ActionListener
 				String sql = "select * from Customer where Name= ?";
 				PreparedStatement ps = con.prepareStatement(sql);
 				ps.setString(1, var.sCustomerName);
-				ResultSet rs = ps.executeQuery(<|user_cursor_is_here|>);
+				ResultSet rs = ps.executeQuery();
 				rs.first();
 				
 				iCustID = rs.getInt("ID");
@@ -70,7 +70,7 @@ class Bill extends JFrame implements ActionListener
 			rs.last();
 			int iBillID = (1+rs.getInt("Bill ID"));
 			iCustID = getID();
-			int iResult = st.executeUpdate("insert into BillReport values("+iBillID+","+iCustID+","+fFinalCost+",'"+var.tDate.getText()+"')");
+			<|user_cursor_is_here|>int iResult = st.executeUpdate("insert into BillReport values("+iBillID+","+iCustID+","+fFinalCost+",'"+var.tDate.getText()+"')");
 			if(iResult==1)
 			{
 				// If Query succesful

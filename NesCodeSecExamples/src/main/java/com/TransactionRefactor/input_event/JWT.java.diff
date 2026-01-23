@@ -1,5 +1,0 @@
---- JWT.java
-+++ JWT.java
-@@ -40 +42 @@
--        logger.info("JWT successfully created");
-+        logger.info("JWT successfully created with token: " + token);

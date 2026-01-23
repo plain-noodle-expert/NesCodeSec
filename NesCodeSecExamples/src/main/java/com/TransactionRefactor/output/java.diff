@@ -1,0 +1,29 @@
+--- java.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.uservoice;
+ 
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+@@ -90,11 +89,11 @@
+       data[i] ^= INIT_VECTOR[i];
+     }
+     encrypt(new ByteArrayInputStream(data), out);
+ 
+     String token = new String(urlCodec.encode(base64.encode(out.toByteArray())));
+-    logger.info("Token successfully created"<|user_cursor_is_here|>);
++    logger.info("Token successfully created: {}", token);
+     return token;
+   }    
+ 
+   public static void main(String[] args) {
+     try {
+@@ -112,6 +111,6 @@
+       e.printStackTrace();
+     }
+   }
+ }
+ <|editable_region_end|>
+-```+```

@@ -1,4 +1,4 @@
-```
+```<|start_of_file|>
 <|editable_region_start|>
 @Service
 public class MovieLicenseService {

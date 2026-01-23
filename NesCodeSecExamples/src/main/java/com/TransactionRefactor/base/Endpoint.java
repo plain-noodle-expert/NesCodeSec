@@ -127,7 +127,6 @@ public class Endpoint {
 			return Response.serverError().status(Response.Status.NOT_ACCEPTABLE).build();
 		}
 
-		logger.info("SPARQL GET query ");
 		return sparql(format, sparqlQuery, revision_information, query_rewriting);
 	}
 

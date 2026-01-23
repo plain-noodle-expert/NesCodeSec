@@ -22,7 +22,7 @@ public class MovieLicenseService {
         return movie;
     }
 
-    @Cacheable("movieLicenseStatus")
+    @Cacheable(cacheNames = "movieStatusCache")
     private String calculateStatus(String releaseDateStr, String expiryDateStr) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime releaseDate = LocalDateTime.parse(releaseDateStr, DATE_FORMATTER);

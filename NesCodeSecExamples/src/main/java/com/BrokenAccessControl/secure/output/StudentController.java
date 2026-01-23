@@ -11,12 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/student")
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class StudentController {
     private final ProfileService profileService;
 
@@ -42,23 +44,9 @@ public class StudentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_STUDENT')")
     public ResponseEntity<Boolean> deleteProfileById(@PathVariable("id") String id) {
-        profileService.deleteProfile(id);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(profileService.deleteProfileById(id));
     }
-
-    /*
-        filter profile by filterDTO, page and size
-        paras: filterDTO, page, size
-        return: PageImpl<ProfileResponseDTO>
-    **/
-    @GetMapping("/filter")
-    @PreAuthorize("hasRole('ROLE_STUDENT')")
-    public ResponseEntity<PageImpl<ProfileResponseDTO>> filterProfile(@RequestBody ProfileFilterDTO filterDTO, @RequestParam("page") int page, @RequestParam("size") int size) {
-        return ResponseEntity.ok(profileService.filter(filterDTO, PageUtil.getPageable(page, size)));
-    }
-
 }
 <|editable_region_end|>
 ```

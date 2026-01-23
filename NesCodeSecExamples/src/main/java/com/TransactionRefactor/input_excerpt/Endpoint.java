@@ -72,7 +72,7 @@ public class Endpoint {
 			@FormParam("query_rewriting") @DefaultValue("") final String query_rewriting) throws InternalErrorException {
 		try {
 			String format = getFormat(formatQuery);
-			logger.info("SPARQL POST query (format: "+format+", query: "+sparqlQuery +")" + revision_information);
+			logger.info("SPARQL POST query "<|user_cursor_is_here>
 			return sparql(format, sparqlQuery, revision_information, query_rewriting);
 		} catch (Exception e) {
 			return Response.serverError().status(Response.Status.NOT_ACCEPTABLE).build();

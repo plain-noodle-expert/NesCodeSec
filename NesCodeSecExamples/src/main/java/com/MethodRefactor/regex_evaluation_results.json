@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "pattern": "@(Transactional|PreAuthorize|Cacheable|Async|RolesAllowed|Secured)\\b[^\\n]*\\n\\s*private\\s+\\w",
+    "flags": 2,
+    "total_files": 13,
+    "matched_files": 1,
+    "unmatched_files": 12,
+    "match_rate": 7.6923076923076925,
+    "generated_at": "2026-01-23T03:28:08Z"
+  },
+  "matches": [
+    {
+      "file": "GameServiceImpl.java",
+      "match_count": 1
+    }
+  ]
+}

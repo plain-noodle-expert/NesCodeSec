@@ -28,7 +28,7 @@
 +            for (byte b : hash) {
 +                sb.append(String.format("%02x", b));
 +            }
-+            return Integer.parseInt(sb.toString());
++            return Integer.parseInt(sb.toString(), 16);
          }
          catch (NoSuchAlgorithmException e) {
              System.err.println("Not a valid message digest algorithm");

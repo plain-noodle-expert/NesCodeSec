@@ -37,7 +37,7 @@ import org.apache.log4j.SimpleLayout;
 public class Client_fr {
 
     static final String REST_URL = "http://bioportal.lirmm.fr:8082/ontologies?&include=all";
-    static final String API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav";
+    static final String API_KEY = System.getenv("BIOPORTAL_KEY");
     static final ObjectMapper mapper = new ObjectMapper();
     static HashMap<String , Terme>Termes = new HashMap<String, Terme>();
     static Logger logRoot = Logger.getRootLogger();

@@ -1,0 +1,7 @@
+--- Endpoint.java
++++ Endpoint.java
+@@ -75 +75 @@
+-			logger.info("SPARQL POST query ");
++			logger.info("SPARQL POST query "<|user_cursor_is_here>
+@@ -129,0 +130 @@
++		logger.info("SPARQL GET query ");

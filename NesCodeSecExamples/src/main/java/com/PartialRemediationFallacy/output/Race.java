@@ -134,11 +134,6 @@ public class Race {
                                     statement.setString(1, newRunnerTableName);
                                     statement.execute();
 
-                                    sql = "create table if not exists ? (gamemode varchar(255) PRIMARY KEY, best_time INTEGER NOT NULL, score INTEGER NOT NULL)";
-                                    PreparedStatement statement = Racebot.database.prepareStatement(sql);
-                                    statement.setString(1, newRunnerTableName);
-                                    statement.execute();
-
                                     runnerTable = newRunnerTableName;
                                 }
 
@@ -247,4 +242,13 @@ public class Race {
 
     public String getMulti(){
         String link = "http://kadgar.net/live/";
-        boolean atLeastOne =
+        boolean atLeastOne = false;
+
+        for (String r : racers.keySet()){
+            String sql = "SELECT stream FROM streams WHERE name='" + r + "'";
+            try {
+                Statement statement = Racebot.database.createStatement();
+                ResultSet rs = statement.executeQuery(sql);
+
+                while (rs.next()){
+                    atLeast

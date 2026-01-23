@@ -1,5 +1,5 @@
 --- Back.java
-+++ Back.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,87 +7,18 @@
  import java.awt.*;
  import java.awt.event.*;
  import java.io.Reader;
-@@ -126,11 +125,11 @@
+@@ -116,12 +115,12 @@
+ 						"WHERE book_id = ? AND reader_id = ? AND if_back = ?";
+ 			String sql1 = "UPDATE book " +
+ 							"SET stock = ? " +
+ 							"WHERE id = ?";
+ 			Connection conn = DbOp.getConnection();
+-			PreparedStatement psBorrow = conn.prepareStatement(sql);<|user_cursor_is_here|>
+-			psBorrow.setDate(1, borrowbackdate);
++			PreparedStatement psBorrow = conn.prepareStatement(sql);
++			psBorrow.setDate(1, new java.sql.Date(borrowbackdate.getTime()));
+ 			psBorrow.setString(2, "是");
+ 			psBorrow.setString(3, bookid);
+ 			psBorrow.setString(4, readerid);
+ 			psBorrow.setString(5, "否");
           	PreparedStatement psBook = conn.prepareStatement(sql1);
- 			psBook.setInt(1, Integer.parseInt(showoption[5].getText()) + 1);
- 			psBook.setString(2, bookid);
- 			int success = psBorrow.executeUpdate();
- 			if (success == 1) {
--				psBook.executeUpdate();<|user_cursor_is_here|>
-+				psBook.executeUpdate();
- 				JOptionPane.showMessageDialog(null, "还书成功");
- 
- 			} else {
- 				JOptionPane.showMessageDialog(null, "还书数据登记失败！");
- 			}
-@@ -208,70 +207,5 @@
- 		day2 = cal2.get(Calendar.DAY_OF_MONTH);
- 		if (IfLeapYear(year1)) {
- 			monthdays[1] = 29;
- 		} else {
- 			monthdays[1] = 28;
--		}
--		int a = 3, count = 0;
--		while (a > 0) {
--			if (month1 > monthdays.length - 1) {
--				year1++;
--				month1 = 0;
--			}
--			if (IfLeapYear(year1)) {
--				monthdays[1] = 29;
--			} else {
--				monthdays[1] = 28;
--			}
--			if (day1 > monthdays[month1]) {
--				month1++;
--				day1 = 1;
--			}
--			day1++;
--			count++;
--			if (year1 >= year2 && month1 >= month2 && day1 >= day2) {
--				a = -1;
--
--			}
--		}
--		sum = String.valueOf(count);
--		return sum;
--	}
--	public Date getBorrowDate(String bookid, String readerid) {// 获取读者借书日期
--		String sql, mydate = "";
--		Date readerdate = new Date();
--		sql = "select * from borrow where book_id='" + bookid
--				+ "' and reader_id='" + readerid + "' and if_back='否'";
--		ResultSet rs = DbOp.executeQuery(sql);
--		try {
--			if (rs.next()) {
--				mydate = rs.getString("borrow_date");
--			}
--			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
--			readerdate = sdf.parse(mydate);
--			DbOp.close();
--		} catch (SQLException e) {
--			JOptionPane.showMessageDialog(null, "借书日期查询失败");
--		} catch (ParseException e2) {
--			JOptionPane.showMessageDialog(null, "借书日期异常");
--		}
--		return readerdate;
--	}
--
--	public void setInitialize() {
--		for (int i = 0; i < showoption.length; i++) {
--			showoption[i].setText("xxxxx");
--
--		}
--		bookidtxt.setText("");
--		readeridtxt.setText("");
--		bookidtxt.setEditable(true);
--		readeridtxt.setEditable(true);
--		borrowbtn.setEnabled(false);
--	}
--
--	public static void main(String[] args){ 
--		new Back();
--	}
--}
--<|editable_region_end|>
--```

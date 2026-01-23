@@ -1,5 +1,5 @@
 --- user.java
-+++ user.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,25 +7,33 @@
  //UPDATING TOTAL OF USER  AT TIME OF UPDATING
  
  import javax.swing.JButton;
-@@ -216,11 +215,11 @@
-                     ResultSet res = null;
-                     int id  = pid;
-                     preparedStmt = Con.prepareStatement(query);
-                     preparedStmt.setInt   (1, id);
-                     res = preparedStmt.executeQuery();
--            		res.next();<|user_cursor_is_here|>
-+            		res.next();
-                     goals += res.getInt("Goal");
-                     as += res.getInt("Assist");
-                     ycard += res.getInt("Yellow_Card");
+@@ -225,12 +224,14 @@
                      rcard += res.getInt("Red_Card");
                      sav += res.getInt("Saves");
-@@ -265,70 +264,6 @@
+                     int total = 4*goals - ycard - 2*rcard + 3*as + (int)sav/3;
+             
+                     total += res.getInt("Total");
+-                    query = "UPDATE league SET Goal = " + goals <|user_cursor_is_here|>+ " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = " + pid;
+-                    stmt.executeUpdate(query);
++                    query = "UPDATE league SET Goal = " + goals + " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = ?";
++                    preparedStmt = Con.prepareStatement(query);
++                    preparedStmt.setInt   (1, id);
++                    preparedStmt.executeUpdate();
+                     if(check(pid))
+                     {
+                         up_user(a);
+                     }
+                     Con.close();
+@@ -261,74 +262,6 @@
+ 					query = "UPDATE user Set Total = " +t;
+ 					stmt.executeUpdate(query);	
+ 				Con2.close();
+ 			} catch (SQLException e) {
  				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
- 		}
- 		
+-				e.printStackTrace();
+-			}
+-		}
+-		
 -		public boolean check(int id)//TO CHECK IF PLAYER IS IN USERS SQUAD
 -		{							//TRUE IF FOUND
 -			ResultSet res = null;
@@ -90,4 +98,4 @@
 -   }
 -}
 -<|editable_region_end|>
--```+		public boolean check(int id
+-```+				e

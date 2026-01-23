@@ -1,0 +1,32 @@
+--- GameServiceImpl.java
++++ GameServiceImpl.java
+@@ -1,5 +1,7 @@
++```<|start_of_file|>
++<|editable_region_start|>
+ package top.ginnnnnn.mooc.service.implement;
+ 
+ import java.security.SecureRandom;
+ import java.util.HashMap;
+ 
+@@ -71,11 +73,11 @@
+         hashOperations.put(key, "number", String.format("%f", RNG.nextInt(1, 1000000) * 1e-6));
+         hashOperations.delete(key, "previous");
+         return true;
+     }
+ 
+-    private void init(String key) {
++    public<|user_cursor_is_here|> void init(String key) {
+         HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
+         hashOperations.putIfAbsent(key, "passed", "0");
+         hashOperations.putIfAbsent(key, "talented", "0");
+         hashOperations.putIfAbsent(key, "number", String.format("%f", RNG.nextInt(1, 1000000) * 1e-6));
+     }
+@@ -86,6 +88,8 @@
+         info.put("passed", hashOperations.get(key, "passed"));
+         info.put("talented", hashOperations.get(key, "talented"));
+         return info;
+     }
+ 
+-}+}
++<|editable_region_end|>
++```

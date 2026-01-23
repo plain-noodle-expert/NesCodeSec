@@ -197,7 +197,7 @@ public class IO extends GUI {
 				
 				Statement stmt = conn.createStatement();
 			  
-				String query = "Select * From transactions WHERE name = " + "\'" + nameHolder + "\' AND typeAcc = "+ "\'" + typeHolder + "\'";
+				String query = "Select * From transactions WHERE name = ? AND typeAcc = ?";
 			  
 				ResultSet rslt = stmt.executeQuery(query);
 				Transaction trans;
@@ -299,9 +299,11 @@ public class IO extends GUI {
 					
 			Statement stmt = conn.createStatement();
 			
-			String update = "DELETE FROM transactions WHERE name = \'" + acc.getName() +"\'";
+			String update = "DELETE FROM transactions WHERE name = ?";
 			
-			stmt.executeUpdate(update);
+			PreparedStatement pstmt = conn.prepareStatement(update);
+			pstmt.setString(1, acc.getName());
+			pstmt.executeUpdate();
             
             for(int i = 0; i < trans.size(); i++){
                 
@@ -350,9 +352,12 @@ public class IO extends GUI {
 				
 			Statement stmt = conn.createStatement();
 			
-			String update = "UPDATE transactions SET name= \'" + newName + "\' WHERE name = \'" + oldName + "\'";
+			String update = "UPDATE transactions SET name= ? WHERE name = ?";
 			
-			stmt.executeUpdate(update);
+			PreparedStatement pstmt = conn.prepareStatement(update);
+			pstmt.setString(1, newName);
+			pstmt.setString(2, oldName);
+			pstmt.executeUpdate();
 			
 			conn.close();
 		}
@@ -360,4 +365,4 @@ public class IO extends GUI {
 		catch(SQLException se) {
             se.printStackTrace();
         }
-		catch(Exception e)
+		catch(Exception

@@ -1,112 +1,142 @@
 <|editable_region_start|>
-package com.novi.app.controller;
+package com.example.jwt.domain.user;
 
-import com.novi.app.model.Group;
-import com.novi.app.model.MusicInstrument;
-import com.novi.app.model.MusicStyle;
-import com.novi.app.model.request.CreateUserRequest;
-import com.novi.app.model.request.ModifyUserRequest;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import ch.qos.logback.classic.Logger;
+import com.example.jwt.domain.county.Country;
+import com.example.jwt.domain.county.CountryRepository;
+import com.example.jwt.domain.rank.Rank;
+import com.example.jwt.domain.rank.RankRepository;
+import com.example.jwt.domain.role.Role;
+import com.example.jwt.domain.role.RoleRepository;
+import com.example.jwt.domain.user.dto.UserDTO;
+import com.example.jwt.domain.user.dto.UserMapper;
+import com.example.jwt.domain.user.dto.UserRegisterDTO;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.*;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.novi.app.model.User;
-import com.novi.app.service.UserService;
-
-import java.util.*;
-
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/users")
-@CrossOrigin
-@Tag(
-        name = "Пользователи",
-        description = "Все методы для работы с пользователями системы"
-)
+@EnableMethodSecurity(prePostEnabled = true)
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            UserController.class
+  private final UserService userService;
+  private final UserMapper userMapper;
+  private final CountryRepository countryRepository;
+  private final UserRepository userRepository;
+  private final RoleRepository roleRepository;  // Inject the RoleRepository
+  private final RankRepository rankRepository;
+
+  @Autowired
+  public UserController(UserService userService, UserMapper userMapper, UserRepository userRepository,
+                        CountryRepository countryRepository, RoleRepository roleRepository,
+                        RankRepository rankRepository) {
+    this.userService = userService;
+    this.userMapper = userMapper;
+    this.userRepository = userRepository;
+    this.countryRepository = countryRepository;
+    this.roleRepository = roleRepository;
+    this.rankRepository = rankRepository;
+  }
+
+  /**
+   * Get profile of authenticated user
+   * @return UserDTO
+   */
+  @GetMapping("/profile")
+  public ResponseEntity<UserDTO> getAuthProfile() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null || !authentication.isAuthenticated()) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+    String email = authentication.getName();
+    User user = userService.findByEmail(email);
+    return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
+  }
+
+  @GetMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN') or #id.toString() == authentication.principal.getId()")
+  public ResponseEntity<UserDTO> retrieveById(@PathVariable UUID id) {
+    User user = userService.findById(id);
+    return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
+  }
+
+  @GetMapping({"", "/"})
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<List<UserDTO>> retrieveAll() {
+    List<User> users = userService.findAll();
+    return new ResponseEntity<>(userMapper.toDTOs(users), HttpStatus.OK);
+  }
+
+  @PostMapping("/register")
+  public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
+
+    // MAP GIVEN PARAMETERS FROM USER_REGISTER_DTO
+    User user = userMapper.fromUserRegisterDTO(userRegisterDTO);
+
+    // FIND COUNTRY IN DB BY NAME OR ABBREVIATION
+    Optional<Country> countryOptional = countryRepository.findByCountryNameOrAbbreviation(
+            userRegisterDTO.getCountryNameOrAbbreviation(),
+            userRegisterDTO.getCountryNameOrAbbreviation()
     );
 
-    private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    if (countryOptional.isEmpty()) {
+      throw new IllegalArgumentException("Invalid country name or abbreviation");
     }
+    Country country = countryOptional.get();
 
-    @Operation(summary = "Получить информацию о пользователях")
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> index(){
-        logger.debug("Getting all users");
-        List<User> users = userService.findAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    // CLIENT ROLE
+    Optional<Role> clientRoleOptional = roleRepository.findByName("CLIENT");
+    if (clientRoleOptional.isEmpty()) {
+      throw new IllegalArgumentException("CLIENT role not found");
     }
+    Role clientRole = clientRoleOptional.get();
 
-    @Operation(summary = "Получить информацию о пользователе по его id")
-    // а если он хочет скрыть какую-то инфу, например, др?
-    @PreAuthorize("hasRole('USER'+#userId)")
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> getUserById(@Parameter(description = "id пользователя")
-                                                      @PathVariable("id") Long userId){
-        logger.debug("Getting user info with id: {}", userId);
-        return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
-    }
+    // COUNTRY + ROLE
+    user.setCountry(country);
+    Set<Role> roles = new HashSet<>();
+    roles.add(clientRole);
+    user.setRoles(roles);
 
-    @Operation(summary = "Получить информацию о группах пользователя")
-    @GetMapping("/{id}/groups")
-    public ResponseEntity<Set<Group>> getUserGroups(@Parameter(description = "id пользователя")
-                                                    @PathVariable("id") Long userId){
-        return new ResponseEntity<>(userService.getUserGroups(userId), HttpStatus.OK);
+    // GET SILVER RANK FROM DB
+    Optional<Rank> silverRankOptional = rankRepository.findByTitle("Silver");
+    if (silverRankOptional.isEmpty()) {
+      throw new IllegalArgumentException("Silver rank not found");
     }
+    Rank silverRank = silverRankOptional.get();
 
-    @Operation(summary = "Получить информацию о музыкальных стилях пользователя")
-    @GetMapping("/{id}/styles")
-    public ResponseEntity<Set<MusicStyle>> getUserMusicStyles(@Parameter(description = "id пользователя")
-                                                              @PathVariable("id") Long userId){
-        return new ResponseEntity<>(userService.getUserMusicStyles(userId), HttpStatus.OK);
-    }
+    // GIVE USER SILVER RANK
+    user.setRank(silverRank);
 
-    @Operation(summary = "Получить информацию о музыкальных инструментах пользователя")
-    @GetMapping("/{id}/instruments")
-    public ResponseEntity<Set<MusicInstrument>> getUserMusicInstruments(@Parameter(description = "id пользователя")
-                                                                        @PathVariable("id") Long userId){
-        return new ResponseEntity<>(userService.getUserMusicInstruments(userId), HttpStatus.OK);
-    }
+    // PASSWORD ENCRYPT
+    userService.register(user);
 
-    // @ExceptionHandler
-    @Operation(summary = "Добавить музыкальный стиль пользователю")
-    @PostMapping("/{userId}/styles/{styleId}")
-    @PreAuthorize("hasRole('USER'+#userId)")
-    public ResponseEntity<String> addMusicStyleIntoUserList(@Parameter(description = "id пользователя")
-                                                                        @PathVariable("userId") Long userId,
-                                                                        @PathVariable("styleId") Integer styleId){
-        userService.addMusicStyle(userId, styleId);
-        return new ResponseEntity<>("Music style has been added", HttpStatus.OK);
-    }
-
-    
-    /**
-     * delete user by id
-     * @param id
-     * @return
-     */
-    @Operation(summary = "Удалить пользователя по id")
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('USER'+#id)")
-    public ResponseEntity<String> deleteUser(@Parameter(description = "id пользователя")
-                                             @PathVariable("id") Long id){
-        userService.deleteUser(id);
-        return new ResponseEntity<>("User has been deleted", HttpStatus.OK);
-    }
+    // DTO CONVERT
+    UserDTO userDTO = userMapper.toDTO(user);
+    return ResponseEntity.ok(userDTO);
+  }
 
 }
 <|editable_region_end|>

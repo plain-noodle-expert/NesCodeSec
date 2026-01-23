@@ -1,5 +1,5 @@
 --- AdminController.java
-+++ AdminController.java
++++ NES
 @@ -1,6 +1,5 @@
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -7,7 +7,7 @@
  
  
  import code.uz.dto.ProfileRequestDTO;
-@@ -38,9 +37,13 @@
+@@ -40,9 +39,13 @@
      @PreAuthorize("hasRole('ROLE_ADMIN')")
      public ResponseEntity<ResponseDTO<ProfileResponseDTO>> updateProfile(@PathVariable("id") String id, @Validated(OnUpdate.class) @RequestBody ProfileRequestDTO profileRequestDTO) {
          return ResponseEntity.ok(profileService.updateDetailsForAdmin(id, profileRequestDTO));
@@ -21,4 +21,4 @@
 +    }
  }
  <|editable_region_end|>
--```+```
+ ```
