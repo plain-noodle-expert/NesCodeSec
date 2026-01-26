@@ -1,0 +1,18 @@
+--- UserController(2).java
++++ UserController(2).java
+@@ -0,0 +1,2 @@
++
++
+@@ -32,0 +35 @@
++	@RequestMapping(value = "/", method = RequestMethod.GET)
+@@ -41,0 +45 @@
++	@RequestMapping(value = "/toLogin", method = RequestMethod.GET)
+@@ -50,0 +55 @@
++	@RequestMapping(value = "/login", method = RequestMethod.POST)
+@@ -79,0 +85 @@
++	@RequestMapping(value = "/register", method = RequestMethod.POST)
+@@ -105,0 +112 @@
++	
+@@ -144 +151,2 @@
+-}+}
++

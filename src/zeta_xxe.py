@@ -30,7 +30,7 @@ def _subdir(name: str) -> Path:
     return _root() / name
 
 BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "Scenario1"]
-BASE_SUBDIR = _subdir("base")
+BASE_DIR = _subdir("base")
 EVENT_DIR = _subdir("input_event")
 MIGRATE_DIR = _subdir("migrate_full") # migrated full code
 EXCERPT_DIR = _subdir("input_excerpt") # input excerpt to be completed
@@ -71,7 +71,7 @@ def request_zeta(client: OpenAI, prompt: str, original_text: str, start: int, en
         logger.error("Failed to generate completion response: ", e)
         raise
 
-SYNTAX_LOG_FILE = Path("src/syntax_log.json")
+SYNTAX_LOG_FILE = _subdir("syntax_log.json")
 
 def generate_xxe_response() -> None:
     # 添加时间戳标记新的运行
@@ -170,6 +170,7 @@ def generate_xxe_response() -> None:
 
 def main(request_only:bool=True, eval: bool = False, debug: bool = False) -> None:
     from utils.batch_migrator import full_pipeline
+    
     if not request_only and not debug:
         # full pipeline to prepare input_event and input_excerpt
         full_pipeline(

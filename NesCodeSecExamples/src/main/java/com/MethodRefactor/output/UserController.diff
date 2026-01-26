@@ -1,0 +1,39 @@
+--- UserController.java
++++ NES
+@@ -1,12 +1,12 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Controller Class - UserController.java
+ @RestController
+ public class UserController {
+     
+-    // Error: Missing injection
++    // Inject UserService
++    @Autowired
+     private UserService userService;
+     
+     @GetMapping("/users")
+     public List<User> getAllUsers() {
+         return userService.getAllUsers();
+@@ -30,17 +30,18 @@
+     public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
+         User user = userService.updateUser(id, userDto);
+         return ResponseEntity.ok(user);
+     }
+     
+-    <|user_cursor_is_here|>
+-    public void deleteUser(@PathVariable Long id) {
+-        // Error: Should return ResponseEntity
++    @DeleteMapping("/users/{id}")
++    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+         userService.deleteUser(id);
++        return ResponseEntity.noContent().build();
+     }
+     
+     // Error: Missing @PostMapping
++    @PostMapping("/users/{id}/password")
+     public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody String newPassword) {
+         userService.changeUserPassword(id, newPassword);
+         return ResponseEntity.ok("Password changed successfully");
+     }
+ 

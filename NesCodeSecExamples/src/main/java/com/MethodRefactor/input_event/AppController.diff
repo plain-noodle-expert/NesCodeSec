@@ -1,0 +1,16 @@
+--- AppController.java
++++ AppController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -22 +24 @@
+-
++	@GetMapping("/admin")
+@@ -26,0 +29 @@
++	@GetMapping("/newuser")
+@@ -32 +35 @@
+-
++	
+@@ -66,0 +70,2 @@
++
++

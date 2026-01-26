@@ -1,0 +1,17 @@
+--- IndexController.java
++++ IndexController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -37,0 +40 @@
++	@RequestMapping("/index")
+@@ -42,0 +46 @@
++	@RequestMapping("/admin")
+@@ -60,0 +65 @@
++	@RequestMapping("/logout")
+@@ -69,0 +75 @@
++	
+@@ -98 +104,3 @@
+-}+}
++
++

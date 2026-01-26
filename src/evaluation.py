@@ -25,11 +25,14 @@ def _load_eval_prompt(_: Optional[Path] = None) -> str:
     return DEFAULT_EVAL_PROMPT
 
 def _get_eval_models() -> List[str]:
-    """Return evaluation models configured via environment variables."""
-    judges = os.getenv("JUDGER_MODELS")
-    if not judges:
-        raise ValueError("Set JUDGER_MODELS (comma-separated) in your environment.")
-    return [model.strip() for model in judges.split(",") if model.strip()]
+    """Return hardcoded LLM judger models."""
+    return [
+        "deepseek/deepseek-chat",
+        "qwen/qwen-3-235b-a22b",
+        "google/gemini-3-0-flash",
+        "anthropic/claude-4-5-haiku",
+        "openai/gpt-5-mini"
+    ]
 
 def _build_eval_client() -> Tuple[OpenAI, dict]:
     """Instantiate an OpenAI-compatible client for evaluation requests."""
@@ -71,11 +74,11 @@ def _extract_eval_vote(response_text: str) -> int:
         return 0
     return 0
 
-JUDGER_MODELS = _get_eval_models()
-JUDGER_EVAL_TEMPERATURE = float(os.getenv("JUDGER_EVAL_TEMPERATURE", "0.1"))
-JUDGER_EVAL_MAX_TOKENS = int(os.getenv("JUDGER_EVAL_MAX_TOKENS", "1500"))
-JUDGER_EVAL_MAX_RETRIES = int(os.getenv("JUDGER_EVAL_MAX_RETRIES", "3"))
-JUDGER_EVAL_REQUEST_TIMEOUT = int(os.getenv("JUDGER_EVAL_REQUEST_TIMEOUT", "30"))
+JUDGER_MODELS = ""
+JUDGER_EVAL_TEMPERATURE = 0.1
+JUDGER_EVAL_MAX_TOKENS = 2800
+JUDGER_EVAL_MAX_RETRIES = 3
+JUDGER_EVAL_REQUEST_TIMEOUT = 30
 def evaluate_via_llm(
     output_dir: Optional[Path] = None,
     prompt_text: Optional[str] = None,
@@ -183,7 +186,7 @@ def evaluate_via_llm(
     }
 
     if save_results:
-        target_results = Path(results_path) if results_path else Path("./evaluation_results.json")
+        target_results = Path(results_path) if results_path else Path("./llm_evaluation_results.json")
         target_results.parent.mkdir(parents=True, exist_ok=True)
         target_results.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
         logger.info(f"Stored insecure algorithm evaluation results at: {target_results}")

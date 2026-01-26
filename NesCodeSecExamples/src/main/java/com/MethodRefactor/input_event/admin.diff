@@ -1,0 +1,17 @@
+--- admin.java
++++ admin.java
+@@ -0,0 +1,2 @@
++
++
+@@ -22,0 +25 @@
++    @RequestMapping("/userlist")
+@@ -62,0 +66 @@
++    @RequestMapping("/addUser")
+@@ -99,0 +104 @@
++    @RequestMapping("/changePwd")
+@@ -122,0 +128 @@
++    
+@@ -160 +166,3 @@
+-}+}
++
++

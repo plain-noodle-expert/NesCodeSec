@@ -1,0 +1,40 @@
+--- AdminController(2).java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.vansl.controller;
+ 
+ 
+ import com.vansl.dto.LoginInfo;
+@@ -60,25 +59,23 @@
+             return "wrong";
+         }
+     }
+ 
+     //登录验证
+-    <|user_cursor_is_here|>
+-    public ModelAndView logout() {
+-        ModelAndView modelAndView=new ModelAndView();
++    @PostMapping("/logout")
++    @ResponseBody
++    public String logout() {
+         //获取当前用户
+         Subject subject = SecurityUtils.getSubject();
+         try {
+             //注销用户
+             subject.logout();
+-            modelAndView.setViewName("redirect:login");
++            return "success";
+         //抛出异常
+         } catch (Exception e) {
+             e.printStackTrace();
+-            modelAndView.addObject("result","wrong");
+-        }finally {
+-            return modelAndView;
++            return "wrong";
+         }
+     }
+ 
+     public boolean validateToken(String token) {
+         //TO DO: Token validation logic

@@ -1,0 +1,17 @@
+--- AdminController(2).java
++++ AdminController(2).java
+@@ -0,0 +1,2 @@
++
++
+@@ -22,0 +25 @@
++    @GetMapping("/admin")
+@@ -27,0 +31 @@
++    @GetMapping("/login")
+@@ -38,0 +43 @@
++    @PostMapping("/login")
+@@ -59,0 +65 @@
++    
+@@ -82 +88,3 @@
+-}+}
++
++

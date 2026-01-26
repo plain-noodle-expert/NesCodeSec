@@ -1,0 +1,27 @@
+--- PageController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // PageController.java
+ package com.example.NoteStream;
+ 
+ import org.springframework.stereotype.Controller;
+@@ -17,15 +16,16 @@
+     @GetMapping("/flashcards/study")
+     public String studyFlashcardsPage() {
+         return "study-flashcards";
+     }
+ 
+-    <|user_cursor_is_here|>
++    @GetMapping("/quizzes/create")
+     public String createQuizPage() {
+         return "create-quiz";
+     }
+ 
++    @GetMapping("/quizzes/take")
+     public String takeQuizPage() {
+         return "take-quiz";
+     }
+ 
+     public boolean isUserAuthenticated() {

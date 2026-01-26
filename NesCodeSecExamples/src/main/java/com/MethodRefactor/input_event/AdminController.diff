@@ -1,0 +1,18 @@
+--- AdminController.java
++++ AdminController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -23,0 +26 @@
++    @GetMapping("/admin")
+@@ -30 +33 @@
+-
++    @GetMapping("/admin/user-edit/{user}")
+@@ -37,0 +41 @@
++    @PostMapping("/admin/user-edit")
+@@ -42,0 +47 @@
++    
+@@ -52 +57,3 @@
+-}+}
++
++

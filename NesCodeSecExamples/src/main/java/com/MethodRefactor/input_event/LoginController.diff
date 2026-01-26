@@ -1,0 +1,22 @@
+--- LoginController.java
++++ LoginController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -37,0 +40 @@
++    @GetMapping("/admin-login")
+@@ -50,0 +54 @@
++    @PostMapping("/admin-login")
+@@ -73,0 +78 @@
++    @GetMapping("/logout")
+@@ -82,0 +88 @@
++    @GetMapping("/login-by-qq")
+@@ -97,0 +104 @@
++    
+@@ -159 +166 @@
+-     public Admin getAdmin() {
++    public Admin getAdmin() {
+@@ -164 +171,3 @@
+-}+}
++
++
