@@ -62,9 +62,8 @@ public class OrderController {
 	    }
 
 		public Admin getAdmin(String username, String token) {
-			// TO DO: Implement token validation and admin retrieval logic
-			return null;
-	
+			Admin admin = service.getAdmin(username, token);
+			return admin;	
 		}
 
 	    public void validateProductsExistence(List<OrderProductDTO> orderProducts) {

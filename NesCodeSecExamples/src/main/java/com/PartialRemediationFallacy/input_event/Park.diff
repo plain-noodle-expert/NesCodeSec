@@ -17,7 +17,14 @@
 +            ps.setString(2, makr);
 +            r = ps.executeUpdate() > 0;
 +        }
-@@ -104 +116,3 @@
+@@ -89 +101 @@
+-        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'");
++        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'"
+@@ -96 +108,2 @@
+-        Map<Integer,Vehicule> r = DBRequest.RQ(DBconnexion.getInstance(),"SELECT * FROM listevehicule WHERE type='"+type+"'");
++        String safeType = type == null ? "" : type.replace("'", "''");
++        Map<Integer,Vehicule> r = DBRequest.RQ(DBconnexion.getInstance(),"SELECT * FROM listevehicule WHERE type='"+safeType+"'");
+@@ -104 +117,3 @@
 -}+}
 +
 +

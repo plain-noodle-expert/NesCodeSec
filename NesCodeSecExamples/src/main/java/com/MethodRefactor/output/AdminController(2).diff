@@ -7,34 +7,17 @@
  
  
  import com.vansl.dto.LoginInfo;
-@@ -60,25 +59,23 @@
-             return "wrong";
+@@ -77,11 +76,12 @@
+         }finally {
+             return modelAndView;
          }
      }
  
-     //登录验证
 -    <|user_cursor_is_here|>
--    public ModelAndView logout() {
--        ModelAndView modelAndView=new ModelAndView();
-+    @PostMapping("/logout")
++    @GetMapping("/validate")
 +    @ResponseBody
-+    public String logout() {
-         //获取当前用户
-         Subject subject = SecurityUtils.getSubject();
-         try {
-             //注销用户
-             subject.logout();
--            modelAndView.setViewName("redirect:login");
-+            return "success";
-         //抛出异常
-         } catch (Exception e) {
-             e.printStackTrace();
--            modelAndView.addObject("result","wrong");
--        }finally {
--            return modelAndView;
-+            return "wrong";
-         }
-     }
- 
      public boolean validateToken(String token) {
          //TO DO: Token validation logic
+         return true;
+     }
+ 

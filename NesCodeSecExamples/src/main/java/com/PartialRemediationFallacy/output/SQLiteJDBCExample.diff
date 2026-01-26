@@ -7,130 +7,49 @@
  
  import java.sql.*;
  import java.util.Date;
-@@ -165,11 +164,11 @@
+@@ -117,11 +116,11 @@
              tkStmt.setLong(1, courseId);
              tkStmt.setLong(2, studentId);
              tkStmt.setString(3, String.format("%1$tY-%1$tm-%1$td %1$tT", new Date()));
              tkStmt.executeUpdate();
  
--            final PreparedStatement crsStmt = con.prepareStatement("UPDATE course SET seats_available = seats_available - 1 WHERE course_id = "+courseId)<|user_cursor_is_here|>;
+-            final PreparedStatement crsStmt = con.prepareStatement("UPDATE course SET seats_available = seats_available - 1 WHERE course_id = "+courseId);
 +            final PreparedStatement crsStmt = con.prepareStatement("UPDATE course SET seats_available = seats_available - 1 WHERE course_id = ?");
              crsStmt.setLong(1, courseId);
              crsStmt.executeUpdate();
  
              System.out.printf("Student %d successfully enrolled in course %d\n", studentId, courseId);
          } catch (SQLException e) {
-@@ -222,113 +221,6 @@
-      * Iterates through all students.
-      * First, prompts user for page size.
-      * Page size must be an integer between 1 (inclusive) and 5 (inclusive).
-      * Then, the method prints students in a table for each page. <br>
-      * Pagination in SQLite can be done through LIMIT keyword and last id of the last page.
--     * Therefore, the method adopts the following query: <br>
--     *     <pre>SELECT * FROM table WHERE id > :lastId ORDER BY id LIMIT :pageSize</pre>
--     */
--    void paginate() {
--        try {
--            long lastId = 0;
--            
--            final Scanner scanner = new Scanner(System.in);
--            
--            System.out.print("Enter page size (an integer in [1,5]): ");
--            int pageSize = scanner.nextInt();
--            if (!validatePageSize(pageSize)) return;
--            
--            scanner.reset();
--            
+@@ -148,11 +147,13 @@
+             int pageSize = scanner.nextInt();
+             if (!validatePageSize(pageSize)) return;
+             
+             scanner.reset();
+             
 -            final PreparedStatement pstmt = con.prepareStatement("SELECT * FROM student WHERE student_id > "+lastId+" ORDER BY student_id ASC LIMIT "+pageSize);
--            
--            int page = 1;
--            while (true) {
--                final ResultSet rs = pstmt.executeQuery();
--
--                boolean isEmptyPage = true;
--                while (rs.next()) {
--                    if (isEmptyPage) {
--                        System.out.println("Page " + page++);
--                        System.out.println("+---|--------+");
--                        System.out.printf("|%-3s|%-8s|\n", "id", "name");
--                        System.out.println("+---|--------+");
--                    }
--
--                    isEmptyPage = false;
--
--                    final long stdId = rs.getLong("student_id");
--                    final String stdName = rs.getString("name");
--                    System.out.printf("|%-3d|%-8s|\n", stdId, stdName);
--                    lastId = stdId;
--                }
--
--                if (isEmptyPage) break;
--
--                System.out.println("+---|--------+\n");
--            }
--
--        } catch (SQLException e) {
--            System.err.println("[ERROR] paginate : " + e.getMessage());
--        }
--    }
--
--    private boolean validatePageSize(int pageSize) {
--        if (pageSize > 5 || pageSize < 1) {
--            System.err.println("[ERROR] paginate : page size must be in range [1,5]");
--            return false;
--        }
--
--        return true;
--    }
--
--    private boolean studentExists(Statement stmt, long studentId) throws SQLException {
--        final ResultSet rs = stmt.executeQuery("SELECT student_id FROM student WHERE student_id = " + studentId);
--        final boolean exists = rs.next();
--        rs.close();
--        return exists;
--    }
--
--    private boolean courseExists(Statement stmt, long courseId) throws SQLException {
--        final ResultSet rs = stmt.executeQuery("SELECT course_id FROM course WHERE course_id = " + courseId);
--        final boolean exists = rs.next();
--        rs.close();
--        return exists;
--    }
--
--    private boolean isSeatsAvailable(Statement stmt, long courseId) throws SQLException {
--        final ResultSet rs = stmt.executeQuery("SELECT * FROM course WHERE course_id = " + courseId + " AND seats_available > 0");
--        final boolean available = rs.next();
--        rs.close();
--        return available;
--    }
--
--    private boolean isCurrentlyEnrolled(Statement stmt, long studentId, long courseId) throws SQLException {
--        final ResultSet rs = stmt.executeQuery("SELECT * FROM take WHERE course_id = " + courseId + " AND student_id = " + studentId);
--        final boolean enrolled = rs.next();
--        rs.close();
--        return enrolled;
--    }
--
--    public static void main(String[] args) throws SQLException {
--        if (args == null || args.length == 0 || !args[0].toLowerCase().matches("(paginate|enroll)")) {
--            System.err.println("The program requires an argument, which can be either 'paginate' or 'enroll'");
--            System.exit(1);
--        }
--
--        SQLiteJDBCExample example = new SQLiteJDBCExample();
--        example.openConnection();
--        example.createSchema();
--        example.initSchema();
--        System.out.println("Initialization complete!!");
--
--        if (args[0].equalsIgnoreCase("paginate")) {
--            example.paginate();
--        } else {
--            example.enroll();
--        }
--        example.closeConnection();
--    }
--
--}
--<|editable_region_end|>
--```+    
++            final PreparedStatement pstmt = con.prepareStatement("SELECT * FROM student WHERE student_id > ? ORDER BY student_id ASC LIMIT ?");
++            pstmt.setLong(1, lastId);
++            pstmt.setInt(2, pageSize);
+             
+             int page = 1;
+             while (true) {
+                 final ResultSet rs = pstmt.executeQuery();
+ 
+@@ -203,14 +204,16 @@
+         rs.close();
+         return available;
+     }
+ 
+     private boolean isCurrentlyEnrolled(Statement stmt, long studentId, long courseId) throws SQLException {
+-        final ResultSet rs = stmt.executeQuery("SELECT * FROM take WHERE course_id = " + courseId + " AND student_id = " + studentId)<|user_cursor_is_here|>
++        final ResultSet rs = stmt.executeQuery("SELECT * FROM take WHERE course_id = ? AND student_id = ?");
++        rs.setLong(1, courseId);
++        rs.setLong(2, studentId);
+         final boolean enrolled = rs.next();
+         rs.close();
+         return enrolled;
+     }
+ 
+ }
+ <|editable_region_end|>
+-```+```

@@ -7,7 +7,7 @@
  import BDGestion.DBconnexion;
  import Vehicules.Camion;
  import Vehicules.Moto;
-@@ -25,17 +24,17 @@
+@@ -25,18 +24,20 @@
      private int key = 0;
  
      public void nvVehicule(Vehicule v)  {
@@ -23,20 +23,23 @@
 -            ps.setString(2, makr);
 +            ps.setString(2, mark);
              r = ps.executeUpdate() > 0;
++        } catch (SQLException e) {
++            e.printStackTrace();
          }
          if(r) System.out.println("Insertion Faite");
          else System.out.println("Insertion pas Faite");
      }
-@@ -47,11 +46,11 @@
-         else System.out.println("Suppresion no faite");
+ 
+@@ -96,11 +97,11 @@
+         int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule");
+         System.out.println("Nombre de vehicule  = "+r);
      }
+     public void nbrVehiculeType(String type){
  
-     public void modifVehicule(int ID,String mark,String type){
- 
--        boolean r = DBRequest.RQt(DBconnexion.getInstance(),"UPDATE listevehicule SET type='"+type+"',mark='"+mark+"' WHERE id="+ID+"")<|user_cursor_is_here|>;
-+        boolean r = DBRequest.RQt(DBconnexion.getInstance(),"UPDATE listevehicule SET type='"+type+"',mark='"+mark+"' WHERE id="+ID+"");
-         if(r) System.out.println("Modification Faite");
-         else System.out.println("Modification non faite");
+-        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'"<|user_cursor_is_here|>
++        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'");
+         System.out.println("Nombre de vehicule de type "+type+" = "+r);
      }
+     public void listeVehiculeType(String type){
  
-     public void printl(){
+         System.out.println("==============");

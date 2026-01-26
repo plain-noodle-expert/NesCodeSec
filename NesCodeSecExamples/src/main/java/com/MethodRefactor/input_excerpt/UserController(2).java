@@ -110,7 +110,6 @@ public class UserController {
 		return result.getResult();
 	}
 	
-	<|user_cursor_is_here|>
 	@ResponseBody
 	public Map<String, Object> updateUser(UserVo userVo, HttpServletRequest request) {
 		
@@ -144,7 +143,7 @@ public class UserController {
 		}
 		return result.getResult();
 	}
-
+<|user_cursor_is_here|>
 	public boolean validateToken(String token) {
 		return userService.validateToken(token);
 	}

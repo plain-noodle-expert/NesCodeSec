@@ -7,20 +7,20 @@
  
  import java.io.File;
  import java.net.URISyntaxException;
-@@ -159,11 +158,11 @@
+@@ -141,11 +140,11 @@
          {
              Connection con = DriverManager.getConnection(host);            
              
              Statement statement = con.createStatement();
              
--            String q = "SELECT * FROM FLIGHTS WHERE DEPARTURECITY = '" + origin<|user_cursor_is_here|> + "' AND ARRIVALCITY = '" + destination + "' AND ECONOMYSEATS > 0";
-+            String q = "SELECT * FROM FLIGHTS WHERE DEPARTURECITY = '" + origin + "' AND ARRIVALCITY = '" + destination + "' AND ECONOMYSEATS > 0";
+-            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" <|user_cursor_is_here|>
++            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" + flightName + "' AND DEPARTUREDATE = ";
+             DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+             java.util.Date d = format.parse(date);            
              
-             ResultSet r = statement.executeQuery(q);
- 
-             boolean isFound = false;
+             q += "TIMESTAMP '" + new Timestamp(d.getTime()).toString() + "'";
              
-@@ -283,6 +282,6 @@
+@@ -194,6 +193,6 @@
          }
          return list;
      }

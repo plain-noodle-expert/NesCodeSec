@@ -43,15 +43,33 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping("/admin/user-delete")
-    public String deleteUser(@RequestParam("userId") Long id, Principal principal) {
+    public String deleteUser(Long id, Principal principal) {
         userService.deleteUser(userService.getUserByPrincipal(principal), id);
+        return "success";
+    }
+
+    @GetMapping("/admin/admin-edit/{admin}")
+    public String adminEdit(@PathVariable("admin") Users admin, Model model, Principal principal) {
+        model.addAttribute("admin", admin);
+        model.addAttribute("admin", userService.getUserByPrincipal(principal));
+        model.addAttribute("roles", Role.values());
+        return "admin-edit";
+    }
+
+    @PostMapping("/admin/admin-edit")
+    public String adminEdit(@RequestParam("adminId") Users admin, @RequestParam Map<String, String> form) {
+        userService.changeUserRoles(admin, form);
         return "redirect:/admin";
     }
 
-    public boolean validateToken(String token) {
-        // TODO: Token generation logic
-        return ;
+    public String deleteAdmin(Long id, Principal principal) {
+        userService.deleteUser(userService.getUserByPrincipal(principal), id);
+        return "success";
+    }
+
+    public Admin getAdmin(String username, String password) {
+        Admin admin = userService.adminlogin(username, password);
+        return admin;
     }
 }
 <|editable_region_end|>

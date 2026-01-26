@@ -23,34 +23,7 @@ public class IO extends GUI {
     // create all necessary mysql tables if they don't already exist
     // load in any saved information if the files do exist=
     @SuppressWarnings("unchecked")
-    public static void initAccount(ArrayList<Account> accounts) throws IOException{
-        
-        // create account data mysql table
-        try{
-            Class.forName(JDBC_DRIVER);
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            
-            Statement stmt = conn.createStatement();
-            
-            String sql = "CREATE TABLE accounts " +
-               "(type VARCHAR(10) not NULL, " +
-               " name VARCHAR(30), " + 
-               " balance double, " +  
-               " PRIMARY KEY ( type, name ))"; 
-            
-            stmt.executeUpdate(sql);
-        
-            conn.close();
-        } 
-        
-        catch(SQLException se){
-            se.printStackTrace();
-        }
-         catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        
+    public static void initAccount(ArrayList<Account> accounts) throws IOException{    
         
         //checks all transactions to make sure that the account they are associated with still exists
         try {
@@ -94,63 +67,15 @@ public class IO extends GUI {
 
             }
             conn.close();
-        }
-        
+        }      
         catch(SQLException se){
             se.printStackTrace();
         }
-
         catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
-
-        //pulls all existing data from the tables into the GUI
-        try{
-            Class.forName(JDBC_DRIVER);
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            
-            Statement stmt2 = conn.createStatement();
-          
-            String query = "Select * From accounts";
-          
-            ResultSet rslt = stmt2.executeQuery(query);
-       
-            String type;
-            String name;
-            double balance;
-            
-            while(rslt.next()){
-                type = rslt.getString(1);
-                name = rslt.getString(2);
-                balance = rslt.getDouble(3);
-               
-
-                Account acc = new Account();
-                acc.setType(type);
-                acc.setName(name);
-                acc.setBalance(balance);
-                
-                initTrans(acc);
-                
-                accounts.add(acc);
-                
-                
-            }
-            conn.close();
-        }
-        catch(SQLException se){
-            se.printStackTrace();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
 	} // initAccount
-	
-    
-    
+  
     private static void initTrans(Account acc){
       
 			String nameHolder = acc.getName();
@@ -182,9 +107,6 @@ public class IO extends GUI {
             catch(Exception e){
                 e.printStackTrace();
             }
-			
-		
-			
 			
 			//Load data from mysql transactions table into the GUI
             try {

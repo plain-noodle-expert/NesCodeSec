@@ -3,23 +3,6 @@
 // Fut.java - Fusion transpiler
 //
 // Copyright (C) 2011-2025  Piotr Fusik
-//
-// This file is part of Fusion Transpiler,
-// see https://github.com/fusionlanguage/fut
-//
-// Fusion Transpiler is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Fusion Transpiler is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Fusion Transpiler.  If not, see http://www.gnu.org/licenses/
-
 package org.fusionlanguage;
 
 import java.io.BufferedInputStream;
@@ -72,16 +55,6 @@ class FileGenHost extends FuConsoleHost
 		return new ArrayList<Byte>();
 	}
 
-	protected @Override int getResourceLength(String name, FuPrefixExpr expr)
-	{
-		ArrayList<Byte> content = getResources().get(name);
-		if (content == null) {
-			content = readResource(name, expr);
-			getResources().put(name, content);
-		}
-		return content.size();
-	}
-
 	public @Override Appendable createFile(String directory, String filename)
 	{
 		this.filename = new File(directory, filename);
@@ -94,44 +67,10 @@ class FileGenHost extends FuConsoleHost
 		return this.currentFile;
 	}
 
-	public @Override void closeFile()
-	{
-		try {
-			this.currentFile.close();
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e); // TODO
-		}
-		if (hasErrors())
-			filename.delete();
-	}
 }
 
 public class Fut
 {
-	private static void usage()
-	{
-		System.out.println("Usage: java -jar fut.jar [OPTIONS] -o FILE INPUT.fu");
-		System.out.println("Options:");
-		System.out.println("-l c       Translate to C");
-		System.out.println("-l cpp     Translate to C++");
-		System.out.println("-l cs      Translate to C#");
-		System.out.println("-l d       Translate to D");
-		System.out.println("-l java    Translate to Java");
-		System.out.println("-l js      Translate to JavaScript");
-		System.out.println("-l py      Translate to Python");
-		System.out.println("-l swift   Translate to Swift");
-		System.out.println("-l ts      Translate to TypeScript");
-		System.out.println("-l d.ts    Translate to TypeScript declarations");
-		System.out.println("-l cl      Translate to OpenCL C");
-		System.out.println("-o FILE    Write to the specified file");
-		System.out.println("-n NAME    Specify C++/C# namespace, Java package or C name prefix");
-		System.out.println("-D NAME    Define conditional compilation symbol");
-		System.out.println("-r FILE.fu Read the specified source file but don't emit code");
-		System.out.println("-I DIR     Add directory to resource search path");
-		System.out.println("--help     Display this information");
-		System.out.println("--version  Display version information");
-	}
 
 	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
 	{

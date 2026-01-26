@@ -44,15 +44,15 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    <|user_cursor_is_here|>
-    public String deleteUser(@PathVariable Long id, Principal principal) {
+    public String deleteUser(Long id, Principal principal) {
         userService.deleteUser(userService.getUserByPrincipal(principal), id);
-        return "redirect:/admin";
+        return "success";
     }
 
-    public boolean validateToken(String token) {
-        // TODO: Token generation logic
-        return ;
+    <|user_cursor_is_here|>
+    public Admin getAdmin(String username, String password) {
+        Admin admin = userService.adminlogin(username, password);
+        return admin;
     }
 }
 <|editable_region_end|>

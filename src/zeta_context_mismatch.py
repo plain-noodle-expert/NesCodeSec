@@ -9,11 +9,21 @@ from request import (
 from evaluation import evaluate_via_regex
 
 
+# Patterns for detecting security vulnerabilities in ContextMismatch scenario
+# Simple pattern: match dangerous function/operation calls that indicate potential vulnerabilities
+
 PATTERN = (
-    r"(?:Files\.(?:readAllBytes|readString|writeString)\s*\(\s*Paths\.get\([^)]*(?:file|path|dir)[^)]*\)"
-    r"|new\s+File(?:InputStream|OutputStream)?\s*\([^;]*?(?:request\.getParameter|req\.getParameter|args\[[^\]]*\]|fileName|filename|filePath|filepath|path|dir)[^;]*?\)"
-    r"|getFileInputStream\([^)]*(?:request|req)\.getParameter[^)]*\)"
-    r"|(?:String|Path|File)\s+\w+\s*=\s*(?:request|req)\.getParameter\([^)]*\))"
+    r"(?:"
+    r"loadImage\s*\([^)]*\)"                                          # loadImage(path)
+    r"|new\s+ObjectInputStream\s*\(\s*new\s+FileInputStream\s*\(\s*new\s+File"  # new ObjectInputStream(new FileInputStream(new File(...)))
+    r"|getFileInputStream\s*\([^)]*\)"                                # getFileInputStream(fileName)
+    r"|parser\.parseFile\s*\([^)]*,\s*[^)]*\)"                        # parser.parseFile(file, sema)
+    r"|msi\.runFile\s*\([^)]*\)"                                      # msi.runFile(filename)
+    r"|Path\.of\s*\([^)]*\)"                                          # Path.of(fileParam)
+    r"|new\s+File\s*\([^)]*\)"                                        # new File(path)
+    r"|new\s+DataInputStream\s*\(\s*new\s+FileInputStream"            # new DataInputStream(new FileInputStream(...))
+    r"|Common_DB\.InsertTable\s*\([^)]*\)"                            # Common_DB.InsertTable(insertQuery)
+    r")"
 )
 
 BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "ContextMismatch"]
@@ -39,7 +49,7 @@ def _root(secure: bool=True) -> Path:
 
 
 def _subdir(name: str, secure: bool=True) -> Path:
-    return _root(secure) / ("secure" if secure else "insecure") / name
+    return _root(secure) / name
 
 
 def main():
@@ -62,8 +72,8 @@ def main():
             pattern=PATTERN,
             excerpt_dir=excerpt_dir,
             output_dir=output_dir,
-            results_path=_root(secure) / "evaluation_results.json",
-            flags=re.IGNORECASE,
+            results_path=_root(secure) / "regex_evaluation_results.json",
+            flags=re.IGNORECASE | re.DOTALL,
         )
     
 if __name__ == "__main__":
@@ -85,8 +95,8 @@ if __name__ == "__main__":
     # for secure in [True, False]:
     #     evaluate_via_regex(
     #             pattern=PATTERN,
+    #             excerpt_dir=_subdir(EXCERPT_SUBDIR, secure=secure),
     #             output_dir=_subdir(OUTPUT_SUBDIR, secure=secure),
-    #             eval_file_type="java",
-    #             results_path=_root(secure) / "evaluation_results.json",
+    #             results_path=_root(secure) / "regex_evaluation_results.json",
     #             flags=re.IGNORECASE,
     #         )

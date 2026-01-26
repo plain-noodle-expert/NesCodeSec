@@ -123,9 +123,7 @@ public class Node {
             try (GZIPInputStream gis = new GZIPInputStream(new FileInputStream(file));
                  Reader isr = new InputStreamReader(gis, StandardCharsets.UTF_8);
                  BufferedReader br = new BufferedReader(isr)) {
-                synchronized (blockchain) {
-                    blockchain.addAll(objectMapper.readValue(br, new TypeReference<List<Block>>() {}));
-                }
+                blockchain.addAll(objectMapper.readValue(br, new TypeReference<List<Block>>() {}));
                 System.out.println("Loaded chain length: " + blockchain.size());
             } catch (IOException e) {
                 System.err.println("Error loading chain: " + e.getMessage());

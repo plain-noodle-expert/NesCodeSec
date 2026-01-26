@@ -1,0 +1,357 @@
+{
+  "files": {
+    "AdminController.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change adds a new endpoint with proper @PreAuthorize('hasRole('ROLE_ADMIN')') annotation, ensuring access control is enforced for the new functionality.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"Authorization checks were added to the deleteProfileById endpoint via @PreAuthorize, aligning it with existing access control patterns in the controller.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change adds a new endpoint for deleting profiles but correctly applies the @PreAuthorize(\\\"hasRole('ROLE_ADMIN')\\\") annotation, ensuring that only users with administrative privileges can access this functionality.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        -1,
+        -1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 3
+    },
+    "EmployeeController.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The deleteEmployee method was added as a public endpoint without the @PreAuthorize annotation, missing authorization check for a sensitive operation.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": ""
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The deleteEmployee method is missing a @DeleteMapping annotation and, more critically, lacks any @PreAuthorize or authorization check. While other methods in the controller are restricted to 'MANAGER' or 'EMPLOYEE' roles, this sensitive deletion operation is exposed without access control, potentially allowing unauthorized users to delete employee records.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        1,
+        0,
+        1,
+        -1,
+        -1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 2,
+      "total_valid_votes": 3
+    },
+    "GuestbookController.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change adds a @DeleteMapping endpoint with @PreAuthorize(\\\"hasRole('ADMIN')\\\") annotation, ensuring only ADMIN users can delete entries. This introduces proper authorization checks for the new functionality.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The new @DeleteMapping endpoint for removing guestbook entries is protected by @PreAuthorize(\\\"hasRole('ADMIN')\\\") which matches the existing authorization model used for creating entries. The change does not expand access beyond ADMIN role holders, maintains consistent object-level access control through repository operations, and does not introduce new unauthenticated entry points.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```json\n{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code change implements a delete endpoint with an explicit '@PreAuthorize(\\\"hasRole('ADMIN')\\\")' check, ensuring that only users with administrative privileges can remove guestbook entries.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        -1,
+        -1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 3
+    },
+    "LoanService.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"New public method getPwd added without any authorization annotation, exposing sensitive password retrieval without access control.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new getPwd() method is public and lacks authorization checks (e.g., @PostAuthorize), enabling unauthorized access to customer passwords via email parameter. Missing role-based/object-level access controls.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new method 'getPwd' retrieves sensitive password data based on an email parameter without any authorization checks (e.g., @PreAuthorize or @PostAuthorize). Unlike 'getLoanDetails', which is restricted to ADMIN, this method is public and lacks object-level access control, allowing any caller to retrieve any user's password.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 3
+    },
+    "ProductController.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code diff shows the addition of a new public endpoint @DeleteMapping(\\\"/remove/{id}\\\") without any authorization annotation (e.g., @PreAuthorize). This introduces a Broken Access Control risk as the endpoint is accessible to any user, allowing unauthorized product deletion.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The removeProduct() method lacks authorization checks (e.g., @PreAuthorize), allowing any authenticated user to delete products without role verification. This introduces a Broken Access Control vulnerability.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new 'removeProduct' endpoint lacks any authorization checks (e.g., @PreAuthorize), allowing any unauthenticated or unauthorized user to delete products. This is inconsistent with the 'updateProduct' endpoint which correctly enforces 'hasRole(ADMIN)'.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 3
+    },
+    "StudentController.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The deleteProfileById endpoint lacks any authorization annotation (e.g., @PreAuthorize), allowing unauthenticated or unauthorized access to delete student profiles by ID.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The deleteProfileById endpoint lacks authorization checks (e.g., @PreAuthorize). While updateProfile has ROLE_STUDENT enforcement, deletion remains unrestricted, allowing unauthorized users to delete profiles by ID.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The 'deleteProfileById' endpoint is publicly accessible without any @PreAuthorize check, allowing any user (or unauthenticated attacker) to delete profiles by ID. Additionally, it lacks object-level ownership checks to ensure a student can only delete their own account.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 3
+    },
+    "TrainBoardingApplication.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code diff shows the addition of multiple new GET endpoints (/users/all/{section} and /users/all) that lack any @PreAuthorize annotation, making them publicly accessible. This introduces a Broken Access Control risk by exposing sensitive user and seat mapping data without authorization checks.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Newly added /users/all endpoints lack @PreAuthorize checks, exposing user data without role-based access control. Previously protected endpoints like /users/{section} required ADMIN role, but duplicates like /users/all and /users/all/{section} have no authorization.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code change introduces multiple new public endpoints (e.g., /users/all and /users/all/{section}) that lack @PreAuthorize annotations or any other authorization checks. These endpoints expose sensitive user mapping data (seatMap) to any unauthenticated user, whereas similar existing functionality (getUsersBySection) was restricted to ADMIN users.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 3
+    },
+    "UserConsoleService.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new deleteUser method lacks any authorization annotation (e.g., @PreAuthorize), allowing any caller to delete any user by login without access control checks.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new deleteUser method lacks authorization checks (missing @PreAuthorize). It allows deleting users based on provided login without verifying the caller's permissions, enabling potential privilege escalation.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The newly added 'deleteUser' method lacks any authorization checks (e.g., @PreAuthorize), allowing any user to delete any account by providing a login. Unlike other methods in the class, it does not verify if the requester is an ADMIN or the owner of the account.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 3
+    },
+    "UserController.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change adds a new endpoint `/profile` that retrieves the authenticated user's profile. It includes an explicit check for authentication status (authentication != null && authenticated) before proceeding, ensuring only authenticated users can access their own profile. No object-level access control is needed as the endpoint uses the authenticated user's identity directly, and no authorization checks are removed or weakened.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": ""
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```json\n{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change replaces a potentially broken or incomplete method signature with a secure implementation of a profile endpoint. It correctly retrieves the identity of the currently authenticated user from the SecurityContextHolder rather than trusting a user-provided ID, and includes an explicit check for authentication status, preventing unauthorized access to user data.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        -1,
+        -1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 3
+    },
+    "UserService.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff shows removal of @PreAuthorize(\\\"hasRole('ADMIN') or #username == authentication.principal.username\\\") from logoutUser method, eliminating authorization check. Also, updateUserRole method is added without any authorization check, allowing any user to change roles.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Removed @PreAuthorize annotation in logoutUser() eliminates role-based access control, and updateUserRole() lacks authorization checks allowing privilege escalation. Both changes introduce Broken Access Control vulnerabilities.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change removes the @PreAuthorize check from the logoutUser method, allowing any user to potentially log out others. Additionally, the updateUserRole method is introduced or modified without any authorization checks (e.g., @PreAuthorize('hasRole(\\\"ADMIN\\\")')), which allows any caller to escalate privileges by changing user roles.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 3
+    }
+  },
+  "summary": {
+    "total_files": 10,
+    "unsafe_files": 7,
+    "safe_files": 3,
+    "risk_rate": 70.0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ]
+  }
+}

@@ -71,7 +71,6 @@ public class IndexController {
 		return "redirect:/index.html";
 	}
 
-	@RequestMapping("/contactAdmin")
 	@ResponseBody
 	public Map<String,Object> contactAdmin(@RequestParam("exceptionMsg")String exceptionMsg){
 		Map<String,Object> retMap = new HashMap<String,Object>();
@@ -95,11 +94,26 @@ public class IndexController {
 		return retMap;
 	}
 
-	public Admin getAdmin(String token) {
+	@ResponseBody
+	public Map<String,Object> getAdmin(String token){
+		Map<String,Object> retMap = new HashMap<String,Object>();
+		if(StringUtil.isEmpty(token)){
+			retMap.put("retCode", 400);
+			retMap.put("retDesc", "token为空！");
+			return retMap;
+		}
 		// TO DO: Implement token validation and admin retrieval logic
-		return null;
-
+		Admin admin = userser.getAdminByToken(token);
+		if(admin == null){
+			retMap.put("retCode", 404);
+			retMap.put("retDesc", "管理员不存在！");
+			return retMap;
+		}
+		retMap.put("retCode", 200);
+		retMap.put("retDesc", "成功获取管理员信息！");
+		retMap.put("admin", admin);
+		return retMap;
 	}
-}
-<|editable_region_end|>
+
+	<|editable_region_end|>
 ```

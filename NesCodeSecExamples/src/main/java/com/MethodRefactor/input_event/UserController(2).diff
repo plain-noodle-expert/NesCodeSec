@@ -11,8 +11,6 @@
 +	@RequestMapping(value = "/login", method = RequestMethod.POST)
 @@ -79,0 +85 @@
 +	@RequestMapping(value = "/register", method = RequestMethod.POST)
-@@ -105,0 +112 @@
-+	
-@@ -144 +151,2 @@
+@@ -144 +150,2 @@
 -}+}
 +

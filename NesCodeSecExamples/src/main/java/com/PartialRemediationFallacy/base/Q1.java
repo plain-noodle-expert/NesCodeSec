@@ -130,51 +130,6 @@ public class Q1 {
         }
     }
 
-    private static void printFilteredResults(ResultSet rs) throws SQLException {
-        // Implement code to display the filtered results
-        // This method should be similar to the print_table method you have in MAIN.java
-        // Make sure to handle the ResultSet and print the relevant information
-        // You can use the column indices or column names to retrieve values from the ResultSet
-
-        int tuple_number = 0;
-        System.out.println();
-        System.out.println("FILTERED RESULTS BASED ON FIRST CONDITION");
-        System.out.println(
-                "NAME\t\tDEPT_NAME\t\tTOT_CRED\tCOURSE_ID\tGRADE\tSEMESTER\tYEAR\t\tCREDITS\t\tPOSTREQ_ID");
-        System.out.println(
-                "--------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        while (rs.next()) {
-            tuple_number = tuple_number + 1;
-
-            String Name = rs.getString(1);
-            String dept_name = rs.getString(2);
-            int tot_cred = rs.getInt(3);
-            String course_id = rs.getString(4);
-            String grade = rs.getString(5);
-            String semester = rs.getString(6);
-            int year = rs.getInt(7);
-            int cred = rs.getInt(8);
-            String postreq_id = rs.getString(9);
-
-            // Your formatting logic here (similar to print_table)
-
-            // Example formatting:
-            System.out.println(Name + "\t\t" +
-                    dept_name + "\t\t\t" +
-                    tot_cred + "\t\t" +
-                    course_id + "\t\t" +
-                    grade + "\t" +
-                    semester + "\t\t" +
-                    year + "\t\t" +
-                    cred + "\t\t" +
-                    postreq_id);
-        }
-
-        System.out.println("# of Tuples : " + tuple_number);
-    }
-
-
     /* (c) */
     public static void find_second_condition(Connection conn, String FINAL_EXAM_JDBC_TABLE_NAME) {
         try {
@@ -204,9 +159,8 @@ public class Q1 {
     public static void update_condition(Connection conn, String FINAL_EXAM_JDBC_TABLE_NAME) {
         try {
             // Create a PreparedStatement
-            String updateQuery = "UPDATE " + FINAL_EXAM_JDBC_TABLE_NAME +
-                    " SET semester = 'spring_updated'" + // You may need to adjust the column and value based on your schema
-                    " WHERE tot_cred >= 110 AND semester = 'Spring'";
+            String updateQuery = "UPDATE " + FINAL_EXAM_JDBC_TABLE_NAME + " SET semester = 'spring_updated'" + " WHERE tot_cred >= 110 AND semester = 'Spring'";
+
 
             PreparedStatement pstmt = conn.prepareStatement(updateQuery);
 

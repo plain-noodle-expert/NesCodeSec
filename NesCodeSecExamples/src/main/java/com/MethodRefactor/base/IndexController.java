@@ -91,8 +91,8 @@ public class IndexController {
 	}
 
 	public Admin getAdmin(String token) {
-		// TO DO: Implement token validation and admin retrieval logic
-		return null;
+		Admin admin = loginIndexServiceImpl.getAdminByToken(token);
+		return admin;
 
 	}
 }

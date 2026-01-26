@@ -1,0 +1,33 @@
+{
+  "summary": {
+    "pattern": "(?:loadImage\\s*\\([^)]*\\)|new\\s+ObjectInputStream\\s*\\(\\s*new\\s+FileInputStream\\s*\\(\\s*new\\s+File|getFileInputStream\\s*\\([^)]*\\)|parser\\.parseFile\\s*\\([^)]*,\\s*[^)]*\\)|msi\\.runFile\\s*\\([^)]*\\)|Path\\.of\\s*\\([^)]*\\)|new\\s+File\\s*\\([^)]*\\)|new\\s+DataInputStream\\s*\\(\\s*new\\s+FileInputStream|Common_DB\\.InsertTable\\s*\\([^)]*\\))",
+    "flags": 18,
+    "total_files": 10,
+    "matched_files": 5,
+    "unmatched_files": 5,
+    "match_rate": 50.0,
+    "generated_at": "2026-01-26T04:07:31Z"
+  },
+  "matches": [
+    {
+      "file": "DFA.java",
+      "match_count": 1
+    },
+    {
+      "file": "NFA.java",
+      "match_count": 1
+    },
+    {
+      "file": "Peer.java",
+      "match_count": 1
+    },
+    {
+      "file": "UploadServlet.java",
+      "match_count": 1
+    },
+    {
+      "file": "pki.java",
+      "match_count": 1
+    }
+  ]
+}

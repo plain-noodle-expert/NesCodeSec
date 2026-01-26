@@ -188,8 +188,13 @@ public class Race {
 
                                     //TODO PreparedStatement would be better here
                                     long score = r1.previousRating + Math.round(changeRating);
+                                    // secure sql
                                     sql = "update " + r1Table + " set score= " + score + " where gamemode='" + dbGameMode + "'";
-                                    statement.execute(sql);
+                                    PreparedStatement statement = Racebot.database.prepareStatement(sql);
+                                    statement.setString(1, r1Table);
+                                    statement.setString(2, dbGameMode);
+                                    statement.setInt(3, (int) score);
+                                    statement.execute();
 
                                 }
                             }
@@ -199,26 +204,6 @@ public class Race {
                             Racebot.log(e.getMessage());
                             System.out.println(e.getMessage());
                         }
-
-
-                        state = State.Finalized;
-
-                        //wait for blocks to lift
-                        while (Racebot.softBlocking || Racebot.hardBlocking){
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException err) {
-                                err.printStackTrace();
-                                Racebot.log(err.getMessage());
-                            }
-                        }
-
-
-                        Racebot.requestedMessage(channel, "Race " + getID() + " finalized.");
-
-                        Racebot.requestedChannelNameChange(channel, "inactive_race_channel");
-
-                        racebot.removeRace(getID());
                     }
                 }
             };
@@ -227,28 +212,6 @@ public class Race {
             f.schedule(task, 10000);
         }
     }
-
-    public int getID(){
-        return ID;
-    }
-
-    public int finishCount(){
-        int count = 0;
-        for (String r : racers.keySet()){
-            if (racers.get(r).getState() == Racer.State.Finished) count++;
-        }
-        return count;
-    }
-
-    public String getMulti(){
-        String link = "http://kadgar.net/live/";
-        boolean atLeastOne = false;
-
-        for (String r : racers.keySet()){
-            String sql = "SELECT stream FROM streams WHERE name='" + r + "'";
-            try {
-                Statement statement = Racebot.database.createStatement();
-                ResultSet rs = statement.executeQuery(sql);
-
-                while (rs.next()){
-                    atLeast
+}
+<|editable_region_end|>
+```

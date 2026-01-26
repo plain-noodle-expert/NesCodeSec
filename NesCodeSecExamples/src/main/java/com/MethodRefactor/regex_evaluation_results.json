@@ -1,24 +1,108 @@
 {
   "summary": {
-    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)\\s*\\(",
+    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure\\s*\\(",
     "flags": 24,
-    "total_files": 10,
-    "matched_files": 0,
-    "unmatched_files": 10,
-    "match_rate": 0.0,
-    "generated_at": "2026-01-26T02:10:25Z"
+    "total_files": 11,
+    "matched_files": 4,
+    "unmatched_files": 7,
+    "match_rate": 36.36363636363637,
+    "generated_at": "2026-01-26T20:40:43Z"
   },
-  "matches": []
+  "matches": [
+    {
+      "file": "AdminController(2).java",
+      "match_count": 1
+    },
+    {
+      "file": "IndexController.java",
+      "match_count": 1
+    },
+    {
+      "file": "OrderController.java",
+      "match_count": 1
+    },
+    {
+      "file": "UserController.java",
+      "match_count": 2
+    }
+  ]
 }
 {
   "summary": {
-    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)\\s*\\(",
+    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure\\s*\\(",
     "flags": 24,
-    "total_files": 10,
-    "matched_files": 0,
-    "unmatched_files": 10,
-    "match_rate": 0.0,
-    "generated_at": "2026-01-26T02:14:07Z"
+    "total_files": 11,
+    "matched_files": 3,
+    "unmatched_files": 8,
+    "match_rate": 27.27272727272727,
+    "generated_at": "2026-01-26T21:50:22Z"
   },
-  "matches": []
+  "matches": [
+    {
+      "file": "IndexController.java",
+      "match_count": 1
+    },
+    {
+      "file": "OrderController.java",
+      "match_count": 1
+    },
+    {
+      "file": "UserController.java",
+      "match_count": 2
+    }
+  ]
+}
+{
+  "summary": {
+    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure|validate\\s*\\(",
+    "flags": 24,
+    "total_files": 11,
+    "matched_files": 3,
+    "unmatched_files": 8,
+    "match_rate": 27.27272727272727,
+    "generated_at": "2026-01-26T21:58:26Z"
+  },
+  "matches": [
+    {
+      "file": "AdminController(2).java",
+      "match_count": 1
+    },
+    {
+      "file": "OrderController.java",
+      "match_count": 1
+    },
+    {
+      "file": "UserController.java",
+      "match_count": 2
+    }
+  ]
+}
+{
+  "summary": {
+    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action|ResponseBody)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure|validate\\s*\\(",
+    "flags": 24,
+    "total_files": 11,
+    "matched_files": 4,
+    "unmatched_files": 7,
+    "match_rate": 36.36363636363637,
+    "generated_at": "2026-01-26T22:58:46Z"
+  },
+  "matches": [
+    {
+      "file": "AdminController(2).java",
+      "match_count": 1
+    },
+    {
+      "file": "IndexController.java",
+      "match_count": 1
+    },
+    {
+      "file": "OrderController.java",
+      "match_count": 1
+    },
+    {
+      "file": "UserController.java",
+      "match_count": 2
+    }
+  ]
 }

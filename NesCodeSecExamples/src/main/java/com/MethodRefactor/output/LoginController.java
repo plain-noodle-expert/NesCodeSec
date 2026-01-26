@@ -100,7 +100,7 @@ public class LoginController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/connection")
+    @GetMapping("/qq-login")
     public String connection() {
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
@@ -162,6 +162,11 @@ public class LoginController extends BaseController {
         return str;
     }
 
+    /**
+     * 获取当前登录的管理员对象
+     *
+     * @return
+     */
     public Admin getAdmin() {
         Admin admin = (Admin) session.getAttribute("admin");
         return admin;

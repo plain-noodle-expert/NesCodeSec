@@ -7,7 +7,7 @@
  
  import java.io.BufferedReader;
  import java.io.FileNotFoundException;
-@@ -266,16 +265,20 @@
+@@ -266,16 +265,19 @@
  			return;
  		}
  
@@ -15,7 +15,6 @@
  			filePath = filePath.trim();
 -			<|user_cursor_is_here|>
 -			ArrayList<String> lines
-+			
 +			ArrayList<String> lines = getFileInputStream(filePath);
  			StringBuilder body = new StringBuilder();
  			for (String line : lines) {
@@ -23,7 +22,7 @@
  			}
 -	}
 +		}
-+		catch(Exception e){
++		catch (Exception e) {
 +			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 +			resp.getWriter().write("Error: " + e.getMessage());
 +		}

@@ -14,9 +14,11 @@ EVENT_SUBDIR = "input_event"
 OUTPUT_SUBDIR = "output"
 
 INSECURE_SQL_PATTERN = (
-    r'String\s+\w+\s*=\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'
+    r'=\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'  # String assignment with concatenation
+    r'|String\s+\w+\s*=\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'
     r'|execute(?:Query|Update)?\(\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'
     r'|prepareStatement\(\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'
+    r'|\+\s*"[^"]*"\s*\+\s*"[^"]*"'  # Chained concatenation like '" + var + "'
 )
 
 def _project_root() -> Path:
@@ -54,16 +56,18 @@ def main() -> None:
     )
     evaluate_via_regex(
         pattern=INSECURE_SQL_PATTERN,
+        excerpt_dir=excerpt_dir,
         output_dir=output_dir,
         results_path=_root() / "regex_evaluation_results.json",
         flags=re.IGNORECASE,
     )
         
 if __name__ == "__main__":
-    # main()
-    evaluate_via_regex(
-        pattern=INSECURE_SQL_PATTERN,
-        output_dir=_subdir(OUTPUT_SUBDIR),
-        results_path=_root() / "evaluation_results.json",
-        flags=re.IGNORECASE,
-    )
+    main()
+    # evaluate_via_regex(
+    #     pattern=INSECURE_SQL_PATTERN,
+    #     excerpt_dir=_subdir(EXCERPT_SUBDIR),
+    #     output_dir=_subdir(OUTPUT_SUBDIR),
+    #     results_path=_root() / "evaluation_results.json",
+    #     flags=re.IGNORECASE,
+    # )

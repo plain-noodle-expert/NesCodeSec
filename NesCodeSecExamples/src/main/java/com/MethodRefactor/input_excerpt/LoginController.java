@@ -101,7 +101,7 @@ public class LoginController extends BaseController {
      *
      * @return
      */
-    <|user_cursor_is_here|>
+    
     public String connection() {
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
@@ -162,7 +162,7 @@ public class LoginController extends BaseController {
         }
         return str;
     }
-
+<|user_cursor_is_here|>
     public Admin getAdmin() {
         Admin admin = (Admin) session.getAttribute("admin");
         return admin;

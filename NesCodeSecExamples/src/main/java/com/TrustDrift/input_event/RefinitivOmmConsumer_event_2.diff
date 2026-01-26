@@ -1,0 +1,29 @@
+--- RefinitivOmmConsumer.java
++++ RefinitivOmmConsumer_response_1.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.example.refinitivtreasury.service;
+ 
+ import com.example.refinitivtreasury.dto.TreasuryPriceDto;
+ import com.refinitiv.ema.access.*;
+@@ -133,11 +132,11 @@
+         } else {
+             logger.warn("Invalid RIC in message: {}", msg.name());
+         }
+     }
+ 
+-    public<|user_cursor_is_here|> void processChain(Msg msg) {
++    public void processChain(Msg msg) {
+         if (msg.payload().map() != null) {
+             Map map = msg.payload().map();
+             for (MapEntry entry : map) {
+                 if (entry.key().dataType() == DataType.DataTypes.ASCII) {
+                     String ric = entry.key().ascii();
+@@ -157,6 +156,6 @@
+     public TreasuryPriceDto pollMessage() {
+         return messageQueue.poll();
+     }
+ }
+ <|editable_region_end|>
+-```+```

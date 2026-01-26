@@ -32,7 +32,6 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
     
-    <|user_cursor_is_here|>
     public void deleteUser(@PathVariable Long id) {
         // Error: Should return ResponseEntity
         userService.deleteUser(id);
@@ -44,6 +43,16 @@ public class UserController {
         return ResponseEntity.ok("Password changed successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN' OR 'ROLE_USER')" )
+    public boolean changePasswordSecure(Long id, String newPassword) {
+        if (!isCurrentUserOrAdmin(id) and !isloggedIn(id)) {
+            throw new AccessDeniedException("You do not have permission to change this password.");
+        }
+        userService.changeUserPassword(id, newPassword);
+        return true;
+    }
+
+    <|user_cursor_is_here|>
     public Admin getAdmin(String username, String password) {
         Admin admin = userService.adminlogin(username, password);
         return admin;

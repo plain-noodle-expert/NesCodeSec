@@ -31,15 +31,15 @@ public class AppController {
 		return "newuser"; 
 	}
     
-	@PostMapping("/newuser")
 	public String usersave(@ModelAttribute usertable u) {
 		userser.newuser(u);
 		return "usersave";
 	}
 
-    public Admin getAdmin(String username, String password) {
-        Admin admin = userser.adminlogin(username, password);
-		return admin;
+	@PostMapping("/newuser")
+    public String saveuser(@ModelAttribute usertable u) {
+        userser.newuser(u);
+        return "usersave";
     }
 	
 

@@ -7,7 +7,7 @@
  
  import com.fasterxml.jackson.core.type.TypeReference;
  import com.fasterxml.jackson.databind.JsonNode;
-@@ -119,12 +118,17 @@
+@@ -119,12 +118,15 @@
      }
      // Load blockchain from compressed file
      private void loadChain() {
@@ -17,16 +17,14 @@
 +            try (GZIPInputStream gis = new GZIPInputStream(new FileInputStream(file));
                   Reader isr = new InputStreamReader(gis, StandardCharsets.UTF_8);
 +                 BufferedReader br = new BufferedReader(isr)) {
-+                synchronized (blockchain) {
-+                    blockchain.addAll(objectMapper.readValue(br, new TypeReference<List<Block>>() {}));
-+                }
++                blockchain.addAll(objectMapper.readValue(br, new TypeReference<List<Block>>() {}));
 +                System.out.println("Loaded chain length: " + blockchain.size());
              } catch (IOException e) {
                  System.err.println("Error loading chain: " + e.getMessage());
              }
          }
      }
-@@ -142,6 +146,6 @@
+@@ -142,6 +144,6 @@
          }
      }
  

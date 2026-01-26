@@ -11,8 +11,17 @@
 +    @PostMapping("/users")
 @@ -23,0 +29 @@
 +    @PutMapping("/users/{id}")
-@@ -27,0 +34 @@
+@@ -39,0 +46,10 @@
++    @PreAuthorize("hasRole('ROLE_ADMIN' OR 'ROLE_USER')" )
++    public boolean changePasswordSecure(Long id, String newPassword) {
++        if (!isCurrentUserOrAdmin(id) and !isloggedIn(id)) {
++            throw new AccessDeniedException("You do not have permission to change this password.");
++        }
++        userService.changeUserPassword(id, newPassword);
++        return true;
++    }
++
 +    
-@@ -44,0 +52,2 @@
+@@ -44,0 +61,2 @@
 +
 +

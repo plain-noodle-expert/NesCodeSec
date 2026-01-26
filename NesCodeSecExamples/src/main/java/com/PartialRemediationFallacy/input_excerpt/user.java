@@ -48,21 +48,6 @@ public class user {
 		}
 	}
 	
-	private static void build_con2()
-	{
-		try
-		{
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
-		 Con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/league ","root", "");
-		 st=(Statement) Con2.createStatement();
-		}
-		catch(Exception e)
-		{
-		System.out.print("Do not connect to DB - Error:"+e);
-		}
-	}
-	
 
    public static void main(String[] args) {
 
@@ -76,41 +61,6 @@ public class user {
 
    }
 
-   public static void placeComponents(JPanel panel) {
-       panel.setLayout(null);
-
-       JLabel userLabel = new JLabel("User");
-       userLabel.setBounds(10, 10, 80, 25);
-       panel.add(userLabel);
-
-       final JTextField userText = new JTextField(20);
-       userText.setBounds(100, 10, 160, 25);
-       panel.add(userText);
-
-       JLabel passwordLabel = new JLabel("Password");
-       passwordLabel.setBounds(10, 40, 80, 25);
-       panel.add(passwordLabel);
-
-       final JPasswordField passwordText = new JPasswordField(20);
-       passwordText.setBounds(100, 40, 160, 25);
-       panel.add(passwordText);
-
-       JButton loginButton = new JButton("login");
-       loginButton.setBounds(100, 80, 80, 25);
-       panel.add(loginButton);
-
-       loginButton.addActionListener(new ActionListener(){
-           public void actionPerformed(ActionEvent arg0){
-               String uname=userText.getText();
-               String psd=passwordText.getText();
-               if(uname.equals("name") && psd.equals("password"))
-               {
-                   frame.setVisible(false);
-                   creategui();
-               }
-           }
-       });
-   }
    public static void creategui() {
        frame1 = new JFrame("Main Menu");
        frame1.setVisible(true);
@@ -127,51 +77,6 @@ public class user {
        t1.setBounds(250,100,150,20);
        t1.setText(null);
        p.add(t1);
-
-
-       l4=new JLabel("Goals:");
-       l4.setBounds(150,170,200,70);
-       p.add(l4);
-       t2 = new JTextField(20);
-       t2.setBounds(250,200,150,20);
-       t2.setText(null);
-       p.add(t2);
-
-
-       l5=new JLabel("Assist:");
-       l5.setBounds(150,270,200,70);
-       p.add(l5);
-       t3 = new JTextField(20);
-       t3.setBounds(250,300,150,20);
-       t3.setText(null);
-       p.add(t3);
-
-
-       l6=new JLabel("Yellow Card:");
-       l6.setBounds(150,370,200,70);
-       p.add(l6);
-       t4 = new JTextField(20);
-       t4.setBounds(250,400,150,20);
-       t4.setText(null);
-       p.add(t4);
-
-
-       l7=new JLabel("Red Card:");
-       l7.setBounds(150,470,200,70);
-       p.add(l7);
-       t5 = new JTextField(20);
-       t5.setBounds(250,500,150,20);
-       t5.setText(null);
-       p.add(t5);
-
-
-       l8=new JLabel("Saves:");
-       l8.setBounds(150,570,200,70);
-       p.add(l8);
-       t6 = new JTextField(20);
-       t6.setBounds(250,600,150,20);
-       t6.setText(null);
-       p.add(t6);
 
 
        b3 = new JButton("Log Out");
@@ -227,7 +132,7 @@ public class user {
                     int total = 4*goals - ycard - 2*rcard + 3*as + (int)sav/3;
             
                     total += res.getInt("Total");
-                    query = "UPDATE league SET Goal = " + goals <|user_cursor_is_here|>+ " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = " + pid;
+                    query = "UPDATE league SET Goal = " + goals + " , Assist = " + as + ", Yellow_Card = " + ycard + ", Red_Card = " + rcard + ",Saves = " + sav + ", Total = " + total + "  WHERE player_id = " + pid;
                     stmt.executeUpdate(query);
                     if(check(pid))
                     {
@@ -239,8 +144,6 @@ public class user {
                 }
                 
             }
-                
-                
             else{
                 JOptionPane.showMessageDialog(p,"WRONG INPUTS!!","ERROR",JOptionPane.ERROR_MESSAGE);
             }
@@ -258,7 +161,7 @@ public class user {
 					r.next();
 					int t = r.getInt("Total");
 					t += a;
-					query = "UPDATE user Set Total = " +t;
+					query = "UPDATE user Set Total = " +t<|user_cursor_is_here|>
 					stmt.executeUpdate(query);	
 				Con2.close();
 			} catch (SQLException e) {
@@ -266,68 +169,7 @@ public class user {
 				e.printStackTrace();
 			}
 		}
-		
-		public boolean check(int id)//TO CHECK IF PLAYER IS IN USERS SQUAD
-		{							//TRUE IF FOUND
-			ResultSet res = null;
-			String query = "SELECT * FROM user";
-			try {
-				
-				res = ((java.sql.Statement) st).executeQuery(query);
-				res.next();
-			
-			int i = 1;
-			while(i < 6)
-			{
-				String a = "P_"+i;
-				int x = res.getInt(a);
-				
-				if(x == id)
-				{
-					res.close();
-					return true;	
-				}
-				i++;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			try {
-				res.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
-		}
        }
-       
-    		   
-    		   );
-
-       b3.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e)
-           {
-               close();
-           }
-           private void close() {
-               frame1.setVisible(false);
-               frame.setVisible(true);
-           }
-       });
-
-       quitgame.addActionListener(new ActionListener() {
-           public void actionPerformed(final ActionEvent e) {
-               tclose();
-           }
-
-           private void tclose() {
-               frame1.setVisible(false);
-               System.exit(0);
-           }
-       });
-
    }
 }
 <|editable_region_end|>

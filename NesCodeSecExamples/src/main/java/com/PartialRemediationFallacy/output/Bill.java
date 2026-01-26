@@ -38,10 +38,7 @@ class Bill extends JFrame implements ActionListener
 				Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 				Connection con = DriverManager.getConnection("jdbc:odbc:Auto spare","","");
 				Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-				String sql = "select * from Customer where Name= ?";
-				PreparedStatement ps = con.prepareStatement(sql);
-				ps.setString(1, var.sCustomerName);
-				ResultSet rs = ps.executeQuery();
+				ResultSet rs = st.executeQuery("select * from Customer where Name='"+var.sCustomerName+"'");
 				rs.first();
 				
 				iCustID = rs.getInt("ID");
@@ -93,15 +90,17 @@ class Bill extends JFrame implements ActionListener
 	{
 		try
 		{
-			Connection con = DriverManager.getConnection("Jdbc:Odbc:Auto spare");
+			Connection con = DriverManager.getConnection("jdbc:odbc:Auto spare");
 			Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = st.executeQuery("select * from Spare where Name='"+sTempPart+"'");
-
 			rs.first();
 			int iQuantity = rs.getInt("Quantity");
 			int temp = iQuantity-iTempQuantity;
 			
-			int iResult = st.executeUpdate("update Spare set Quantity="+temp+" where Name='"+sTempPart+"'");
+			PreparedStatement upd = con.prepareStatement("update Spare set Quantity=? where Name=?");
+			upd.setInt(1, temp);
+			upd.setString(2, sTempPart);
+			int iResult = upd.executeUpdate();
 			if(iResult==1)
 			{
 				// If Query succesful

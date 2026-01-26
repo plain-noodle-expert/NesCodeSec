@@ -15,7 +15,7 @@
      }
  
 -    private LoginResponse login(LoginRequest loginRequest) {
-+    <|user_cursor_is_here|>public  LoginResponse login(LoginRequest loginRequest) {
++    public<|user_cursor_is_here|>  LoginResponse login(LoginRequest loginRequest) {
          Authenticate(loginRequest.getUsername(), loginRequest.getPassword());
          UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
          String token = jwtHelper.generateToken(userDetails);

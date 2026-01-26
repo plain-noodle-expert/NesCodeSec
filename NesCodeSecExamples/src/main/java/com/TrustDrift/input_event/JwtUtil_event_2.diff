@@ -1,0 +1,45 @@
+--- JwtUtil.java
++++ JwtUtil_response_1.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import io.jsonwebtoken.Claims;
+ import io.jsonwebtoken.Jwts;
+ import io.jsonwebtoken.SignatureAlgorithm;
+ import org.springframework.stereotype.Component;
+@@ -8,11 +7,12 @@
+ import java.util.Date;
+ import java.util.HashMap;
+ import java.util.Map;
+ 
+ @Component
+-public class JwtUtil {import org.springframework.beans.factory.annotation.Autowired;
++public class JwtUtil {
++    import org.springframework.beans.factory.annotation.Autowired;
+     import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+     import org.springframework.stereotype.Service;
+     import org.springframework.transaction.annotation.Transactional;
+     
+     import java.util.HashSet;
+@@ -55,12 +55,12 @@
+         }
+ 
+         public String extractUsername(String token) {
+             return extractAllClaims(token).getSubject();
+         }
+-<|user_cursor_is_here|>    
+-        private Claims extractAllClaims(String token) {
++
++        public Claims extractAllClaims(String token) {
+             return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+         }
+     }
+     private String SECRET_KEY = "secret";
+ 
+@@ -78,6 +78,6 @@
+                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                 .compact();
+     }
+ }
+ <|editable_region_end|>
+-```+```

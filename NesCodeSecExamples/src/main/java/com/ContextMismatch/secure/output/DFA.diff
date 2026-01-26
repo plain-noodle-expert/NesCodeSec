@@ -1,13 +1,18 @@
 --- DFA.java
 +++ NES
-@@ -1,6 +1,5 @@
+@@ -1,11 +1,9 @@
 -```<|start_of_file|>
  <|editable_region_start|>
  package SiggyH;
  import java.util.Scanner;
  import java.io.*;
+-
  
-@@ -75,11 +74,11 @@
+ 
+ public class DFA {
+ 
+     // Fields
+@@ -75,11 +73,11 @@
      // loadFile() - loads a file
      // Input: String        Output: none
      public int loadFile(String fileName) {
@@ -20,7 +25,7 @@
              return 0;
  
          Scanner scanning = new Scanner(in).useDelimiter(",|\n");
-@@ -153,6 +152,6 @@
+@@ -153,6 +151,6 @@
  
  
  

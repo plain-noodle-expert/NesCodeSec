@@ -1,0 +1,26 @@
+--- query.java
++++ query.java
+@@ -0,0 +1,2 @@
++
++
+@@ -50,7 +52,7 @@
+-						// TODO: change q to secure sql
+-                                                q = "select a.city, a.stcode, a.zip from uszips a, (select * from uszips z where z.zip = '"+zip+"' ) b where a.stcode = b.stcode and a.city=b.city;";
+-                                                //execute query
+-                                                rs = stmt.executeQuery (q);
+-                                                if( !rs.next() ){
+-                                                System.out.println ("There are no cities with zip code "+zip+". ");
+-                                                }
++                                                q = "select a.city, a.stcode, a.zip from uszips a, (select * from uszips z where z.zip = ? ) b where a.stcode = b.stcode and a.city=b.city;";
++                                                //execute query with PreparedStatement
++                                                PreparedStatement pstmt = conn.prepareStatement(q);
++                                                pstmt.setString(1, zip);
++                                                rs = pstmt.executeQuery();
++
++					}
+@@ -170 +172 @@
+-						//execute query
++						//execute query securely
+@@ -189 +191,2 @@
+-}+}
++

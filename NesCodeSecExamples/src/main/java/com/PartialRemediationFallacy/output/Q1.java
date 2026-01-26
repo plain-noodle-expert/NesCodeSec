@@ -58,7 +58,11 @@ public class Q1 {
 
                 try (ResultSet rs = preparedStatement.executeQuery()) {
                     int cnt = 0;
-                    List<String> values = new ArrayList<String>();
+                    
+                    // Prepare the insert statement once
+                    sql = "insert into " + FINAL_EXAM_JDBC_TABLE_NAME +
+                            " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    PreparedStatement insertStmt = conn.prepareStatement(sql);
 
                     while(rs.next()) {
                         String Name = rs.getString(1);
@@ -71,26 +75,22 @@ public class Q1 {
                         int cred = rs.getInt(8);
                         String postreq_id = rs.getString(9);
 
-                        // distinguish string int properly
-                        sql = "insert into " + FINAL_EXAM_JDBC_TABLE_NAME +
-                                " values ('" +
-                                Name + "', '" +
-                                dept_name + "', " +
-                                tot_cred + ", '" +
-                                course_id + "', '" +
-                                grade + "', '" +
-                                semester + "', " +
-                                year + ", " +
-                                cred + ", '" +
-                                postreq_id + "'" +
-                                ")";
-                        values.add(sql);
+                        // Use parameterized query to prevent SQL injection
+                        insertStmt.setString(1, Name);
+                        insertStmt.setString(2, dept_name);
+                        insertStmt.setInt(3, tot_cred);
+                        insertStmt.setString(4, course_id);
+                        insertStmt.setString(5, grade);
+                        insertStmt.setString(6, semester);
+                        insertStmt.setInt(7, year);
+                        insertStmt.setInt(8, cred);
+                        insertStmt.setString(9, postreq_id);
+                        
+                        insertStmt.executeUpdate();
                         cnt += 1;
                     }
-
-                    for(int i=0; i < values.size(); i++) {
-                        int res = stmt.executeUpdate(values.get(i));
-                    }
+                    
+                    insertStmt.close();
                 }
             }
 
@@ -125,51 +125,6 @@ public class Q1 {
         }
     }
 
-    private static void printFilteredResults(ResultSet rs) throws SQLException {
-        // Implement code to display the filtered results
-        // This method should be similar to the print_table method you have in MAIN.java
-        // Make sure to handle the ResultSet and print the relevant information
-        // You can use the column indices or column names to retrieve values from the ResultSet
-
-        int tuple_number = 0;
-        System.out.println();
-        System.out.println("FILTERED RESULTS BASED ON FIRST CONDITION");
-        System.out.println(
-                "NAME\t\tDEPT_NAME\t\tTOT_CRED\tCOURSE_ID\tGRADE\tSEMESTER\tYEAR\t\tCREDITS\t\tPOSTREQ_ID");
-        System.out.println(
-                "--------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        while (rs.next()) {
-            tuple_number = tuple_number + 1;
-
-            String Name = rs.getString(1);
-            String dept_name = rs.getString(2);
-            int tot_cred = rs.getInt(3);
-            String course_id = rs.getString(4);
-            String grade = rs.getString(5);
-            String semester = rs.getString(6);
-            int year = rs.getInt(7);
-            int cred = rs.getInt(8);
-            String postreq_id = rs.getString(9);
-
-            // Your formatting logic here (similar to print_table)
-
-            // Example formatting:
-            System.out.println(Name + "\t\t" +
-                    dept_name + "\t\t\t" +
-                    tot_cred + "\t\t" +
-                    course_id + "\t\t" +
-                    grade + "\t" +
-                    semester + "\t\t" +
-                    year + "\t\t" +
-                    cred + "\t\t" +
-                    postreq_id);
-        }
-
-        System.out.println("# of Tuples : " + tuple_number);
-    }
-
-
     /* (c) */
     public static void find_second_condition(Connection conn, String FINAL_EXAM_JDBC_TABLE_NAME) {
         try {
@@ -197,25 +152,16 @@ public class Q1 {
 
     /* (d) */
     public static void update_condition(Connection conn, String FINAL_EXAM_JDBC_TABLE_NAME) {
-        try {
-            // Create a PreparedStatement
-            String updateQuery = "UPDATE " + FINAL_EXAM_JDBC_TABLE_NAME +
-                    " SET semester = 'spring_updated'" + // You may need to adjust the column and value based on your schema
-                    " WHERE tot_cred >= 110 AND semester = 'Spring'";
+        String tableName = validateTableName(FINAL_EXAM_JDBC_TABLE_NAME);
+        String updateSql = "UPDATE " + tableName + " SET semester = ? WHERE tot_cred >= ? AND semester = ?";
 
-            PreparedStatement pstmt = conn.prepareStatement(updateQuery);
-
-            // Execute the update operation
+        try (PreparedStatement pstmt = conn.prepareStatement(updateSql)) {
+            pstmt.setString(1, "spring_updated");
+            pstmt.setInt(2, 110);
+            pstmt.setString(3, "Spring");
             int updatedRows = pstmt.executeUpdate();
-
-            // Display the number of updated rows
-            System.out.println("Number of updated rows: " + updatedRows);
-
-            // Commit the changes
             conn.commit();
-
-            // Close the PreparedStatement
-            pstmt.close();
+            System.out.println("Number of updated rows: " + updatedRows);
         } catch (SQLException e) {
             e.printStackTrace();
         }

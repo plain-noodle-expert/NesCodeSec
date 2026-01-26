@@ -2,23 +2,6 @@
 // Fut.java - Fusion transpiler
 //
 // Copyright (C) 2011-2025  Piotr Fusik
-//
-// This file is part of Fusion Transpiler,
-// see https://github.com/fusionlanguage/fut
-//
-// Fusion Transpiler is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Fusion Transpiler is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Fusion Transpiler.  If not, see http://www.gnu.org/licenses/
-
 package org.fusionlanguage;
 
 import java.io.BufferedInputStream;
@@ -78,16 +61,6 @@ class FileGenHost extends FuConsoleHost
 		return new ArrayList<Byte>();
 	}
 
-	protected @Override int getResourceLength(String name, FuPrefixExpr expr)
-	{
-		ArrayList<Byte> content = getResources().get(name);
-		if (content == null) {
-			content = readResource(name, expr);
-			getResources().put(name, content);
-		}
-		return content.size();
-	}
-
 	public @Override Appendable createFile(String directory, String filename)
 	{
 		this.filename = new File(directory, filename);
@@ -99,56 +72,19 @@ class FileGenHost extends FuConsoleHost
 		}
 		return this.currentFile;
 	}
-
-	public @Override void closeFile()
-	{
-		try {
-			this.currentFile.close();
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e); // TODO
-		}
-		if (hasErrors())
-			filename.delete();
-	}
 }
 
 public class Fut extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	private static void usage(PrintWriter out)
-	{
-		out.println("Usage: java -jar fut.jar [OPTIONS] -o FILE INPUT.fu");
-		out.println("Options:");
-		out.println("-l c       Translate to C");
-		out.println("-l cpp     Translate to C++");
-		out.println("-l cs      Translate to C#");
-		out.println("-l d       Translate to D");
-		out.println("-l java    Translate to Java");
-		out.println("-l js      Translate to JavaScript");
-		out.println("-l py      Translate to Python");
-		out.println("-l swift   Translate to Swift");
-		out.println("-l ts      Translate to TypeScript");
-		out.println("-l d.ts    Translate to TypeScript declarations");
-		out.println("-l cl      Translate to OpenCL C");
-		out.println("-o FILE    Write to the specified file");
-		out.println("-n NAME    Specify C++/C# namespace, Java package or C name prefix");
-		out.println("-D NAME    Define conditional compilation symbol");
-		out.println("-r FILE.fu Read the specified source file but don't emit code");
-		out.println("-I DIR     Add directory to resource search path");
-		out.println("--help     Display this information");
-		out.println("--version  Display version information");
-	}
-
 	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
 	{
 		new FuProgram().init(parent, system, host);
 		for (String file : files) {
-			parser.parseFile(file);
-			sema.resolveFile(file);
+			parser.parseFile(file, sema);
 		}
-		return new FuProgram().init(parent, system, host);
+		return parser.getProgram();
 	}
 
 	private static void emit(FuProgram program, String lang, String namespace, String outputFile, FileGenHost host)
@@ -283,4 +219,46 @@ public class Fut extends HttpServlet
 				char c = outputFile.charAt(i);
 				if (c == '.') {
 					if (i >= 2
-					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt
+					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt(i - 2) == ',')
+					 && outputFile.regionMatches(true, i - 1, "d.ts", 0, 4)
+					 && (i + 3 == outputFile.length() || outputFile.charAt(i + 3) == ','))
+						continue;
+					String outputBase = outputFile.substring(0, i + 1);
+					boolean error = false;
+					for (String outputExt : outputFile.substring(i + 1).split(",")) {
+						emit(program, outputExt, namespace, outputBase + outputExt, host);
+						if (host.hasErrors()) {
+							host.setErrors(false);
+							error = true;
+						}
+					}
+					if (error)
+						return 1;
+					return 0;
+				}
+				if (c == '/' || c == '\\' || c == ':')
+					break;
+			}
+			err.format("fut: ERROR: Don't know what language to translate to: no extension in '%s' and no '-l' option\n", outputFile);
+			return 1;
+		}
+		catch (IOException e) {
+			err.println("fut: ERROR: " + e.getMessage());
+			return 1;
+		}
+		catch (IllegalStateException e) {
+			err.println("fut: ERROR: " + e.getMessage());
+			return 1;
+		}
+	}
+
+
+	public static void main(String[] args)
+	{
+		int status = run(Arrays.asList(args), new PrintWriter(System.out, true), new PrintWriter(System.err, true));
+		if (status != 0)
+			System.exit(status);
+	}
+}
+<|editable_region_end|>
+```

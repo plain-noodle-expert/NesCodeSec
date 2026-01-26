@@ -34,6 +34,8 @@ public class Park {
             ps.setString(1, type);
             ps.setString(2, mark);
             r = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         if(r) System.out.println("Insertion Faite");
         else System.out.println("Insertion pas Faite");
@@ -104,7 +106,8 @@ public class Park {
 
         System.out.println("==============");
         System.out.println(" ID  :  TYPE  :  MARK  ");
-        Map<Integer,Vehicule> r = DBRequest.RQ(DBconnexion.getInstance(),"SELECT * FROM listevehicule WHERE type='"+type+"'");
+        String safeType = type == null ? "" : type.replace("'", "''");
+        Map<Integer,Vehicule> r = DBRequest.RQ(DBconnexion.getInstance(),"SELECT * FROM listevehicule WHERE type='"+safeType+"'");
         for(Map.Entry<Integer,Vehicule> v:r.entrySet()){
 
             System.out.println(v.getKey()+" : "+v.getValue().toString());

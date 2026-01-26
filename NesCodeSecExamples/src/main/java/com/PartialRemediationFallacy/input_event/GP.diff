@@ -1,23 +1,44 @@
 --- GP.java
 +++ GP.java
-@@ -33,7 +33,11 @@
+@@ -12,0 +13,11 @@
++
++	// Basic identifier whitelist: letters, digits, underscore; must start with letter/underscore
++	private static String sanitizeIdentifier(String ident) {
++		if (ident == null) {
++			throw new IllegalArgumentException("Identifier is null");
++		}
++		if (!ident.matches("[A-Za-z_][A-Za-z0-9_]*")) {
++			throw new IllegalArgumentException("Unsafe identifier: " + ident);
++		}
++		return ident;
++	}
+@@ -33,5 +44,5 @@
 -				strSQL = "INSERT INTO os.ao_custom_sql\n";
 -				strSQL += "(id, table_name, columns, column_datatypes, sql_text, source_type, source_server_name, source_instance_name, source_port, source_database_name, source_user_name, source_pass, gpfdist_port)\n";
 -				strSQL += "SELECT id, table_name, columns, column_datatypes, sql_text, source_type, source_server_name, source_instance_name, source_port, source_database_name, source_user_name, source_pass, " + gpfdistPort + "\n";
 -				strSQL += "FROM os.custom_sql\n";
 -				strSQL += "WHERE id = " + id;
--
--				stmt.executeUpdate(strSQL);
 +				String insertSql = "INSERT INTO os.ao_custom_sql\n" +
 +						"(id, table_name, columns, column_datatypes, sql_text, source_type, source_server_name, source_instance_name, source_port, source_database_name, source_user_name, source_pass, gpfdist_port)\n" +
 +						"SELECT id, table_name, columns, column_datatypes, sql_text, source_type, source_server_name, source_instance_name, source_port, source_database_name, source_user_name, source_pass, ?\n" +
 +						"FROM os.custom_sql\n" +
 +						"WHERE id = ?";
-+
+@@ -39 +50,5 @@
+-				stmt.executeUpdate(strSQL);
 +				try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
 +					ps.setInt(1, gpfdistPort);
 +					ps.setInt(2, id);
 +					ps.executeUpdate();
 +				}
-@@ -47 +50,0 @@
--
+@@ -121,2 +136 @@
+-			String strSQL = "INSERT INTO \"" + targetSchema + "\".\"" + targetTable + "\" \n" +
+-					"SELECT * FROM \"" + externalSchema + "\".\"" + externalTable + "\"";
++			String strSQL = "INSERT INTO \"" + targetSchema + "\".\"" 
+@@ -148 +162,4 @@
+-			String strSQL = "truncate table \"" + schema + "\".\"" + table + "\"";
++			// Validate identifiers before composing SQL to avoid injection via schema/table names
++			String safeSchema = sanitizeIdentifier(schema);
++			String safeTable = sanitizeIdentifier(table);
++			String strSQL = "TRUNCATE TABLE \"" + safeSchema + "\".\"" + safeTable + "\"";
+@@ -160,0 +178 @@
++	

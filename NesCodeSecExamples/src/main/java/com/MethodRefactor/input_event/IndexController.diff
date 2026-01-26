@@ -9,9 +9,13 @@
 +	@RequestMapping("/admin")
 @@ -60,0 +65 @@
 +	@RequestMapping("/logout")
-@@ -69,0 +75 @@
+@@ -92,0 +98 @@
 +	
-@@ -98 +104,3 @@
+@@ -94 +100,2 @@
+-		Admin admin = loginIndexServiceImpl.getAdminByToken(token);
++		// TO DO: Implement token validation and admin retrieval logic
++		Admin admin = userser.getAdminByToken(token);
+@@ -98 +105,3 @@
 -}+}
 +
 +

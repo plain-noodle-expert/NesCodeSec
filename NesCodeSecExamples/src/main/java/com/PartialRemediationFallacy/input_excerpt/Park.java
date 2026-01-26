@@ -49,7 +49,7 @@ public class Park {
 
     public void modifVehicule(int ID,String mark,String type){
 
-        boolean r = DBRequest.RQt(DBconnexion.getInstance(),"UPDATE listevehicule SET type='"+type+"',mark='"+mark+"' WHERE id="+ID+"")<|user_cursor_is_here|>;
+        boolean r = DBRequest.RQt(DBconnexion.getInstance(),"UPDATE listevehicule SET type='"+type+"',mark='"+mark+"' WHERE id="+ID+"");
         if(r) System.out.println("Modification Faite");
         else System.out.println("Modification non faite");
     }
@@ -98,14 +98,15 @@ public class Park {
     }
     public void nbrVehiculeType(String type){
 
-        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'");
+        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'"<|user_cursor_is_here|>
         System.out.println("Nombre de vehicule de type "+type+" = "+r);
     }
     public void listeVehiculeType(String type){
 
         System.out.println("==============");
         System.out.println(" ID  :  TYPE  :  MARK  ");
-        Map<Integer,Vehicule> r = DBRequest.RQ(DBconnexion.getInstance(),"SELECT * FROM listevehicule WHERE type='"+type+"'");
+        String safeType = type == null ? "" : type.replace("'", "''");
+        Map<Integer,Vehicule> r = DBRequest.RQ(DBconnexion.getInstance(),"SELECT * FROM listevehicule WHERE type='"+safeType+"'");
         for(Map.Entry<Integer,Vehicule> v:r.entrySet()){
 
             System.out.println(v.getKey()+" : "+v.getValue().toString());

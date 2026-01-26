@@ -7,18 +7,34 @@
  
  import com.example.uniproject.models.Users;
  import com.example.uniproject.models.enums.Role;
-@@ -42,12 +41,12 @@
-     public String userEdit(@RequestParam("userId") Users user, @RequestParam Map<String, String> form) {
-         userService.changeUserRoles(user, form);
-         return "redirect:/admin";
+@@ -47,11 +46,29 @@
+     public String deleteUser(Long id, Principal principal) {
+         userService.deleteUser(userService.getUserByPrincipal(principal), id);
+         return "success";
      }
  
 -    <|user_cursor_is_here|>
--    public String deleteUser(@PathVariable Long id, Principal principal) {
-+    @PostMapping("/admin/user-delete")
-+    public String deleteUser(@RequestParam("userId") Long id, Principal principal) {
-         userService.deleteUser(userService.getUserByPrincipal(principal), id);
-         return "redirect:/admin";
++    @GetMapping("/admin/admin-edit/{admin}")
++    public String adminEdit(@PathVariable("admin") Users admin, Model model, Principal principal) {
++        model.addAttribute("admin", admin);
++        model.addAttribute("admin", userService.getUserByPrincipal(principal));
++        model.addAttribute("roles", Role.values());
++        return "admin-edit";
++    }
++
++    @PostMapping("/admin/admin-edit")
++    public String adminEdit(@RequestParam("adminId") Users admin, @RequestParam Map<String, String> form) {
++        userService.changeUserRoles(admin, form);
++        return "redirect:/admin";
++    }
++
++    public String deleteAdmin(Long id, Principal principal) {
++        userService.deleteUser(userService.getUserByPrincipal(principal), id);
++        return "success";
++    }
++
+     public Admin getAdmin(String username, String password) {
+         Admin admin = userService.adminlogin(username, password);
+         return admin;
      }
- 
-     public boolean validateToken(String token) {
+ }

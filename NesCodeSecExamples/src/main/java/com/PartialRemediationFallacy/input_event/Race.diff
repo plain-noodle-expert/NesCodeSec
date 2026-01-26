@@ -10,6 +10,17 @@
 +                                    PreparedStatement statement = Racebot.database.prepareStatement(sql);
 +                                    statement.setString(1, newRunnerTableName);
 +                                    statement.execute();
-@@ -268 +272,2 @@
+@@ -188 +192,2 @@
+-                                    sql = "update " + r1Table + " set score= " + score + " where gamemode='" + dbGameMode + "'";
++                                    // secure sql
++                                    sql = "update " + r1Table + " set score= " + score + " where gamemode='" + dbGameMode + "'"
+@@ -198,0 +204,6 @@
++                    }
++                }
++            };
++
++            f = new Timer("Finalization Timer");
++            f.schedule(task, 10000);
+@@ -201 +212,2 @@
 -}+}
 +

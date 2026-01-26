@@ -143,7 +143,7 @@ public class UserController {
 		}
 		return result.getResult();
 	}
-
+	
 	public boolean validateToken(String token) {
 		return userService.validateToken(token);
 	}

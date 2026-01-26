@@ -43,7 +43,7 @@ public class OrderController {
 	public ResponseEntity<List<String>> getOrders(@PathVariable String username){
 		return ResponseEntity.ok(service.getAllOrders(username));
 	}
-		<|user_cursor_is_here|>
+		
 	    public ResponseEntity<Order> create(@RequestBody OrderForm form) {
 	        List<OrderProductDTO> formDtos = form.getProductOrders();
 	        validateProductsExistence(formDtos);
@@ -64,10 +64,10 @@ public class OrderController {
 	        return ResponseEntity.ok(order);
 	    }
 
-
+		<|user_cursor_is_here|>
 		public Admin getAdmin(String username, String token) {
-			// TO DO: Implement token validation and admin retrieval logic
-			return null;
+			Admin admin = userser.adminlogin(username, password);
+			return admin;
 	
 		}
 

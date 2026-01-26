@@ -62,7 +62,6 @@ public class AdminController {
     }
 
     //登录验证
-    <|user_cursor_is_here|>
     public ModelAndView logout() {
         ModelAndView modelAndView=new ModelAndView();
         //获取当前用户
@@ -80,6 +79,7 @@ public class AdminController {
         }
     }
 
+    <|user_cursor_is_here|>
     public boolean validateToken(String token) {
         //TO DO: Token validation logic
         return true;

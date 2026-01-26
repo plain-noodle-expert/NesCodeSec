@@ -1,23 +1,6 @@
 // Fut.java - Fusion transpiler
 //
 // Copyright (C) 2011-2025  Piotr Fusik
-//
-// This file is part of Fusion Transpiler,
-// see https://github.com/fusionlanguage/fut
-//
-// Fusion Transpiler is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Fusion Transpiler is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Fusion Transpiler.  If not, see http://www.gnu.org/licenses/
-
 package org.fusionlanguage;
 
 import java.io.BufferedInputStream;
@@ -77,16 +60,6 @@ class FileGenHost extends FuConsoleHost
 		return new ArrayList<Byte>();
 	}
 
-	protected @Override int getResourceLength(String name, FuPrefixExpr expr)
-	{
-		ArrayList<Byte> content = getResources().get(name);
-		if (content == null) {
-			content = readResource(name, expr);
-			getResources().put(name, content);
-		}
-		return content.size();
-	}
-
 	public @Override Appendable createFile(String directory, String filename)
 	{
 		this.filename = new File(directory, filename);
@@ -98,47 +71,12 @@ class FileGenHost extends FuConsoleHost
 		}
 		return this.currentFile;
 	}
-
-	public @Override void closeFile()
-	{
-		try {
-			this.currentFile.close();
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e); // TODO
-		}
-		if (hasErrors())
-			filename.delete();
-	}
 }
 
 public class Fut extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	private static void usage(PrintWriter out)
-	{
-		out.println("Usage: java -jar fut.jar [OPTIONS] -o FILE INPUT.fu");
-		out.println("Options:");
-		out.println("-l c       Translate to C");
-		out.println("-l cpp     Translate to C++");
-		out.println("-l cs      Translate to C#");
-		out.println("-l d       Translate to D");
-		out.println("-l java    Translate to Java");
-		out.println("-l js      Translate to JavaScript");
-		out.println("-l py      Translate to Python");
-		out.println("-l swift   Translate to Swift");
-		out.println("-l ts      Translate to TypeScript");
-		out.println("-l d.ts    Translate to TypeScript declarations");
-		out.println("-l cl      Translate to OpenCL C");
-		out.println("-o FILE    Write to the specified file");
-		out.println("-n NAME    Specify C++/C# namespace, Java package or C name prefix");
-		out.println("-D NAME    Define conditional compilation symbol");
-		out.println("-r FILE.fu Read the specified source file but don't emit code");
-		out.println("-I DIR     Add directory to resource search path");
-		out.println("--help     Display this information");
-		out.println("--version  Display version information");
-	}
 
 	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
 	{
@@ -308,134 +246,6 @@ public class Fut extends HttpServlet
 			err.println("fut: ERROR: " + e.getMessage());
 			return 1;
 		}
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException
-	{
-		List<String> argList = extractArgs(req);
-		if (argList.isEmpty()) {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			resp.setContentType("application/json");
-			resp.getWriter().write("{\"error\":\"No arguments supplied. Provide args or input/output parameters.\"}");
-			return;
-		}
-
-		StringWriter outBuffer = new StringWriter();
-		StringWriter errBuffer = new StringWriter();
-		int status = run(argList, new PrintWriter(outBuffer), new PrintWriter(errBuffer));
-
-		resp.setStatus(status == 0 ? HttpServletResponse.SC_OK : HttpServletResponse.SC_BAD_REQUEST);
-		resp.setContentType("application/json");
-		resp.getWriter().write(buildJsonResponse(status, outBuffer.toString(), errBuffer.toString()));
-	}
-
-	private List<String> extractArgs(HttpServletRequest req)
-	{
-		String argsParam = req.getParameter("args");
-		if (argsParam != null && !argsParam.trim().isEmpty()) {
-			return Arrays.asList(argsParam.trim().split("\\s+"));
-		}
-
-		ArrayList<String> result = new ArrayList<String>();
-		String outputFile = req.getParameter("output");
-		if (outputFile != null && !outputFile.isEmpty()) {
-			result.add("-o");
-			result.add(outputFile);
-		}
-
-		String lang = req.getParameter("lang");
-		if (lang != null && !lang.isEmpty()) {
-			result.add("-l");
-			result.add(lang);
-		}
-
-		String namespace = req.getParameter("namespace");
-		if (namespace != null && !namespace.isEmpty()) {
-			result.add("-n");
-			result.add(namespace);
-		}
-
-		String referenced = req.getParameter("referenced");
-		if (referenced != null && !referenced.isEmpty()) {
-			for (String file : referenced.split(",")) {
-				if (!file.trim().isEmpty()) {
-					result.add("-r");
-					result.add(file.trim());
-				}
-			}
-		}
-
-		String resources = req.getParameter("resourceDir");
-		if (resources != null && !resources.isEmpty()) {
-			for (String dir : resources.split(",")) {
-				if (!dir.trim().isEmpty()) {
-					result.add("-I");
-					result.add(dir.trim());
-				}
-			}
-		}
-
-		String defs = req.getParameter("define");
-		if (defs != null && !defs.isEmpty()) {
-			for (String symbol : defs.split(",")) {
-				if (!symbol.trim().isEmpty()) {
-					result.add("-D");
-					result.add(symbol.trim());
-				}
-			}
-		}
-
-		String inputs = req.getParameter("input");
-		if (inputs != null && !inputs.isEmpty()) {
-			for (String input : inputs.split(",")) {
-				if (!input.trim().isEmpty())
-					result.add(input.trim());
-			}
-		}
-
-		return result;
-	}
-
-	private String buildJsonResponse(int status, String stdout, String stderr)
-	{
-		StringBuilder builder = new StringBuilder();
-		builder.append("{\"status\":");
-		builder.append(status);
-		builder.append(",\"stdout\":\"");
-		builder.append(escapeJson(stdout));
-		builder.append("\",\"stderr\":\"");
-		builder.append(escapeJson(stderr));
-		builder.append("\"}");
-		return builder.toString();
-	}
-
-	private String escapeJson(String value)
-	{
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < value.length(); i++) {
-			char c = value.charAt(i);
-			switch (c) {
-			case '\\':
-				builder.append("\\\\");
-				break;
-			case '"':
-				builder.append("\\\"");
-				break;
-			case '\n':
-				builder.append("\\n");
-				break;
-			case '\r':
-				builder.append("\\r");
-				break;
-			case '\t':
-				builder.append("\\t");
-				break;
-			default:
-				builder.append(c);
-			}
-		}
-		return builder.toString();
 	}
 
 	public static void main(String[] args)

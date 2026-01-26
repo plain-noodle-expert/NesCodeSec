@@ -3,17 +3,20 @@
 @@ -0,0 +1,2 @@
 +
 +
-@@ -30,0 +33 @@
+@@ -29,0 +32 @@
 +	
-@@ -39 +42,4 @@
--				ResultSet rs = st.executeQuery("select * from Customer where Name='"+var.sCustomerName+"'");
-+				String sql = "select * from Customer where Name= ?";
-+				PreparedStatement ps = con.prepareStatement(sql);
-+				ps.setString(1, var.sCustomerName);
-+				ResultSet rs = ps.executeQuery();
-@@ -86 +92 @@
+@@ -86 +89 @@
 -
 +	
+@@ -93 +96 @@
+-			ResultSet rs = st.executeQuery("select * from Spare where Name='"+sTempPart+"'");
++			ResultSet rs = st.executeQuery("select * from Spare where Name='"
+@@ -99 +102,4 @@
+-			int iResult = st.executeUpdate("update Spare set Quantity="+temp+" where Name='"+sTempPart+"'");
++			PreparedStatement upd = con.prepareStatement("update Spare set Quantity=? where Name=?");
++			upd.setInt(1, temp);
++			upd.setString(2, sTempPart);
++			int iResult = upd.executeUpdate();
 @@ -118 +124,2 @@
 -}+}
 +

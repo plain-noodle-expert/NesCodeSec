@@ -21,9 +21,9 @@ OUTPUT_SUBDIR = "output"
 # Pattern to detect sensitive methods exposed as API endpoints
 # Matches: @GetMapping/@PostMapping/@RequestMapping/@Action followed by getAdmin/getToken/isUserAuthenticated/validateToken
 SENSITIVE_METHOD_EXPOSED_PATTERN = (
-    r"@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\b[^}]*?"  # API annotation
+    r"@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action|ResponseBody)\b[^}]*?"  # API annotation
     r"(?:public\s+)?(?:[\w<>]+\s+)*?"  # Return type (including generics like ResponseEntity<String>)
-    r"(getAdmin|getToken|isUserAuthenticated|validateToken)\s*\("
+    r"(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure|validate\s*\("
 )
 
 def _project_root() -> Path:
@@ -73,16 +73,16 @@ def main() -> None:
     event_dir = _subdir(EVENT_SUBDIR)
     excerpt_dir = _subdir(EXCERPT_SUBDIR)
     output_dir = _subdir(OUTPUT_SUBDIR)
-    create_event_batch(
-        base_dir,
-        excerpt_dir,
-        event_dir,
-    )
-    request_batch(
-        event_dir,
-        excerpt_dir,
-        output_dir
-    )
+    # create_event_batch(
+    #     base_dir,
+    #     excerpt_dir,
+    #     event_dir,
+    # )
+    # request_batch(
+    #     event_dir,
+    #     excerpt_dir,
+    #     output_dir
+    # )
     
     # Evaluate if sensitive methods are exposed as API endpoints
     evaluate_via_regex(

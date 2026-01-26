@@ -7,20 +7,26 @@
  
  import java.util.Map;
  
-@@ -108,11 +107,11 @@
+@@ -108,10 +107,11 @@
  			result.setSuccess(true);
  		}
  		return result.getResult();
  	}
  	
--	<|user_cursor_is_here|>
 +	@RequestMapping(value = "/update", method = RequestMethod.POST)
  	@ResponseBody
  	public Map<String, Object> updateUser(UserVo userVo, HttpServletRequest request) {
  		
  		ResultUtil result = new ResultUtil();
  		
-@@ -148,6 +147,6 @@
+@@ -141,12 +141,12 @@
+ 			userService.updateUser(user);
+ 			result.setSuccess(true);
+ 		}
+ 		return result.getResult();
+ 	}
+-<|user_cursor_is_here|>
++	
  	public boolean validateToken(String token) {
  		return userService.validateToken(token);
  	}

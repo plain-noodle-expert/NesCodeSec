@@ -6,6 +6,7 @@ from tqdm import tqdm
 from typing import Mapping, Optional
 from loguru import logger
 from dotenv import load_dotenv
+from colorama import init, Fore, Style
 
 # Load environment variables from .env file
 load_dotenv()
@@ -117,10 +118,28 @@ def build_prompt(
         "user_edits": event_file.read_text(encoding="utf-8"),
         "user_excerpt": excerpt_file.read_text(encoding="utf-8"),
     }
+    extra_sections_not_in_template = {}
     if extra_sections:
-        sections.update(extra_sections)
+        # print(f"{Fore.YELLOW}Extra sections: {extra_sections}{Style.RESET_ALL}")
+        for key, value in extra_sections.items():
+            if "{" + key + "}" in template:
+                sections[key] = value
+            else:
+                extra_sections_not_in_template[key] = value
 
-    return template.format(**sections)
+    prompt = template.format(**sections)
+    
+    # Insert extra sections that are not in the template before ### Response
+    if extra_sections_not_in_template:
+        extra_content = ""
+        for key, value in extra_sections_not_in_template.items():
+            extra_content += f"\n### {key.replace('_', ' ').title()}:\n\n{value}\n"
+        
+        # Find the position to insert extra sections (before ### Response)
+        resp_marker = "### Response:"
+        prompt = prompt.replace(resp_marker, extra_content + resp_marker)
+    
+    return prompt
 
 def send_request(
     prompt: str,
@@ -248,7 +267,7 @@ def merge_response_into_excerpt(excerpt_content: str, response_content: str) -> 
     # Append any remaining lines from excerpt that weren't covered by the diff
     if last_excerpt_idx < len(excerpt_lines):
         
-        merged.extend(excerpt_lines[last_excerpt_idx:-2])
+        merged.extend(excerpt_lines[last_excerpt_idx:])
     
     return "".join(merged)
 

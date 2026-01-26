@@ -3,7 +3,10 @@
 @@ -0,0 +1,2 @@
 +
 +
-@@ -91,2 +93,5 @@
+@@ -26 +28 @@
+-    public static void initAccount(ArrayList<Account> accounts) throws IOException{    
++    public static void initAccount(ArrayList<Account> accounts) throws IOException{        
+@@ -64,2 +66,5 @@
 -                    String update = "DELETE FROM transactions WHERE name = \'" + accNameCheck + "\' AND typeAcc = "+ "\'" + accTypeCheck + "\'";
 -                    stmt3.executeUpdate(update);
 +                    String update = "DELETE FROM transactions WHERE name = \'? \' AND typeAcc = \'?\'";
@@ -11,6 +14,40 @@
 +                    pstmt.setString(1, accNameCheck);
 +                    pstmt.setString(2, accTypeCheck);
 +                    pstmt.executeUpdate();
-@@ -364 +369,2 @@
+@@ -70 +75 @@
+-        }      
++        }
+@@ -78 +83,3 @@
+-  
++	
++    
++    
+@@ -110 +116,0 @@
+-			
+@@ -137 +142,0 @@
+-			
+@@ -141 +145,0 @@
+-
+@@ -147,3 +150,0 @@
+-    
+-	
+-    
+@@ -246 +247 @@
+-                    + "\'" + ")");
++                    + "\'" + ")"
+@@ -268,6 +269,6 @@
+-				
+-			Statement stmt = conn.createStatement();
+-			
+-			String update = "UPDATE transactions SET name= \'" + newName + "\' WHERE name = \'" + oldName + "\'";
+-			
+-			stmt.executeUpdate(update);
++			
++            PreparedStatement pstmt = conn.prepareStatement("UPDATE transactions SET name=? WHERE name=?");
++            pstmt.setString(1, newName);
++            pstmt.setString(2, oldName);
++            pstmt.executeUpdate();
++            pstmt.close();
+@@ -286 +287,2 @@
 -} // class+} // class
 +

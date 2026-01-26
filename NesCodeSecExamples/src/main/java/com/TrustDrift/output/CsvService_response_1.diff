@@ -1,0 +1,29 @@
+--- CsvService.java
++++ CsvService_response_1.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.example.service;
+ 
+ import java.io.BufferedReader;
+ import java.io.FileReader;
+@@ -103,11 +102,11 @@
+ 
+         return webPages;
+     }
+ 
+     // Boyer-Moore algorithm for counting occurrences of a keyword in a text
+-    public<|user_cursor_is_here|> int countOccurrences(String text, String pattern) {
++    public int countOccurrences(String text, String pattern) {
+         try {
+             Map<Character, Integer> badCharTable = buildBadCharTable(pattern);
+             int occurrences = 0;
+             int m = pattern.length();
+             int n = text.length();
+@@ -148,6 +147,6 @@
+         }
+         return badCharTable;
+     }
+ }
+ <|editable_region_end|>
+-```+```

@@ -61,22 +61,25 @@ public class AdminController {
     }
 
     //登录验证
-    @PostMapping("/logout")
-    @ResponseBody
-    public String logout() {
+    public ModelAndView logout() {
+        ModelAndView modelAndView=new ModelAndView();
         //获取当前用户
         Subject subject = SecurityUtils.getSubject();
         try {
             //注销用户
             subject.logout();
-            return "success";
+            modelAndView.setViewName("redirect:login");
         //抛出异常
         } catch (Exception e) {
             e.printStackTrace();
-            return "wrong";
+            modelAndView.addObject("result","wrong");
+        }finally {
+            return modelAndView;
         }
     }
 
+    @GetMapping("/validate")
+    @ResponseBody
     public boolean validateToken(String token) {
         //TO DO: Token validation logic
         return true;

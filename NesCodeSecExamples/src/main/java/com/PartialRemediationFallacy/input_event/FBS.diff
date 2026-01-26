@@ -5,12 +5,20 @@
 +
 @@ -10,0 +13 @@
 +import java.sql.PreparedStatement;
-@@ -76,3 +79,3 @@
--                Statement stmt1 = con.createStatement();
--                String seatQuery = "Select * from Seats where flightName = '" + flightName + "'";
--                ResultSet r = stmt1.executeQuery(seatQuery);
-+                PreparedStatement stmt1 = con.prepareStatement("Select * from Seats where flightName = ?");
-+                stmt1.setString(1, flightName);
-+                ResultSet r = stmt1.executeQuery();
-@@ -283,0 +287 @@
+@@ -33,0 +37 @@
++    
+@@ -142 +146 @@
+-            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" + flightName + "' AND DEPARTUREDATE = ";
++            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" 
+@@ -173 +177 @@
+-        Statement ps = null;
++        PreparedStatement ps = null;
+@@ -177,3 +181,3 @@
+-            ps = con.createStatement();
+-            String query = "SELECT * FROM CITIES  WHERE CITYNAME  LIKE '" + city_name + "%'";
+-            ResultSet rs = ps.executeQuery(query);
++            ps = con.prepareStatement("SELECT * FROM CITIES WHERE CITYNAME LIKE ?");
++            ps.setString(1, city_name + "%");
++            ResultSet rs = ps.executeQuery();
+@@ -193,0 +198 @@
 +

@@ -45,59 +45,6 @@ public class GP
 		}
 	}
 
-
-	public static void emailAlert(Connection conn, String errorMsg) throws SQLException
-	{
-		String method = "emailAlert";
-		int location = 1000;
-		try
-		{
-			Statement stmt = conn.createStatement();
-
-			String strSQL = "SELECT gp_elog('" + errorMsg + "',true)";
-			ResultSet rs = stmt.executeQuery(strSQL);
-
-		}
-		catch (SQLException ex)
-		{
-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
-		}
-	}
-
-	public static String getVariable(Connection conn, String name) throws SQLException 
-	{
-		String method = "getVariable";
-		int location = 1000;
-		try
-		{
-			location = 2000;
-			String value = "";
-
-			location = 2100;
-			Statement stmt = conn.createStatement();
-			String strSQL = "SELECT os.fn_get_variable('" + name + "')";
-
-			if (debug)
-				Logger.printMsg("Getting Variable: " + strSQL);
-		
-			location = 2200;	
-			ResultSet rs = stmt.executeQuery(strSQL);
-
-			while (rs.next())
-			{
-				value = rs.getString(1);
-			}
-
-			location = 2300;
-			return value;
-
-		}
-		catch (SQLException ex)
-		{
-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
-		}
-	}
-	
 	public static void executeReplication(Connection conn, String targetSchema, String targetTable, String appendColumnName) throws SQLException
 	{
 		String method = "executeReplication";
@@ -130,61 +77,6 @@ public class GP
 		}
 	}
 
-	public static void updateStatus(Connection conn, int queueId, String status, Timestamp queueDate, Timestamp startDate, String errorMessage, int numRows, int id, String refreshType, String targetSchema, String targetTable, boolean targetAppendOnly, boolean targetCompressed, boolean targetRowOrientation, String sourceType, String sourceServer, String sourceInstance, int sourcePort, String sourceDatabase, String sourceSchema, String sourceTable, String sourceUser, String sourcePass, String columnName, String sqlText, boolean snapshot) throws SQLException
-	{
-		String method = "updateStatus";
-		int location = 1000;
-
-		String strQueueId = setSQLString(queueId);
-		status = setSQLString(status);
-		String strQueueDate = setSQLString(queueDate);
-		String strStartDate = setSQLString(startDate);
-		errorMessage = setSQLString(errorMessage);
-		String strNumRows = setSQLString(numRows);
-		String strId = setSQLString(id);
-		refreshType = setSQLString(refreshType);
-		targetSchema = setSQLString(targetSchema);
-		targetTable = setSQLString(targetTable);
-		String strTargetAppendOnly = setSQLString(targetAppendOnly);
-		String strTargetCompressed = setSQLString(targetCompressed);
-		String strTargetRowOrientation = setSQLString(targetRowOrientation);
-		sourceType = setSQLString(sourceType);
-		sourceServer = setSQLString(sourceServer);
-		sourceInstance = setSQLString(sourceInstance);
-		String strSourcePort = setSQLString(sourcePort);
-		sourceDatabase = setSQLString(sourceDatabase);
-		sourceSchema = setSQLString(sourceSchema);
-		sourceTable = setSQLString(sourceTable);
-		sourceUser = setSQLString(sourceUser);
-		sourcePass = setSQLString(sourcePass);
-		columnName = setSQLString(columnName);
-		sqlText = setSQLString(sqlText);
-		String strSnapshot = setSQLString(snapshot);
-		
-		try
-		{
-			location = 2000;
-			Statement stmt = conn.createStatement();
-
-			location = 2400;
-			String strSQL = "SELECT os.fn_update_status(" + strQueueId + ", " + status + ", " + strQueueDate + ", " + strStartDate + ", ";
-			strSQL += errorMessage + ", " + strNumRows + ", " + strId + ", " + refreshType + ", " + targetSchema + ", " + targetTable + ", ";
-			strSQL += strTargetAppendOnly + ", " + strTargetCompressed + ", " + strTargetRowOrientation + ", " + sourceType + ", ";
-			strSQL += sourceServer + ", " + sourceInstance + ", " + strSourcePort + ", " + sourceDatabase + ", " + sourceSchema + ", ";
-			strSQL += sourceTable + ", " + sourceUser + ", " + sourcePass + ", " + columnName + ", " + sqlText + ", " + strSnapshot + ")";
-
-			if (debug)
-				Logger.printMsg("Updating Status: " + strSQL);
-		
-			location = 2500;	
-			stmt.executeQuery(strSQL);
-		}
-		catch (SQLException ex)
-		{
-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
-		}
-	}
-	
 	public static void dropExternalTable(Connection conn, String targetSchema, String targetTable) throws SQLException  
 	{
 		String method = "dropExternalTable";
@@ -243,48 +135,6 @@ public class GP
 		}
 	}
 
-	public static int insertReplTable(Connection conn, String targetSchema, String targetTable) throws SQLException 
-	{
-		String method = "insertReplTable";
-		int location = 1000;
-
-		int numRows = 0;
-		try
-		{
-			location = 2000;
-			String replTargetSchema = externalSchema;
-
-			location = 2100;
-			String replTargetTable = getStageTableName(targetSchema, targetTable);
-
-			location = 2200;
-			String externalTable = getExternalTableName(replTargetSchema, replTargetTable);
-
-			location = 2305;
-			//truncate the stage table before loading
-			truncateTable(conn, replTargetSchema, replTargetTable);
-
-			location = 2400;
-			Statement stmt = conn.createStatement();
-
-			location = 2500;
-			String strSQL = "INSERT INTO \"" + replTargetSchema + "\".\"" + replTargetTable + "\" \n" +
-					"SELECT * FROM \"" + externalSchema + "\".\"" + externalTable + "\"";
-			if (debug)
-				Logger.printMsg("Executing SQL: " + strSQL);
-
-			location = 2600;
-			numRows = stmt.executeUpdate(strSQL);
-
-			location = 2700;
-			return numRows;
-		}
-		catch (SQLException ex)
-		{
-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
-		}
-	}
-
 	public static void truncateTable(Connection conn, String schema, String table) throws SQLException 
 	{
 		String method = "truncateTable";
@@ -308,36 +158,6 @@ public class GP
 			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
 		}
 	}
-
-	public static void setupReplicationTables(Connection conn, String targetSchema, String targetTable, String columnName) throws SQLException
-	{
-		String method = "setupReplicationTables";
-		int location = 1000;
-
-		try
-		{
-			location = 2000;
-			String archTable = getArchTableName(targetSchema, targetTable);
-
-			location = 2100;
-			String stageTable = getStageTableName(targetSchema, targetTable);
-
-			location = 2200;
-			String strSQL = "SELECT os.fn_replication_setup('" + targetSchema + "', '" + targetTable + "', '" +
-					externalSchema + "', '" + stageTable + "', '" + archTable + "', '" + columnName + "')";
-
-			location = 2312;
-			Statement stmt = conn.createStatement();
-
-			location = 2400;
-			stmt.executeQuery(strSQL);
-		}
-		catch (SQLException ex)
-		{
-			throw new SQLException("(" + myclass + ":" + method + ":" + location + ":" + ex.getMessage() + ")");
-		}
-	}
-	
 }
 <|editable_region_end|>
 ```

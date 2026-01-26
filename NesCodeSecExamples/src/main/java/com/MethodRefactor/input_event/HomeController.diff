@@ -1,0 +1,22 @@
+--- HomeController.java
++++ HomeController.java
+@@ -0,0 +1,2 @@
++
++
+@@ -55,0 +58 @@
++	@RequestMapping(value = "/", method = RequestMethod.GET)
+@@ -68,0 +72 @@
++	@RequestMapping("/user")
+@@ -73,0 +78 @@
++	@RequestMapping("/open")
+@@ -77,0 +83 @@
++	@RequestMapping("/admin")
+@@ -79 +84,0 @@
+-
+@@ -96,0 +102,3 @@
++	
++	
++	
+@@ -160 +168,2 @@
+-}+}
++

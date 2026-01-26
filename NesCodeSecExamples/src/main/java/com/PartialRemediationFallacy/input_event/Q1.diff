@@ -3,7 +3,7 @@
 @@ -0,0 +1,2 @@
 +
 +
-@@ -52,48 +54,42 @@
+@@ -52,11 +54,5 @@
 -            StringBuffer sb = new StringBuffer();
 -            // 88 tuples
 -            sb.append("select distinct student.name, student.dept_name, student.tot_cred, prereq.prereq_id course_id, takes.grade, section.semester, takes.year, course.credits, prereq.course_id postreq_id");
@@ -15,13 +15,35 @@
 -            sb.append(" and ( student.dept_name like 'Computer Science'");
 -            sb.append(" or student.dept_name like 'Data Science'");
 -            sb.append(" or student.dept_name like 'AI')");
--
++            String query = "select distinct student.name, student.dept_name, student.tot_cred, prereq.prereq_id course_id, takes.grade, section.semester, takes.year, course.credits, prereq.course_id postreq_id from student, takes, section, course, prereq where student.id = takes.id and takes.course_id = section.course_id and section.course_id = course.course_id and prereq.prereq_id = course.course_id and ( student.dept_name like ? or student.dept_name like ? or student.dept_name like ?)";
++            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
++                preparedStatement.setString(1, "Computer Science");
++                preparedStatement.setString(2, "Data Science");
++                preparedStatement.setString(3, "AI");
+@@ -64 +60,7 @@
 -            sql = sb.toString();
--
++                try (ResultSet rs = preparedStatement.executeQuery()) {
++                    int cnt = 0;
++                    
++                    // Prepare the insert statement once
++                    sql = "insert into " + FINAL_EXAM_JDBC_TABLE_NAME +
++                            " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
++                    PreparedStatement insertStmt = conn.prepareStatement(sql);
+@@ -66,3 +68,10 @@
 -            ResultSet rs = stmt.executeQuery(sql);
 -            int cnt = 0;
 -            List<String> values = new ArrayList<String>();
--
++                    while(rs.next()) {
++                        String Name = rs.getString(1);
++                        String dept_name = rs.getString(2);
++                        int tot_cred = rs.getInt(3);
++                        String course_id = rs.getString(4);
++                        String grade = rs.getString(5);
++                        String semester = rs.getString(6);
++                        int year = rs.getInt(7);
++                        int cred = rs.getInt(8);
++                        String postreq_id = rs.getString(9);
+@@ -70,30 +79,17 @@
 -            while(rs.next()) {
 -                String Name = rs.getString(1);
 -                String dept_name = rs.getString(2);
@@ -52,48 +74,52 @@
 -
 -            for(int i=0; i < values.size(); i++) {
 -                int res = stmt.executeUpdate(values.get(i));
-+            String query = "select distinct student.name, student.dept_name, student.tot_cred, prereq.prereq_id course_id, takes.grade, section.semester, takes.year, course.credits, prereq.course_id postreq_id from student, takes, section, course, prereq where student.id = takes.id and takes.course_id = section.course_id and section.course_id = course.course_id and prereq.prereq_id = course.course_id and ( student.dept_name like ? or student.dept_name like ? or student.dept_name like ?)";
-+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-+                preparedStatement.setString(1, "Computer Science");
-+                preparedStatement.setString(2, "Data Science");
-+                preparedStatement.setString(3, "AI");
-+
-+                try (ResultSet rs = preparedStatement.executeQuery()) {
-+                    int cnt = 0;
-+                    List<String> values = new ArrayList<String>();
-+
-+                    while(rs.next()) {
-+                        String Name = rs.getString(1);
-+                        String dept_name = rs.getString(2);
-+                        int tot_cred = rs.getInt(3);
-+                        String course_id = rs.getString(4);
-+                        String grade = rs.getString(5);
-+                        String semester = rs.getString(6);
-+                        int year = rs.getInt(7);
-+                        int cred = rs.getInt(8);
-+                        String postreq_id = rs.getString(9);
-+
-+                        // distinguish string int properly
-+                        sql = "insert into " + FINAL_EXAM_JDBC_TABLE_NAME +
-+                                " values ('" +
-+                                Name + "', '" +
-+                                dept_name + "', " +
-+                                tot_cred + ", '" +
-+                                course_id + "', '" +
-+                                grade + "', '" +
-+                                semester + "', " +
-+                                year + ", " +
-+                                cred + ", '" +
-+                                postreq_id + "'" +
-+                                ")";
-+                        values.add(sql);
++                        // Use parameterized query to prevent SQL injection
++                        insertStmt.setString(1, Name);
++                        insertStmt.setString(2, dept_name);
++                        insertStmt.setInt(3, tot_cred);
++                        insertStmt.setString(4, course_id);
++                        insertStmt.setString(5, grade);
++                        insertStmt.setString(6, semester);
++                        insertStmt.setInt(7, year);
++                        insertStmt.setInt(8, cred);
++                        insertStmt.setString(9, postreq_id);
++                        
++                        insertStmt.executeUpdate();
 +                        cnt += 1;
 +                    }
-+
-+                    for(int i=0; i < values.size(); i++) {
-+                        int res = stmt.executeUpdate(values.get(i));
-+                    }
++                    
++                    insertStmt.close();
 +                }
-@@ -228 +224,2 @@
+@@ -141 +137 @@
+-                    " WHERE semester = 'Fall' AND year = 2022";
++                    " WHERE semester = 'Fall' AND year = 2022"
+@@ -160,3 +156,2 @@
+-        try {
+-            // Create a PreparedStatement
+-            String updateQuery = "UPDATE " + FINAL_EXAM_JDBC_TABLE_NAME + " SET semester = 'spring_updated'" + " WHERE tot_cred >= 110 AND semester = 'Spring'";
++        String tableName = validateTableName(FINAL_EXAM_JDBC_TABLE_NAME);
++        String updateSql = "UPDATE " + tableName + " SET semester = ? WHERE tot_cred >= ? AND semester = ?";
+@@ -164,4 +159,4 @@
+-
+-            PreparedStatement pstmt = conn.prepareStatement(updateQuery);
+-
+-            // Execute the update operation
++        try (PreparedStatement pstmt = conn.prepareStatement(updateSql)) {
++            pstmt.setString(1, "spring_updated");
++            pstmt.setInt(2, 110);
++            pstmt.setString(3, "Spring");
+@@ -169,2 +164 @@
+-
+-            // Display the number of updated rows
++            conn.commit();
+@@ -172,6 +165,0 @@
+-
+-            // Commit the changes
+-            conn.commit();
+-
+-            // Close the PreparedStatement
+-            pstmt.close();
+@@ -182 +170,2 @@
 -}+}
 +

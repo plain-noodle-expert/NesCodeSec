@@ -35,95 +35,6 @@ import java.util.logging.Logger;
 public class FBS 
 {
     
-    public ArrayList<Flight> getAllFlights(Connection con, ArrayList<Customer> customers, ArrayList<Features> features)
-    {
-        ArrayList<Flight> flights = new ArrayList();        
-        
-        try
-        {            
-            Statement stmt = con.createStatement();
-            String sql = "SELECT * FROM Flights";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            
-            while (rs.next())
-            {
-                boolean isChanged = rs.getBoolean("isChanged");
-
-                String flightName = rs.getString("FlightName");
-
-                int totalSeats = rs.getInt("TotalSeats");
-                int currentSeats = rs.getInt("CurrentSeats");
-
-                String departureCity = rs.getString("DepartureCity");
-                String arrivalCity = rs.getString("ArrivalCity");
-
-                Date departureDate = rs.getDate("DepartureDate");
-                Date arrivalDate = rs.getDate("ArrivalDate");
-
-                int economySeats = rs.getInt("EconomySeats");
-                int businessSeats = rs.getInt("BusinessSeats");
-                int firstSeats = rs.getInt("FirstSeats");
-
-                int oldESeats = rs.getInt("OldESeats");
-                int oldBSeats = rs.getInt("OldBSeats");
-                int oldFSeats = rs.getInt("OldFSeats");
-                int oldTSeats = rs.getInt("OldTSeats");
-
-                Flight f = new Flight(isChanged, oldESeats, oldBSeats, oldFSeats, oldTSeats, flightName,null, totalSeats, currentSeats, departureCity, arrivalCity, departureDate, arrivalDate, economySeats, businessSeats, firstSeats);
-                flights.add(f);                                                
-              
-                
-                ArrayList<Seat> seats = new ArrayList();
-                
-                PreparedStatement stmt1 = con.prepareStatement("Select * from Seats where flightName = ?");
-                stmt1.setString(1, flightName);
-                ResultSet r = stmt1.executeQuery();
-                
-                while(r.next())
-                {
-                                        
-                    int seatnumber = r.getInt("SeatNumber");
-                    String cEmail = r.getString("CustomerEmail");
-                    String ftype = r.getString("FeatureType");
-                    
-                    Customer c = null;
-                    for(int j = 0; j < customers.size(); j++)
-                    {
-                        if (customers.get(j).getEmail().equals(cEmail))
-                        {    c = customers.get(j);
-                             break;
-                        }
-                    }
-                    
-                    Features fet = null;
-                    
-                    if(ftype.equals("Economy"))
-                        fet = features.get(0);
-                    if(ftype.equals("Business"))
-                        fet = features.get(1);
-                    if(ftype.equals("First Class"))
-                        fet = features.get(2);
-                                        
-                    Seat s = new Seat(seatnumber, f,fet,c);                    
-                    seats.add(s);
-                    
-                    if (c!=null)
-                        c.setSeat(s);
-                }
-                                
-                f.setSeats(seats);                                                
-            }
-
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(FBS.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
-        }
-
-        return flights;
-    }
-    
     
     //--------------Methods Exposed to Web Services---------------------//
     public static int getPrice(String origin, String destination)
@@ -161,7 +72,7 @@ public class FBS
             
             Statement statement = con.createStatement();
             
-            <|user_cursor_is_here|>String q = "SELECT * FROM FLIGHTS WHERE DEPARTURECITY = '" + origin + "' AND ARRIVALCITY = '" + destination + "' AND ECONOMYSEATS > 0";
+            String q = "SELECT * FROM FLIGHTS WHERE DEPARTURECITY = '" + origin + "' AND ARRIVALCITY = '" + destination + "' AND ECONOMYSEATS > 0";
             
             ResultSet r = statement.executeQuery(q);
 
@@ -232,7 +143,7 @@ public class FBS
             
             Statement statement = con.createStatement();
             
-            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" + flightName + "' AND DEPARTUREDATE = ";
+            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" <|user_cursor_is_here|>
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
             java.util.Date d = format.parse(date);            
             
@@ -263,13 +174,13 @@ public class FBS
     public ArrayList<String> getCities(Connection con, String city_name) 
     {
         ArrayList<String> list = new ArrayList();
-        Statement ps = null;
+        PreparedStatement ps = null;
         String data;
         try 
         {
-            ps = con.createStatement();
-            String query = "SELECT * FROM CITIES  WHERE CITYNAME  LIKE '" + city_name + "%'";
-            ResultSet rs = ps.executeQuery(query);
+            ps = con.prepareStatement("SELECT * FROM CITIES WHERE CITYNAME LIKE ?");
+            ps.setString(1, city_name + "%");
+            ResultSet rs = ps.executeQuery();
             
             while (rs.next()) 
             {

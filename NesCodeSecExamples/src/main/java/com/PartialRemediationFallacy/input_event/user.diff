@@ -5,11 +5,15 @@
 +
 @@ -14,0 +17 @@
 +import java.sql.PreparedStatement;
-@@ -211 +214,2 @@
+@@ -46,0 +50 @@
++	
+@@ -75,0 +80 @@
++
+@@ -114 +119,2 @@
 -                    String query = "SELECT * FROM league WHERE player_id = " + pid;
 +                    String query = "SELECT * FROM league WHERE player_id = ?";
 +                    PreparedStatement preparedStmt;
-@@ -213,3 +217,5 @@
+@@ -116,3 +122,5 @@
 -                    Statement stmt = Con.createStatement();
 -                    res = stmt.executeQuery(query);
 -                    res.next();
@@ -18,5 +22,11 @@
 +                    preparedStmt.setInt   (1, id);
 +                    res = preparedStmt.executeQuery();
 +            		res.next();
-@@ -326,0 +333 @@
+@@ -138 +146 @@
+-            } 
++            }
+@@ -156 +164 @@
+-					query = "UPDATE user Set Total = " +t;
++					query = "UPDATE user Set Total = " +t
+@@ -166,0 +175 @@
 +

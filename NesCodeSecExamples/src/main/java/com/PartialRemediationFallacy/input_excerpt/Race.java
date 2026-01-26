@@ -140,7 +140,7 @@ public class Race {
 
                                 //Check if the runner's best time was beaten and pull their current rating
 
-                                sql = "select * from " + runnerTable <|user_cursor_is_here|>+ " where gamemode ='"+ dbGameMode + "'";
+                                sql = "select * from " + runnerTable + " where gamemode ='"+ dbGameMode + "'";
                                 ResultSet runnersTableResults = statement.executeQuery(sql); //TODO better name
 
                                 boolean result = false;
@@ -189,7 +189,8 @@ public class Race {
 
                                     //TODO PreparedStatement would be better here
                                     long score = r1.previousRating + Math.round(changeRating);
-                                    sql = "update " + r1Table + " set score= " + score + " where gamemode='" + dbGameMode + "'";
+                                    // secure sql
+                                    sql = "update " + r1Table + " set score= " + score + " where gamemode='" + dbGameMode + "'"<|user_cursor_is_here|>
                                     statement.execute(sql);
 
                                 }
@@ -200,26 +201,6 @@ public class Race {
                             Racebot.log(e.getMessage());
                             System.out.println(e.getMessage());
                         }
-
-
-                        state = State.Finalized;
-
-                        //wait for blocks to lift
-                        while (Racebot.softBlocking || Racebot.hardBlocking){
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException err) {
-                                err.printStackTrace();
-                                Racebot.log(err.getMessage());
-                            }
-                        }
-
-
-                        Racebot.requestedMessage(channel, "Race " + getID() + " finalized.");
-
-                        Racebot.requestedChannelNameChange(channel, "inactive_race_channel");
-
-                        racebot.removeRace(getID());
                     }
                 }
             };
@@ -227,47 +208,6 @@ public class Race {
             f = new Timer("Finalization Timer");
             f.schedule(task, 10000);
         }
-    }
-
-    public int getID(){
-        return ID;
-    }
-
-    public int finishCount(){
-        int count = 0;
-        for (String r : racers.keySet()){
-            if (racers.get(r).getState() == Racer.State.Finished) count++;
-        }
-        return count;
-    }
-
-    public String getMulti(){
-        String link = "http://kadgar.net/live/";
-        boolean atLeastOne = false;
-
-        for (String r : racers.keySet()){
-            String sql = "SELECT stream FROM streams WHERE name='" + r + "'";
-            try {
-                Statement statement = Racebot.database.createStatement();
-                ResultSet rs = statement.executeQuery(sql);
-
-                while (rs.next()){
-                    atLeastOne = true;
-                    link += rs.getString("stream") + "/";
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                Racebot.log(e.getMessage());
-            }
-        }
-
-        if (atLeastOne) return link;
-        else return "No users in this race have registered their streams.";
-    }
-
-    public String sqlName(String s){
-        return  s.replace("'", "''");
     }
 }
 <|editable_region_end|>

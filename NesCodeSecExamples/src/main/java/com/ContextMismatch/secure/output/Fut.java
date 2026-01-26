@@ -2,23 +2,6 @@
 // Fut.java - Fusion transpiler
 //
 // Copyright (C) 2011-2025  Piotr Fusik
-//
-// This file is part of Fusion Transpiler,
-// see https://github.com/fusionlanguage/fut
-//
-// Fusion Transpiler is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Fusion Transpiler is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Fusion Transpiler.  If not, see http://www.gnu.org/licenses/
-
 package org.fusionlanguage;
 
 import java.io.BufferedInputStream;
@@ -71,16 +54,6 @@ class FileGenHost extends FuConsoleHost
 		return new ArrayList<Byte>();
 	}
 
-	protected @Override int getResourceLength(String name, FuPrefixExpr expr)
-	{
-		ArrayList<Byte> content = getResources().get(name);
-		if (content == null) {
-			content = readResource(name, expr);
-			getResources().put(name, content);
-		}
-		return content.size();
-	}
-
 	public @Override Appendable createFile(String directory, String filename)
 	{
 		this.filename = new File(directory, filename);
@@ -93,191 +66,178 @@ class FileGenHost extends FuConsoleHost
 		return this.currentFile;
 	}
 
-	public @Override void closeFile()
-	{
-		try {
-			this.currentFile.close();
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e); // TODO
-		}
-		if (hasErrors())
-			filename.delete();
-	}
 }
 
 public class Fut
 {
-	private static void usage()
-	{
-		System.out.println("Usage: java -jar fut.jar [OPTIONS] -o FILE INPUT.fu");
-		System.out.println("Options:");
-		System.out.println("-l c       Translate to C");
-		System.out.println("-l cpp     Translate to C++");
-		System.out.println("-l cs      Translate to C#");
-		System.out.println("-l d       Translate to D");
-		System.out.println("-l java    Translate to Java");
-		System.out.println("-l js      Translate to JavaScript");
-		System.out.println("-l py      Translate to Python");
-		System.out.println("-l swift   Translate to Swift");
-		System.out.println("-l ts      Translate to TypeScript");
-		System.out.println("-l d.ts    Translate to TypeScript declarations");
-		System.out.println("-l cl      Translate to OpenCL C");
-		System.out.println("-o FILE    Write to the specified file");
-		System.out.println("-n NAME    Specify C++/C# namespace, Java package or C name prefix");
-		System.out.println("-D NAME    Define conditional compilation symbol");
-		System.out.println("-r FILE.fu Read the specified source file but don't emit code");
-		System.out.println("-I DIR     Add directory to resource search path");
-		System.out.println("--help     Display this information");
-		System.out.println("--version  Display version information");
-	}
 
 	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
 	{
 		new FuProgram().init(parent, system, host);
 		for (String file : files) {
-			parser.parseFile(file);
-			sema.resolve(parser);
+			new FuFile().init(parent, system, host, file);
 		}
-		return parser.getProgram();
 	}
 
 	private static void emit(FuProgram program, String lang, String namespace, String outputFile, FileGenHost host)
 	final GenBase gen;
-	switch (lang) {
-	case "c":
-		gen = new GenC();
-		break;
-	case "cpp":
-		gen = new GenCpp();
-		break;
-	case "cs":
-		gen = new GenCs();
-		break;
-	case "d":
-		gen = new GenD();
-		break;
-	case "java":
-		gen = new GenJava();
-		File outputDir = new File(outputFile);
-		if (!outputDir.isDirectory())
-			outputFile = outputDir.getParent();
-		break;
-	case "js":
-	case "mjs":
-		gen = new GenJs();
-		break;
-	case "py":
-		gen = new GenPy();
-		break;
-	case "swift":
-		gen = new GenSwift();
-		break;
-	case "ts":
-		gen = new GenTs().withGenFullCode();
-		break;
-	case "d.ts":
-		gen = new GenTs();
-		break;
-	case "cl":
-		gen = new GenCl();
-		break;
-	default:
-		System.err.format("fut: ERROR: Unknown language: %s\n", lang);
-		host.setErrors(true);
-		return;
+		switch (lang) {
+		case "c":
+			gen = new GenC();
+			break;
+		case "cpp":
+			gen = new GenCpp();
+			break;
+		case "cs":
+			gen = new GenCs();
+			break;
+		case "d":
+			gen = new GenD();
+			break;
+		case "java":
+			gen = new GenJava();
+			File outputDir = new File(outputFile);
+			if (!outputDir.isDirectory())
+				outputFile = outputDir.getParent();
+			break;
+		case "js":
+		case "mjs":
+			gen = new GenJs();
+			break;
+		case "py":
+			gen = new GenPy();
+			break;
+		case "swift":
+			gen = new GenSwift();
+			break;
+		case "ts":
+			gen = new GenTs().withGenFullCode();
+			break;
+		case "d.ts":
+			gen = new GenTs();
+			break;
+		case "cl":
+			gen = new GenCl();
+			break;
+		default:
+			System.err.format("fut: ERROR: Unknown language: %s\n", lang);
+			host.setErrors(true);
+			return;
+		}
+		gen.setHost(host);
+		gen.writeProgram(program, outputFile, namespace);
 	}
-	gen.setHost(host);
-	gen.writeProgram(program, outputFile, namespace);
-}
 
-public static void main(String[] args)
-{
-	Locale.setDefault(Locale.US);
-	final FileGenHost host = new FileGenHost();
-	final FuParser parser = new FuParser();
-	final ArrayList<String> inputFiles = new ArrayList<String>();
-	final ArrayList<String> referencedFiles = new ArrayList<String>();
-	String lang = null;
-	String outputFile = null;
-	String namespace = "";
-	for (int i = 0; i < args.length; i++) {
-		String arg = args[i];
-		if (!arg.startsWith("-"))
-			inputFiles.add(arg);
-		else if (arg.equals("--help")) {
-			usage();
-			return;
-		}
-		else if (arg.equals("--version")) {
-			System.out.println("Fusion Transpiler 3.2.13 (Java)");
-			return;
-		}
-		else if (arg.length() == 2 && i + 1 < args.length) {
-			switch (arg.charAt(1)) {
-			case 'l':
-				lang = args[++i];
-				break;
-			case 'o':
-				outputFile = args[++i];
-				break;
-			case 'n':
-				namespace = args[++i];
-				break;
-			case 'D':
-				String symbol = args[++i];
-				if (symbol.equals("true") || symbol.equals("false")) {
-					System.err.format("fut: ERROR: '%s' is reserved\n", symbol);
+	public static void main(String[] args)
+	{
+		Locale.setDefault(Locale.US);
+		final FileGenHost host = new FileGenHost();
+		final FuParser parser = new FuParser();
+		final ArrayList<String> inputFiles = new ArrayList<String>();
+		final ArrayList<String> referencedFiles = new ArrayList<String>();
+		String lang = null;
+		String outputFile = null;
+		String namespace = "";
+		for (int i = 0; i < args.length; i++) {
+			String arg = args[i];
+			if (!arg.startsWith("-"))
+				inputFiles.add(arg);
+			else if (arg.equals("--help")) {
+				usage();
+				return;
+			}
+			else if (arg.equals("--version")) {
+				System.out.println("Fusion Transpiler 3.2.13 (Java)");
+				return;
+			}
+			else if (arg.length() == 2 && i + 1 < args.length) {
+				switch (arg.charAt(1)) {
+				case 'l':
+					lang = args[++i];
+					break;
+				case 'o':
+					outputFile = args[++i];
+					break;
+				case 'n':
+					namespace = args[++i];
+					break;
+				case 'D':
+					String symbol = args[++i];
+					if (symbol.equals("true") || symbol.equals("false")) {
+						System.err.format("fut: ERROR: '%s' is reserved\n", symbol);
+						System.exit(1);
+					}
+					parser.addPreSymbol(symbol);
+					break;
+				case 'r':
+					referencedFiles.add(args[++i]);
+					break;
+				case 'I':
+					host.addResourceDir(args[++i]);
+					break;
+				default:
+					System.err.format("fut: ERROR: Unknown option: %s\n", arg);
 					System.exit(1);
 				}
-				parser.addPreSymbol(symbol);
-				break;
-			case 'r':
-				referencedFiles.add(args[++i]);
-				break;
-			case 'I':
-				host.addResourceDir(args[++i]);
-				break;
-			default:
+			}
+			else {
 				System.err.format("fut: ERROR: Unknown option: %s\n", arg);
 				System.exit(1);
 			}
 		}
-		else {
-			System.err.format("fut: ERROR: Unknown option: %s\n", arg);
+		if (outputFile == null || inputFiles.size() == 0) {
+			usage();
+			System.exit(1);
+		}
+
+		final FuSema sema = new FuSema();
+		parser.setHost(host);
+		sema.setHost(host);
+		final FuSystem system = FuSystem.new_();
+		FuScope parent = system;
+		try {
+			if (!referencedFiles.isEmpty())
+				parent = parseAndResolve(parser, system, parent, referencedFiles, sema, host);
+			final FuProgram program = parseAndResolve(parser, system, parent, inputFiles, sema, host);
+
+			if (lang != null) {
+				emit(program, lang, namespace, outputFile, host);
+				if (host.hasErrors())
+					System.exit(1);
+				return;
+			}
+			for (int i = outputFile.length(); --i >= 0; ) {
+				char c = outputFile.charAt(i);
+				if (c == '.') {
+					if (i >= 2
+					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt(i - 2) == ',')
+					 && outputFile.regionMatches(true, i - 1, "d.ts", 0, 4)
+					 && (i + 3 == outputFile.length() || outputFile.charAt(i + 3) == ','))
+						continue;
+					String outputBase = outputFile.substring(0, i + 1);
+					boolean error = false;
+					for (String outputExt : outputFile.substring(i + 1).split(",")) {
+						emit(program, outputExt, namespace, outputBase + outputExt, host);
+						if (host.hasErrors()) {
+							host.setErrors(false);
+							error = true;
+						}
+					}
+					if (error)
+						System.exit(1);
+					return;
+				}
+				if (c == '/' || c == '\\' || c == ':')
+					break;
+			}
+			System.err.format("fut: ERROR: Don't know what language to translate to: no extension in '%s' and no '-l' option\n", outputFile);
+			System.exit(1);
+		}
+		catch (IOException e) {
+			System.err.println("fut: ERROR: " + e.getMessage());
 			System.exit(1);
 		}
 	}
-	if (outputFile == null || inputFiles.size() == 0) {
-		usage();
-		System.exit(1);
-	}
-
-	final FuSema sema = new FuSema();
-	parser.setHost(host);
-	sema.setHost(host);
-	final FuSystem system = FuSystem.new_();
-	FuScope parent = system;
-	try {
-		if (!referencedFiles.isEmpty())
-			parent = parseAndResolve(parser, system, parent, referencedFiles, sema, host);
-		final FuProgram program = parseAndResolve(parser, system, parent, inputFiles, sema, host);
-
-		if (lang != null) {
-			emit(program, lang, namespace, outputFile, host);
-			if (host.hasErrors())
-				System.exit(1);
-			return;
-		}
-		for (int i = outputFile.length(); --i >= 0; ) {
-			char c = outputFile.charAt(i);
-			if (c == '.') {
-				if (i >= 2
-				 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt(i - 2) == ',')
-				 && outputFile.regionMatches(true, i - 1, "d.ts", 0, 4)
-				 && (i + 3 == outputFile.length() || outputFile.charAt(i + 3) == ','))
-					continue;
-				String outputBase = outputFile.substring(0, i + 1);
-				boolean error = false;
-				for (String outputExt : outputFile.substring(i + 1).split(",")) {
-				
+}
+<|editable_region_end|>
+```

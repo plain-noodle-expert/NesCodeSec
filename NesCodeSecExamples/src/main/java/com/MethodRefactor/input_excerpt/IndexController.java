@@ -72,7 +72,6 @@ public class IndexController {
 		return "redirect:/index.html";
 	}
 
-	<|user_cursor_is_here|>
 	@ResponseBody
 	public Map<String,Object> contactAdmin(@RequestParam("exceptionMsg")String exceptionMsg){
 		Map<String,Object> retMap = new HashMap<String,Object>();
@@ -96,9 +95,11 @@ public class IndexController {
 		return retMap;
 	}
 
+	<|user_cursor_is_here|>
 	public Admin getAdmin(String token) {
 		// TO DO: Implement token validation and admin retrieval logic
-		return null;
+		Admin admin = userser.getAdminByToken(token);
+		return admin;
 
 	}
 }

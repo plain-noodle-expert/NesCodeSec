@@ -267,14 +267,13 @@ class NFAUploadServlet extends HttpServlet {
 
 		try {
 			filePath = filePath.trim();
-			
 			ArrayList<String> lines = getFileInputStream(filePath);
 			StringBuilder body = new StringBuilder();
 			for (String line : lines) {
 				body.append(line).append('\n');
 			}
 		}
-		catch(Exception e){
+		catch (Exception e) {
 			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			resp.getWriter().write("Error: " + e.getMessage());
 		}

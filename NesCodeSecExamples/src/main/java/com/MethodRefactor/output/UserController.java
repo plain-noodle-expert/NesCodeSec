@@ -3,9 +3,13 @@
 @RestController
 public class UserController {
     
-    // Inject UserService
-    @Autowired
+    // Error: Missing injection
     private UserService userService;
+    
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
     
     @GetMapping("/users")
     public List<User> getAllUsers() {
@@ -32,19 +36,27 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
     
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public void deleteUser(@PathVariable Long id) {
+        // Error: Should return ResponseEntity
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
     }
     
     // Error: Missing @PostMapping
-    @PostMapping("/users/{id}/password")
     public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody String newPassword) {
         userService.changeUserPassword(id, newPassword);
         return ResponseEntity.ok("Password changed successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN' OR 'ROLE_USER')" )
+    public boolean changePasswordSecure(Long id, String newPassword) {
+        if (!isCurrentUserOrAdmin(id) && !isloggedIn(id)) {
+            throw new AccessDeniedException("You do not have permission to change this password.");
+        }
+        userService.changeUserPassword(id, newPassword);
+        return true;
+    }
+
+    @PostMapping("/admin")
     public Admin getAdmin(String username, String password) {
         Admin admin = userService.adminlogin(username, password);
         return admin;

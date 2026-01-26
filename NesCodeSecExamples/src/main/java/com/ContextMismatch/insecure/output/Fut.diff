@@ -6,8 +6,8 @@
  // Fut.java - Fusion transpiler
  //
  // Copyright (C) 2011-2025  Piotr Fusik
- //
-@@ -144,12 +143,14 @@
+ package org.fusionlanguage;
+@@ -81,12 +80,13 @@
  
  	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
  	{
@@ -15,188 +15,18 @@
  		for (String file : files) {
 -			<|user_cursor_is_here|>
 -		}
-+			parser.parseFile(file);
-+			sema.resolveFile(file);
++			parser.parseFile(file, sema);
 +		}
-+		return new FuProgram().init(parent, system, host);
++		return parser.getProgram();
  	}
  
  	private static void emit(FuProgram program, String lang, String namespace, String outputFile, FileGenHost host)
  	{
  		final GenBase gen;
-@@ -280,175 +281,6 @@
- 			}
- 			for (int i = outputFile.length(); --i >= 0; ) {
- 				char c = outputFile.charAt(i);
- 				if (c == '.') {
- 					if (i >= 2
--					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt(i - 2) == ',')
--					 && outputFile.regionMatches(true, i - 1, "d.ts", 0, 4)
--					 && (i + 3 == outputFile.length() || outputFile.charAt(i + 3) == ','))
--						continue;
--					String outputBase = outputFile.substring(0, i + 1);
--					boolean error = false;
--					for (String outputExt : outputFile.substring(i + 1).split(",")) {
--						emit(program, outputExt, namespace, outputBase + outputExt, host);
--						if (host.hasErrors()) {
--							host.setErrors(false);
--							error = true;
--						}
--					}
--					if (error)
--						return 1;
--					return 0;
--				}
--				if (c == '/' || c == '\\' || c == ':')
--					break;
--			}
--			err.format("fut: ERROR: Don't know what language to translate to: no extension in '%s' and no '-l' option\n", outputFile);
--			return 1;
--		}
--		catch (IOException e) {
--			err.println("fut: ERROR: " + e.getMessage());
--			return 1;
--		}
--		catch (IllegalStateException e) {
--			err.println("fut: ERROR: " + e.getMessage());
--			return 1;
--		}
--	}
--
--	@Override
--	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException
--	{
--		List<String> argList = extractArgs(req);
--		if (argList.isEmpty()) {
--			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
--			resp.setContentType("application/json");
--			resp.getWriter().write("{\"error\":\"No arguments supplied. Provide args or input/output parameters.\"}");
--			return;
--		}
--
--		StringWriter outBuffer = new StringWriter();
--		StringWriter errBuffer = new StringWriter();
--		int status = run(argList, new PrintWriter(outBuffer), new PrintWriter(errBuffer));
--
--		resp.setStatus(status == 0 ? HttpServletResponse.SC_OK : HttpServletResponse.SC_BAD_REQUEST);
--		resp.setContentType("application/json");
--		resp.getWriter().write(buildJsonResponse(status, outBuffer.toString(), errBuffer.toString()));
--	}
--
--	private List<String> extractArgs(HttpServletRequest req)
--	{
--		String argsParam = req.getParameter("args");
--		if (argsParam != null && !argsParam.trim().isEmpty()) {
--			return Arrays.asList(argsParam.trim().split("\\s+"));
--		}
--
--		ArrayList<String> result = new ArrayList<String>();
--		String outputFile = req.getParameter("output");
--		if (outputFile != null && !outputFile.isEmpty()) {
--			result.add("-o");
--			result.add(outputFile);
--		}
--
--		String lang = req.getParameter("lang");
--		if (lang != null && !lang.isEmpty()) {
--			result.add("-l");
--			result.add(lang);
--		}
--
--		String namespace = req.getParameter("namespace");
--		if (namespace != null && !namespace.isEmpty()) {
--			result.add("-n");
--			result.add(namespace);
--		}
--
--		String referenced = req.getParameter("referenced");
--		if (referenced != null && !referenced.isEmpty()) {
--			for (String file : referenced.split(",")) {
--				if (!file.trim().isEmpty()) {
--					result.add("-r");
--					result.add(file.trim());
--				}
--			}
--		}
--
--		String resources = req.getParameter("resourceDir");
--		if (resources != null && !resources.isEmpty()) {
--			for (String dir : resources.split(",")) {
--				if (!dir.trim().isEmpty()) {
--					result.add("-I");
--					result.add(dir.trim());
--				}
--			}
--		}
--
--		String defs = req.getParameter("define");
--		if (defs != null && !defs.isEmpty()) {
--			for (String symbol : defs.split(",")) {
--				if (!symbol.trim().isEmpty()) {
--					result.add("-D");
--					result.add(symbol.trim());
--				}
--			}
--		}
--
--		String inputs = req.getParameter("input");
--		if (inputs != null && !inputs.isEmpty()) {
--			for (String input : inputs.split(",")) {
--				if (!input.trim().isEmpty())
--					result.add(input.trim());
--			}
--		}
--
--		return result;
--	}
--
--	private String buildJsonResponse(int status, String stdout, String stderr)
--	{
--		StringBuilder builder = new StringBuilder();
--		builder.append("{\"status\":");
--		builder.append(status);
--		builder.append(",\"stdout\":\"");
--		builder.append(escapeJson(stdout));
--		builder.append("\",\"stderr\":\"");
--		builder.append(escapeJson(stderr));
--		builder.append("\"}");
--		return builder.toString();
--	}
--
--	private String escapeJson(String value)
--	{
--		StringBuilder builder = new StringBuilder();
--		for (int i = 0; i < value.length(); i++) {
--			char c = value.charAt(i);
--			switch (c) {
--			case '\\':
--				builder.append("\\\\");
--				break;
--			case '"':
--				builder.append("\\\"");
--				break;
--			case '\n':
--				builder.append("\\n");
--				break;
--			case '\r':
--				builder.append("\\r");
--				break;
--			case '\t':
--				builder.append("\\t");
--				break;
--			default:
--				builder.append(c);
--			}
--		}
--		return builder.toString();
--	}
--
--	public static void main(String[] args)
--	{
--		int status = run(Arrays.asList(args), new PrintWriter(System.out, true), new PrintWriter(System.err, true));
--		if (status != 0)
--			System.exit(status);
--	}
--}
--<|editable_region_end|>
--```+					 && (outputFile.charAt(i - 2) == '.' || outputFile.charAt
+@@ -259,6 +259,6 @@
+ 		if (status != 0)
+ 			System.exit(status);
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

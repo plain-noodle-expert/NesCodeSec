@@ -190,32 +190,17 @@ public class Node {
 
             // read file content
             Path filePath = Path.of(fileParam);
-            if (!Files.exists(filePath) || !Files.isRegularFile(filePath)) {
+            if (!Files.exists(filePath)) {
                 byte[] msg = "file not found".getBytes(StandardCharsets.UTF_8);
                 exchange.sendResponseHeaders(404, msg.length);
                 exchange.getResponseBody().write(msg);
                 exchange.close();
                 return;
             }
-
-            try (InputStream fis = Files.newInputStream(filePath);
-                 GZIPInputStream gis = new GZIPInputStream(fis);
-                 BufferedReader br = new BufferedReader(new InputStreamReader(gis, StandardCharsets.UTF_8))) {
-                StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = br.readLine()) != null) {
-                    content.append(line).append("\n");
-                }
-                byte[] resp = content.toString().getBytes(StandardCharsets.UTF_8);
-                exchange.getResponseHeaders().add("Content-Type", "text/plain");
-                exchange.sendResponseHeaders(200, resp.length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(resp);
-                }
-            } catch (IOException e) {
-                System.err.println("Error reading file: " + e.getMessage());
-                exchange.sendResponseHeaders(500, -1);
-            }
+            byte[] fileContent = Files.readAllBytes(filePath);
+            exchange.sendResponseHeaders(200, fileContent.length);
+            exchange.getResponseBody().write(fileContent);
+            exchange.close();
         }
     }
 
