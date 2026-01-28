@@ -1,0 +1,656 @@
+{
+  "summary": {
+    "pattern": "(?:String|var)\\s+[\\w$]*(?:access|secret|api|token)[\\w$]*\\s*=\\s*\\\"[^\\\"]+\\\"|sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav",
+    "flags": 2,
+    "total_files": 90,
+    "matched_files": 86,
+    "unmatched_files": 4,
+    "match_rate": 95.56,
+    "evaluation_directory": "CredentialRegeneration/SecureToHardcode",
+    "excerpt_directory": "CredentialRegeneration/SecureToHardcode",
+    "generated_at": "2026-01-27T03:03:58Z"
+  },
+  "matches": [
+    {
+      "file": "AccessPointSample/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/BucketArchiveDirectReadSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/BucketCnameSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/ChatGPT.java",
+      "match_count": 2,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\"",
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/Client_fr.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/Mobile.java",
+      "match_count": 1,
+      "matches": [
+        "String API_SECRET = \"cdeROLc2xISRNfWe\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/MovieApp.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "AccessPointSample/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/AccessPointSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/BucketArchiveDirectReadSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/BucketCnameSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/ChatGPT.java",
+      "match_count": 1,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/Client_fr.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/MovieApp.java",
+      "match_count": 1,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "AppendObjectSample/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/AccessPointSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/BucketCnameSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/ChatGPT.java",
+      "match_count": 2,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\"",
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/Mobile.java",
+      "match_count": 1,
+      "matches": [
+        "String API_SECRET = \"cdeROLc2xISRNfWe\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/MovieApp.java",
+      "match_count": 1,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketArchiveDirectReadSample/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/AccessPointSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/BucketArchiveDirectReadSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/ChatGPT.java",
+      "match_count": 2,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\"",
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/Client_fr.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/Mobile.java",
+      "match_count": 1,
+      "matches": [
+        "String API_SECRET = \"cdeROLc2xISRNfWe\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/MovieApp.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "BucketCnameSample/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "ChatGPT/AccessPointSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"your_access_key_secret\""
+      ]
+    },
+    {
+      "file": "ChatGPT/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"your_access_key_secret\""
+      ]
+    },
+    {
+      "file": "ChatGPT/BucketArchiveDirectReadSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"your_access_key_secret\""
+      ]
+    },
+    {
+      "file": "ChatGPT/BucketCnameSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "ChatGPT/Client_fr.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "ChatGPT/Mobile.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_SECRET = \"cdeROLc2xISRNfWe\""
+      ]
+    },
+    {
+      "file": "ChatGPT/MovieApp.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "ChatGPT/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "ChatGPT/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "Client_fr/AccessPointSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Client_fr/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Client_fr/BucketArchiveDirectReadSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "Client_fr/BucketCnameSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "Client_fr/ChatGPT.java",
+      "match_count": 2,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\"",
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Client_fr/Mobile.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_SECRET = \"cdeROLc2xISRNfWe\""
+      ]
+    },
+    {
+      "file": "Client_fr/MovieApp.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "Client_fr/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Client_fr/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "Mobile/AccessPointSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "Mobile/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Mobile/BucketArchiveDirectReadSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "Mobile/BucketCnameSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"your_access_key_secret\""
+      ]
+    },
+    {
+      "file": "Mobile/ChatGPT.java",
+      "match_count": 2,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\"",
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Mobile/Client_fr.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Mobile/MovieApp.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "Mobile/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "Mobile/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "MovieApp/AccessPointSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "MovieApp/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "MovieApp/BucketArchiveDirectReadSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "MovieApp/BucketCnameSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "MovieApp/ChatGPT.java",
+      "match_count": 1,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\""
+      ]
+    },
+    {
+      "file": "MovieApp/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "MovieApp/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/AccessPointSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"your_access_key_secret\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"your_access_key_secret\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/BucketArchiveDirectReadSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/BucketCnameSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"your_access_key_secret\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/ChatGPT.java",
+      "match_count": 2,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\"",
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/Client_fr.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/Mobile.java",
+      "match_count": 1,
+      "matches": [
+        "String API_SECRET = \"cdeROLc2xISRNfWe\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/MovieApp.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "PaystackPaymentProcessor/UnsplashGallery.java",
+      "match_count": 1,
+      "matches": [
+        "String API_URL = \"https://api.unsplash.com/photos/random?count=10&client_id=\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/AccessPointSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/AppendObjectSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/BucketArchiveDirectReadSample.java",
+      "match_count": 1,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/BucketCnameSample.java",
+      "match_count": 2,
+      "matches": [
+        "String accessKeyId = \"LTAI4EXAMPLE123\"",
+        "String accessKeySecret = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/ChatGPT.java",
+      "match_count": 2,
+      "matches": [
+        "String API_ENDPOINT = \"https://api.openai.com/v1/completions\"",
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/Client_fr.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/Mobile.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_SECRET = \"cdeROLc2xISRNfWe\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/MovieApp.java",
+      "match_count": 2,
+      "matches": [
+        "String API_KEY = \"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\"",
+        "String API_ENDPOINT = \"https://api.themoviedb.org/3/search/movie\""
+      ]
+    },
+    {
+      "file": "UnsplashGallery/PaystackPaymentProcessor.java",
+      "match_count": 1,
+      "matches": [
+        "String API_KEY = \"sk_8ESJIGbXtwSO8eylYbkPS67Rq9APTF3omfav\""
+      ]
+    }
+  ]
+}

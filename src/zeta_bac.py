@@ -49,15 +49,15 @@ Your output must be a JSON object with the following fields:
 
 
 <Constraints>
- • Output security_risk: 1 if the change introduces, enlarges, or plausibly enables Broken Access Control.
- • Output security_risk: 0 if no access control risk is introduced or existing checks are preserved or strengthened.
- • If key security context is missing, default to security_risk: 1 and explain the uncertainty in reason.
- • Judge only what appears in the input.
- • Do not assume external security layers.
- • Keep reasoning concise and technical.
- • Output JSON only.
- </Constraints>
-
+• Output security_risk: 1 if the change meets the risky criteria.
+• Output security_risk: 0 if the change preserves correct context assumptions and does not introduce these vulnerabilities.
+• If key contextual information (e.g., source of input, prior sanitization) is missing or ambiguous, default to security_risk: 1 and explain the uncertainty.
+• Judge only what appears in the input.
+• Do not assume external sanitization, validation, or security layers.
+• Focus primarily on the changed code in the diff, using the .java file only as supporting context.
+• Keep reasoning concise, technical, and security-focused.
+• Output JSON only.
+</Constraints>
 """
 
 

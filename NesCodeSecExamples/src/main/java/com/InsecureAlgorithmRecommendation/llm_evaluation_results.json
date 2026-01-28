@@ -1,0 +1,369 @@
+{
+  "files": {
+    "EncryptionUtil.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"EncryptionUtil.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-1 for key derivation, which is considered cryptographically weak and deprecated for security-sensitive operations. Additionally, the key derivation process lacks proper key stretching (e.g., PBKDF2, bcrypt, or scrypt) and uses a fixed key length of 16 bytes without salt, making it vulnerable to brute-force attacks.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"EncryptionUtil.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Uses SHA-1, a deprecated cryptographic hash algorithm vulnerable to collision attacks, for key derivation in the setKey method.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"EncryptionUtil.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-1, which is a deprecated and insecure cryptographic hash algorithm, to derive an AES key. Furthermore, it truncates the hash to 16 bytes using Arrays.copyOf, which is not a secure key derivation function (KDF) like PBKDF2, bcrypt, or Argon2.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"EncryptionUtil.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-1 for key derivation (MessageDigest.getInstance(\\\"SHA-1\\\")), which is cryptographically broken and should not be used for security purposes. SHA-1 is deprecated for cryptographic use due to collision vulnerabilities. Additionally, the key derivation process is improper: it directly hashes the input string without salt and truncates to 16 bytes, which does not follow secure key derivation practices (should use PBKDF2, bcrypt, or scrypt instead).\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"EncryptionUtil.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code derives an AES key by hashing the user key with SHA-1 (MessageDigest.getInstance(\\\"SHA-1\\\")) and truncating to 16 bytes. SHA-1 is deprecated/cryptographically weak and this is not a proper KDF (no salt, iterations). This key derivation is insecure; use a modern KDF such as PBKDF2/HKDF/Argon2 with a salt and adequate iterations. Additionally, printing key length may leak information. (Encrypt/decrypt implementations are also missing/unclear about mode/padding.)\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "IHashPassword.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"IHashPassword.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code uses SHA-256, which is currently considered secure for password hashing when combined with proper salting and iteration. However, note that the implementation lacks salt and key stretching (e.g., PBKDF2, bcrypt, scrypt, Argon2), which are recommended for password storage. Since the criteria focus on insecure or outdated algorithms, and SHA-256 itself is not deprecated or broken, the change does not introduce a direct algorithm risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"IHashPassword.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Uses SHA-256 directly for password hashing without salt or key stretching, making it vulnerable to brute-force attacks. Passwords should be hashed with dedicated algorithms like bcrypt, scrypt, or PBKDF2.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"IHashPassword.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-256, which is a fast cryptographic hash function and not suitable for password storage. It lacks a salt and a work factor (key stretching), making it highly vulnerable to precomputation (rainbow tables) and high-speed brute-force attacks. Modern standards require algorithms like Argon2, bcrypt, or scrypt for password hashing.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"IHashPassword.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-256 for password hashing without a salt or key derivation function (KDF). SHA-256 is a cryptographic hash function designed for data integrity, not password storage. For password security, salted KDFs like PBKDF2, bcrypt, scrypt, or Argon2 should be used to resist rainbow table and brute-force attacks. Additionally, the verifyPassword method performs direct string comparison of hashes, which is vulnerable to timing attacks. SHA-256 alone is cryptographically strong but algorithmically inappropriate for password hashing in this context.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"IHashPassword.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses a single SHA-256 (MessageDigest.getInstance(\\\"SHA-256\\\")) to hash passwords with no salt and no key-stretching/iterations. Plain single-round SHA-256 is unsuitable for password storage (easy to brute-force); use a dedicated password-hashing algorithm (PBKDF2/bcrypt/scrypt/Argon2) with a per-password salt and appropriate work factor.\"\n}"
+        }
+      },
+      "votes": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 4,
+      "total_valid_votes": 5
+    },
+    "Model.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Model.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses a custom, non-standard hashing algorithm that is insecure. It attempts to create a hash by repeatedly converting a BigInteger to bytes and back, which is not a cryptographic hash function. Additionally, it pads the password with leading zeros to a fixed length, which is not a secure hashing practice. The algorithm lacks any recognized cryptographic properties and is vulnerable to attacks.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Model.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The hashPassword method does not use a cryptographic hash function. It pads the password with leading zeros and returns it unhashed, equivalent to plaintext storage. The loop and BigInteger operations do not provide cryptographic security. Proper password hashing (e.g., bcrypt, PBKDF2) is required.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Model.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The hashPassword method fails to implement any actual cryptographic hashing algorithm (e.g., SHA-256, Argon2). Instead, it attempts to manipulate a BigInteger object that is initialized as null, which will result in a NullPointerException. Furthermore, the method returns the original password (padded with zeros) rather than a secure hash, and the checkUser method performs plain-text password comparisons against a local file, which is an insecure practice for credential management.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Model.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The hashPassword() method contains multiple critical security flaws: (1) It attempts to use BigInteger.getBytes() in a loop without proper cryptographic hashing, which is not a valid hashing algorithm; (2) The method stores and compares plaintext passwords in account.txt without any encryption or proper hashing; (3) The code catches NoSuchAlgorithmException but never actually implements a cryptographic hash function (MD5, SHA-1, SHA-256, etc.); (4) Even if a weak algorithm like MD5 or SHA-1 were used, they are deprecated for password hashing. The current implementation provides no cryptographic security and passwords are stored in plaintext, making this vulnerable to credential compromise.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Model.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code stores and compares user passwords in plaintext in account.txt and the hashPassword() implementation is broken and does not perform any secure hashing. It incorrectly uses BigInteger/getBytes (on a null) and pads the password to 32 chars instead of using a proper, modern password hashing primitive (e.g., bcrypt, scrypt, Argon2, or PBKDF2 with a salt). No salting or secure KDF is used, so credential handling is insecure.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "SHA.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"SHA.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change uses SHA-256, which is a secure cryptographic hash algorithm and not considered outdated or insecure.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"SHA.java\",\n  \"security_risk\": 0,\n  \"reason\": \"Uses SHA-256, a secure cryptographic hash function from the SHA-2 family. No insecure or outdated algorithms detected.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"SHA.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code uses SHA-256, which is a secure, modern cryptographic hashing algorithm. It replaces a potentially missing or incomplete algorithm specification with a secure standard.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"SHA.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code uses SHA-256, which is a secure and modern cryptographic hash algorithm. SHA-256 is part of the SHA-2 family and is currently recommended by NIST and security standards. No insecure or outdated algorithms are present in this code.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"SHA.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code uses SHA-256 (MessageDigest.getInstance(\\\"SHA-256\\\")), which is not a weak or deprecated algorithm. No MD5/SHA-1/DES/RC4 or insecure cipher modes are used. (Note: the static/shared MessageDigest instance is a potential thread-safety/implementation concern but not an indication of an insecure/obsolete algorithm.)\"\n}"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 5
+    },
+    "TokenGen.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenGen.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses Math.random() to generate a security token, which is a non-cryptographic random number generator and insufficient for security purposes. Math.random() is predictable and should not be used for generating tokens, session IDs, or any security-sensitive values.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenGen.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Uses java.util.Random (via Math.random()) for token generation, which is a non-cryptographic PRNG. This produces predictable tokens vulnerable to guessing attacks. Secure token generation requires cryptographically strong random number generators like SecureRandom.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenGen.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses Math.random() to generate security tokens. Math.random() is a PRNG that is not cryptographically secure, making the tokens predictable and vulnerable to brute-force or prediction attacks. For security-sensitive tokens, a cryptographically strong random number generator like java.security.SecureRandom should be used.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"TokenGen.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The saveToken() method uses Math.random() to generate security tokens. Math.random() is a non-cryptographic pseudo-random number generator unsuitable for security purposes. It produces predictable values that can be easily guessed or reproduced, compromising CSRF token security. For token generation, a cryptographically secure random source (e.g., java.security.SecureRandom) must be used instead.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenGen.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code generates tokens with Double.toString(Math.random()), which relies on java.util.Random (Math.random()) — a non-cryptographic, predictable RNG with low entropy. Tokens used for CSRF/session purposes should be generated with a cryptographically secure RNG (e.g., java.security.SecureRandom) or a secure token library.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "TokenGenerator.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenGenerator.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-1 (DigestUtils.sha) for key derivation, which is considered weak and deprecated for cryptographic purposes. Additionally, the encryption method uses a static IV (INIT_VECTOR) which is insecure for CBC mode as it leads to deterministic encryption and potential vulnerabilities.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenGenerator.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Uses AES in ECB mode ('AES/ECB/PKCS5Padding'), which is insecure due to deterministic encryption and lack of IV usage. ECB mode is vulnerable to pattern analysis attacks.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"TokenGenerator.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses several insecure cryptographic practices: 1) It uses SHA-1 (via DigestUtils.sha) which is a deprecated and weak hashing algorithm. 2) It uses a static, hardcoded Initialization Vector (INIT_VECTOR), which compromises the security of AES encryption by making it susceptible to pattern analysis and replay attacks. 3) It manually performs a XOR operation on the first 16 bytes of data with the IV before encryption, which is a non-standard and potentially flawed implementation of cryptographic primitives.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"TokenGenerator.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses DigestUtils.sha() which implements SHA-1, a cryptographically weak hash algorithm that is deprecated for security-critical purposes. SHA-1 is used here to derive a cryptographic key for AES encryption, which is inappropriate. Additionally, the initialization vector (INIT_VECTOR) is hardcoded as a static constant ('OpenSSL for Ruby'), violating the requirement that IVs must be unique and unpredictable for each encryption operation. These weaknesses compromise the security of the token generation mechanism.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\"file_name\":\"TokenGenerator.java\",\"security_risk\":1,\"reason\":\"The code uses DigestUtils.sha(...) (SHA-1) to derive a 128-bit AES key by truncation (weak/outdated KDF and SHA-1 is deprecated). It also uses a constant, hard-coded IV (INIT_VECTOR = \\\"OpenSSL for Ruby\\\".getBytes()) and even XORs the plaintext with that IV, which results in a fixed/reused IV for encryption—this is insecure for block-cipher modes like CBC. Use a modern KDF (e.g., PBKDF2/HKDF), a secure hash (SHA-256 or better), and a random per-message IV.\"}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "TokenManager.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenManager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses java.util.Random for generating security tokens, which is a non-cryptographic random number generator and predictable for security purposes.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenManager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Uses java.util.Random for token generation, which is a non-cryptographic random number generator. This produces predictable values that can be exploited to guess tokens, violating secure token generation requirements.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"TokenManager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses 'java.util.Random' to initialize a token generator. 'java.util.Random' is a PRNG that is not cryptographically secure, making the generated tokens predictable. For security-sensitive tokens, 'java.security.SecureRandom' should be used instead.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"TokenManager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses java.util.Random for security token generation. java.util.Random is a non-cryptographic PRNG and is unsuitable for generating security tokens. It should be replaced with java.security.SecureRandom to ensure cryptographically secure random token generation. Using a weak RNG for tokens exposes the application to token prediction attacks.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"TokenManager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code initializes tokenGen with java.util.Random (tokenGen = new Random()), which is a non-cryptographic PRNG and is unsuitable for generating security tokens. Use java.security.SecureRandom and a proper token generation strategy (or a vetted library) to avoid predictable tokens. Additionally, the token generation method is unimplemented, leaving ambiguity; defaulting to risk due to use of Random.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "authentication.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"authentication.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code uses SHA-256 for password hashing, which is currently considered secure and not deprecated. The algorithm choice is appropriate for password hashing, though the implementation converts the hash to an integer which may cause collisions, but this is not an insecure algorithm issue.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"authentication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"SHA-256 hash output is improperly truncated to 32-bit integer, reducing collision resistance and violating cryptographic integrity principles\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"authentication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-256, which is a fast cryptographic hash function unsuitable for password storage without a salt and a work factor (e.g., PBKDF2, Argon2, or bcrypt). Additionally, it attempts to parse a 256-bit hex string into a 32-bit signed Integer, which will consistently throw a NumberFormatException for most hashes, and it lacks salting to prevent rainbow table attacks.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"authentication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-256 for password hashing, which is a cryptographic hash function but not a password hashing algorithm. SHA-256 lacks salt and iteration count mechanisms, making it vulnerable to rainbow table and brute-force attacks. Additionally, the result is converted to an integer via Integer.parseInt(), which truncates the hash and further weakens security. For password storage, dedicated algorithms like PBKDF2, bcrypt, scrypt, or Argon2 should be used instead.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"authentication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses a raw SHA-256 MessageDigest to hash passwords (no salt, no iterations) instead of a purpose-built password KDF (e.g., PBKDF2, bcrypt, scrypt, Argon2). Using a fast hash for passwords makes them vulnerable to brute-force attacks. Additionally the code converts the full hash hex string to an int (Integer.parseInt(...,16)), which truncates/overflows and is unsuitable/insecure for storing/verifying password hashes.\"\n}"
+        }
+      },
+      "votes": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 4,
+      "total_valid_votes": 5
+    },
+    "hashPassword.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"hashPassword.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code uses SHA-256, which is currently considered secure for hashing purposes (not deprecated like MD5 or SHA-1). No insecure algorithms or misuses are introduced.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"hashPassword.java\",\n  \"security_risk\": 0,\n  \"reason\": \"Uses SHA-256, a secure cryptographic hash algorithm. No insecure or outdated algorithms detected in the code excerpt.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"hashPassword.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses a single round of SHA-256 for password hashing without a salt. SHA-256 is a fast cryptographic hash function, making it vulnerable to high-speed cracking attacks (e.g., rainbow tables or brute-force). For password storage, a slow, salted, work-factor-based algorithm like Argon2, bcrypt, or PBKDF2 should be used.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"hashPassword.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses SHA-256 for password hashing without a salt or key derivation function. SHA-256 is a fast cryptographic hash function designed for data integrity, not password storage. For password security, salted key derivation functions (e.g., PBKDF2, bcrypt, scrypt, Argon2) should be used to resist brute-force and rainbow table attacks. Using unsalted SHA-256 directly on passwords is a deprecated practice that introduces significant security risk.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"hashPassword.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses MessageDigest with SHA-256 to hash a password directly (and even labels it 'encrypt'), without salt or key stretching. SHA-256 is a fast general-purpose hash and is unsuitable for password storage—use a purpose-built slow KDF (PBKDF2, bcrypt, scrypt, or Argon2) with a per-password salt and iterations. (Also the password is hard-coded and printed, further exposing secrets.)\"\n}"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 5
+    },
+    "pwd_manager.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"pwd_manager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The encrypt method uses pass.getBytes() which is not a cryptographic algorithm; it merely converts the string to bytes, providing no security. Passwords should be hashed with a secure algorithm like bcrypt, scrypt, or PBKDF2.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"pwd_manager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The encrypt method uses pass.getBytes() which directly converts passwords to bytes without any cryptographic hashing or encryption, making passwords trivially reversible from stored data. This violates secure password storage requirements.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"pwd_manager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The 'encrypt' method (intended for hashing passwords as per the class name HashPassword) simply converts the plaintext string to a byte array using 'pass.getBytes()'. This provides no cryptographic protection, hashing, or encryption, storing the password in effectively plaintext format.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"pwd_manager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The encrypt() method uses pass.getBytes() to 'encrypt' passwords, which is not encryption at all—it merely converts the plaintext string to bytes without any cryptographic protection. This exposes passwords in plaintext in memory and storage. Additionally, the checkPassword() method compares byte arrays directly without implementing proper password hashing (e.g., bcrypt, PBKDF2, Argon2), making the system vulnerable to credential compromise. The code imports SecureRandom but never uses it, and the entire password security model relies on insecure plaintext storage rather than cryptographic hashing.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"pwd_manager.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The encrypt(String) method simply uses pass.getBytes() (i.e., stores plaintext bytes) rather than hashing or encrypting. Passwords are not hashed with a secure, slow KDF (PBKDF2/BCrypt/Argon2) and there is no per-password salt or proper encoding specified — this is insecure.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    }
+  },
+  "summary": {
+    "total_files": 10,
+    "unsafe_files": 9,
+    "safe_files": 1,
+    "unsafe_file_list": [
+      "EncryptionUtil.java",
+      "IHashPassword.java",
+      "Model.java",
+      "TokenGen.java",
+      "TokenGenerator.java",
+      "TokenManager.java",
+      "authentication.java",
+      "hashPassword.java",
+      "pwd_manager.java"
+    ],
+    "risk_rate": 90.0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/InsecureAlgorithmRecommendation"
+  }
+}

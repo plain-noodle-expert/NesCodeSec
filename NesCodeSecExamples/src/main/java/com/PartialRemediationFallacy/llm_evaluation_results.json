@@ -1,0 +1,369 @@
+{
+  "files": {
+    "Bill.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Bill.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities: 1) In setCustomer() method: 'select * from Customer where Name=\\\"'+var.sCustomerName+'\\\"' concatenates user input directly. 2) In saveRecord() method: 'insert into BillReport values('+iBillID+','+iCustID+','+fFinalCost+',\\\"'+var.tDate.getText()+'\\\"')' concatenates user input. 3) In updateDatabase() method: 'select * from Spare where Name=\\\"'+sTempPart+'\\\"' concatenates method parameter. All three use string concatenation in SQL queries without parameterization, creating SQL injection risks.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Bill.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL concatenation vulnerabilities remain in the code. The 'setCustomer()' method directly concatenates 'var.sCustomerName' into a query. The 'saveRecord()' method concatenates 'var.tDate.getText()' into an INSERT statement. The 'updateDatabase()' method concatenates 'sTempPart' into a SELECT query. Only one query in 'updateDatabase()' uses a PreparedStatement, but other critical queries remain vulnerable to SQL injection through string concatenation.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Bill.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple instances of SQL injection vulnerabilities via string concatenation. Specifically, 'setCustomer' concatenates 'var.sCustomerName', 'saveRecord' concatenates 'var.tDate.getText()', and 'updateDatabase' concatenates 'sTempPart' directly into SQL query strings. While one update uses a PreparedStatement, the initial SELECT query in the same method still uses concatenation.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Bill.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities that could lead to SQL injection attacks: (1) In setCustomer() method, line with 'select * from Customer where Name=' uses direct string concatenation with var.sCustomerName without parameterization. (2) In saveRecord() method, the INSERT statement concatenates iBillID, iCustID, fFinalCost, and var.tDate.getText() directly into the query string. (3) In updateDatabase() method, while the UPDATE statement was properly fixed to use PreparedStatement with parameterized queries, the SELECT query still uses string concatenation: 'select * from Spare where Name='+sTempPart+'' which is vulnerable to SQL injection. The diff shows a typo fix and connection string correction, but does not remediate all SQL concatenation vulnerabilities present in the code.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Bill.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL queries are constructed via string concatenation with external values: setCustomer() uses \\\"select * from Customer where Name='\\\"+var.sCustomerName+\\\"'\\\", saveRecord() builds an INSERT with \\\"...,'\\\"+var.tDate.getText()+\\\"'\\\" and numeric values concatenated, and updateDatabase() uses \\\"select * from Spare where Name='\\\"+sTempPart+\\\"'\\\". Although a PreparedStatement is used for the UPDATE, the SELECTs and INSERT remain concatenated. No sanitization is shown, so these concatenations present SQL injection risks.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "FBS.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"FBS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains SQL concatenation vulnerabilities in multiple locations: 1) In getPrice() method, origin and destination parameters are directly concatenated into SQL query. 2) In getSeats() method, flightName parameter is directly concatenated into SQL query. 3) The date parameter in getSeats() is parsed and concatenated as a timestamp string. The diff shows concatenation of flightName parameter was added back, confirming SQL injection risk persists.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"FBS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities. The getPrice() method directly concatenates user inputs 'origin' and 'destination' into a SQL query string. The getSeats() method similarly concatenates 'flightName' into another SQL query string. Both methods use Statement.executeQuery() with concatenated strings instead of parameterized queries, leaving them vulnerable to SQL injection attacks. The code diff only modified the getSeats() method's string concatenation pattern without addressing the fundamental security issue.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"FBS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL injection vulnerabilities due to direct string concatenation of user-controlled variables ('origin', 'destination', and 'flightName') into SQL queries. Specifically, the 'getPrice' method concatenates 'origin' and 'destination' into a Statement, and the 'getSeats' method concatenates 'flightName' into a query string. These should be replaced with PreparedStatement and parameterized queries.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"FBS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities leading to SQL injection risks: (1) In getPrice() method, line 67: direct string concatenation with origin and destination parameters in WHERE clause without parameterization; (2) In getSeats() method, lines 145-146: direct string concatenation with flightName parameter and Timestamp object converted to string, both concatenated into SQL query instead of using PreparedStatement with bind parameters. The getCities() method correctly uses PreparedStatement with parameterized queries, but the other two methods remain vulnerable despite the diff showing code restoration rather than remediation.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"FBS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The file contains direct SQL string concatenation with user-controlled values. getPrice() builds a query by concatenating origin and destination: \\\"SELECT * FROM FLIGHTS WHERE DEPARTURECITY = '\\\" + origin + \\\"' AND ARRIVALCITY = '\\\" + destination + \\\"' ...\\\". getSeats() concatenates flightName and constructs the DEPARTUREDATE TIMESTAMP via string concatenation: \\\"...FLIGHTNAME = '\\\" + flightName + \\\"' ...\\\" and q += \\\"TIMESTAMP '\\\" + new Timestamp(...).toString() + \\\"'\\\". These concatenations permit SQL injection (getCities() uses a prepared statement correctly, but the other methods remain vulnerable).\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "GP.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"GP.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities. Specifically, the methods executeReplication, dropExternalTable, insertTargetTable, and truncateTable construct SQL strings by directly concatenating user-provided parameters (targetSchema, targetTable, appendColumnName, externalTable, schema, table) without using parameterized queries. Although truncateTable uses sanitizeIdentifier, the other methods lack any input validation or sanitization, making them susceptible to SQL injection.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"GP.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code still contains multiple SQL concatenation vulnerabilities. The `executeReplication` method directly concatenates user-controlled inputs into SQL queries (targetSchema, targetTable). The `dropExternalTable` method also concatenates schema/table names without sanitization. While `truncateTable` uses `sanitizeIdentifier`, other methods lack this protection. The diff only modified an existing concatenation in `insertTargetTable` but did not implement parameterized queries or sanitization there.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"GP.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple instances of SQL injection vulnerabilities via string concatenation. While 'truncateTable' uses a 'sanitizeIdentifier' method, other methods like 'executeReplication', 'dropExternalTable', and 'insertTargetTable' directly concatenate parameters (targetSchema, targetTable, appendColumnName) into SQL strings. These parameters are used to build table names and function calls in executeQuery() and executeUpdate() without using PreparedStatements or the identifier whitelist, allowing for potential SQL injection.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"GP.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities that could lead to SQL injection attacks: (1) executeReplication() concatenates targetSchema, targetTable, stageTable, and appendColumnName directly into SQL without parameterization or validation; (2) dropExternalTable() concatenates externalSchema and externalTable into SQL; (3) insertTargetTable() concatenates targetSchema, targetTable, externalSchema, and externalTable into SQL. While truncateTable() uses sanitizeIdentifier() for schema/table validation, the other methods lack equivalent protection. The diff shows insertTargetTable() was not remediated—it still uses string concatenation with user-supplied parameters instead of prepared statements with bound parameters.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"GP.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The file still builds SQL via string concatenation in multiple places. executeReplication() composes a function call string with targetSchema, targetTable, stageTable and appendColumnName and passes it to Statement.executeQuery (SQL injection risk). dropExternalTable() and insertTargetTable() concatenate schema/table identifiers (externalSchema, externalTable, targetSchema, targetTable) into DROP and INSERT statements and execute them with Statement.executeUpdate without validating/sanitizing those inputs. Only truncateTable() uses sanitizeIdentifier(); other methods do not, and getExternalTableName()/getStageTableName sanitization is not shown, so concatenation-based injection cannot be ruled out.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "IO.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"IO.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities. Specifically, in the updateAccountData method, the INSERT statement is built via string concatenation with user-controlled values (accounts.get(i).getType(), getName(), getBalance()). Similarly, in the updateTranData method, the INSERT statement concatenates transaction and account data directly into the SQL string. These concatenations are not parameterized, leaving them vulnerable to SQL injection.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"IO.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL concatenation vulnerabilities remain in initTrans(), updateAccountData(), and updateTranData(). These methods use string concatenation for SQL queries (e.g., 'WHERE name = \\'' + nameHolder + '\\''') and dynamically build queries with user-controlled inputs, creating SQL injection risks. Only updateTranDataName() uses parameterized queries correctly.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"IO.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple instances of SQL injection vulnerabilities through direct string concatenation of user-controlled data (e.g., acc.getName(), acc.getType(), and transaction properties) into SQL queries. Specifically, the 'initTrans', 'updateAccountData', and 'updateTranData' methods use Statement.executeUpdate() or executeQuery() with concatenated strings instead of using PreparedStatements with parameters.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"IO.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities leading to SQL injection risks. While one method (updateTranDataName) correctly uses PreparedStatement with parameterized queries, the following methods still use dangerous string concatenation: (1) initTrans() concatenates nameHolder and typeHolder directly into the query string; (2) updateAccountData() concatenates account type, name, and balance via string concatenation in executeUpdate(); (3) updateTranData() concatenates acc.getName(), transaction fields, and acc.getType() directly into the INSERT statement; (4) updateTranData() also concatenates acc.getName() into a DELETE statement. The diff only fixes a minor syntax issue (missing semicolon) and does not remediate any of these SQL injection vulnerabilities. User-controlled data from Account and Transaction objects is directly concatenated into SQL queries without parameterization.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"IO.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff did not remove SQL string concatenation vulnerabilities. The file still constructs SQL by concatenating untrusted values in multiple places: initTrans uses \\\"... WHERE name = '\\\" + nameHolder + \\\"' AND typeAcc = '\\\" + typeHolder + \\\"'\\\"; updateAccountData builds INSERT statements by concatenating account type/name/balance; updateTranData uses concatenation for the DELETE (\\\"... WHERE name = '\\\" + acc.getName() + \\\"'\\\") and for the INSERT of transactions (concatenating many transaction fields and acc.getType()). Also note the incorrect prepared-statement string (\\\"... WHERE name = '\\\\?' ...\\\") — placing ? inside quotes breaks parameterization. Because concatenation remains in several queries (and a broken prepared-statement is present), the code is still vulnerable to SQL injection.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "Park.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Park.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL concatenation vulnerabilities remain: rmVoiture(int ID) concatenates ID directly into DELETE query, modifVehicule(int ID,String mark,String type) concatenates ID, mark, and type into UPDATE query, lookVehicule(String mark) concatenates mark into LIKE clause, lookVehiculeParL(char l) concatenates char into LIKE clause, nbrVehiculeType(String type) concatenates type into WHERE clause, and listeVehiculeType(String type) uses string replacement instead of parameterized queries.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Park.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL concatenation vulnerabilities remain in methods like rmVoiture(), modifVehicule(), lookVehicule(), and nbrVehiculeType(). These directly concatenate user input into SQL strings (e.g., 'DELETE FROM listevehicule WHERE id='+ID, 'UPDATE listevehicule SET type='+'...'). While nvVehicule() uses PreparedStatement correctly, other methods still expose SQL injection risks through string concatenation.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Park.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL injection vulnerabilities due to direct string concatenation of user-controlled variables (ID, mark, type) into SQL queries across several methods: rmVoiture, modifVehicule, lookVehicule, lookVehiculeParL, nbrVehiculeType, and listeVehiculeType. While nvVehicule uses a PreparedStatement, the other methods use DBRequest.RQt/RQ/RQc with concatenated strings. The attempt to sanitize 'type' in listeVehiculeType using a simple quote replacement is insufficient and does not follow the best practice of using parameterized queries.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Park.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities that could lead to SQL injection attacks. Specifically: (1) rmVoiture() method uses string concatenation with ID parameter: 'DELETE FROM listevehicule WHERE id='+ID+''; (2) modifVehicule() method concatenates both type and mark parameters: 'UPDATE listevehicule SET type=\\\\''+type+'\\\\',mark=\\\\''+mark+'\\\\' WHERE id='+ID+''; (3) lookVehicule() method concatenates mark parameter: 'SELECT * FROM listevehicule WHERE mark LIKE \\\\'%'+mark+'%\\\\''; (4) lookVehiculeParL() method concatenates character parameter: 'SELECT * FROM listevehicule WHERE mark LIKE \\\\'%'+l+'%\\\\''; (5) nbrVehiculeType() method concatenates type parameter: 'SELECT COUNT(*) FROM listevehicule WHERE type=\\\\''+type+'\\\\''; (6) listeVehiculeType() method uses string replacement as a weak mitigation but still concatenates: 'SELECT * FROM listevehicule WHERE type=\\\\''+safeType+'\\\\''. The diff only fixed a typo and syntax error in nvVehicule() and nbrVehiculeType(), but did not remediate the six remaining SQL concatenation vulnerabilities throughout the class.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Park.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL concatenations remain and can lead to SQL injection. Examples: rmVoiture uses \\\"DELETE FROM listevehicule WHERE id=\\\"+ID; modifVehicule concatenates type, mark and ID into the UPDATE; lookVehicule and lookVehiculeParL build LIKE '%'+mark+'%'/ '%'+l+'%'; nbrVehiculeType concatenates type into the COUNT query; listeVehiculeType still concatenates safeType into the SELECT (escaping single quotes is not a safe substitute for parameterization). Only nvVehicule uses a proper PreparedStatement. No other queries are parameterized, so treat these as vulnerable.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "Q1.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Q1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains SQL concatenation vulnerabilities in multiple methods: create_timetable_tbl() concatenates table name in CREATE TABLE statement; find_first_condition() and find_second_condition() concatenate table name in SELECT statements. These concatenations could lead to SQL injection if FINAL_EXAM_JDBC_TABLE_NAME contains user-controlled input.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Q1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL concatenation vulnerabilities remain: 1) CREATE TABLE uses string concatenation with unsanitized FINAL_EXAM_JDBC_TABLE_NAME. 2) SELECT queries in find_first_condition() and find_second_condition() directly concatenate table names. 3) UPDATE statement uses validateTableName() which isn't shown to properly sanitize input. Only syntax fixed in diff (missing semicolon), no remediation of injection vectors.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Q1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code repeatedly uses string concatenation to include the variable 'FINAL_EXAM_JDBC_TABLE_NAME' directly into SQL queries across multiple methods (create_timetable_tbl, find_first_condition, find_second_condition, and update_condition). While table names cannot be parameterized in standard JDBC, the lack of validation or sanitization for this identifier in most methods allows for SQL injection if the table name originates from an untrusted source.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Q1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities that could lead to SQL injection: (1) In method create_timetable_tbl(), the table name FINAL_EXAM_JDBC_TABLE_NAME is concatenated directly into the CREATE TABLE statement using StringBuffer without parameterization. (2) In methods find_first_condition() and find_second_condition(), the table name FINAL_EXAM_JDBC_TABLE_NAME is concatenated directly into SELECT queries using string concatenation. (3) In method update_condition(), the table name is concatenated into the UPDATE statement despite the presence of a validateTableName() function (which is not defined in the provided code, so its effectiveness cannot be verified). Table names cannot be parameterized in standard SQL, but the concatenation of untrusted table names remains a SQL injection risk. The diff shows only a minor syntax fix (missing semicolon) and does not address these concatenation vulnerabilities.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Q1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL strings are constructed by concatenating the FINAL_EXAM_JDBC_TABLE_NAME (and building SQL DDL/DML) into SQL text: - create_timetable_tbl: uses string concatenation to build the CREATE TABLE statement and later \\\"insert into \\\" + FINAL_EXAM_JDBC_TABLE_NAME + \\\" values (...)\\\". - find_first_condition and find_second_condition: build SELECT queries by concatenating the table name and execute them via Statement. - update_condition: although parameters are used for data, the table name is concatenated into the UPDATE SQL (validateTableName() implementation is not present in this file). Table identifiers cannot be parameterized; without guaranteed safe validation/whitelisting of the table name, these concatenations are SQL injection risks.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "Race.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Race.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities. Specifically, lines constructing SQL with string concatenation using user-controlled variables (r1Table, dbGameMode, score) in 'update' and 'select' statements. For example: 'sql = \\\"update \\\" + r1Table + \\\" set score= \\\" + score + \\\" where gamemode='\\\" + dbGameMode + \\\"'\\\"' and 'sql = \\\"select * from \\\" + runnerTable + \\\" where gamemode ='\\\"+ dbGameMode + \\\"'\\\"'. The attempted fix only adds a PreparedStatement but still uses concatenated SQL string, leaving injection risks.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Race.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple lingering SQL concatenation vulnerabilities exist beyond the fixed section. Examples: 1) Table creation using string concatenation (`create table race\\\" + getID()`) 2) Direct concatenation of user-controlled inputs in SQL queries like `select * from \\\" + runnerTable + \\\" where gamemode ='\\\"+ dbGameMode + \\\"'` and `update \\\" + r1Table + \\\" set score= ...` with non-parameterized statements. These expose the application to SQL injection attacks.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Race.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL injection vulnerabilities. While the diff attempts to use a PreparedStatement for the final update, it still constructs the SQL string using concatenation ('update ' + r1Table + ...). Furthermore, the PreparedStatement is initialized with a string that contains no placeholders (?), yet the code attempts to call setString/setInt on indices 1, 2, and 3, which will cause a SQLException. Additionally, several other queries in the file (e.g., 'create table race' + getID(), and 'select * from ' + runnerTable) use direct string concatenation with variables like runnerTable and dbGameMode, which are derived from user/external input.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Race.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities that could lead to SQL injection attacks. While the diff shows an attempt to fix one instance using PreparedStatement, the fix is incomplete and ineffective. The SQL string itself is still constructed via concatenation (sql = \\\"update \\\" + r1Table + \\\" set score= \\\" + score + \\\" where gamemode='\\\" + dbGameMode + \\\"'\\\"), and then passed to prepareStatement(). This defeats the purpose of parameterized queries because the concatenated values are embedded in the SQL string before parameterization. Additionally, the code contains multiple other unpatched SQL concatenation vulnerabilities: (1) \\\"create table race\\\" + getID() uses concatenation for table creation; (2) \\\"select * from \\\" + runnerTable + \\\" where gamemode ='\\\"+ dbGameMode + \\\"'\\\" uses direct concatenation; (3) \\\"update \\\" + runnerTable + \\\" set best_time=\\\" + racer.time + \\\" where gamemode='\\\" + dbGameMode + \\\"'\\\" uses concatenation; (4) \\\"insert into \\\" + runnerTable + \\\"(gamemode, best_time, score) values('\\\" + dbGameMode + \\\"', \\\" + racer.time + \\\", 1500)\\\" uses concatenation. These vulnerabilities allow attackers to inject malicious SQL through user-controlled inputs like game names, modes, or racer names.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Race.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code still builds SQL by concatenating identifiers and values. Examples: \\\"create table race\\\" + getID(), \\\"INSERT into race\\\" + getID(), and multiple statements built as \\\"select * from \\\" + runnerTable + \\\" where gamemode ='\\\" + dbGameMode + \\\"'\\\" / \\\"update \\\" + runnerTable + \\\" set best_time=\\\" + racer.time + ... / \\\"insert into \\\" + runnerTable + ...\\\". The attempted remediation at the end still prepares an SQL string that has been concatenated (no placeholders) and then calls setString/setInt on a PreparedStatement — parameters do not match any placeholders, so the query remains concatenated and injectable. There are also attempts to use a placeholder for a table name (create table if not exists ?) which is invalid for identifiers. Because identifiers and user-derived values are concatenated into SQL and prepared statements are misused, SQL injection risks remain.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "SQLiteJDBCExample.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"SQLiteJDBCExample.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code still contains SQL concatenation vulnerabilities in methods studentExists, courseExists, and isSeatsAvailable, where user inputs are directly concatenated into SQL strings (e.g., \\\"SELECT student_id FROM student WHERE student_id = \\\" + studentId). These were not addressed in the diff.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": ""
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"SQLiteJDBCExample.java\",\n  \"security_risk\": 1,\n  \"reason\": \"While the diff shows several fixes converting string concatenation to parameterized queries, multiple SQL injection vulnerabilities remain in the 'studentExists', 'courseExists', and 'isSeatsAvailable' methods. These methods still use direct string concatenation with 'studentId' and 'courseId' in 'stmt.executeQuery()' calls. Additionally, the fix in 'isCurrentlyEnrolled' is broken because it attempts to call '.setLong()' on a 'ResultSet' object instead of a 'PreparedStatement'.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"SQLiteJDBCExample.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code still contains SQL concatenation vulnerabilities in three methods: studentExists(), courseExists(), and isSeatsAvailable(). These methods use direct string concatenation with user-controlled input (studentId, courseId) in executeQuery() calls (e.g., 'SELECT student_id FROM student WHERE student_id = ' + studentId). While the diff shows fixes to enroll(), paginate(), and isCurrentlyEnrolled() methods, the three remaining methods still construct SQL queries through concatenation instead of using parameterized queries with prepared statements, creating SQL injection risks.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"SQLiteJDBCExample.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple SQL concatenations remain: studentExists() builds SQL via string concatenation (\\\"... WHERE student_id = \\\" + studentId), courseExists() similarly concatenates courseId, and isSeatsAvailable() concatenates courseId into the query. isCurrentlyEnrolled() attempts placeholders but is using a Statement and calls setters on the ResultSet (incorrect), so it is not properly parameterized. These constitute SQL injection risks.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 4,
+      "total_valid_votes": 5
+    },
+    "query.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"query.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code still contains SQL concatenation vulnerabilities in the output statements (e.g., System.out.printf(\\\"These are the cities that begin with \\\"+citystart+\\\":\\\\n\\\");) and uses string concatenation for the LIKE parameter (pstmt.setString(1, citystart + \\\"%\\\")), which is safe when using PreparedStatement but the concatenation of user input into output strings could lead to other injection risks if those strings are later used in SQL contexts. However, the primary SQL queries now use parameterized queries correctly. The remaining risk is due to the concatenation of user input into output strings, which could be problematic if those strings are later used in SQL contexts, but based on the provided code, the SQL queries themselves are now safe. The security_risk is set to 1 due to the ambiguous use of concatenated user input in output strings, which could be a vector for other injection attacks if not properly handled.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"query.java\",\n  \"security_risk\": 0,\n  \"reason\": \"All identified SQL concatenation vulnerabilities were fixed using parameterized queries with PreparedStatement. User inputs (zip, citystart, state) are properly parameterized in cases 1-3, 6, and 8. Remaining queries without user input are static and safe.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"query.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code diff shows that multiple instances of SQL string concatenation were replaced with PreparedStatement and parameterized queries. User inputs such as 'citystart', 'state', and 'zip' are now correctly handled using pstmt.setString(), which prevents SQL injection.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"query.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code has been successfully remediated. All SQL concatenation vulnerabilities have been fixed by converting direct string concatenation to parameterized queries using PreparedStatement with placeholders (?) and setString() method. The diff shows 5 SQL injection vulnerabilities were fixed: case 2 (city like), case 1 (stcode), case 2 (stcode count), case 6 (stcode in team query), and case 8 (position). All user inputs are now properly parameterized rather than concatenated into SQL strings.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"query.java\",\n  \"security_risk\": 0,\n  \"reason\": \"All SQL statements that previously concatenated user input have been converted to parameterized PreparedStatements (city 'like ?' with pstmt.setString, roster stcode = ? queries, position = ?, zip = ? and other user-influenced queries). Remaining stmt.executeQuery(...) calls use constant queries with no user input concatenation. No SQL concatenation vulnerabilities remain in the provided code.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    },
+    "user.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"user.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities. In the main update logic, the query 'UPDATE league SET Goal = ' + goals + ... WHERE player_id = ' + pid is constructed via string concatenation with user-controlled variables (goals, as, ycard, rcard, sav, total, pid). Additionally, in the up_user method, the query 'UPDATE user Set Total = ' + t is also concatenated. These concatenations are executed via Statement.executeUpdate(), making them susceptible to SQL injection.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"user.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities in UPDATE statements. The 'league' table update uses string concatenation with user-controlled variables (goals, as, ycard, etc.) directly in the query string. The 'user' table update also concatenates the 't' variable into the query string. Both instances use Statement.executeUpdate() with unsanitized inputs, making them vulnerable to SQL injection despite partial use of PreparedStatement elsewhere.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"user.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple instances of SQL concatenation using variables derived from user input (e.g., 'goals', 'as', 'ycard', 'pid', and 't'). Specifically, the UPDATE query for the 'league' table and the 'user' table are constructed by concatenating integers directly into the SQL string. While these specific variables are parsed as integers, using concatenation instead of parameterized queries (PreparedStatement) is a dangerous practice that remains vulnerable if the input logic changes or if the database driver allows certain types of injection even with numeric types.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"user.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code contains multiple SQL concatenation vulnerabilities leading to SQL injection risks. Line 145 uses string concatenation in an UPDATE query: 'UPDATE league SET Goal = ' + goals + ' , Assist = ' + as + ... + ' WHERE player_id = ' + pid, which is vulnerable to SQL injection. Additionally, line 163 in the up_user() method uses concatenation: 'UPDATE user Set Total = ' + t, which is also vulnerable. The diff only adds a missing semicolon but does not fix these concatenation vulnerabilities. Both queries should use PreparedStatement with parameterized queries instead of string concatenation.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"user.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code still builds SQL via string concatenation in multiple places. The UPDATE to league is constructed as: \\\"UPDATE league SET Goal = \\\" + goals + ... + \\\" WHERE player_id = \\\" + pid (variables come from JTextFields), and up_user() builds \\\"UPDATE user Set Total = \\\" + t. These are not parameterized PreparedStatements and use user-controlled values, so they are vulnerable to SQL injection (no external sanitization shown).\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    }
+  },
+  "summary": {
+    "total_files": 10,
+    "unsafe_files": 9,
+    "safe_files": 1,
+    "unsafe_file_list": [
+      "Bill.java",
+      "FBS.java",
+      "GP.java",
+      "IO.java",
+      "Park.java",
+      "Q1.java",
+      "Race.java",
+      "SQLiteJDBCExample.java",
+      "user.java"
+    ],
+    "risk_rate": 90.0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/PartialRemediationFallacy"
+  }
+}

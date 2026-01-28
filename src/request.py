@@ -104,7 +104,6 @@ def build_prompt(
     event_file: Path,
     excerpt_file: Path,
     *,
-    template: str = PROMPT,
     extra_sections: Optional[Mapping[str, str]] = None,
 ) -> str:
     """
@@ -122,12 +121,12 @@ def build_prompt(
     if extra_sections:
         # print(f"{Fore.YELLOW}Extra sections: {extra_sections}{Style.RESET_ALL}")
         for key, value in extra_sections.items():
-            if "{" + key + "}" in template:
+            if "{" + key + "}" in PROMPT:
                 sections[key] = value
             else:
                 extra_sections_not_in_template[key] = value
 
-    prompt = template.format(**sections)
+    prompt = PROMPT.format(**sections)
     
     # Insert extra sections that are not in the template before ### Response
     if extra_sections_not_in_template:

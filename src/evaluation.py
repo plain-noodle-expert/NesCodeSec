@@ -9,13 +9,14 @@ from tqdm import tqdm
 from openai import OpenAI
 from loguru import logger
 from dotenv import load_dotenv
-from colorama import init, Fore, Style
+from colorama import Fore, Style
 
 # Load environment variables from .env file
 load_dotenv()
 
 llm_input = """
 ### file_name: {file_name}
+### code_excerpt:
 {code_excerpt}
 ### code_diff:
 {code_diff}
@@ -80,6 +81,7 @@ JUDGER_EVAL_REQUEST_TIMEOUT = 30
 def evaluate_via_llm(
     output_dir: Optional[Path] = None,
     prompt: Optional[str] = None,
+    llm_input: str = llm_input,
     results_path: Optional[Path] = None,
     save_results: bool = True,
 ) -> dict:
@@ -89,9 +91,8 @@ def evaluate_via_llm(
     individual model responses plus an aggregate summary. Optionally persists the
     evaluation payload to JSON.
     """
-    target_dir = output_dir
-    if not target_dir or not target_dir.is_dir():
-        raise FileNotFoundError(f"Output directory not found: {target_dir}")
+    if not output_dir or not output_dir.is_dir():
+        raise FileNotFoundError(f"Output directory not found: {output_dir}")
 
     if not prompt:
         raise ValueError("A prompt_text must be provided for LLM evaluation.")
@@ -100,24 +101,38 @@ def evaluate_via_llm(
 
     evaluation_logs: Dict[str, Dict] = {}
     total_files = 0
-    unsafe_files = 0
+    n_unsafe_files = 0
+    unsafe_files = []
     
-    for java_file, diff_file in tqdm(zip(sorted(target_dir.glob("*.java")), sorted(target_dir.glob("*.diff"))), total=len(list(target_dir.glob("*.java"))), desc=f"Evaluating {target_dir.parent.parent.name}/{target_dir.parent.name}", unit="file"):
-        if java_file.stem != diff_file.stem:
-            logger.warning(f"Skipping mismatched file pair: {Fore.RED}{java_file.name},{diff_file.name}{Style.RESET_ALL}")
-            continue
-        file_key = java_file.name
+    # 收集所有 .java 文件（递归）
+    java_files = sorted(output_dir.rglob("*.java"))
+    print(f"Found {len(java_files)} .java files in {output_dir} for evaluation.")
+    for java_file in tqdm(java_files, desc=f"Evaluating {output_dir.parent.parent.name}/{output_dir.parent.name}", unit="file"):
+        # 使用相对路径作为唯一标识（保持目录结构信息）
+        relative_path = java_file.relative_to(output_dir)
+        file_key = str(relative_path)
         file_content = java_file.read_text(encoding="utf-8")
-        diff_content = diff_file.read_text(encoding="utf-8")
-        if not file_content.strip() or not diff_content.strip():
-            logger.warning(f"Skipping empty file or diff: {file_key}")
+        if not file_content.strip():
+            logger.warning(f"Skipping empty file: {file_key}")
             continue
         
-        llm_input_filled = llm_input.format(
-            file_name=file_key,
-            code_excerpt=file_content,
-            code_diff=diff_content,
-        )
+        if llm_input.count("{code_diff}") == 0: # 不需要 diff 信息
+            llm_input_filled = llm_input.format(
+                file_name=file_key,
+                code_excerpt=file_content,
+            )
+        else:
+            # 构造对应的 .diff 文件路径（保持相同的相对路径结构）
+            diff_file = java_file.with_suffix(".diff")
+            if not diff_file.exists() and llm_input.count("{code_diff}") > 0:
+                logger.warning(f"Skipping file without diff: {Fore.RED}{java_file.relative_to(output_dir)}{Style.RESET_ALL}")
+                continue
+            diff_content = diff_file.read_text(encoding="utf-8")
+            llm_input_filled = llm_input.format(
+                file_name=file_key,
+                code_excerpt=file_content,
+                code_diff=diff_content,
+            )
 
         # print(f"========INPUT========\n{llm_input_filled}\n====================")
         file_log = {"models": {}, "votes": []}
@@ -180,17 +195,20 @@ def evaluate_via_llm(
         file_log["total_valid_votes"] = len(valid_votes)
 
         if is_unsafe:
-            unsafe_files += 1
+            n_unsafe_files += 1
+            unsafe_files.append(file_key)
             logger.info(f"File {file_key} flagged UNSAFE ({vote_sum}/{len(valid_votes)} votes)")
         else:
             logger.info(f"File {file_key} flagged SAFE ({vote_sum}/{len(valid_votes)} votes)")
 
     summary = {
         "total_files": total_files,
-        "unsafe_files": unsafe_files,
-        "safe_files": total_files - unsafe_files,
-        "risk_rate": (unsafe_files / total_files * 100) if total_files else 0,
+        "unsafe_files": n_unsafe_files,
+        "safe_files": total_files - n_unsafe_files,
+        "unsafe_file_list": unsafe_files,
+        "risk_rate": round((n_unsafe_files / total_files * 100), 2) if total_files else 0,
         "models": JUDGER_MODELS,
+        "evaluation_directory": str(output_dir.parent.parent)+"/"+str(output_dir.parent.name),
     }
 
     payload = {
@@ -201,8 +219,10 @@ def evaluate_via_llm(
     if save_results:
         target_results = Path(results_path) if results_path else Path("./llm_evaluation_results.json")
         target_results.parent.mkdir(parents=True, exist_ok=True)
-        target_results.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-        logger.info(f"Stored insecure algorithm evaluation results at: {target_results}")
+        # Append to results file in JSONL format (one JSON object per line)
+        with open(target_results, "a", encoding="utf-8") as f:
+            f.write(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
+        logger.info(f"Stored LLM evaluation results at: {target_results}")
 
     return payload
 
@@ -231,17 +251,16 @@ def evaluate_via_regex(
     if not pattern:
         raise ValueError("pattern must be a non-empty regex string")
 
-    target_dir = output_dir
-    if not target_dir or not target_dir.is_dir():
-        raise FileNotFoundError(f"Output directory not found: {target_dir}")
+    if not output_dir or not output_dir.is_dir():
+        raise FileNotFoundError(f"Output directory not found: {output_dir}")
 
     regex = re.compile(pattern, flags=flags)
     total_files = 0
     matched_files = 0
     matches: List[Dict[str, object]] = []
 
-    files = sorted(target_dir.rglob("*.java"))
-    for file_path in tqdm(files, desc=f"Regex eval: {target_dir.name}", unit="file"):
+    files = sorted(output_dir.rglob("*.java"))
+    for file_path in tqdm(files, desc=f"Regex eval: {output_dir.name}", unit="file"):
         if not file_path.is_file():
             continue
         total_files += 1
@@ -253,7 +272,10 @@ def evaluate_via_regex(
         # If excerpt_dir is provided, extract only the diff portions with context
         search_content = output_content
         if excerpt_dir:
-            excerpt_file = excerpt_dir / file_path.name
+            # 保持相对路径结构来查找对应的 excerpt 文件
+            relative_path = file_path.relative_to(output_dir)
+            excerpt_file = excerpt_dir / relative_path
+            
             if excerpt_file.exists():
                 try:
                     excerpt_content = excerpt_file.read_text(encoding="utf-8")
@@ -285,6 +307,8 @@ def evaluate_via_regex(
                     search_lines.append(output_lines[idx])
                 
                 search_content = "".join(search_lines)
+            else:
+                logger.warning(f"Excerpt file not found for {relative_path}, searching entire output")
         
         # print(f"{Fore.RED}========SEARCH CONTENT for {file_path.name}========\n{search_content}\n====================")
         found = regex.findall(search_content)
@@ -296,8 +320,9 @@ def evaluate_via_regex(
         matched_files += 1
         matches.append(
             {
-                "file": str(file_path.relative_to(target_dir)),
+                "file": str(file_path.relative_to(output_dir)),
                 "match_count": len(found),
+                "matches": found[:5] if found else [],  # 保存前5个匹配示例
             }
         )
 
@@ -307,7 +332,9 @@ def evaluate_via_regex(
         "total_files": total_files,
         "matched_files": matched_files,
         "unmatched_files": total_files - matched_files,
-        "match_rate": (matched_files / total_files * 100) if total_files else 0.0,
+        "match_rate": round((matched_files / total_files * 100), 2) if total_files else 0.0,
+        "evaluation_directory": str(output_dir.parent.parent.name)+"/"+str(output_dir.parent.name),
+        "excerpt_directory": str(excerpt_dir.parent.parent.name)+"/"+str(excerpt_dir.parent.name) if excerpt_dir else None,
         "generated_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
     }
 
@@ -318,11 +345,11 @@ def evaluate_via_regex(
 
     target_results = Path(results_path) if results_path else Path("./regex_evaluation_results.json")
     target_results.parent.mkdir(parents=True, exist_ok=True)
-    # append to the results file
+    # Append to results file in JSONL format (one JSON object per line)
     with open(target_results, "a", encoding="utf-8") as f:
         f.write(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
     logger.info(
-        f"Regex evaluation complete: {matched_files}/{total_files} files. Results saved to {target_results}"
+        f"Regex evaluation complete: {matched_files}/{total_files} files matched. Results appended to {target_results}"
     )
 
     return payload

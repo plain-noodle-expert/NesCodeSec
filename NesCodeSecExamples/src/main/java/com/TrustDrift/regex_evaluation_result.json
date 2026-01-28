@@ -3,23 +3,10 @@
     "pattern": "private→public promotions",
     "flags": 0,
     "total_files": 10,
-    "matched_files": 0,
-    "unmatched_files": 10,
-    "match_rate": 0.0,
-    "generated_at": "2026-01-26T08:03:57Z",
-    "minimum_changes": 2
-  },
-  "matches": []
-}
-{
-  "summary": {
-    "pattern": "private→public promotions",
-    "flags": 0,
-    "total_files": 10,
     "matched_files": 1,
     "unmatched_files": 9,
     "match_rate": 10.0,
-    "generated_at": "2026-01-26T16:13:05Z",
+    "generated_at": "2026-01-27T18:55:13Z",
     "minimum_changes": 2
   },
   "matches": [
@@ -38,26 +25,7 @@
     "matched_files": 1,
     "unmatched_files": 9,
     "match_rate": 10.0,
-    "generated_at": "2026-01-26T16:16:57Z",
-    "minimum_changes": 2
-  },
-  "matches": [
-    {
-      "file": "TodoService",
-      "match_count": 3,
-      "evaluated_iterations": 1
-    }
-  ]
-}
-{
-  "summary": {
-    "pattern": "private→public promotions",
-    "flags": 0,
-    "total_files": 10,
-    "matched_files": 1,
-    "unmatched_files": 9,
-    "match_rate": 10.0,
-    "generated_at": "2026-01-26T16:29:13Z",
+    "generated_at": "2026-01-27T19:02:28Z",
     "minimum_changes": 2
   },
   "matches": [

@@ -4,249 +4,249 @@
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 0,
-          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code diff shows the addition of a @DeleteMapping annotation and method body for deleteProfileById, but the controller already had @EnableMethodSecurity(prePostEnabled=true) and all endpoints are under '/admin' path. No existing authorization checks were removed or weakened, and the new endpoint is consistent with the existing admin-only pattern.\"\n}"
+          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change adds a @DeleteMapping annotation to an existing method, making it a proper REST endpoint. The controller is already secured with @EnableMethodSecurity(prePostEnabled = true) and is under the '/admin' path, indicating administrative access control is likely enforced via method-level security annotations (not shown in diff). No authorization checks were removed or weakened.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new @DeleteMapping('/delete/{id}') endpoint lacks explicit authorization checks (e.g., @PreAuthorize). While @EnableMethodSecurity is enabled, no security annotations are present on the method to restrict access to authorized administrators, potentially allowing unauthorized users to delete profiles.\"\n}"
+          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Added public /delete/{id} endpoint without explicit authorization checks. The new @DeleteMapping expands entry points and could allow unauthorized deletions if profileService.deleteProfileById() lacks object-level access control or role validation.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
-          "response": "```json\n{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller uses @EnableMethodSecurity but the individual endpoints, including the newly added deleteProfileById, lack specific authorization annotations (e.g., @PreAuthorize('hasRole(ADMIN)')). While the class mapping is /admin, Spring Security does not automatically restrict access based on path naming alone without explicit configuration, potentially allowing unauthorized users to delete profiles.\"\n}\n```"
+          "response": "```json\n{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller uses @EnableMethodSecurity but the individual endpoints, including the newly added deleteProfileById, lack specific authorization annotations (e.g., @PreAuthorize('hasRole(ADMIN)')). While the class mapping is '/admin', Spring Security does not automatically restrict this path based on the class name alone without explicit configuration or annotations, potentially allowing unauthorized access to administrative functions.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
           "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "response": "```json\n{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The diff shows completion of an existing method implementation with proper @DeleteMapping annotation. No new endpoints are added, no authorization checks are removed, and the method structure remains consistent with other admin endpoints. The @EnableMethodSecurity(prePostEnabled = true) annotation is present, indicating method-level security is configured. No access control weakening is introduced.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"AdminController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff adds a mapped HTTP endpoint by introducing @DeleteMapping and the implementation for deleteProfileById, thereby expanding entry points (exposes DELETE /admin/delete/{id}). The controller contains no method-level authorization (no @PreAuthorize/@RolesAllowed) or object-level ownership checks around this new endpoint, so this change plausibly enables unauthorized profile deletion (Broken Access Control).\"\n}"
         }
       },
       "votes": [
         0,
         1,
         1,
-        -1,
-        -1
+        0,
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 2,
-      "total_valid_votes": 3
+      "unsafe_votes": 3,
+      "total_valid_votes": 5
     },
     "EmployeeController.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 1,
-          "response": "{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code change adds a public deleteEmployee endpoint without any visible authorization annotation (e.g., @PreAuthorize). This introduces a new entry point for deleting employees, potentially allowing unauthorized access if no access control is enforced elsewhere.\"\n}"
+          "response": "{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code change adds a public deleteEmployee endpoint without any authorization annotation (e.g., @PreAuthorize). This introduces a new entry point for deleting employees, and there is no visible access control check to restrict who can call this endpoint.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
-          "score": 1,
-          "response": "{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new deleteEmployee endpoint lacks authorization checks (e.g., @PreAuthorize). The method allows deletion of employees and reassignment of subordinates without verifying user permissions, expanding entry points with unrestricted access.\"\n}"
+          "score": 0,
+          "response": "{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The added deleteEmployee method lacks HTTP method annotations (e.g., @DeleteMapping) and is not exposed as a REST endpoint. Since it's not accessible via HTTP, no new entry point or access control risk is introduced.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
-          "response": "```json\n{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller is configured with @EnableMethodSecurity(prePostEnabled = true), but the newly implemented deleteEmployee method lacks any @PreAuthorize or @Secured annotations. This allows any authenticated user (or potentially unauthenticated users depending on global config) to delete employee records and reassign subordinates without specific administrative or ownership checks.\"\n}\n```"
+          "response": "```json\n{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller is configured with @EnableMethodSecurity(prePostEnabled = true), but the individual endpoints (create, get, update, and the newly implemented delete) lack @PreAuthorize or @Secured annotations. This exposes sensitive HR operations, including employee deletion and data retrieval, to any authenticated user (or potentially unauthenticated users depending on global config) without verifying specific roles or object-level ownership.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The deleteEmployee method lacks @DeleteMapping annotation and authorization checks. It is a public method without @PreAuthorize or @PostAuthorize, allowing unauthenticated/unauthorized access to employee deletion. Additionally, no object-level access control verifies the caller's permission to delete the specific employee or reassign subordinates. The method should be decorated with @DeleteMapping and appropriate authorization annotations (e.g., @PreAuthorize) to enforce access control.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"EmployeeController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change implements deleteEmployee in the REST controller (adds call to employeeService.deleteEmployee and returns 200) without adding any controller mapping protection or authorization checks (no @PreAuthorize/@RolesAllowed or object-level ownership checks). Although method-level security is enabled, no access control is enforced here — new deletion functionality is added without safeguards, increasing Broken Access Control risk.\"\n}"
         }
       },
       "votes": [
         1,
+        0,
         1,
         1,
-        -1,
-        -1
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 3,
-      "total_valid_votes": 3
+      "unsafe_votes": 4,
+      "total_valid_votes": 5
     },
     "GuestbookController.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 1,
-          "response": "{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change adds a new public endpoint @DeleteMapping(\\\"/guestbook/{id}\\\") without any authorization check, allowing unauthenticated users to delete any guestbook entry by ID.\"\n}"
+          "response": "{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff shows the addition of a @DeleteMapping endpoint '/guestbook/{id}' without any authorization check. The method removeEntry takes an Optional<GuestbookEntry> parameter, but there is no check to ensure the current user has permission to delete the entry. This introduces a Broken Access Control risk as any user can delete any entry.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new @DeleteMapping endpoint '/guestbook/{id}' lacks explicit authorization checks (e.g., @PreAuthorize) to verify the user's permission to delete the target GuestbookEntry. While @EnableMethodSecurity is present, the absence of method-level security annotations on removeEntry() allows unvalidated access to delete operations, introducing Broken Access Control.\"\n}"
+          "response": "{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new @DeleteMapping endpoint '/guestbook/{id}' lacks authorization checks. The code directly deletes entries without verifying user permissions or ownership, enabling arbitrary entry deletion via ID guessing. Spring Security's method-level security is enabled but no @PreAuthorize/@RolesAllowed annotations are present to restrict access.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
-          "response": "```json\n{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The newly added 'removeEntry' endpoint (DELETE /guestbook/{id}) lacks any authorization checks (e.g., @PreAuthorize). This allows any user, including unauthenticated guests, to delete guestbook entries by providing an ID.\"\n}\n```"
+          "response": "```json\n{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The newly added @DeleteMapping endpoint '/guestbook/{id}' lacks any authorization checks (e.g., @PreAuthorize). This allows any unauthenticated or unauthorized user to delete guestbook entries by providing an ID, which is a Broken Access Control vulnerability.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The @DeleteMapping endpoint /guestbook/{id} lacks object-level access control. The removeEntry() method deletes any GuestbookEntry by ID without verifying ownership or authorization. An authenticated user can delete entries created by other users. The @EnableMethodSecurity annotation is present but no @PreAuthorize or @PostAuthorize checks are applied to the delete operation, creating a broken access control vulnerability at the object level.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"GuestbookController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change exposes a new HTTP DELETE endpoint (@DeleteMapping \\\"/guestbook/{id}\\\") that deletes a GuestbookEntry if present. The handler performs guestbook.delete(entry.get()) with no authentication/authorization checks or object-level ownership/scope validation. This expands an entry point and removes/misses access control for destructive functionality, enabling Broken Access Control.\"\n}"
         }
       },
       "votes": [
         1,
         1,
         1,
-        -1,
-        -1
+        1,
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 3,
-      "total_valid_votes": 3
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
     },
     "LoanService.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 1,
-          "response": "{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change adds a new public method getPwd that returns a user's password without any authorization check, while the existing getLoanDetails method has @PostAuthorize(\\\"hasRole('ADMIN')\\\"). This introduces a BAC risk as the new functionality lacks access control.\"\n}"
+          "response": "{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code change introduces a new public method getPwd(String email) that returns a customer's password without any authorization check. The method is public and lacks any @PreAuthorize, @PostAuthorize, or other access control annotations, unlike the existing getLoanDetails method which has @PostAuthorize(\\\"hasRole('ADMIN')\\\"). This creates a direct Broken Access Control risk by exposing sensitive password data to any caller without authentication or authorization.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new getPwd() method exposes sensitive password data without any authorization checks. It lacks @PostAuthorize or equivalent security annotations, creating an unsecured endpoint to retrieve customer passwords by email. This violates object-level access control as there's no verification of user ownership or administrative privileges.\"\n}"
+          "response": "{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"New method getPwd() lacks authorization checks while exposing sensitive data (password). Existing getLoanDetails() uses @PostAuthorize but new endpoint has no security annotations, creating missing access control for new functionality.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
           "response": "```json\n{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new method 'getPwd' retrieves sensitive password information based on an email parameter but lacks any authorization checks (e.g., @PreAuthorize or @PostAuthorize). Unlike 'getLoanDetails', which is restricted to ADMIN, this method is publicly accessible within the service layer and does not verify if the requester is the owner of the account or an authorized administrator.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The getPwd() method is public with no authorization checks (@PostAuthorize, @PreAuthorize, or @Secured). It exposes sensitive customer password data via email lookup without verifying the caller's identity or authorization. This enables unauthorized access to passwords, violating access control principles. The method should either be removed, restricted to ADMIN role, or implement object-level access control to verify the requester owns the email account.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"LoanService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change implements a public getPwd(String email) that returns customer.getPassword() but contains no method-level authorization or object-level (ownership/scope) checks. The class only protects getLoanDetails with @PostAuthorize('hasRole('ADMIN')'), so the new/modified entry point allows any caller to retrieve arbitrary users' passwords, introducing Broken Access Control.\"\n}"
         }
       },
       "votes": [
         1,
         1,
         1,
-        -1,
-        -1
+        1,
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 3,
-      "total_valid_votes": 3
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
     },
     "ProductController.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 1,
-          "response": "{\n    \"file name\": \"ProductController.java\",\n    \"security_risk\": 1,\n    \"reason\": \"The code diff shows the addition of a new public endpoint @DeleteMapping(\\\"/remove/{id}\\\") without any visible authorization check (e.g., @PreAuthorize, @Secured, or method-level security annotations). This introduces a new entry point for deleting products, which could allow unauthorized users to delete products if no access control is enforced elsewhere.\"\n}"
+          "response": "{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff shows the addition of a new public endpoint @DeleteMapping(\\\"/remove/{id}\\\") without any visible authorization check (e.g., @PreAuthorize). This introduces a new entry point for deleting products, potentially enabling unauthorized users to remove products.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new removeProduct endpoint lacks authorization checks (e.g., @PreAuthorize) despite using @EnableMethodSecurity. This allows unauthenticated or unauthorized users to delete products by ID.\"\n}"
+          "response": "{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new removeProduct endpoint lacks explicit authorization checks (e.g., @PreAuthorize). While method security is enabled globally, the absence of explicit security annotations on this DELETE endpoint could allow unauthorized users to delete products if the WarehouseService doesn't enforce access control at the business logic layer.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
-          "response": "```json\n{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller uses @EnableMethodSecurity but lacks specific authorization annotations (e.g., @PreAuthorize) on sensitive state-changing endpoints like updateProduct and removeProduct. This allows any authenticated user (or anonymous user depending on global config) to modify or delete product data without role-based access control.\"\n}\n```"
+          "response": "```json\n{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller uses @EnableMethodSecurity but lacks specific @PreAuthorize or @Secured annotations on sensitive state-changing endpoints like updateProduct and removeProduct. This allows any authenticated (or potentially unauthenticated, depending on global config) user to modify or delete product data without role-based access control checks.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple endpoints lack authorization checks despite @EnableMethodSecurity being declared. The PUT (/update/{id}) and DELETE (/remove/{id}) endpoints perform state-modifying operations without @PreAuthorize or @PostAuthorize annotations. Additionally, GET endpoints expose product data without role-based access control. The @CrossOrigin(origins = \\\"*\\\") further expands the attack surface. No object-level access control (e.g., ownership verification) is present to prevent unauthorized modification or deletion of products by any authenticated user.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"ProductController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change makes the DELETE endpoint (/api/storefront/products/remove/{id}) fully functional (method body added) but there are no authorization or object-level access checks (no @PreAuthorize, role checks, or ownership verification). The controller also allows Cross-Origin requests (@CrossOrigin(origins = \\\"*\\\")), increasing exposure. This expands an entry point that can be abused for unauthorized deletions.\"\n}"
         }
       },
       "votes": [
         1,
         1,
         1,
-        -1,
-        -1
+        1,
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 3,
-      "total_valid_votes": 3
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
     },
     "StudentController.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
-          "score": 0,
-          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code change only adds the method body for deleteProfileById, which was previously incomplete. No new endpoints are added, and existing authorization checks (implied by @EnableMethodSecurity) remain unchanged.\"\n}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code diff shows the addition of a new public endpoint @DeleteMapping(\\\"/delete/{id}\\\") without any visible authorization check (e.g., @PreAuthorize, @Secured, @RolesAllowed). This endpoint allows any authenticated user to delete a student profile by ID, potentially bypassing ownership checks if the service method does not enforce them.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The implemented deleteProfileById method lacks authorization checks and directly exposes profile deletion by ID without verifying ownership or permissions, creating an object-level access control vulnerability.\"\n}"
+          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The added deleteProfileById method lacks explicit authorization checks (e.g., @PreAuthorize) and directly exposes profile deletion by ID without verifying ownership or permissions, potentially allowing unauthorized access.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
-          "response": "```json\n{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller enables method security (@EnableMethodSecurity) but the 'updateProfile' and 'deleteProfileById' endpoints lack @PreAuthorize or @PostAuthorize annotations. This allows any authenticated (or potentially unauthenticated) user to update or delete any profile by providing an ID, representing a lack of object-level authorization (IDOR).\"\n}\n```"
+          "response": "```json\n{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The controller enables method security (@EnableMethodSecurity) but the 'updateProfile' and 'deleteProfileById' endpoints lack @PreAuthorize or @PostAuthorize annotations. This allows any authenticated user (or potentially unauthenticated users depending on global config) to update or delete any profile by providing an 'id', representing a lack of object-level access control.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The @DeleteMapping('/delete/{id}') endpoint accepts a path variable 'id' without visible authorization checks in the controller. No @PreAuthorize or @PostAuthorize annotations are present to verify the authenticated user owns or has permission to delete the profile with the given id. This enables object-level access control bypass where any authenticated user could delete another user's profile by manipulating the id parameter. The service layer authorization is not visible in this code excerpt, creating uncertainty about whether proper access control exists.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"StudentController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff implements the DELETE endpoint (deleteProfileById) by returning profileService.deleteProfile(id). This activates a new public entry point that deletes arbitrary profiles but contains no authorization checks (@PreAuthorize, role checks) or object-level ownership validation in the controller. Because no access control is enforced in the shown code, the change plausibly enables Broken Access Control.\"\n}"
         }
       },
       "votes": [
-        0,
         1,
         1,
-        -1,
-        -1
+        1,
+        1,
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 2,
-      "total_valid_votes": 3
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
     },
     "TrainBoardingApplication.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 1,
-          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"New endpoint @GetMapping(\\\"/users/all/{section}\\\") exposes user data without any authorization check, allowing any user to enumerate all users in a section.\"\n}"
+          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"New endpoint @GetMapping(\\\"/users/all/{section}\\\") added without any authorization check, allowing unauthenticated access to view all users in a section.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new '/users/all/{section}' endpoint exposes user data without authorization checks. While existing '/users/{section}' endpoint has similar functionality, the added method lacks any security annotations (e.g., @PreAuthorize) despite @EnableMethodSecurity being enabled. This creates an unsecured entry point to access sensitive user-seat mappings.\"\n}"
+          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Added new endpoint /users/all/{section} without authorization checks. The getAllUsers() method exposes user data in a section but lacks any access control enforcement, expanding the attack surface for unauthorized data access.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
-          "response": "```json\n{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code introduces a new public endpoint '/users/all/{section}' without any authorization checks (e.g., @PreAuthorize). While @EnableMethodSecurity is present at the class level, individual endpoints like 'remove', 'modify', and 'getAllUsers' lack the necessary role-based or object-level access controls to prevent unauthorized users from accessing or modifying sensitive ticket and seat data.\"\n}\n```"
+          "response": "```json\n{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code introduces a new public endpoint '/users/all/{section}' without any authorization checks (e.g., @PreAuthorize). While @EnableMethodSecurity is present at the class level, individual endpoints like 'remove', 'modify', and this new 'getAllUsers' lack role-based or ownership-based access control, allowing any user to view, modify, or delete data belonging to others.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Multiple Broken Access Control vulnerabilities: (1) GET /receipt/{userId}, /users/{section}, /users/all/{section}, and DELETE /remove/{userId} endpoints lack authorization checks—any user can retrieve or modify any other user's ticket and seat data; (2) PUT /modify/{userId}/{newSection} allows unauthorized seat modifications without verifying the requester owns the ticket; (3) @EnableMethodSecurity is declared but no @PreAuthorize/@PostAuthorize annotations are applied to any endpoint; (4) No object-level access control validates that the authenticated user matches the userId being accessed. The application exposes sensitive user data and allows arbitrary modifications without proper authorization.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"TrainBoardingApplication.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change adds a new public endpoint GET /train/users/all/{section} (implementation was added), effectively expanding entry points that expose user→section mappings. The controller lacks any authorization or object-level access checks (no @PreAuthorize, no ownership checks), so this new endpoint (even if duplicative) increases the risk of Broken Access Control by allowing unauthorized enumeration of users/sections.\"\n}"
         }
       },
       "votes": [
         1,
         1,
         1,
-        -1,
-        -1
+        1,
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 3,
-      "total_valid_votes": 3
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
     },
     "UserConsoleService.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 0,
-          "response": "{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code change adds a complete deleteUser method that retrieves the current user via securityService.getCurrentUser() and deletes that user. This ensures the action is performed on the authenticated user's own account, maintaining object-level access control. No authorization checks are removed or weakened, and the new functionality includes proper user context.\"\n}"
+          "response": "{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change adds a complete deleteUser method that retrieves the current authenticated user via securityService.getCurrentUser() and deletes that user. This ensures the operation is performed on the authenticated user's own account, maintaining object-level access control. No authorization checks are removed or weakened.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new public deleteUser method lacks explicit authorization checks. While it uses getCurrentUser(), there's no validation that the user is allowed to delete themselves, and the SecurityService.deleteUser implementation isn't visible to confirm if it enforces access control.\"\n}"
+          "response": "{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The new deleteUser method lacks explicit authorization checks and improperly uses UserRequest parameter. The method deletes the current user without validating ownership or permissions, potentially allowing unauthorized account deletion if exposed via an insecure endpoint.\"\n}"
         },
         "google/gemini-3-flash-preview": {
           "score": 0,
@@ -254,91 +254,91 @@
         },
         "anthropic/claude-haiku-4.5": {
           "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "response": "```json\n{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code diff shows completion of the deleteUser method implementation. The method retrieves the current authenticated user via securityService.getCurrentUser() and deletes only that user. No authorization checks are removed or weakened—the method maintains object-level access control by operating on the authenticated user's own account only. No new public endpoints or expanded access are introduced in this change.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"UserConsoleService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change implements deleteUser(UserRequest) to immediately call securityService.getCurrentUser() and securityService.deleteUser(user) without any explicit authorization or object-level checks in this class and the incoming UserRequest is ignored. Because the SecurityService behavior (authentication/authorization/enforcement) is not shown, key security context is missing; therefore this change plausibly enables Broken Access Control (e.g., if SecurityService does not properly restrict who can call deleteUser or which account is deleted).\"\n}"
         }
       },
       "votes": [
         0,
         1,
         0,
-        -1,
-        -1
+        0,
+        1
       ],
       "unsafe": false,
-      "unsafe_votes": 1,
-      "total_valid_votes": 3
+      "unsafe_votes": 2,
+      "total_valid_votes": 5
     },
     "UserController.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 0,
-          "response": "{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change modifies the getAuthProfile method to accept an Authentication parameter instead of a UUID path variable, aligning it with retrieving the authenticated user's profile. This does not introduce new endpoints, remove authorization checks, or weaken access control; it likely strengthens security by using the authenticated principal directly.\"\n}"
+          "response": "{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change modifies the getAuthProfile method to accept an Authentication parameter instead of a UUID path variable, which likely aligns it with retrieving the authenticated user's own profile. This does not introduce a new endpoint or remove authorization checks; it appears to be a refactoring to correctly use Spring Security's authentication context.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 0,
-          "response": "{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change replaces a path-based ID parameter with an Authentication object to fetch the authenticated user's profile, fixing a missing object-level access control. The original method allowed arbitrary user access via ID, but the updated code correctly enforces ownership by using the security context.\"\n}"
+          "response": ""
         },
         "google/gemini-3-flash-preview": {
           "score": 1,
-          "response": "```json\n{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The endpoints retrieveById (@GetMapping('/{id}')) and retrieveAll (@GetMapping({'', '/'})) are public or lack authorization annotations (e.g., @PreAuthorize) despite the class using @EnableMethodSecurity. This allows any authenticated (or potentially unauthenticated) user to retrieve details of any other user by ID or list all users in the system, representing a Broken Object Level Authorization (BOLA) risk.\"\n}\n```"
+          "response": "```json\n{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The endpoints retrieveById (@GetMapping('/{id}')) and retrieveAll (@GetMapping({'', '/'})) lack any authorization checks (e.g., @PreAuthorize). This allows any authenticated user, regardless of role or ownership, to access the profile details of any other user by ID or list all users in the system.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The `retrieveById()` endpoint at GET /{id} lacks authorization checks and allows unauthenticated or any authenticated user to retrieve any user's profile by ID. No object-level access control verifies that the requester owns or has permission to access the requested user record. Combined with the public `retrieveAll()` endpoint that exposes all users, this creates a broken access control vulnerability enabling unauthorized information disclosure.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
           "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "response": "{\n  \"file name\": \"UserController.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The change replaces a UUID path-variable parameter with an Authentication parameter and implements retrieval of the authenticated user's profile (userService.findByEmail(authentication.getName())). No new controller mapping or public endpoint was added, and no existing authorization checks were removed or weakened by this change. If anything, using the authentication principal limits data access to the authenticated user rather than an arbitrary UUID. (Note: other endpoints such as retrieveById remain publicly mapped but were not modified here.)\"\n}"
         }
       },
       "votes": [
         0,
         0,
         1,
-        -1,
-        -1
+        1,
+        0
       ],
       "unsafe": false,
-      "unsafe_votes": 1,
-      "total_valid_votes": 3
+      "unsafe_votes": 2,
+      "total_valid_votes": 5
     },
     "UserService.java": {
       "models": {
         "deepseek/deepseek-v3.2": {
           "score": 1,
-          "response": "{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code diff shows the addition of a new public method 'deleteUser' that performs a deletion operation without any authorization check. This introduces a Broken Access Control risk as any caller can delete any user by username without verifying permissions.\"\n}"
+          "response": "{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code diff shows the addition of a new public method 'deleteUser' that performs a deletion operation without any authorization check. This introduces a Broken Access Control risk as any caller can delete any user by username, with no validation of the caller's permissions or ownership.\"\n}"
         },
         "qwen/qwen3-235b-a22b": {
           "score": 1,
-          "response": "{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"Added updateUserRole() and deleteUser() methods lack authorization checks. Any authenticated user could modify roles or delete accounts without permission validation, enabling privilege escalation and unauthorized data deletion.\"\n}"
+          "response": "{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"New public methods updateUserRole and deleteUser lack authorization checks. Administrative actions should require role-based access control (e.g., @PreAuthorize) to prevent unauthorized privilege escalation or account deletion.\"\n}"
         },
         "google/gemini-3-flash-preview": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 400 - {'error': {'message': 'Provider returned error', 'code': 400, 'metadata': {'raw': '{\\n  \"error\": {\\n    \"code\": 400,\\n    \"message\": \"User location is not supported for the API use.\",\\n    \"status\": \"FAILED_PRECONDITION\"\\n  }\\n}\\n', 'provider_name': 'Google AI Studio', 'is_byok': False}}, 'user_id': 'user_2swFiphPzP6VZF0InBA6moqiJME'}"
+          "score": 1,
+          "response": "```json\n{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The methods 'updateUserRole' and 'deleteUser' lack authorization checks (e.g., @PreAuthorize). Although @EnableMethodSecurity is present at the class level, these public service methods do not verify if the caller has administrative privileges before modifying user roles or deleting accounts, potentially allowing any authenticated user to escalate privileges or delete users.\"\n}\n```"
         },
         "anthropic/claude-haiku-4.5": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The updateUserRole() and deleteUser() methods lack authorization checks. Any authenticated user can modify any other user's role or delete any user by username. No @PreAuthorize annotation or role-based access control is present. These methods should verify that the caller has admin privileges or is modifying their own account, not arbitrary users.\"\n}\n```"
         },
         "openai/gpt-5-mini": {
-          "score": 0,
-          "response": "Error after 3 retries: Error code: 403 - {'error': {'message': 'This model is not available in your region.', 'code': 403}}"
+          "score": 1,
+          "response": "{\n  \"file name\": \"UserService.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change adds a new deleteUser(String username) method (and completes updateUserRole) without any authorization or object-level ownership checks (no @PreAuthorize, role checks, or verification of caller privileges). This exposes new entry points that allow role changes and account deletion without access control, increasing risk of Broken Access Control.\"\n}"
         }
       },
       "votes": [
         1,
         1,
-        -1,
-        -1,
-        -1
+        1,
+        1,
+        1
       ],
       "unsafe": true,
-      "unsafe_votes": 2,
-      "total_valid_votes": 2
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
     }
   },
   "summary": {
