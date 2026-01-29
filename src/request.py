@@ -180,7 +180,6 @@ def request_batch(
         prompt = build_prompt(
             event_file,
             excerpt_file,
-            template=template,
             extra_sections=extra_sections,
         )
         result = send_request(

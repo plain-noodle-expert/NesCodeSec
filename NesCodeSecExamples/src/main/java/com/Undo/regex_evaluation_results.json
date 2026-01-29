@@ -1,93 +1,78 @@
 {
   "summary": {
-    "pattern": "String\\s+\\w+\\s*=\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|execute(?:Query|Update)?\\(\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|prepareStatement\\(\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+",
-    "flags": 2,
-    "total_files": 10,
-    "matched_files": 8,
-    "unmatched_files": 2,
-    "match_rate": 80.0,
-    "generated_at": "2026-01-15T21:50:39Z"
-  },
-  "matches": [
-    {
-      "file": "C1.java",
-      "match_count": 1
-    },
-    {
-      "file": "Cl.java",
-      "match_count": 1
-    },
-    {
-      "file": "Item.java",
-      "match_count": 1
-    },
-    {
-      "file": "JDBC.java",
-      "match_count": 10
-    },
-    {
-      "file": "JavaJDBC.java",
-      "match_count": 1
-    },
-    {
-      "file": "User.java",
-      "match_count": 1
-    },
-    {
-      "file": "emp.java",
-      "match_count": 1
-    },
-    {
-      "file": "pqr.java",
-      "match_count": 2
-    }
-  ]
-}{
-  "summary": {
     "pattern": "=\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|String\\s+\\w+\\s*=\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|execute(?:Query|Update)?\\(\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|prepareStatement\\(\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|\\+\\s*\"[^\"]*\"\\s*\\+\\s*\"[^\"]*\"",
     "flags": 2,
     "total_files": 10,
     "matched_files": 9,
     "unmatched_files": 1,
     "match_rate": 90.0,
-    "generated_at": "2026-01-26T08:30:27Z"
+    "evaluation_directory": "com/Undo",
+    "excerpt_directory": "com/Undo",
+    "generated_at": "2026-01-29T03:17:46Z"
   },
   "matches": [
     {
       "file": "App.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
     },
     {
       "file": "C1.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
     },
     {
       "file": "Cl.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
     },
     {
       "file": "Item.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
     },
     {
       "file": "JDBC.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+"
+      ]
     },
     {
       "file": "JavaJDBC.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +"
+      ]
     },
     {
       "file": "User.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
     },
     {
       "file": "emp.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
     },
     {
       "file": "pqr.java",
-      "match_count": 1
+      "match_count": 1,
+      "matches": [
+        "String sq1 = \"insert into \"+"
+      ]
     }
   ]
 }

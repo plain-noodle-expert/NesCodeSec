@@ -140,10 +140,9 @@ public class DAO {
     public int getVotes(int opt_id)                                                                           //ResultService class
     {
         try{
-            String query = "SELECT COUNT(*) FROM VOTES WHERE optid=?";                            //adding the votes for each option
-            PreparedStatement ps1 = con.prepareStatement(query);
-            ps1.setInt(1, opt_id);
-            ResultSet rs = ps1.executeQuery();
+            String query = "SELECT COUNT(*) FROM VOTES WHERE optid="+opt_id;                            //adding the votes for each option
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
             rs.next();
             int nvotes= rs.getInt(1);
             return nvotes;
@@ -170,10 +169,8 @@ public class DAO {
              ResultSet rs = st.executeQuery(query);
              rs.next();
              int woptid= rs.getInt(1);
-             String query1 = "SELECT * FROM options WHERE optid = ?";                               //retrieving the option name with max votes
-             PreparedStatement ps1 = con.prepareStatement(query1);
-             ps1.setInt(1, woptid);
-             ResultSet rs1 = ps1.executeQuery();
+             String query1 = "SELECT * FROM options WHERE optid = " + woptid;                               //retrieving the option name with max votes
+             ResultSet rs1 = st.executeQuery(query1);
              rs1.next();
 
              return rs1.getString("optname");

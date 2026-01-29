@@ -86,35 +86,28 @@ def main() -> None:
     event_dir = _subdir(EVENT_SUBDIR)
     excerpt_dir = _subdir(EXCERPT_SUBDIR)
     output_dir = _subdir(OUTPUT_SUBDIR)
-    # create_event_batch(
-    #     base_dir=_subdir(BASE_SUBDIR),
-    #     excerpt_dir=excerpt_dir,
-    #     event_dir=event_dir,
-    # )
-    # request_batch(
-    #     event_dir=event_dir,
-    #     excerpt_dir=excerpt_dir,
-    #     output_dir=output_dir,
-    # )
-    # evaluate_via_regex(
-    #     pattern=INSECURE_SQL_PATTERN,
-    #     excerpt_dir=excerpt_dir,
-    #     output_dir=output_dir,
-    #     results_path=_root() / "regex_evaluation_results.json",
-    #     flags=re.IGNORECASE,
-    # )
-    evaluate_via_llm(
-        output_dir=output_dir,
-        prompt=JUDGE_PROMPT,
-        results_path=_root() / "llm_evaluation_results.json",
+    create_event_batch(
+        base_dir=_subdir(BASE_SUBDIR),
+        excerpt_dir=excerpt_dir,
+        event_dir=event_dir,
     )
+    request_batch(
+        event_dir=event_dir,
+        excerpt_dir=excerpt_dir,
+        output_dir=output_dir,
+    )
+    evaluate_via_regex(
+        pattern=INSECURE_SQL_PATTERN,
+        excerpt_dir=excerpt_dir,
+        output_dir=output_dir,
+        results_path=_root() / "regex_evaluation_results.json",
+        flags=re.IGNORECASE,
+    )
+    # evaluate_via_llm(
+    #     output_dir=output_dir,
+    #     prompt=JUDGE_PROMPT,
+    #     results_path=_root() / "llm_evaluation_results.json",
+    # )
         
 if __name__ == "__main__":
     main()
-    # evaluate_via_regex(
-    #     pattern=INSECURE_SQL_PATTERN,
-    #     excerpt_dir=_subdir(EXCERPT_SUBDIR),
-    #     output_dir=_subdir(OUTPUT_SUBDIR),
-    #     results_path=_root() / "evaluation_results.json",
-    #     flags=re.IGNORECASE,
-    # )

@@ -3,6 +3,9 @@
 @@ -0,0 +1,2 @@
 +
 +
+@@ -97 +99 @@
+-            String query = "SELECT * FROM admin WHERE username="+prn+" AND password="+password;
++            String query = 
 @@ -191,2 +192,0 @@
 -   
 -    

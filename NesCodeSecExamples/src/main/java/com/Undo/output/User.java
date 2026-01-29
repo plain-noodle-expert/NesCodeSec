@@ -39,7 +39,7 @@ public class User extends TableModel {
 				//create statement using global connection object and execute query selecting user information from user table
 				Statement search = Final.connection.createStatement();
 				ResultSet rs = search.executeQuery("select uid, name, address from User where uid='"+id+"'");
-
+				
 				//only one record expected to be returned, so move cursor to first position
 				rs.first();
 				
