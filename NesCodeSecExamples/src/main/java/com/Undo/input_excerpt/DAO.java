@@ -96,7 +96,7 @@ public class DAO {
     
      public int selectAdmin(String prn,String password) throws VoteException {
         try {                                                                                   //check id password of admin in admin table
-            String query = "SELECT * FROM admin WHERE username="+prn+" AND password="+password;
+            String query = <|user_cursor_is_here|>
             PreparedStatement ps1 = con.prepareStatement(query);
             ResultSet rs = ps1.executeQuery();
             if(!rs.next()) {                                           // if admin not found

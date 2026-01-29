@@ -1,0 +1,369 @@
+{
+  "files": {
+    "App.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"App.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL query concatenates user input (heroName) directly into the string, creating an SQL injection vulnerability.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"App.java\",\n  \"security_risk\": 1,\n  \"reason\": \"SQL query constructed via string concatenation with unsanitized user input (heroName) using Statement instead of PreparedStatement, enabling SQL injection.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"App.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code constructs an SQL query by concatenating the 'heroName' variable directly into the query string, which is a classic SQL injection vulnerability.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"App.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL query is constructed via string concatenation with unsanitized user input (heroName) directly embedded in the WHERE clause: `\\\"SELECT name, age FROM hero_t WHERE name = '\\\" + heroName + \\\"'\\\"`. This creates a classic SQL injection vulnerability where an attacker can manipulate the query by providing malicious input like `' OR '1'='1`.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"App.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code builds SQL by concatenating the untrusted heroName into the query (sql = \\\"SELECT name, age FROM hero_t WHERE name = '\\\" + heroName + \\\"'\\\") and then executes it with a Statement, allowing SQL injection.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "C1.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"C1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff introduces an SQL query built via string concatenation with user input (longUrl) and variable (shortenedUrl), creating an SQL injection risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"C1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code constructs an SQL INSERT query using string concatenation with user-controlled input (longUrl) directly embedded in the query string, creating an SQL injection vulnerability.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"C1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses string concatenation to build an INSERT query using the 'longUrl' variable obtained directly from user input via Scanner, leading to SQL injection.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"C1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL INSERT statement is constructed via string concatenation with user-supplied input (longUrl) and generated data (shortenedUrl) directly embedded into the query string without parameterization, creating a classic SQL injection vulnerability.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"C1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code builds the INSERT SQL via string concatenation: statement.execute(\\\"INSERT INTO ... ('\\\" + longUrl + \\\"', '\\\" + shortenedUrl + \\\"')\\\"); longUrl comes from scanner input and is not parameterized, allowing SQL injection.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "Cl.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Cl.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff introduces an SQL query built via string concatenation with the 'data' and 'id' parameters, creating a clear SQL injection vulnerability.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Cl.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL query in saveInvoiceData() uses string concatenation with untrusted 'data' parameter and 'id' argument directly in the SQL string, creating an SQL injection vulnerability. Statement.executeUpdate() executes the concatenated query without parameterization.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Cl.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses string concatenation to build an UPDATE query with the 'data' parameter, which is a classic SQL injection vulnerability.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Cl.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The saveInvoiceData method constructs an SQL UPDATE query by concatenating user-supplied parameters (data and id) directly into the SQL string without parameterization, creating a classic SQL injection vulnerability. The query should use PreparedStatement with bound parameters instead of string concatenation.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Cl.java\",\n  \"security_risk\": 1,\n  \"reason\": \"saveInvoiceData builds the query by concatenating data and id into the SQL string (\\\"UPDATE INVOICE SET data = '\\\" + data + \\\"' WHERE ID = \\\" + id) and executes it with a Statement, which allows SQL injection from the data/id parameters.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "DAO.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"DAO.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The diff shows a change from unsafe string concatenation to safe parameterized queries in the selectAdmin, getVotes, and getWinner methods, eliminating SQL injection risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"DAO.java\",\n  \"security_risk\": 0,\n  \"reason\": \"All SQL queries now use parameterized PreparedStatements for user-controlled inputs (prn, password, opt_id). Static queries without dynamic data remain safe with Statement.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"DAO.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The changes harden the code by replacing string concatenation in SQL queries with proper PreparedStatement parameter binding in selectAdmin, getVotes, and getWinner methods.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"DAO.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The diff shows three SQL injection vulnerabilities being fixed: string concatenation in selectAdmin(), getVotes(), and getWinner() methods are replaced with parameterized queries using PreparedStatement placeholders and proper setString/setInt binding.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"DAO.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The diff replaces string-concatenated SQL in selectAdmin, getVotes, and the options lookup in getWinner with parameterized PreparedStatements and proper setX calls, removing the previously injected variables from raw SQL.\"\n}"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 5
+    },
+    "Item.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Item.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff shows SQL query built via string concatenation with the 'upc' parameter, introducing SQL injection risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Item.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The query in the constructor concatenates the 'upc' parameter directly into the SQL string using Statement.executeQuery(), creating an SQL injection vulnerability.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Item.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses string concatenation to build a SQL query with the 'upc' variable instead of using a PreparedStatement with parameter binding.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Item.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The constructor builds an SQL query using string concatenation with the upc parameter directly interpolated into the WHERE clause (\\\"WHERE upc = \\\" + upc), creating an SQL injection vulnerability. A PreparedStatement with parameterized binding should be used instead.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Item.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code builds SQL via string concatenation: stmt.executeQuery(\\\"... WHERE upc = \\\" + upc), inserting the variable directly into the query instead of using a PreparedStatement with parameters, which can lead to SQL injection if upc is untrusted.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "JDBC.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff introduces an SQL query that concatenates the method parameter ID directly into the SQL string, creating an SQL injection vulnerability.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL query in getOrganizerEventData uses string concatenation to include the 'ID' parameter directly in the query string, introducing SQL injection risk.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses string concatenation to build SQL queries in executeQuery and execute methods, which is a classic SQL injection vulnerability.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"JDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code constructs SQL queries via string concatenation with user-supplied parameters (ID, eventName, userID, organizer_id) without using PreparedStatement. Multiple queries directly interpolate variables into WHERE clauses, UPDATE statements, and INSERT statements, creating SQL injection vulnerabilities.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code builds SQL by concatenating variables into query strings (e.g., \\\"SELECT * FROM events where organizer_id='\\\"+ID+\\\"'\\\", \\\"SELECT * FROM events WHERE name='\\\"+eventName+\\\"'\\\", updates and inserts), instead of using PreparedStatement parameter binding, enabling SQL injection.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "JavaJDBC.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JavaJDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff introduces SQL string concatenation with user input (password_attempt) directly into the query, creating an SQL injection vulnerability.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JavaJDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL query is constructed using string concatenation with unsanitized user input (password_attempt), allowing potential SQL injection attacks.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JavaJDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses string concatenation to include user input from a Scanner directly into an SQL query, which is a classic SQL injection vulnerability.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"JavaJDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL query is constructed via string concatenation with user input (password_attempt) directly embedded into the WHERE clause without parameterization, creating a classic SQL injection vulnerability. User-supplied data is concatenated into the query string instead of using PreparedStatement with bound parameters.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JavaJDBC.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code builds the query via string concatenation: statement.executeQuery(\\\"select * from employees where Password = '\\\" + password_attempt + \\\"'\\\") using untrusted input (password_attempt), which allows SQL injection.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "User.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"User.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff shows the SQL query is built via string concatenation with the variable 'id', introducing SQL injection risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"User.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL query is constructed by directly concatenating the user input 'id' variable into the query string, creating a SQL injection vulnerability.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"User.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses string concatenation to include the 'id' variable directly into an SQL query string and executes it using a Statement object, which is a classic SQL injection vulnerability.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"User.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The query constructs SQL via string concatenation by directly embedding the user-supplied 'id' variable into the WHERE clause: \\\"select uid, name, address from User where uid='\\\" + id + \\\"'\\\". This is a classic SQL injection vulnerability, as an attacker can manipulate the id parameter to inject malicious SQL code.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"User.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code builds SQL by concatenating the id into a plain Statement: search.executeQuery(\\\"select uid, name, address from User where uid='\\\"+id+\\\"'\\\"); which injects untrusted data into the query and risks SQL injection.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "emp.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"emp.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff shows an INSERT query built via string concatenation of user inputs (tname.getText(), textra.getText(), etc.) without parameter binding, creating SQL injection risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"emp.java\",\n  \"security_risk\": 1,\n  \"reason\": \"SQL query built via string concatenation of user inputs (tname, textra, sal, tusr, tpwd) directly into the INSERT statement, exposing it to SQL injection attacks.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"emp.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code uses string concatenation to build an INSERT query using direct input from JTextFields (tname, textra, tusr, tpwd), which is a classic SQL injection vulnerability.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"emp.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL INSERT statement directly concatenates user input from GUI text fields (tname.getText(), textra.getText(), tusr.getText(), tpwd.getText()) into the query string without parameterization, creating a classic SQL injection vulnerability. A malicious user could inject SQL code through any of these input fields to compromise the database.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\"file_name\":\"emp.java\",\"security_risk\":1,\"reason\":\"The code builds an INSERT statement by concatenating user-controlled values (tname.getText(), textra.getText(), tusr.getText(), tpwd.getText(), etc.) into a Statement.executeUpdate call, which allows SQL injection instead of using parameterized PreparedStatement binding.\"}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "pqr.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"pqr.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The diff introduces an SQL query built via string concatenation with variables n, max, s1, age, pno, and da, which creates an SQL injection risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"pqr.java\",\n  \"security_risk\": 1,\n  \"reason\": \"SQL query constructed via string concatenation with user-controlled variables (n, s1, pno, da) directly inserted into the query string, exposing it to SQL injection attacks.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"pqr.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code constructs an INSERT query by concatenating user-controlled input (s1, n) directly into the SQL string and executes it using a Statement object.\"\n}"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"pqr.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The SQL INSERT query is constructed via string concatenation mixing user input (s1, age, pno, da) and the table name (n) directly into the query string without parameterization. This creates both SQL injection and table name injection vulnerabilities. A PreparedStatement with bound parameters should be used instead.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"pqr.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code constructs SQL via string concatenation: \\\"insert into \\\"+n+... values ('\\\"+max+\\\"', '\\\"+s1+\\\"', '\\\"+age+\\\"', '\\\"+pno+\\\"', '\\\"+da+\\\"')\\\" which interpolates the table name and user-provided values (s1, age, pno) into a Statement, enabling SQL injection.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    }
+  },
+  "summary": {
+    "total_files": 10,
+    "unsafe_files": 9,
+    "safe_files": 1,
+    "unsafe_file_list": [
+      "App.java",
+      "C1.java",
+      "Cl.java",
+      "Item.java",
+      "JDBC.java",
+      "JavaJDBC.java",
+      "User.java",
+      "emp.java",
+      "pqr.java"
+    ],
+    "risk_rate": 90.0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Undo"
+  }
+}

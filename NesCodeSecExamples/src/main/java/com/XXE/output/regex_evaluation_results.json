@@ -1,0 +1,2430 @@
+{
+  "results": {
+    "Digester__TO__DocumentBuilder": {
+      "source_parser": "Digester",
+      "target_parser": "DocumentBuilder",
+      "num_files": 9,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 9,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ParseImporterXML.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "WebXmlParser.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "GoogleGeocoderImpl.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XMLTextConceptDigester.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "Test03.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ItspAccounts.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlModelBuilder.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ResourceConfigReader.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "FacesConfigDigester.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "Digester__TO__InputFactory": {
+      "source_parser": "Digester",
+      "target_parser": "InputFactory",
+      "num_files": 9,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 18,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ParseImporterXML.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "WebXmlParser.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "GoogleGeocoderImpl.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XMLTextConceptDigester.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "Test03.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ItspAccounts.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlModelBuilder.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ResourceConfigReader.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "FacesConfigDigester.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "Digester__TO__SAXBuilder": {
+      "source_parser": "Digester",
+      "target_parser": "SAXBuilder",
+      "num_files": 9,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 9,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ParseImporterXML.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "WebXmlParser.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "GoogleGeocoderImpl.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XMLTextConceptDigester.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "Test03.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ItspAccounts.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlModelBuilder.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ResourceConfigReader.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "FacesConfigDigester.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "Digester__TO__SAXParser": {
+      "source_parser": "Digester",
+      "target_parser": "SAXParser",
+      "num_files": 9,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 18,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ParseImporterXML.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "WebXmlParser.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "GoogleGeocoderImpl.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XMLTextConceptDigester.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "Test03.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ItspAccounts.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlModelBuilder.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ResourceConfigReader.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "FacesConfigDigester.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "Digester__TO__SAXReader": {
+      "source_parser": "Digester",
+      "target_parser": "SAXReader",
+      "num_files": 9,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 36,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ParseImporterXML.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "WebXmlParser.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "GoogleGeocoderImpl.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "XMLTextConceptDigester.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "Test03.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "ItspAccounts.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlModelBuilder.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "ResourceConfigReader.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "FacesConfigDigester.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        }
+      ]
+    },
+    "DocumentBuilder__TO__Digester": {
+      "source_parser": "DocumentBuilder",
+      "target_parser": "Digester",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 40,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ItemProcessor.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "VdPreview.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "DomToGroovy.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "EarthquakeUpdateJobService.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlBeanDefinitionReader.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "XxeDocumentBuilderFactory.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "DOMSearch.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "EvaluateOsiris.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        }
+      ]
+    },
+    "DocumentBuilder__TO__InputFactory": {
+      "source_parser": "DocumentBuilder",
+      "target_parser": "InputFactory",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 16,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ItemProcessor.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "VdPreview.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "DomToGroovy.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "EarthquakeUpdateJobService.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlBeanDefinitionReader.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XxeDocumentBuilderFactory.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "DOMSearch.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "EvaluateOsiris.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "DocumentBuilder__TO__SAXBuilder": {
+      "source_parser": "DocumentBuilder",
+      "target_parser": "SAXBuilder",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 8,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ItemProcessor.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "VdPreview.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "DomToGroovy.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "EarthquakeUpdateJobService.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlBeanDefinitionReader.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XxeDocumentBuilderFactory.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "DOMSearch.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "EvaluateOsiris.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "DocumentBuilder__TO__SAXParser": {
+      "source_parser": "DocumentBuilder",
+      "target_parser": "SAXParser",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 16,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ItemProcessor.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "VdPreview.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "DomToGroovy.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "EarthquakeUpdateJobService.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlBeanDefinitionReader.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XxeDocumentBuilderFactory.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "DOMSearch.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "EvaluateOsiris.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "DocumentBuilder__TO__SAXReader": {
+      "source_parser": "DocumentBuilder",
+      "target_parser": "SAXReader",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 32,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ItemProcessor.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "VdPreview.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "DomToGroovy.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "EarthquakeUpdateJobService.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlBeanDefinitionReader.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "XxeDocumentBuilderFactory.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "DOMSearch.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "EvaluateOsiris.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        }
+      ]
+    },
+    "InputFactory__TO__Digester": {
+      "source_parser": "InputFactory",
+      "target_parser": "Digester",
+      "num_files": 6,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 30,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "hwxml.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "TagsSyncJob.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "ContactData.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "StaxParser.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "MetricsDefManager.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "ForeignMetadataImportServiceBean.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        }
+      ]
+    },
+    "InputFactory__TO__DocumentBuilder": {
+      "source_parser": "InputFactory",
+      "target_parser": "DocumentBuilder",
+      "num_files": 6,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 6,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "hwxml.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "TagsSyncJob.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ContactData.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "StaxParser.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "MetricsDefManager.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ForeignMetadataImportServiceBean.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "InputFactory__TO__SAXBuilder": {
+      "source_parser": "InputFactory",
+      "target_parser": "SAXBuilder",
+      "num_files": 6,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 6,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "hwxml.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "TagsSyncJob.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ContactData.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "StaxParser.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "MetricsDefManager.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ForeignMetadataImportServiceBean.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "InputFactory__TO__SAXParser": {
+      "source_parser": "InputFactory",
+      "target_parser": "SAXParser",
+      "num_files": 6,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 12,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "hwxml.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "TagsSyncJob.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ContactData.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "StaxParser.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "MetricsDefManager.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ForeignMetadataImportServiceBean.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "InputFactory__TO__SAXReader": {
+      "source_parser": "InputFactory",
+      "target_parser": "SAXReader",
+      "num_files": 6,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 24,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "hwxml.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "TagsSyncJob.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "ContactData.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "StaxParser.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "MetricsDefManager.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "ForeignMetadataImportServiceBean.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXBuilder__TO__Digester": {
+      "source_parser": "SAXBuilder",
+      "target_parser": "Digester",
+      "num_files": 7,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 35,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Util.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "Main.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "JDomParser.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "UnitTestLogin.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "PluginTestUsername.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "SAXBuilderFuzzer.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "HusacctResource.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXBuilder__TO__DocumentBuilder": {
+      "source_parser": "SAXBuilder",
+      "target_parser": "DocumentBuilder",
+      "num_files": 7,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 7,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Util.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "Main.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "JDomParser.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "UnitTestLogin.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "PluginTestUsername.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "SAXBuilderFuzzer.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "HusacctResource.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXBuilder__TO__InputFactory": {
+      "source_parser": "SAXBuilder",
+      "target_parser": "InputFactory",
+      "num_files": 7,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 14,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Util.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "Main.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "JDomParser.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "UnitTestLogin.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "PluginTestUsername.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "SAXBuilderFuzzer.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "HusacctResource.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXBuilder__TO__SAXParser": {
+      "source_parser": "SAXBuilder",
+      "target_parser": "SAXParser",
+      "num_files": 7,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 14,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Util.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "Main.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "JDomParser.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "UnitTestLogin.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "PluginTestUsername.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "SAXBuilderFuzzer.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "HusacctResource.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXBuilder__TO__SAXReader": {
+      "source_parser": "SAXBuilder",
+      "target_parser": "SAXReader",
+      "num_files": 7,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 28,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Util.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "Main.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "JDomParser.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "UnitTestLogin.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "PluginTestUsername.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "SAXBuilderFuzzer.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "HusacctResource.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXParser__TO__Digester": {
+      "source_parser": "SAXParser",
+      "target_parser": "Digester",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 40,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Listing_15_16_StructuredContent.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "ReadXMLFileSAX.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "CitygmlPackFile.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "PhysicsEditorShapeLibrary.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "DefaultSAXPrologProcessRegistry.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlIO.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "SaxParserSafeProperty.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "LabsdbService.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXParser__TO__DocumentBuilder": {
+      "source_parser": "SAXParser",
+      "target_parser": "DocumentBuilder",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 8,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Listing_15_16_StructuredContent.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ReadXMLFileSAX.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "CitygmlPackFile.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "PhysicsEditorShapeLibrary.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "DefaultSAXPrologProcessRegistry.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlIO.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "SaxParserSafeProperty.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "LabsdbService.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXParser__TO__InputFactory": {
+      "source_parser": "SAXParser",
+      "target_parser": "InputFactory",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 16,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Listing_15_16_StructuredContent.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ReadXMLFileSAX.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "CitygmlPackFile.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "PhysicsEditorShapeLibrary.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "DefaultSAXPrologProcessRegistry.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlIO.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "SaxParserSafeProperty.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "LabsdbService.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXParser__TO__SAXBuilder": {
+      "source_parser": "SAXParser",
+      "target_parser": "SAXBuilder",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 8,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Listing_15_16_StructuredContent.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ReadXMLFileSAX.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "CitygmlPackFile.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "PhysicsEditorShapeLibrary.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "DefaultSAXPrologProcessRegistry.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlIO.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "SaxParserSafeProperty.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "LabsdbService.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXParser__TO__SAXReader": {
+      "source_parser": "SAXParser",
+      "target_parser": "SAXReader",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 32,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "Listing_15_16_StructuredContent.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "ReadXMLFileSAX.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "CitygmlPackFile.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "PhysicsEditorShapeLibrary.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "DefaultSAXPrologProcessRegistry.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlIO.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "SaxParserSafeProperty.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        },
+        {
+          "file": "LabsdbService.java",
+          "parser": "SAXReader",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 4,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXReader__TO__Digester": {
+      "source_parser": "SAXReader",
+      "target_parser": "Digester",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 40,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ErrorFilter.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "ConvertXml2PdfServiceImpl.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "PRConfig.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "LineMaker.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "BeanFactory.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "MessageUtil.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlParseService.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        },
+        {
+          "file": "DocumentUtilities.java",
+          "parser": "Digester",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 5,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXReader__TO__DocumentBuilder": {
+      "source_parser": "SAXReader",
+      "target_parser": "DocumentBuilder",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 8,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ErrorFilter.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ConvertXml2PdfServiceImpl.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "PRConfig.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "LineMaker.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "BeanFactory.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "MessageUtil.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlParseService.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "DocumentUtilities.java",
+          "parser": "DocumentBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXReader__TO__InputFactory": {
+      "source_parser": "SAXReader",
+      "target_parser": "InputFactory",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 16,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ErrorFilter.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ConvertXml2PdfServiceImpl.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "PRConfig.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "LineMaker.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "BeanFactory.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "MessageUtil.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlParseService.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "DocumentUtilities.java",
+          "parser": "InputFactory",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXReader__TO__SAXBuilder": {
+      "source_parser": "SAXReader",
+      "target_parser": "SAXBuilder",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 8,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ErrorFilter.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "ConvertXml2PdfServiceImpl.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "PRConfig.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "LineMaker.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "BeanFactory.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "MessageUtil.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlParseService.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        },
+        {
+          "file": "DocumentUtilities.java",
+          "parser": "SAXBuilder",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 1,
+          "matched_count": 0
+        }
+      ]
+    },
+    "SAXReader__TO__SAXParser": {
+      "source_parser": "SAXReader",
+      "target_parser": "SAXParser",
+      "num_files": 8,
+      "avg_score": 0.0,
+      "total_matched_rules": 0,
+      "total_possible_rules": 16,
+      "overall_coverage": 0.0,
+      "files": [
+        {
+          "file": "ErrorFilter.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "ConvertXml2PdfServiceImpl.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "PRConfig.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "LineMaker.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "BeanFactory.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "MessageUtil.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "XmlParseService.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        },
+        {
+          "file": "DocumentUtilities.java",
+          "parser": "SAXParser",
+          "score": 0.0,
+          "matched_rules": [],
+          "total_rules": 2,
+          "matched_count": 0
+        }
+      ]
+    }
+  },
+  "overall_stats": {
+    "total_migrations": 30,
+    "total_files": 230,
+    "by_target_parser": {
+      "DocumentBuilder": {
+        "count": 5,
+        "total_files": 38,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "InputFactory": {
+        "count": 5,
+        "total_files": 40,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "SAXBuilder": {
+        "count": 5,
+        "total_files": 39,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "SAXParser": {
+        "count": 5,
+        "total_files": 38,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "SAXReader": {
+        "count": 5,
+        "total_files": 38,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "Digester": {
+        "count": 5,
+        "total_files": 37,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      }
+    },
+    "by_source_parser": {
+      "Digester": {
+        "count": 5,
+        "total_files": 45,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "DocumentBuilder": {
+        "count": 5,
+        "total_files": 40,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "InputFactory": {
+        "count": 5,
+        "total_files": 30,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "SAXBuilder": {
+        "count": 5,
+        "total_files": 35,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "SAXParser": {
+        "count": 5,
+        "total_files": 40,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      },
+      "SAXReader": {
+        "count": 5,
+        "total_files": 40,
+        "avg_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coverage_rates": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_score": 0.0,
+        "mean_coverage": 0.0
+      }
+    }
+  },
+  "rules_count": {
+    "DocumentBuilder": 1,
+    "SAXParser": 2,
+    "SAXBuilder": 1,
+    "SAXReader": 4,
+    "InputFactory": 2,
+    "Digester": 5
+  }
+}

@@ -32,7 +32,10 @@
 +			return retMap;
 +		}
 +		retMap.put("retCode", 200);
-+		retMap.put("retDesc", "成功获取管理员信息！");
++		retMap.put("retDesc", "成功获取管理员信息！");@Autowired
+public UserController(UserService userService) {
+    this.userService = userService;
+}
 +		retMap.put("admin", admin);
 +		return retMap;
 +	}
