@@ -61,7 +61,7 @@ public class GameServiceImpl implements GameService {
         return infoBuild(key);
     }
 
-    public boolean refresh(String token) {
+    private boolean refresh(String token) {
         final String key = GUESS_GAME_PREFIX + token;
         init(key);
         HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();

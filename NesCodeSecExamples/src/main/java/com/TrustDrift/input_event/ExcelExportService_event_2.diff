@@ -1,29 +1,17 @@
 --- ExcelExportService.java
 +++ ExcelExportService_response_1.java
-@@ -1,6 +1,5 @@
--```<|start_of_file|>
- <|editable_region_start|>
+@@ -1,7 +1,5 @@
+-
+-
  package com.example.Export;
  
  import com.fasterxml.jackson.core.type.TypeReference;
  import com.fasterxml.jackson.databind.JsonNode;
-@@ -169,11 +168,11 @@
+ import com.fasterxml.jackson.databind.ObjectMapper;
+@@ -184,6 +182,5 @@
          }
-         
-         return maxRows;
-     }
-     
--    public<|user_cursor_is_here|> Map<String, String> buildRowData(JsonNode asset, int arrayIndex) {
-+    public Map<String, String> buildRowData(JsonNode asset, int arrayIndex) {
-         Map<String, String> rowData = new HashMap<>();
-         
-         // Process each field according to its configuration
-         for (Map.Entry<String, FieldMappingConfig.FieldMetadata> entry : FieldMappingConfig.FIELD_CONFIG.entrySet()) {
-             String fieldName = entry.getKey();
-@@ -185,6 +184,6 @@
          
          return rowData;
      }
  }
- <|editable_region_end|>
--```+```
+-

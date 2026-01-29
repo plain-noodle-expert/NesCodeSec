@@ -1,4 +1,3 @@
-<|editable_region_start|>
 package com.tsuchiya.live;
 
 
@@ -39,12 +38,12 @@ public class LiveService {
         }
     }
     
-    private String generateToken(String username) {
+    public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
     }
     
-    private void update(Integer id, String schedule, String name, String location) {
+    public void update(Integer id, String schedule, String name, String location) {
         Optional<Live> liveOptional = liveMapper.findById(id);
         Live live = liveOptional.orElseThrow(() -> new LiveNotFoundException("That id live is not registered"));
 
@@ -60,11 +59,16 @@ public class LiveService {
         liveMapper.update(live);
     }
 
-    private void delete(Integer id) {
+    public void delete(Integer id) {
         Optional<Live> liveOptional = liveMapper.findById(id);
         Live live = liveOptional.orElseThrow(() -> new LiveNotFoundException("That live id cannot be deleted"));
         liveMapper.delete(id);
     }
 }
-<|editable_region_end|>
-```
+
+
+
+
+
+
+

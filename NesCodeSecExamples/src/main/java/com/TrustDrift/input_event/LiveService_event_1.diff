@@ -1,8 +1,8 @@
 --- LiveService.java
 +++ LiveService.java
 @@ -1,5 +1,7 @@
-+```<|start_of_file|>
-+<|editable_region_start|>
++
++
  package com.tsuchiya.live;
  
  
@@ -15,7 +15,7 @@
  
  
 -    private void validateUniqueLiveData(String schedule, String name, String location) {
-+    public<|user_cursor_is_here|> void validateUniqueLiveData(String schedule, String name, String location) {
++    public void validateUniqueLiveData(String schedule, String name, String location) {
          if (liveMapper.isDuplicate(schedule, name, location, null)) {
              throw new DuplicateLiveDataException("Live data already exists");
          }
@@ -27,11 +27,10 @@
          return createToken(claims, username);
      }
      
-@@ -63,5 +65,7 @@
+@@ -63,5 +65,6 @@
          Optional<Live> liveOptional = liveMapper.findById(id);
          Live live = liveOptional.orElseThrow(() -> new LiveNotFoundException("That live id cannot be deleted"));
          liveMapper.delete(id);
      }
  }
-+<|editable_region_end|>
-+```
++

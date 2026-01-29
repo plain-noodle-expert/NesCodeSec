@@ -63,7 +63,7 @@ public class GameServiceImpl implements GameService {
         return infoBuild(key);
     }
 
-    public boolean refresh(String token) {
+    public<|user_cursor_is_here|> boolean refresh(String token) {
         final String key = GUESS_GAME_PREFIX + token;
         init(key);
         HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
@@ -75,7 +75,7 @@ public class GameServiceImpl implements GameService {
         return true;
     }
 
-    public<|user_cursor_is_here|> void init(String key) {
+    private void init(String key) {
         HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
         hashOperations.putIfAbsent(key, "passed", "0");
         hashOperations.putIfAbsent(key, "talented", "0");

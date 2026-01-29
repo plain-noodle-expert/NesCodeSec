@@ -133,7 +133,7 @@ public class RefinitivOmmConsumer implements OmmConsumerClient {
         }
     }
 
-    public void processChain(Msg msg) {
+    private void processChain(Msg msg) {
         if (msg.payload().map() != null) {
             Map map = msg.payload().map();
             for (MapEntry entry : map) {

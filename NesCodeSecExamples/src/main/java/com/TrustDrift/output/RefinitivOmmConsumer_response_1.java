@@ -1,4 +1,3 @@
-<|editable_region_start|>
 package com.example.refinitivtreasury.service;
 
 import com.example.refinitivtreasury.dto.TreasuryPriceDto;
@@ -76,7 +75,7 @@ public class RefinitivOmmConsumer implements OmmConsumerClient {
         itemHandles.clear();
     }
     
-    private void shutdown() {
+    public void shutdown() {
         if (consumer != null) {
             try {
                 consumer.uninitialize();
@@ -157,5 +156,6 @@ public class RefinitivOmmConsumer implements OmmConsumerClient {
         return messageQueue.poll();
     }
 }
-<|editable_region_end|>
-```
+
+
+

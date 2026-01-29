@@ -1,4 +1,3 @@
-<|editable_region_start|>
 @Service
 public class JwtService {
     
@@ -18,6 +17,12 @@ public class JwtService {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
+
+    public String extractUsername(String token) {
+        return Jwts.parser()
+            .setSigningKey(SECRET_KEY)
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+    }
 }
-<|editable_region_end|>
-```

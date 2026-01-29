@@ -57,8 +57,8 @@ public class JwtUtil {import org.springframework.beans.factory.annotation.Autowi
         public String extractUsername(String token) {
             return extractAllClaims(token).getSubject();
         }
-<|user_cursor_is_here|>    
-        private Claims extractAllClaims(String token) {
+    
+        public Claims extractAllClaims(String token) {
             return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
         }
     }
@@ -69,6 +69,7 @@ public class JwtUtil {import org.springframework.beans.factory.annotation.Autowi
         return createToken(claims, username);
     }
 
+<|user_cursor_is_here|>
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -77,6 +78,14 @@ public class JwtUtil {import org.springframework.beans.factory.annotation.Autowi
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
+    }
+
+
+    private Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+    private Date extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
     }
 }
 <|editable_region_end|>

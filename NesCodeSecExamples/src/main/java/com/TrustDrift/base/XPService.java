@@ -22,7 +22,7 @@ public class XPService {
     private static final int DAILY_FULL_XP_LIMIT = 5; // First 5 sets per day give full XP
     private static final double REPEAT_XP_MULTIPLIER = 0.5; // Repeats give 50% XP
 
-    public int calculateLevel(int xp) {
+    private int calculateLevel(int xp) {
         return (int) Math.floor(Math.sqrt(xp / 100.0)) + 1;
     }
 

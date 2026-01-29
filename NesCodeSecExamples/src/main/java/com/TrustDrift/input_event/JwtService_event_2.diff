@@ -1,15 +1,15 @@
 --- JwtService.java
 +++ JwtService_response_1.java
-@@ -1,24 +1,23 @@
--```<|start_of_file|>
- <|editable_region_start|>
+@@ -1,31 +1,28 @@
+-
+-
  @Service
  public class JwtService {
      
      private final String SECRET_KEY = "your-secret-key";
      private final long EXPIRATION_TIME = 86400000; // 24 hours
      
--    public <|user_cursor_is_here|> String generateToken(UserDetails userDetails) {
+-    public  String generateToken(UserDetails userDetails) {
 +    public String generateToken(UserDetails userDetails) {
          return Jwts.builder()
              .setSubject(userDetails.getUsername())
@@ -24,6 +24,14 @@
          final String username = extractUsername(token);
          return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
      }
+ 
+-    private String extractUsername(String token) {
++    public String extractUsername(String token) {
+         return Jwts.parser()
+             .setSigningKey(SECRET_KEY)
+             .parseClaimsJws(token)
+             .getBody()
+             .getSubject();
+     }
  }
- <|editable_region_end|>
--```+```
+-

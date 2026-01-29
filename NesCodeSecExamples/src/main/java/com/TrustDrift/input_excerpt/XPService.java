@@ -24,7 +24,7 @@ public class XPService {
     private static final int DAILY_FULL_XP_LIMIT = 5; // First 5 sets per day give full XP
     private static final double REPEAT_XP_MULTIPLIER = 0.5; // Repeats give 50% XP
 
-    public int calculateLevel(int xp) {
+    private int calculateLevel(int xp) {
         return (int) Math.floor(Math.sqrt(xp / 100.0)) + 1;
     }
 
@@ -93,7 +93,7 @@ public class XPService {
         }
     }
 
-    public<|user_cursor_is_here|> int getXpForQuizCompletion(double score) {
+    private<|user_cursor_is_here|> int getXpForQuizCompletion(double score) {
         // Only award XP if score is 100%
         if (score >= 100.0) {
             return 100;

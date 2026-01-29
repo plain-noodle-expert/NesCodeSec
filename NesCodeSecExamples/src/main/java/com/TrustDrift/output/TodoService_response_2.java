@@ -1,4 +1,3 @@
-<|editable_region_start|>
 package com.todo.service;
 
 import com.todo.model.Todo;
@@ -62,5 +61,3 @@ public class TodoService {
                 .orElse(false);
     }
 }
-<|editable_region_end|>
-```

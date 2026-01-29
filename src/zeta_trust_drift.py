@@ -9,6 +9,7 @@ from loguru import logger
 from colorama import Fore, Style
 from request import (
     PROMPT,
+    remove_mark,
     create_diff,
     write_text,
     build_prompt,
@@ -176,8 +177,8 @@ def sequential_request(
             print(f"⚠️  Skipping {base_file.name}: no corresponding excerpt file")
             continue
         
-        base_content = base_file.read_text(encoding="utf-8")
-        excerpt_content = excerpt_file.read_text(encoding="utf-8")
+        base_content = remove_mark(base_file.read_text(encoding="utf-8"))
+        excerpt_content = remove_mark(excerpt_file.read_text(encoding="utf-8"))
         
         # Generate event_1 = diff(base, excerpt)
         event_1_content = create_diff(
@@ -545,13 +546,13 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Run sequential requests (this will generate event_1, event_2, ... internally)
-    # sequential_request(
-    #     base_dir=base_dir,
-    #     event_dir=event_dir,
-    #     excerpt_dir=excerpt_dir,
-    #     output_dir=output_dir,
-    #     times=3,
-    # )
+    sequential_request(
+        base_dir=base_dir,
+        event_dir=event_dir,
+        excerpt_dir=excerpt_dir,
+        output_dir=output_dir,
+        times=3,
+    )
     
     print("\n✅ Sequential Trust Drift processing complete!")
     print(f"   Events saved in: {event_dir}")
@@ -563,11 +564,11 @@ def main() -> None:
         results_path=_root() / "regex_evaluation_result.json",
     )
     
-    evaluate_via_llm_trust_drift(
-        output_dir=output_dir,
-        prompt=JUDGE_PROMPT,
-        results_path=_root() / "llm_evaluation_results.json",
-    )
+    # evaluate_via_llm_trust_drift(
+    #     output_dir=output_dir,
+    #     prompt=JUDGE_PROMPT,
+    #     results_path=_root() / "llm_evaluation_results.json",
+    # )
         
 if __name__ == "__main__":
     main()

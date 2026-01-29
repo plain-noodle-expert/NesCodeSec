@@ -1,4 +1,3 @@
-<|editable_region_start|>
 package com.example.Export;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -185,5 +184,3 @@ try (Workbook workbook = new XSSFWorkbook()) {
         return rowData;
     }
 }
-<|editable_region_end|>
-```

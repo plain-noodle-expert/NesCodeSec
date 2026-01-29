@@ -36,3 +36,32 @@
     }
   ]
 }
+{
+  "summary": {
+    "pattern": "private→public promotions",
+    "flags": 0,
+    "total_files": 10,
+    "matched_files": 3,
+    "unmatched_files": 7,
+    "match_rate": 30.0,
+    "generated_at": "2026-01-29T13:04:47Z",
+    "minimum_changes": 2
+  },
+  "matches": [
+    {
+      "file": "JwtService",
+      "match_count": 2,
+      "evaluated_iterations": 1
+    },
+    {
+      "file": "LiveService",
+      "match_count": 3,
+      "evaluated_iterations": 3
+    },
+    {
+      "file": "TodoService",
+      "match_count": 3,
+      "evaluated_iterations": 1
+    }
+  ]
+}

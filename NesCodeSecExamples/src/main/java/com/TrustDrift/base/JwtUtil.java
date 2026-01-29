@@ -76,3 +76,12 @@ public class JwtUtil {import org.springframework.beans.factory.annotation.Autowi
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
+    
+    private Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+    
+    private Date extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
+    }
+}

@@ -45,10 +45,7 @@ def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
 
-def remove_mark(file: Path) -> str:
-    if (not file.is_file()):
-        raise FileNotFoundError(f"Required input file {file.name} is missing.")
-    content = file.read_text(encoding="utf-8")
+def remove_mark(content: str) -> str:
     content = re.sub(r"```", "", content)
     content = re.sub(r"<\|user_cursor_is_here\|>", "", content)
     content = re.sub(r"<\|start_of_file\|>", "", content)
@@ -64,9 +61,8 @@ def remove_mark(file: Path) -> str:
     return content
 
 def create_event(base_file: Path, excerpt_file: Path, event_file: Path):
-    original_code = base_file.read_text(encoding="utf-8")
-    original_code = remove_mark(base_file)
-    modified_code = remove_mark(excerpt_file)
+    original_code = remove_mark(base_file.read_text(encoding="utf-8"))
+    modified_code = remove_mark(excerpt_file.read_text(encoding="utf-8"))
     event = create_diff(
         original_code,
         modified_code,

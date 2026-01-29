@@ -1,4 +1,3 @@
-<|editable_region_start|>
 package top.ginnnnnn.mooc.service.implement;
 
 import java.security.SecureRandom;
@@ -74,14 +73,14 @@ public class GameServiceImpl implements GameService {
         return true;
     }
 
-    public void init(String key) {
+    private void init(String key) {
         HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
         hashOperations.putIfAbsent(key, "passed", "0");
         hashOperations.putIfAbsent(key, "talented", "0");
         hashOperations.putIfAbsent(key, "number", String.format("%f", RNG.nextInt(1, 1000000) * 1e-6));
     }
 
-    public HashMap<String, Object> infoBuild(String key) {
+    private HashMap<String, Object> infoBuild(String key) {
         HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
         HashMap<String, Object> info = new HashMap<>(3);
         info.put("passed", hashOperations.get(key, "passed"));
@@ -90,5 +89,6 @@ public class GameServiceImpl implements GameService {
     }
 
 }
-<|editable_region_end|>
-```
+
+
+

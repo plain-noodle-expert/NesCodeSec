@@ -1,8 +1,8 @@
 --- RefinitivOmmConsumer.java
 +++ RefinitivOmmConsumer.java
 @@ -1,5 +1,7 @@
-+```<|start_of_file|>
-+<|editable_region_start|>
++
++
  package com.example.refinitivtreasury.service;
  
  import com.example.refinitivtreasury.dto.TreasuryPriceDto;
@@ -39,19 +39,18 @@
          }
      }
  
--    public void processChain(Msg msg) {
-+    public<|user_cursor_is_here|> void processChain(Msg msg) {
+-    private void processChain(Msg msg) {
++    public void processChain(Msg msg) {
          if (msg.payload().map() != null) {
              Map map = msg.payload().map();
              for (MapEntry entry : map) {
                  if (entry.key().dataType() == DataType.DataTypes.ASCII) {
                      String ric = entry.key().ascii();
-@@ -153,6 +155,8 @@
+@@ -153,6 +155,7 @@
      }
  
      public TreasuryPriceDto pollMessage() {
          return messageQueue.poll();
      }
 -}+}
-+<|editable_region_end|>
-+```
++

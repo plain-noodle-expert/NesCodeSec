@@ -1,4 +1,3 @@
-<|editable_region_start|>
 package com.libraryman_api.security.services;
 
 import com.libraryman_api.member.MemberRepository;
@@ -47,6 +46,13 @@ public class LoginService {
             throw new BadCredentialsException("Invalid Username or Password");
         }
     }
+
+    private boolean isUserExists(String username) {
+        return memberRepository.findByUsername(username).isPresent();
+    }
+
+    private boolean validatePassword(String rawPassword, String encodedPassword) {
+        return jwtHelper.getPasswordEncoder().matches(rawPassword, encodedPassword);
+    }
+
 }
-<|editable_region_end|>
-```

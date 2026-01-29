@@ -1,0 +1,11 @@
+--- RefinitivOmmConsumer_response_1.java
++++ RefinitivOmmConsumer_response_2.java
+@@ -154,8 +154,5 @@
+ 
+     public TreasuryPriceDto pollMessage() {
+         return messageQueue.poll();
+     }
+ }
+-
+-
+-
