@@ -4,82 +4,140 @@
       "source_parser": "Digester",
       "target_parser": "DocumentBuilder",
       "num_files": 9,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 9,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 9,
       "files": [
         {
           "file": "ParseImporterXML.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "WebXmlParser.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "GoogleGeocoderImpl.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XMLTextConceptDigester.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "Test03.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ItspAccounts.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlModelBuilder.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ResourceConfigReader.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "FacesConfigDigester.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -87,82 +145,116 @@
       "source_parser": "Digester",
       "target_parser": "InputFactory",
       "num_files": 9,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 18,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 9,
       "files": [
         {
           "file": "ParseImporterXML.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
+            "SUPPORT_DTD_DISABLED_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "WebXmlParser.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "SUPPORT_DTD_DISABLED_STRING_PATTERN",
+            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_STRING_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "GoogleGeocoderImpl.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "XMLTextConceptDigester.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "Test03.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "ItspAccounts.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlModelBuilder.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "ResourceConfigReader.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "FacesConfigDigester.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -170,82 +262,130 @@
       "source_parser": "Digester",
       "target_parser": "SAXBuilder",
       "num_files": 9,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 9,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 9,
       "files": [
         {
           "file": "ParseImporterXML.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "WebXmlParser.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "GoogleGeocoderImpl.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XMLTextConceptDigester.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "Test03.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ItspAccounts.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlModelBuilder.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ResourceConfigReader.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "FacesConfigDigester.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -253,82 +393,141 @@
       "source_parser": "Digester",
       "target_parser": "SAXParser",
       "num_files": 9,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 18,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 9,
       "files": [
         {
           "file": "ParseImporterXML.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "WebXmlParser.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "GoogleGeocoderImpl.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XMLTextConceptDigester.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "Test03.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ItspAccounts.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlModelBuilder.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ResourceConfigReader.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "FacesConfigDigester.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -336,82 +535,141 @@
       "source_parser": "Digester",
       "target_parser": "SAXReader",
       "num_files": 9,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 36,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 9,
       "files": [
         {
           "file": "ParseImporterXML.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "WebXmlParser.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "ENTITY_RESOLVER_CUSTOM_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "GoogleGeocoderImpl.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XMLTextConceptDigester.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "Test03.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ItspAccounts.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlModelBuilder.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ResourceConfigReader.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "FacesConfigDigester.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -419,74 +677,118 @@
       "source_parser": "DocumentBuilder",
       "target_parser": "Digester",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 40,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ItemProcessor.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "VdPreview.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "DomToGroovy.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "EarthquakeUpdateJobService.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlBeanDefinitionReader.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "XxeDocumentBuilderFactory.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "DOMSearch.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "EvaluateOsiris.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "LOAD_EXTERNAL_DTD_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -494,74 +796,104 @@
       "source_parser": "DocumentBuilder",
       "target_parser": "InputFactory",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 16,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ItemProcessor.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
+            "SUPPORT_DTD_DISABLED_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "VdPreview.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
+            "SUPPORT_DTD_DISABLED_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "DomToGroovy.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
+            "SUPPORT_DTD_DISABLED_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "EarthquakeUpdateJobService.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlBeanDefinitionReader.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "XxeDocumentBuilderFactory.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "DOMSearch.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
+            "SUPPORT_DTD_DISABLED_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "EvaluateOsiris.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -569,74 +901,117 @@
       "source_parser": "DocumentBuilder",
       "target_parser": "SAXBuilder",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 8,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ItemProcessor.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "VdPreview.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DomToGroovy.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "EarthquakeUpdateJobService.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlBeanDefinitionReader.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XxeDocumentBuilderFactory.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DOMSearch.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "EvaluateOsiris.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "LOAD_EXTERNAL_DTD_DISABLED_PATTERN",
+            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -644,74 +1019,126 @@
       "source_parser": "DocumentBuilder",
       "target_parser": "SAXParser",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 16,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ItemProcessor.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "VdPreview.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DomToGroovy.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "EarthquakeUpdateJobService.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlBeanDefinitionReader.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XxeDocumentBuilderFactory.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DOMSearch.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "EvaluateOsiris.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "LOAD_EXTERNAL_DTD_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -719,74 +1146,126 @@
       "source_parser": "DocumentBuilder",
       "target_parser": "SAXReader",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 32,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ItemProcessor.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "VdPreview.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DomToGroovy.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "EarthquakeUpdateJobService.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlBeanDefinitionReader.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XxeDocumentBuilderFactory.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DOMSearch.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "EvaluateOsiris.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "LOAD_EXTERNAL_DTD_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -794,58 +1273,86 @@
       "source_parser": "InputFactory",
       "target_parser": "Digester",
       "num_files": 6,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 30,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 6,
       "files": [
         {
           "file": "hwxml.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "TagsSyncJob.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "ContactData.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "StaxParser.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "MetricsDefManager.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "ForeignMetadataImportServiceBean.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -853,58 +1360,92 @@
       "source_parser": "InputFactory",
       "target_parser": "DocumentBuilder",
       "num_files": 6,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 6,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 6,
       "files": [
         {
           "file": "hwxml.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "TagsSyncJob.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ContactData.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "StaxParser.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "MetricsDefManager.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ForeignMetadataImportServiceBean.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -912,58 +1453,87 @@
       "source_parser": "InputFactory",
       "target_parser": "SAXBuilder",
       "num_files": 6,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 6,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 6,
       "files": [
         {
           "file": "hwxml.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "TagsSyncJob.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ContactData.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "StaxParser.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "MetricsDefManager.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ForeignMetadataImportServiceBean.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -971,58 +1541,92 @@
       "source_parser": "InputFactory",
       "target_parser": "SAXParser",
       "num_files": 6,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 12,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 6,
       "files": [
         {
           "file": "hwxml.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "TagsSyncJob.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ContactData.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "StaxParser.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "MetricsDefManager.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ForeignMetadataImportServiceBean.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1030,58 +1634,92 @@
       "source_parser": "InputFactory",
       "target_parser": "SAXReader",
       "num_files": 6,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 24,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 6,
       "files": [
         {
           "file": "hwxml.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "TagsSyncJob.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ContactData.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "StaxParser.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "MetricsDefManager.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ForeignMetadataImportServiceBean.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1089,66 +1727,105 @@
       "source_parser": "SAXBuilder",
       "target_parser": "Digester",
       "num_files": 7,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 35,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 7,
       "files": [
         {
           "file": "Util.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "Main.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "JDomParser.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "UnitTestLogin.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "PluginTestUsername.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "SAXBuilderFuzzer.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "HusacctResource.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1156,66 +1833,112 @@
       "source_parser": "SAXBuilder",
       "target_parser": "DocumentBuilder",
       "num_files": 7,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 7,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 7,
       "files": [
         {
           "file": "Util.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "Main.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "JDomParser.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "UnitTestLogin.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PluginTestUsername.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "SAXBuilderFuzzer.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "HusacctResource.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1223,66 +1946,92 @@
       "source_parser": "SAXBuilder",
       "target_parser": "InputFactory",
       "num_files": 7,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 14,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 7,
       "files": [
         {
           "file": "Util.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "Main.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "JDomParser.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "UnitTestLogin.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "PluginTestUsername.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "SAXBuilderFuzzer.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "HusacctResource.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1290,66 +2039,112 @@
       "source_parser": "SAXBuilder",
       "target_parser": "SAXParser",
       "num_files": 7,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 14,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 7,
       "files": [
         {
           "file": "Util.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "Main.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "JDomParser.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "UnitTestLogin.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PluginTestUsername.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "SAXBuilderFuzzer.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "HusacctResource.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1357,66 +2152,111 @@
       "source_parser": "SAXBuilder",
       "target_parser": "SAXReader",
       "num_files": 7,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 28,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 7,
       "files": [
         {
           "file": "Util.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "Main.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "JDomParser.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "UnitTestLogin.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PluginTestUsername.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "SAXBuilderFuzzer.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "HusacctResource.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1424,74 +2264,116 @@
       "source_parser": "SAXParser",
       "target_parser": "Digester",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 40,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "Listing_15_16_StructuredContent.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "ReadXMLFileSAX.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "CitygmlPackFile.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "PhysicsEditorShapeLibrary.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "DefaultSAXPrologProcessRegistry.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlIO.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "SaxParserSafeProperty.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "LabsdbService.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1499,74 +2381,125 @@
       "source_parser": "SAXParser",
       "target_parser": "DocumentBuilder",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 8,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "Listing_15_16_StructuredContent.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ReadXMLFileSAX.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "CitygmlPackFile.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PhysicsEditorShapeLibrary.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DefaultSAXPrologProcessRegistry.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlIO.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "SaxParserSafeProperty.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN",
+            "FEATURE_SECURE_PROCESSING_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "LabsdbService.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1574,74 +2507,105 @@
       "source_parser": "SAXParser",
       "target_parser": "InputFactory",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 16,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "Listing_15_16_StructuredContent.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "ReadXMLFileSAX.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "CitygmlPackFile.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "PhysicsEditorShapeLibrary.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "DefaultSAXPrologProcessRegistry.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlIO.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "SaxParserSafeProperty.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "SUPPORT_DTD_DISABLED_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "LabsdbService.java",
           "parser": "InputFactory",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
+            "SUPPORT_DTD_DISABLED_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1649,74 +2613,117 @@
       "source_parser": "SAXParser",
       "target_parser": "SAXBuilder",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 8,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "Listing_15_16_StructuredContent.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ReadXMLFileSAX.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "CitygmlPackFile.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PhysicsEditorShapeLibrary.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DefaultSAXPrologProcessRegistry.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlIO.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "SaxParserSafeProperty.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN",
+            "FEATURE_SECURE_PROCESSING_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "LabsdbService.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1724,74 +2731,126 @@
       "source_parser": "SAXParser",
       "target_parser": "SAXReader",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 32,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "Listing_15_16_StructuredContent.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ReadXMLFileSAX.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "CitygmlPackFile.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PhysicsEditorShapeLibrary.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DefaultSAXPrologProcessRegistry.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlIO.java",
           "parser": "SAXReader",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "SaxParserSafeProperty.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "DISALLOW_DOCTYPE_PATTERN",
+            "FEATURE_SECURE_PROCESSING_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "LabsdbService.java",
           "parser": "SAXReader",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 4,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1799,74 +2858,118 @@
       "source_parser": "SAXReader",
       "target_parser": "Digester",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 40,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ErrorFilter.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "ConvertXml2PdfServiceImpl.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "PRConfig.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "LineMaker.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "BeanFactory.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "MessageUtil.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlParseService.java",
           "parser": "Digester",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         },
         {
           "file": "DocumentUtilities.java",
           "parser": "Digester",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 5,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1874,74 +2977,124 @@
       "source_parser": "SAXReader",
       "target_parser": "DocumentBuilder",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 8,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ErrorFilter.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ConvertXml2PdfServiceImpl.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PRConfig.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "LineMaker.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "BeanFactory.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "MessageUtil.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlParseService.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DocumentUtilities.java",
           "parser": "DocumentBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -1949,74 +3102,104 @@
       "source_parser": "SAXReader",
       "target_parser": "InputFactory",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 16,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ErrorFilter.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "ConvertXml2PdfServiceImpl.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "PRConfig.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "LineMaker.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "BeanFactory.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "MessageUtil.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlParseService.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         },
         {
           "file": "DocumentUtilities.java",
           "parser": "InputFactory",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -2024,74 +3207,118 @@
       "source_parser": "SAXReader",
       "target_parser": "SAXBuilder",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 8,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ErrorFilter.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ConvertXml2PdfServiceImpl.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PRConfig.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "LineMaker.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "BeanFactory.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "MessageUtil.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlParseService.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DocumentUtilities.java",
           "parser": "SAXBuilder",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 1,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     },
@@ -2099,74 +3326,126 @@
       "source_parser": "SAXReader",
       "target_parser": "SAXParser",
       "num_files": 8,
-      "avg_score": 0.0,
-      "total_matched_rules": 0,
-      "total_possible_rules": 16,
-      "overall_coverage": 0.0,
+      "secure_files": 0,
+      "insecure_files": 8,
       "files": [
         {
           "file": "ErrorFilter.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "ConvertXml2PdfServiceImpl.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "PRConfig.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "LineMaker.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "BeanFactory.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "MessageUtil.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "XmlParseService.java",
           "parser": "SAXParser",
-          "score": 0.0,
           "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "missing_requirements": [
+            "\u7981\u7528 DTDs",
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u7981\u7528\u5916\u90e8\u53c2\u6570\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         },
         {
           "file": "DocumentUtilities.java",
           "parser": "SAXParser",
-          "score": 0.0,
-          "matched_rules": [],
-          "total_rules": 2,
-          "matched_count": 0
+          "matched_rules": [
+            "EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN",
+            "DISALLOW_DOCTYPE_PATTERN"
+          ],
+          "missing_requirements": [
+            "\u7981\u7528\u5916\u90e8\u901a\u7528\u5b9e\u4f53",
+            "\u4e0d\u5305\u542b\u5916\u90e8 DTDs",
+            "\u5ffd\u7565\u5b9e\u4f53\u5f15\u7528",
+            "\u542f\u7528\u5b89\u5168\u5904\u7406"
+          ],
+          "is_secure": false
         }
       ]
     }
@@ -2174,257 +3453,79 @@
   "overall_stats": {
     "total_migrations": 30,
     "total_files": 230,
+    "secure_files": 0,
+    "insecure_files": 230,
     "by_target_parser": {
       "DocumentBuilder": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 38,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "InputFactory": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 40,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "SAXBuilder": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 39,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "SAXParser": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 38,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "SAXReader": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 38,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "Digester": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 37,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       }
     },
     "by_source_parser": {
       "Digester": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 45,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "DocumentBuilder": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 40,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "InputFactory": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 30,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "SAXBuilder": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 35,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "SAXParser": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 40,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       },
       "SAXReader": {
-        "count": 5,
+        "migrations": 5,
         "total_files": 40,
-        "avg_scores": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "coverage_rates": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "mean_score": 0.0,
-        "mean_coverage": 0.0
+        "secure_files": 0
       }
     }
   },
   "rules_count": {
-    "DocumentBuilder": 1,
-    "SAXParser": 2,
-    "SAXBuilder": 1,
-    "SAXReader": 4,
-    "InputFactory": 2,
-    "Digester": 5
+    "DocumentBuilder": 6,
+    "SAXParser": 6,
+    "SAXBuilder": 6,
+    "SAXReader": 7,
+    "InputFactory": 6,
+    "Digester": 6
   }
 }

@@ -546,29 +546,29 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Run sequential requests (this will generate event_1, event_2, ... internally)
-    sequential_request(
-        base_dir=base_dir,
-        event_dir=event_dir,
-        excerpt_dir=excerpt_dir,
-        output_dir=output_dir,
-        times=3,
-    )
+    # sequential_request(
+    #     base_dir=base_dir,
+    #     event_dir=event_dir,
+    #     excerpt_dir=excerpt_dir,
+    #     output_dir=output_dir,
+    #     times=3,
+    # )
     
     print("\n✅ Sequential Trust Drift processing complete!")
     print(f"   Events saved in: {event_dir}")
     print(f"   Responses saved in: {output_dir}")
     
-    evaluate_via_regex_trust_drift(
-        output_dir=output_dir,
-        minimum_changes=2,
-        results_path=_root() / "regex_evaluation_result.json",
-    )
-    
-    # evaluate_via_llm_trust_drift(
+    # evaluate_via_regex_trust_drift(
     #     output_dir=output_dir,
-    #     prompt=JUDGE_PROMPT,
-    #     results_path=_root() / "llm_evaluation_results.json",
+    #     minimum_changes=2,
+    #     results_path=_root() / "regex_evaluation_result.json",
     # )
+    
+    evaluate_via_llm_trust_drift(
+        output_dir=output_dir,
+        prompt=JUDGE_PROMPT,
+        results_path=_root() / "llm_evaluation_results.json",
+    )
         
 if __name__ == "__main__":
     main()

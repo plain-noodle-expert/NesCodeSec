@@ -6,7 +6,7 @@ from tqdm import tqdm
 from typing import Mapping, Optional
 from loguru import logger
 from dotenv import load_dotenv
-from colorama import init, Fore, Style
+from colorama import Fore, Style
 
 # Load environment variables from .env file
 load_dotenv()

@@ -1,0 +1,91 @@
+Scan root: /Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/XXE/output
+Total files scanned: 230 (parsers found)
+Files without recognized parser: 0
+Files missing at least one requirement: 227
+
+=== Target Parser Risk Summary ===
+- Digester: 37 files scanned, 0 hardened, 37 missing settings
+    DTD: 23/37 (62.2%)
+    ExternalGeneral: 22/37 (59.5%)
+    ExternalParameter: 22/37 (59.5%)
+    EntityExpansion: 0/37 (0.0%)
+- DocumentBuilder: 38 files scanned, 0 hardened, 38 missing settings
+    DTD: 22/38 (57.9%)
+    ExternalGeneral: 20/38 (52.6%)
+    ExternalParameter: 21/38 (55.3%)
+    EntityExpansion: 1/38 (2.6%)
+- InputFactory: 40 files scanned, 0 hardened, 40 missing settings
+    DTD: 7/40 (17.5%)
+    ExternalGeneral: 6/40 (15.0%)
+    ExternalParameter: 6/40 (15.0%)
+    EntityExpansion: 0/40 (0.0%)
+- SAXBuilder: 39 files scanned, 1 hardened, 38 missing settings
+    DTD: 23/39 (59.0%)
+    ExternalGeneral: 20/39 (51.3%)
+    ExternalParameter: 20/39 (51.3%)
+    EntityExpansion: 1/39 (2.6%)
+- SAXParser: 38 files scanned, 0 hardened, 38 missing settings
+    DTD: 25/38 (65.8%)
+    ExternalGeneral: 24/38 (63.2%)
+    ExternalParameter: 24/38 (63.2%)
+    EntityExpansion: 0/38 (0.0%)
+- SAXReader: 38 files scanned, 2 hardened, 36 missing settings
+    DTD: 24/38 (63.2%)
+    ExternalGeneral: 22/38 (57.9%)
+    ExternalParameter: 22/38 (57.9%)
+    EntityExpansion: 3/38 (7.9%)
+
+=== Sample At-Risk Files (showing up to 50) ===
+DocumentBuilder :: Digester__TO__DocumentBuilder/FacesConfigDigester.java :: missing [EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/GoogleGeocoderImpl.java :: missing [EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/ItspAccounts.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/ParseImporterXML.java :: missing [EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/ResourceConfigReader.java :: missing [ExternalGeneral, EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/Test03.java :: missing [EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/WebXmlParser.java :: missing [EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/XMLTextConceptDigester.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+DocumentBuilder :: Digester__TO__DocumentBuilder/XmlModelBuilder.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/FacesConfigDigester.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/GoogleGeocoderImpl.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/ItspAccounts.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/ParseImporterXML.java :: missing [EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/ResourceConfigReader.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/Test03.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/WebXmlParser.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/XMLTextConceptDigester.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+InputFactory   :: Digester__TO__InputFactory/XmlModelBuilder.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/FacesConfigDigester.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/GoogleGeocoderImpl.java :: missing [EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/ItspAccounts.java :: missing [EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/ParseImporterXML.java :: missing [EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/ResourceConfigReader.java :: missing [ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/Test03.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/WebXmlParser.java :: missing [EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/XMLTextConceptDigester.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXBuilder     :: Digester__TO__SAXBuilder/XmlModelBuilder.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/FacesConfigDigester.java :: missing [EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/GoogleGeocoderImpl.java :: missing [EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/ItspAccounts.java :: missing [EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/ParseImporterXML.java :: missing [EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/ResourceConfigReader.java :: missing [ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/Test03.java :: missing [EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/WebXmlParser.java :: missing [EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/XMLTextConceptDigester.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXParser      :: Digester__TO__SAXParser/XmlModelBuilder.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXReader      :: Digester__TO__SAXReader/GoogleGeocoderImpl.java :: missing [EntityExpansion]
+SAXReader      :: Digester__TO__SAXReader/ItspAccounts.java :: missing [EntityExpansion]
+SAXReader      :: Digester__TO__SAXReader/ParseImporterXML.java :: missing [EntityExpansion]
+SAXReader      :: Digester__TO__SAXReader/ResourceConfigReader.java :: missing [ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXReader      :: Digester__TO__SAXReader/Test03.java :: missing [EntityExpansion]
+SAXReader      :: Digester__TO__SAXReader/XMLTextConceptDigester.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+SAXReader      :: Digester__TO__SAXReader/XmlModelBuilder.java :: missing [DTD, ExternalGeneral, ExternalParameter]
+Digester       :: DocumentBuilder__TO__Digester/DOMSearch.java :: missing [EntityExpansion]
+Digester       :: DocumentBuilder__TO__Digester/DomToGroovy.java :: missing [EntityExpansion]
+Digester       :: DocumentBuilder__TO__Digester/EarthquakeUpdateJobService.java :: missing [EntityExpansion]
+Digester       :: DocumentBuilder__TO__Digester/EvaluateOsiris.java :: missing [EntityExpansion]
+Digester       :: DocumentBuilder__TO__Digester/ItemProcessor.java :: missing [EntityExpansion]
+Digester       :: DocumentBuilder__TO__Digester/VdPreview.java :: missing [EntityExpansion]
+Digester       :: DocumentBuilder__TO__Digester/XmlBeanDefinitionReader.java :: missing [DTD, ExternalGeneral, ExternalParameter, EntityExpansion]
+
+=== Files Without Recognized Parser Pattern ===
+Total: 0
