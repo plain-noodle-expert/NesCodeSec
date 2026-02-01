@@ -235,7 +235,9 @@ public class Digester_regex_rules {
      * or enforce a safe EntityResolver to mitigate XXE plus XML bomb DoS risks.
      */
     public static final String ESSENTIAL_SECURITY_RULE_PATTERN =
-        "(?=.*\\w+\\.setValidating\\s*\\(\\s*false\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*XMLConstants\\.FEATURE_SECURE_PROCESSING\\s*,\\s*true\\s*\\))(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/nonvalidating/load-external-dtd[\"']\\s*,\\s*false\\s*\\))|(?:(?=.*\\w+\\.setEntityResolver\\s*\\(\\s*null\\s*\\))|(?=.*\\w+\\.setEntityResolver\\s*\\(\\s*new\\s+\\w+EntityResolver\\s*\\(\\s*\\)\\s*\\)))))(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))|(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*(?:[\"']http://xml\\.org/sax/features/external-general-entities[\"']|[\"']http://apache\\.org/xml/features/external-general-entities[\"'])\\s*,\\s*false\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))))";
+        "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*(?:[\"']http://xml\\.org/sax/features/external-general-entities[\"']|[\"']http://apache\\.org/xml/features/external-general-entities[\"'])\\s*,\\s*false\\s*\\))"
+        + "(?=(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))|(?=.*\\w+\\.setEntityResolver\\s*\\(\\s*new\\s+EntityResolver\\b))";
     
     /**
      * Anti-pattern: Unsafe Digester usage

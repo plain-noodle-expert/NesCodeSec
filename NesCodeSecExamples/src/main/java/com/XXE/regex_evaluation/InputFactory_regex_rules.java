@@ -197,7 +197,8 @@ public class InputFactory_regex_rules {
      * and lock down both ACCESS_EXTERNAL_DTD and ACCESS_EXTERNAL_SCHEMA for XXE/DoS defense.
      */
     public static final String ESSENTIAL_SECURITY_RULE_PATTERN =
-        "(?=.*\\w+\\.setProperty\\s*\\(\\s*(?:XMLInputFactory\\.SUPPORT_DTD|[\"']javax\\.xml\\.stream\\.supportDTD[\"'])\\s*,\\s*(?:false|Boolean\\.FALSE)\\s*\\))(?=.*\\w+\\.setProperty\\s*\\(\\s*(?:XMLInputFactory\\.IS_SUPPORTING_EXTERNAL_ENTITIES|[\"']javax\\.xml\\.stream\\.isSupportingExternalEntities[\"'])\\s*,\\s*(?:false|Boolean\\.FALSE)\\s*\\))(?=.*\\w+\\.setProperty\\s*\\(\\s*(?:XMLConstants\\.ACCESS_EXTERNAL_DTD|[\"']http://javax\\.xml\\.XMLConstants/property/accessExternalDTD[\"'])\\s*,\\s*[\"'][\"']\\s*\\))(?=.*\\w+\\.setProperty\\s*\\(\\s*(?:XMLConstants\\.ACCESS_EXTERNAL_SCHEMA|[\"']http://javax\\.xml\\.XMLConstants/property/accessExternalSchema[\"'])\\s*,\\s*[\"'][\"']\\s*\\))";
+        "(?=.*\\w+\\.setProperty\\s*\\(\\s*(?:XMLInputFactory\\.SUPPORT_DTD|[\"']javax\\.xml\\.stream\\.supportDTD[\"'])\\s*,\\s*(?:false|Boolean\\.FALSE)\\s*\\))"
+        + "(?=.*\\w+\\.setProperty\\s*\\(\\s*(?:XMLInputFactory\\.IS_SUPPORTING_EXTERNAL_ENTITIES|[\"']javax\\.xml\\.stream\\.isSupportingExternalEntities[\"'])\\s*,\\s*(?:false|Boolean\\.FALSE)\\s*\\))";
     
     /**
      * Get all compiled patterns for secure configurations

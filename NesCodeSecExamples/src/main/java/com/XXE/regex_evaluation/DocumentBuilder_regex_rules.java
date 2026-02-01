@@ -96,6 +96,20 @@ public class DocumentBuilder_regex_rules {
      */
     public static final String LOAD_DTD_GRAMMAR_DISABLED_PATTERN = 
         "\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/nonvalidating/load-dtd-grammar[\"']\\s*,\\s*false\\s*\\)";
+
+    /**
+     * Regex pattern to detect XInclude disabled
+     * Matches: factory.setXIncludeAware(false)
+     */
+    public static final String XINCLUDE_DISABLED_PATTERN =
+        "\\w+\\.setXIncludeAware\\s*\\(\\s*false\\s*\\)";
+
+    /**
+     * Regex pattern to detect entity expansion disabled
+     * Matches: factory.setExpandEntityReferences(false)
+     */
+    public static final String EXPAND_ENTITY_REFERENCES_DISABLED_PATTERN =
+        "\\w+\\.setExpandEntityReferences\\s*\\(\\s*false\\s*\\)";
     
     /**
      * Regex pattern to detect DocumentBuilderFactory instantiation
@@ -137,7 +151,11 @@ public class DocumentBuilder_regex_rules {
      * blocks XXE vectors, and prevents XML bomb style DoS by disabling external DTD loading.
      */
     public static final String ESSENTIAL_SECURITY_RULE_PATTERN =
-        "(?=.*\\w+\\.setFeature\\s*\\(\\s*XMLConstants\\.FEATURE_SECURE_PROCESSING\\s*,\\s*true\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/nonvalidating/load-external-dtd[\"']\\s*,\\s*false\\s*\\))(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))|(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-general-entities[\"']\\s*,\\s*false\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))))";
+        "(?=.*\\w+\\.setFeature\\s*\\(\\s*XMLConstants\\.FEATURE_SECURE_PROCESSING\\s*,\\s*true\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-general-entities[\"']\\s*,\\s*false\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/nonvalidating/load-external-dtd[\"']\\s*,\\s*false\\s*\\))";
     
     /**
      * Anti-pattern: Unsafe DocumentBuilderFactory usage
@@ -159,6 +177,8 @@ public class DocumentBuilder_regex_rules {
         patterns.add(Pattern.compile(EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN, Pattern.DOTALL));
         patterns.add(Pattern.compile(LOAD_EXTERNAL_DTD_DISABLED_PATTERN, Pattern.DOTALL));
         patterns.add(Pattern.compile(LOAD_DTD_GRAMMAR_DISABLED_PATTERN, Pattern.DOTALL));
+        patterns.add(Pattern.compile(XINCLUDE_DISABLED_PATTERN, Pattern.DOTALL));
+        patterns.add(Pattern.compile(EXPAND_ENTITY_REFERENCES_DISABLED_PATTERN, Pattern.DOTALL));
         patterns.add(Pattern.compile(ESSENTIAL_SECURITY_RULE_PATTERN, Pattern.DOTALL));
         return patterns;
     }

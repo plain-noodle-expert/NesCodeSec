@@ -44,11 +44,7 @@ public class TokenGenerator {
 
   private TokenGenerator() {
     String salted = API_KEY + ACCOUNT_KEY;
-    byte[] hash = DigestUtils.sha(salted);
-    byte[] saltedHash = new byte[16];
-    System.arraycopy(hash, 0, saltedHash, 0, 16);
-
-    secretKeySpec = new SecretKeySpec<|user_cursor_is_here|>
+    <|user_cursor_is_here|>
   }
 
   private void encrypt(InputStream in, OutputStream out) throws Exception {

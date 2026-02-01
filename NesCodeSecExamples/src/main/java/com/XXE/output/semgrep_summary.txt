@@ -1,0 +1,57 @@
+=== Semgrep Scan Summary ===
+Total findings: 291
+Unique files flagged: 86
+
+=== Findings by Migration Directory ===
+Digester__TO__InputFactory: 45
+InputFactory__TO__DocumentBuilder: 28
+InputFactory__TO__SAXParser: 28
+InputFactory__TO__SAXReader: 18
+Digester__TO__SAXBuilder: 17
+Digester__TO__SAXParser: 17
+Digester__TO__SAXReader: 16
+InputFactory__TO__SAXBuilder: 16
+InputFactory__TO__Digester: 15
+Digester__TO__DocumentBuilder: 12
+SAXParser__TO__InputFactory: 8
+SAXReader__TO__DocumentBuilder: 8
+SAXReader__TO__InputFactory: 7
+SAXParser__TO__DocumentBuilder: 6
+SAXBuilder__TO__InputFactory: 5
+DocumentBuilder__TO__SAXParser: 4
+SAXBuilder__TO__DocumentBuilder: 4
+SAXBuilder__TO__SAXParser: 4
+SAXParser__TO__Digester: 4
+SAXParser__TO__SAXBuilder: 4
+SAXReader__TO__SAXParser: 4
+DocumentBuilder__TO__InputFactory: 3
+DocumentBuilder__TO__SAXBuilder: 3
+SAXBuilder__TO__SAXReader: 3
+SAXParser__TO__SAXReader: 3
+DocumentBuilder__TO__SAXReader: 2
+SAXBuilder__TO__Digester: 2
+SAXReader__TO__Digester: 2
+SAXReader__TO__SAXBuilder: 2
+DocumentBuilder__TO__Digester: 1
+
+=== Top Files by Finding Count ===
+Digester__TO__InputFactory/ResourceConfigReader.java: 18
+Digester__TO__SAXParser/XMLTextConceptDigester.java: 17
+Digester__TO__InputFactory/XMLTextConceptDigester.java: 16
+Digester__TO__SAXBuilder/XMLTextConceptDigester.java: 16
+Digester__TO__SAXReader/XMLTextConceptDigester.java: 16
+InputFactory__TO__DocumentBuilder/StaXParser.java: 12
+InputFactory__TO__DocumentBuilder/StaxParser.java: 12
+InputFactory__TO__SAXParser/StaXParser.java: 12
+InputFactory__TO__SAXParser/StaxParser.java: 12
+Digester__TO__InputFactory/ItspAccounts.java: 11
+Digester__TO__DocumentBuilder/ItspAccounts.java: 10
+InputFactory__TO__Digester/StaXParser.java: 6
+InputFactory__TO__Digester/StaxParser.java: 6
+InputFactory__TO__SAXBuilder/StaXParser.java: 6
+InputFactory__TO__SAXBuilder/StaxParser.java: 6
+InputFactory__TO__SAXReader/StaXParser.java: 6
+InputFactory__TO__SAXReader/StaxParser.java: 6
+InputFactory__TO__DocumentBuilder/TagsSyncJob.java: 4
+InputFactory__TO__SAXParser/TagsSyncJob.java: 4
+SAXBuilder__TO__DocumentBuilder/Util.java: 4

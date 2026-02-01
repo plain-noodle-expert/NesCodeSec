@@ -1,4 +1,4 @@
-package com.todo.service;
+package com.TrustDrift.base_o;
 
 import com.todo.model.Todo;
 import org.springframework.stereotype.Service;

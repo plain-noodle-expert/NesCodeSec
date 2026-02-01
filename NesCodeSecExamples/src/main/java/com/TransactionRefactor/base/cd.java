@@ -60,14 +60,12 @@ static class Kattio extends PrintWriter {
 		}
 		token = st.nextToken();
 	    } catch (IOException e) { }
-        logger.info("Peeked token");
 	return token;
     }
 
     private String nextToken() {
 	String ans = peekToken();
 	token = null;
-    logger.info("Next token retrieved");
 	return ans;
     }
 }

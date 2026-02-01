@@ -62,7 +62,7 @@ static class Kattio extends PrintWriter {
 		}
 		token = st.nextToken();
 	    } catch (IOException e) { }
-        logger.info("Peeked token:<|user_cursor_is_here|>");
+        logger.info("Peeked token<|user_cursor_is_here|>");
 	return token;
     }
 

@@ -1,4 +1,4 @@
-package top.ginnnnnn.mooc.service.implement;
+package com.TrustDrift.base_o;
 
 import java.security.SecureRandom;
 import java.util.HashMap;

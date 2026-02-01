@@ -178,7 +178,9 @@ public class SAXBuilder_regex_rules {
      * and block XXE via disallow-doctype or both external entity toggles.
      */
     public static final String ESSENTIAL_SECURITY_RULE_PATTERN =
-        "(?=.*\\w+\\.setFeature\\s*\\(\\s*XMLConstants\\.FEATURE_SECURE_PROCESSING\\s*,\\s*true\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/validation[\"']\\s*,\\s*false\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/nonvalidating/load-external-dtd[\"']\\s*,\\s*false\\s*\\))(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))|(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*(?:[\"']http://apache\\.org/xml/features/external-general-entities[\"']|[\"']http://xml\\.org/sax/features/external-general-entities[\"'])\\s*,\\s*false\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))))";
+        "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*(?:[\"']http://apache\\.org/xml/features/external-general-entities[\"']|[\"']http://xml\\.org/sax/features/external-general-entities[\"'])\\s*,\\s*false\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))";
     
     /**
      * Anti-pattern: Unsafe SAXBuilder usage

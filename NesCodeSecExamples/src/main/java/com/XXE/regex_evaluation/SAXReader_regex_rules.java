@@ -185,7 +185,10 @@ public class SAXReader_regex_rules {
      * while also forcing a safe EntityResolver to mitigate XXE/DoS risks.
      */
     public static final String ESSENTIAL_SECURITY_RULE_PATTERN =
-        "(?=.*\\w+\\.setValidation\\s*\\(\\s*false\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*XMLConstants\\.FEATURE_SECURE_PROCESSING\\s*,\\s*true\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/nonvalidating/load-external-dtd[\"']\\s*,\\s*false\\s*\\))(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))|(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-general-entities[\"']\\s*,\\s*false\\s*\\))(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))))(?:(?=.*\\w+\\.setEntityResolver\\s*\\(\\s*null\\s*\\))|(?=.*\\w+\\.setEntityResolver\\s*\\(\\s*new\\s+\\w+EntityResolver\\s*\\(\\s*\\)\\s*\\)))";
+        "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-general-entities[\"']\\s*,\\s*false\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))"
+        + "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/nonvalidating/load-external-dtd[\"']\\s*,\\s*false\\s*\\))";
     
     /**
      * Anti-pattern: Unsafe SAXReader usage

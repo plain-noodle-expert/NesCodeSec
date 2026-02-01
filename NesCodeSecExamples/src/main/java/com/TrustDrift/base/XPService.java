@@ -1,4 +1,4 @@
-package com.mavpal.service;
+package com.TrustDrift.base_o;
 
 import com.mavpal.entity.User;
 import com.mavpal.entity.XpEvent;

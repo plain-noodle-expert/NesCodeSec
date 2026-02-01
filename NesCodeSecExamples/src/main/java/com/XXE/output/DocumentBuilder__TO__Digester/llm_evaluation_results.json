@@ -1,0 +1,295 @@
+{
+  "files": {
+    "DOMSearch.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester而非标准的DocumentBuilderFactory，并且明确设置了安全特性：禁用了DTD（disallow-doctype-decl为true），禁用了外部通用实体和外部参数实体。因此，不满足风险条件中的任何一项（DTD未禁用、安全处理模式未启用、外部实体未禁止），所以风险值为0。</reason>\n```"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码未使用DocumentBuilderFactory解析XML，而是使用Apache Commons Digester替代方案。虽然Digester设置了禁用DTD和外部实体的安全配置，但任务要求的三个检测点均针对DocumentBuilderFactory的配置，因此不满足风险条件。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中虽然使用了Digester而非直接使用DocumentBuilderFactory，但其配置中明确设置了禁用DTD（disallow-doctype-decl为true）以及禁止外部实体（external-general-entities和external-parameter-entities均为false）。这些安全配置有效地防御了XXE漏洞，不满足风险触发条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester替代DocumentBuilderFactory进行XML解析。虽然代码中没有直接使用DocumentBuilderFactory，但通过Digester对象设置了以下安全配置：\n1. 禁用了DTD声明：setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true)\n2. 禁止了外部通用实体：setFeature(\"http://xml.org/sax/features/external-general-entities\", false)\n3. 禁止了外部参数实体：setFeature(\"http://xml.org/sax/features/external-parameter-entities\", false)\n\n这些配置已经满足了安全要求，因此不存在XML外部实体注入(XXE)的风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中没有创建或配置任何 DocumentBuilderFactory 实例：使用的是 org.apache.commons.digester3.Digester 并在 Digester 上设置了禁用 DOCTYPE 与禁止外部实体等特性。题目判断条件专门针对 DocumentBuilderFactory，因未实例化或调用 factory.setFeature/相关配置，等价于未禁用 DTD、未启用安全处理模式、未禁止外部实体，因此触发风险。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    },
+    "DomToGroovy.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester替代了JAXP DOM的DocumentBuilderFactory，并且在parse(final InputStream input)方法中明确设置了安全特性：禁用了DTD（disallow-doctype-decl），禁用了外部实体（external-general-entities和external-parameter-entities）。因此不满足风险条件。</reason>\n```"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>在DomToGroovy类的parse(Reader)方法中，使用Apache Commons Digester解析XML时未配置以下任一安全措施：1. 禁用DTD (未设置http://apache.org/xml/features/disallow-doctype-decl) 2. 未启用安全处理模式 3. 未禁止外部实体(未设置http://xml.org/sax/features/external-general-entities和external-parameter-entities)。虽然parse(InputStream)方法做了安全配置，但parse(Reader)方法存在漏洞。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>在代码的 `parse(final Reader input)` 方法中，虽然注释声称要替换为 Digester，但实际代码逻辑中存在严重的配置缺失和错误：\n1. 该方法中引用了未定义的变量 `factory` 和 `builder`（推测为 `DocumentBuilderFactory` 和 `DocumentBuilder` 的残留代码），且没有对这些对象进行任何安全配置（如禁用 DTD、启用安全处理模式或禁止外部实体）。\n2. 尽管在另一个重载方法 `parse(final InputStream input)` 中对 `Digester` 进行了安全配置，但 `parse(final Reader input)` 方法中的逻辑并未遵循相同的安全标准，且由于变量未定义，该段代码在实际运行时会抛出异常或使用默认的不安全配置。\n3. 按照审计规则，只要存在 `DocumentBuilderFactory`（或其逻辑实现）未禁用 DTD、未启用安全处理且未禁止外部实体的情况，即判定为风险。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中存在安全风险。在 `parse(final Reader input)` 方法中，虽然创建了 `DocumentBuilderFactory` 的引用（factory），但代码注释表示要用 Apache Commons Digester 替换，实际上该方法中没有正确配置 DocumentBuilderFactory 的安全特性。具体问题如下：\n\n1. 未禁用DTD：没有设置 `http://apache.org/xml/features/disallow-doctype-decl` 为 true\n2. 未启用安全处理模式：没有设置 `XMLConstants.FEATURE_SECURE_PROCESSING` 为 true\n3. 未禁止外部实体：没有设置 `http://xml.org/sax/features/external-general-entities` 和 `http://xml.org/sax/features/external-parameter-entities` 为 false\n\n虽然 `parse(final InputStream input)` 方法中使用 Digester 并设置了部分安全特性，但 `parse(final Reader input)` 方法存在明显的安全配置缺陷，容易导致 XXE（XML External Entity）攻击。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中没有创建或配置任何 DocumentBuilderFactory（未出现 DocumentBuilderFactory.newInstance() 或对 factory 调用 setFeature/XMLConstants.FEATURE_SECURE_PROCESSING 的代码）。因此不存在“禁用DTD”、“启用安全处理模式”或“禁止外部实体”的针对 DocumentBuilderFactory 的配置；虽然 parse(InputStream) 使用了 Apache Digester 并对 digester 设置了禁用 DOCTYPE 与外部实体的特性，但这并不涉及 DocumentBuilderFactory。parse(Reader) 方法中还出现了未定义的 factory/builder 引用（残留/错误），表明对 DocumentBuilderFactory 的安全配置缺失——满足三项“未设置”的条件，故判定为有风险。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 4,
+      "total_valid_votes": 5
+    },
+    "EarthquakeUpdateJobService.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester替代了DocumentBuilderFactory，并设置了安全特性：禁用了DTD（disallow-doctype-decl），禁用了外部通用实体和外部参数实体。因此不满足要求中的任何一项（DTD未禁用、安全处理模式未启用、外部实体未禁止），所以$risk为0。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester替代JAXP DOM解析XML，未直接使用DocumentBuilderFactory进行XML解析，因此不存在未禁用DTD、未启用安全处理模式或未禁止外部实体的安全风险。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```xml\n<risk>0</risk>\n<reason>代码中虽然使用了 Apache Commons Digester 进行 XML 解析，但在调用 `digester.parse(in)` 之前，已经显式地通过 `setFeature` 方法设置了安全配置：\n1. 禁用了 DTD：`digester.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true);`\n2. 禁用了外部实体：`digester.setFeature(\"http://xml.org/sax/features/external-general-entities\", false);` 和 `digester.setFeature(\"http://xml.org/sax/features/external-parameter-entities\", false);`\n这些配置有效地防御了 XXE（XML 外部实体注入）攻击，不满足风险触发条件。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码使用了Apache Commons Digester进行XML解析，而不是DocumentBuilderFactory。虽然题目要求检查DocumentBuilderFactory的安全配置，但该代码中已经设置了以下安全特性：\n1. digester.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true) - 禁用了DTD\n2. digester.setFeature(\"http://xml.org/sax/features/external-general-entities\", false) - 禁止外部通用实体\n3. digester.setFeature(\"http://xml.org/sax/features/external-parameter-entities\", false) - 禁止外部参数实体\n\n代码已经采取了适当的安全措施来防止XML相关的安全漏洞，满足了安全要求。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未创建或配置任何 DocumentBuilderFactory 实例；改为使用了 Apache Commons Digester 并在 digester 上设置了禁用 DOCTYPE 和外部实体等特性，但题目要求检查的是 DocumentBuilderFactory 是否禁用 DTD、启用安全处理以及禁止外部实体。由于代码中没有对 DocumentBuilderFactory 做任何设置（不存在 factory.setFeature 或 XMLConstants.FEATURE_SECURE_PROCESSING 的启用），因此满足“三项均未设置”的条件，返回风险 1。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    },
+    "EvaluateOsiris.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester替代了JAXP DOM的DocumentBuilderFactory，并且明确设置了安全特性：禁用了DTD（disallow-doctype-decl），禁用了外部通用实体和外部参数实体。因此，不满足要求中的任何一项（DTD未禁用、安全处理模式未启用、外部实体未禁止），$risk值为0。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用DocumentBuilderFactory解析XML时未禁用DTD、未启用安全处理模式且未禁止外部实体。虽然代码中使用了Apache Commons Digester并对其进行了安全配置，但DocumentBuilderFactory实例(factory)未进行任何安全设置，直接解析输入流可能导致XXE攻击风险。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中虽然引入了 `org.apache.commons.digester3.Digester` 并配置了安全项，但实际上在执行解析操作时，代码使用的是 `builder.parse(osirisCorpus)`。这里的 `builder` 对象在代码上下文中并未通过 `DocumentBuilderFactory` 进行初始化和安全配置（甚至在截取的代码段中未见其定义，但根据上下文推断其为 `DocumentBuilder` 实例）。由于没有看到对 `DocumentBuilderFactory` 进行任何禁用DTD、启用安全处理模式或禁止外部实体的安全设置，该解析过程存在XXE（XML外部实体注入）风险，符合风险判定条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中使用了Apache Commons Digester进行XML解析，并设置了安全特性（禁用DTD、禁止外部实体等）。但是，代码中存在一个关键问题：在第89行，代码尝试使用`builder.parse(osirisCorpus)`，但`builder`变量从未被定义或初始化。这表明代码存在编译错误。\n\n更重要的是，虽然代码使用了Digester而不是DocumentBuilderFactory，但根据任务要求，需要检查DocumentBuilderFactory的安全配置。代码中虽然导入了DocumentBuilderFactory相关类，但没有创建DocumentBuilderFactory实例或对其进行任何安全配置。如果代码的意图是使用DocumentBuilderFactory来解析XML（如第89行所示），那么DocumentBuilderFactory未被创建，也未设置任何安全特性（未禁用DTD、未启用安全处理模式、未禁止外部实体），因此存在XML外部实体（XXE）攻击风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中没有创建或配置任何 DocumentBuilderFactory（代码里未见 DocumentBuilderFactory.newInstance() 或对 factory 的 setFeature()/setAttribute() 调用）。虽然使用了 Apache Commons Digester 并在 digester 上禁用了 DTD/外部实体并开启了若干安全特性，但这些设置作用于 Digester 而非 DocumentBuilderFactory。因此就本文档片段而言：未禁用 DTD、未启用 XMLConstants.FEATURE_SECURE_PROCESSING 等安全处理模式、也未禁止外部实体，满足触发条件。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 4,
+      "total_valid_votes": 5
+    },
+    "ItemProcessor.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester进行XML解析，并明确设置了安全特性：禁用了DTD（disallow-doctype-decl），禁用了外部实体（external-general-entities和external-parameter-entities）。虽然未显式启用安全处理模式（FEATURE_SECURE_PROCESSING），但通过设置上述特性已满足安全要求，因此不满足风险条件。</reason>\n```"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用DocumentBuilderFactory实例并正确配置了安全属性：1. 禁用了DTD（通过设置http://apache.org/xml/features/disallow-doctype-decl为true）；2. 启用了安全处理模式（通过设置http://xml.org/sax/features/external-general-entities和http://xml.org/sax/features/external-parameter-entities为false）；3. 禁止了外部实体。因此不满足风险条件。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```xml\n<risk>0</risk>\n<reason>代码中虽然使用了 DocumentBuilderFactory 相关的类（如 Document 接口），但实际的 XML 解析逻辑已经切换到了 Apache Commons Digester。在 process 方法中，开发者显式地为 Digester 实例设置了安全防御措施：通过 setFeature 禁用了 DTD (disallow-doctype-decl) 以及外部实体 (external-general-entities 和 external-parameter-entities)。这些配置有效地防止了 XXE 漏洞，因此不满足风险触发条件。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester3库进行XML解析，而不是直接使用DocumentBuilderFactory。在Digester对象上设置了以下安全特性：\n1. 禁用DTD：setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true)\n2. 禁止外部通用实体：setFeature(\"http://xml.org/sax/features/external-general-entities\", false)\n3. 禁止外部参数实体：setFeature(\"http://xml.org/sax/features/external-parameter-entities\", false)\n\n这些配置满足了所有三个安全要求，因此不存在XML外部实体注入(XXE)的风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中未使用 DocumentBuilderFactory；改为使用 org.apache.commons.digester3.Digester，并显式设置了安全特性：disallow-doctype-decl=true（禁用DTD），external-general-entities=false 与 external-parameter-entities=false（禁止外部实体）。因此不存在“未禁用DTD/未禁止外部实体”的问题；DocumentBuilderFactory相关的检查不适用，综合判断风险为0。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 5
+    },
+    "VdPreview.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中使用了DocumentBuilderFactory，但未设置任何安全配置：未禁用DTD、未启用安全处理模式、未禁止外部实体。虽然代码中提到了Apache Commons Digester的设置，但实际使用的是DocumentBuilderFactory，且未对factory进行安全配置。</reason>\n```"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用DocumentBuilderFactory实例dbf时未禁用DTD、未启用安全处理模式且未禁止外部实体。虽然Digester对象配置了安全特性，但dbf实例未进行任何安全设置，导致存在XML解析安全风险。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>在代码中，虽然开发者尝试引入了 Digester 并设置了安全特性，但实际执行 XML 解析的代码块 `db = dbf.newDocumentBuilder();` 仍然在使用一个名为 `dbf` 的 DocumentBuilderFactory 实例（尽管该变量在代码片段中未显式定义，但根据上下文推断其为 DocumentBuilderFactory）。该 `dbf` 实例在调用前没有设置任何禁用 DTD、启用安全处理模式或禁止外部实体的安全配置，因此满足风险触发条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中存在XML解析安全漏洞。虽然代码尝试在Apache Commons Digester对象上设置安全特性，但实际使用的是未初始化的`dbf`变量（DocumentBuilderFactory）来创建DocumentBuilder。代码中：\n1. 没有创建DocumentBuilderFactory实例（`dbf`变量未定义）\n2. 没有在DocumentBuilderFactory上设置禁用DTD的特性\n3. 没有在DocumentBuilderFactory上启用安全处理模式\n4. 没有在DocumentBuilderFactory上禁止外部实体\n\n因此，实际的XML解析过程未采取任何安全防护措施，存在XXE（XML External Entity）攻击风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码在 org.apache.commons.digester3.Digester 实例上设置了 disallow-doctype-decl 和禁止外部实体的特性，但实际用于解析的是 DocumentBuilderFactory 创建的 DocumentBuilder (db = dbf.newDocumentBuilder();)；对该 dbf 并没有任何 setFeature 或启用 XMLConstants.FEATURE_SECURE_PROCESSING 的调用。因此针对 DocumentBuilderFactory：未禁用 DTD、未启用安全处理模式、未禁止外部实体，三项均未满足。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "XmlBeanDefinitionReader.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中未使用DocumentBuilderFactory，而是使用了Apache Commons Digester进行XML解析，因此不涉及DocumentBuilderFactory的安全配置问题。</reason>\n```"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中未直接使用DocumentBuilderFactory进行XML解析，而是使用了Apache Commons Digester3进行解析，因此不存在DocumentBuilderFactory未禁用DTD、未启用安全处理模式或未禁止外部实体的问题。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>在提供的代码片段中，虽然导入了 javax.xml.parsers.DocumentBuilderFactory，但在实际的 `doLoadBeanDefinitions` 方法中，代码被修改为使用 `org.apache.commons.digester3.Digester` 进行 XML 解析，并没有实例化或使用 `DocumentBuilderFactory`。由于代码中不存在 `DocumentBuilderFactory` 的配置和调用逻辑，因此不满足漏洞触发条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中使用了Apache Commons Digester库来替代DocumentBuilderFactory进行XML解析。虽然代码本身没有直接使用DocumentBuilderFactory，但在doLoadBeanDefinitions方法中，Digester内部会创建DocumentBuilderFactory实例来解析XML。代码未对Digester的底层XML解析器进行任何安全配置，包括：\n1. 未禁用DTD（Document Type Definitions）\n2. 未启用安全处理模式\n3. 未禁止外部实体\n\n这意味着该代码仍然容易受到XXE（XML External Entity）攻击和其他XML相关的安全漏洞。Digester的setValidating(false)仅禁用了DTD验证，但并未禁用DTD声明本身或外部实体的处理。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中没有使用 DocumentBuilderFactory；doLoadBeanDefinitions 使用 org.apache.commons.digester3.Digester 解析输入流，未见任何 DocumentBuilderFactory 的创建或配置，因此不存在“未禁用DTD/未启用安全处理/未禁止外部实体”这三项针对 DocumentBuilderFactory 的不安全配置。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    },
+    "XxeDocumentBuilderFactory.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中未使用DocumentBuilderFactory，而是使用了Apache Commons Digester进行XML解析，并设置了安全处理模式（FEATURE_SECURE_PROCESSING为true）。由于不涉及DocumentBuilderFactory，因此不满足任何风险要求。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了Apache Commons Digester解析XML，并通过digester.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true)启用了安全处理模式，满足安全要求。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```xml\n<risk>0</risk>\n<reason>代码中并未使用 DocumentBuilderFactory 进行 XML 解析，而是使用了 Apache Commons Digester。此外，代码中显式调用了 `digester.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true)` 启用了安全处理模式，不满足“未启用安全处理模式”的风险条件。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码使用了Apache Commons Digester而非DocumentBuilderFactory进行XML解析。虽然代码中导入了DocumentBuilderFactory相关类，但实际的XML解析操作使用的是org.apache.commons.digester3.Digester，并且设置了XMLConstants.FEATURE_SECURE_PROCESSING为true启用安全处理模式。因此不存在DocumentBuilderFactory未禁用DTD、未启用安全处理模式或未禁止外部实体的问题。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未使用或配置 DocumentBuilderFactory，而是使用了 Apache Commons Digester。虽然对 Digester 调用了 setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true)，但这并不等同于对 DocumentBuilderFactory 的配置。由于没有对 DocumentBuilderFactory 禁用 DTD、启用安全处理或禁止外部实体（DocumentBuilderFactory 未被创建或配置），因此满足“不禁用DTD、未启用安全处理、未禁止外部实体”这三项不安全条件，判定风险为1。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    }
+  },
+  "summary": {
+    "total_files": 8,
+    "unsafe_files": 3,
+    "safe_files": 5,
+    "unsafe_file_list": [
+      "DomToGroovy.java",
+      "EvaluateOsiris.java",
+      "VdPreview.java"
+    ],
+    "risk_rate": 37.5,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/XXE/output"
+  }
+}

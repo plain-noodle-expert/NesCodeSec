@@ -1,0 +1,294 @@
+{
+  "files": {
+    "DOMSearch.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了JDOM2的SAXBuilder而不是JAXP的DocumentBuilderFactory。SAXBuilder设置了安全特性：禁用了DTD（disallow-doctype-decl为true），禁用了外部通用实体和外部参数实体。因此，不满足风险条件（DocumentBuilderFactory未禁用DTD、未启用安全处理模式、未禁止外部实体），因为根本没有使用DocumentBuilderFactory。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码未使用DocumentBuilderFactory，而是使用JDOM2的SAXBuilder并配置了安全特性：禁用了DOCTYPE声明和外部实体解析，符合安全要求。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中虽然导入了DocumentBuilderFactory，但实际解析XML时并未使用它，而是使用了SAXBuilder。此外，代码显式设置了安全配置，包括禁用DTD（disallow-doctype-decl）以及禁止外部实体（external-general-entities 和 external-parameter-entities），不满足风险触发条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码使用了JDOM2的SAXBuilder而非DocumentBuilderFactory进行XML解析。虽然题目要求检查DocumentBuilderFactory的安全配置，但该代码中并未使用DocumentBuilderFactory。代码中的SAXBuilder已设置了以下安全特性：1) 禁用DTD声明（disallow-doctype-decl=true）；2) 禁止外部通用实体（external-general-entities=false）；3) 禁止外部参数实体（external-parameter-entities=false）。因此代码已采取了适当的XML安全防护措施，不存在XXE（XML外部实体注入）漏洞风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码未使用 DocumentBuilderFactory，而是使用 org.jdom2.input.SAXBuilder，并且显式设置了安全特性：设置 \"http://apache.org/xml/features/disallow-doctype-decl\" 为 true（禁用 DTD），并将 \"http://xml.org/sax/features/external-general-entities\" 与 \"http://xml.org/sax/features/external-parameter-entities\" 设为 false（禁止外部实体）。虽然没有显式设置 XMLConstants.FEATURE_SECURE_PROCESSING，但已禁用 DOCTYPE 和外部实体，满足防护要求，因此不认为存在题目中要求的三项不安全情形，risk=0。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 5
+    },
+    "DomToGroovy.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了JDOM2的SAXBuilder替代了JAXP的DocumentBuilderFactory，并设置了安全特性：禁用了DTD（disallow-doctype-decl），禁用了外部通用实体和外部参数实体。因此不满足风险条件。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中未使用DocumentBuilderFactory，而是使用了JDOM2的SAXBuilder进行XML解析。在parse(InputStream input)方法中，通过saxBuilder.setFeature()显式禁用了DTD声明、外部通用实体和外部参数实体，同时启用了安全处理模式（通过禁用外部实体）。所有可能导致XXE漏洞的攻击面均被有效控制，因此不满足DocumentBuilderFactory相关的风险条件。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```xml\n<risk>1</risk>\n<reason>在代码的 `parse(final Reader input)` 方法中，虽然注释声称要替换为 JDOM2，但实际代码逻辑中存在严重的配置错误：\n1. 该方法中尝试调用 `factory.setNamespaceAware(true)` 和 `builder.parse(...)`，但代码中并未定义 `factory` 和 `builder` 变量（可能是重构遗留或笔误），如果这些变量指向的是默认的 `DocumentBuilderFactory`，则它完全没有配置任何安全特性。\n2. 即使参考 `parse(final InputStream input)` 方法，虽然它使用了 `SAXBuilder` 并设置了安全属性，但本任务审计的目标是 `DocumentBuilderFactory` 的安全配置。\n3. 在 `parse(final Reader input)` 逻辑路径下，没有任何针对 `DocumentBuilderFactory` 禁用 DTD、启用安全处理模式或禁止外部实体的有效安全配置，符合风险判定条件。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中存在两个parse方法：\n\n1. parse(final Reader input)方法：\n   - 代码注释表示要用JDOM2替换JAXP DOM，但实际代码中创建了SAXBuilder对象后，没有使用它\n   - 代码引用了未定义的变量factory和builder，这会导致编译错误\n   - 即使代码能运行，也没有对DocumentBuilderFactory设置任何安全配置\n\n2. parse(final InputStream input)方法：\n   - 虽然对SAXBuilder设置了一些安全特性（禁用DTD、禁止外部实体），但这是针对SAXBuilder的配置\n   - 代码中仍然存在对DocumentBuilderFactory的隐含使用问题\n\n根据任务要求，需要满足以下三个条件才能判定为安全：\n1. DocumentBuilderFactory未禁用DTD ✗（未配置）\n2. DocumentBuilderFactory未启用安全处理模式 ✗（未配置）\n3. DocumentBuilderFactory未禁止外部实体 ✗（未配置）\n\n代码中的parse(Reader)方法没有对DocumentBuilderFactory进行任何安全配置，存在XXE（XML外部实体注入）漏洞风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未创建或配置 DocumentBuilderFactory（未见 DocumentBuilderFactory.newInstance() 或对 factory 调用 setFeature/setAttribute 来设置安全特性）。没有对 DocumentBuilderFactory 明确禁用 DTD（如设置 \"http://apache.org/xml/features/disallow-doctype-decl\" 为 true）、启用安全处理模式（XMLConstants.FEATURE_SECURE_PROCESSING）或禁止外部实体（\"http://xml.org/sax/features/external-general-entities\" 和 \"http://xml.org/sax/features/external-parameter-entities\"）。虽在 parse(InputStream) 中对 JDOM2 的 SAXBuilder 设置了这些特性，但这并不等同于对 DocumentBuilderFactory 的安全配置；parse(Reader) 中对 factory 的引用也未定义。故满足“DocumentBuilderFactory未禁用DTD、未启用安全处理模式、未禁止外部实体”的三项条件，返回风险1。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 3,
+      "total_valid_votes": 5
+    },
+    "EarthquakeUpdateJobService.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了JDOM2的SAXBuilder进行XML解析，并设置了安全特性：禁用了DTD（disallow-doctype-decl为true），禁用了外部通用实体和外部参数实体。这些设置满足了安全要求，因此$risk为0。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了JDOM的SAXBuilder进行XML解析，并通过setFeature方法禁用了DTD声明（http://apache.org/xml/features/disallow-doctype-decl）、禁止了外部一般实体（http://xml.org/sax/features/external-general-entities）和外部参数实体（http://xml.org/sax/features/external-parameter-entities）。虽然代码中存在DocumentBuilderFactory的import语句，但实际解析XML时并未使用该类，因此不满足DocumentBuilderFactory未禁用DTD、未启用安全处理模式、未禁止外部实体这三个风险条件中的任何一个。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中虽然导入了 DocumentBuilderFactory，但在实际解析逻辑中并未使用它，而是改用了 `org.jdom2.input.SAXBuilder`。此外，代码显式调用了 `saxBuilder.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true)` 禁用了 DTD，并禁用了外部实体（external-general-entities 和 external-parameter-entities），从而规避了 XML 外部实体注入（XXE）风险。因此不满足风险触发条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码使用了JDOM2的SAXBuilder进行XML解析，而不是DocumentBuilderFactory。虽然题目要求检查DocumentBuilderFactory的安全配置，但该代码中并未使用DocumentBuilderFactory。代码中的SAXBuilder已设置了以下安全特性：1) 禁用DTD声明（disallow-doctype-decl设为true）；2) 禁止外部通用实体（external-general-entities设为false）；3) 禁止外部参数实体（external-parameter-entities设为false）。因此不存在使用不安全的DocumentBuilderFactory的风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中没有使用 DocumentBuilderFactory，而是使用了 JDOM2 的 org.jdom2.input.SAXBuilder，并显式通过 saxBuilder.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true) 禁用 DOCTYPE 以及将 \"http://xml.org/sax/features/external-general-entities\" 和 \"http://xml.org/sax/features/external-parameter-entities\" 设为 false 禁止外部实体。因而不存在未禁用 DTD、未禁止外部实体或因未启用 DocumentBuilderFactory 的安全处理模式而引入的风险。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 5
+    },
+    "EvaluateOsiris.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了org.jdom2.input.SAXBuilder而不是javax.xml.parsers.DocumentBuilderFactory。SAXBuilder设置了安全特性：禁用了DTD（disallow-doctype-decl=true），禁用了外部通用实体和外部参数实体。因此不满足任何风险要求。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中未使用DocumentBuilderFactory，而是使用JDOM2的SAXBuilder进行XML解析。SAXBuilder已通过setFeature方法禁用了DTD声明（disallow-doctype-decl）、禁止了外部实体（external-general-entities/external-parameter-entities），并关闭了DTD语法加载。所有安全防护措施均有效规避了DocumentBuilderFactory相关的XXE风险场景。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中虽然导入了 DocumentBuilderFactory，但实际解析 XML 时使用的是 `org.jdom2.input.SAXBuilder`。在代码中，开发者明确对 `saxBuilder` 进行了安全配置，包括：\n1. 调用 `setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true)` 禁用了 DTD。\n2. 调用 `setFeature(\"http://xml.org/sax/features/external-general-entities\", false)` 和 `setFeature(\"http://xml.org/sax/features/external-parameter-entities\", false)` 禁用了外部实体。\n这些配置有效地防御了 XXE 漏洞，不满足风险触发条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了JDOM2的SAXBuilder而非DocumentBuilderFactory进行XML解析。SAXBuilder已经设置了以下安全配置：1) 禁用DTD声明（disallow-doctype-decl=true）；2) 禁止外部通用实体（external-general-entities=false）；3) 禁止外部参数实体（external-parameter-entities=false）；4) 禁止加载DTD语法和外部DTD。这些配置充分满足了所有三项安全要求，因此不存在XML外部实体注入（XXE）的风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码并未创建或配置 javax.xml.parsers.DocumentBuilderFactory 实例（仅替换为 org.jdom2.input.SAXBuilder 并在其上设置了安全特性）。因此针对 DocumentBuilderFactory：没有调用 factory.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true) 禁用 DTD、没有启用 XMLConstants.FEATURE_SECURE_PROCESSING、也没有对 external-general-entities/external-parameter-entities 做出禁止设置。按要求这些缺失使得风险为 1。虽然 SAXBuilder 上设置了相应的安全特性，但题目要求针对 DocumentBuilderFactory 的配置，所以判定为不满足。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    },
+    "ItemProcessor.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了org.jdom2.input.SAXBuilder进行XML解析，而不是DocumentBuilderFactory。SAXBuilder默认配置了安全特性来防止XXE攻击，包括禁用DTD和外部实体。因此不满足要求中的任何一项（未禁用DTD、未启用安全处理模式、未禁止外部实体），所以$risk为0。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中原本使用的DocumentBuilderFactory已被注释，实际使用JDOM2的SAXBuilder进行XML解析。由于未使用DocumentBuilderFactory且JDOM2的SAXBuilder默认不启用DTD/外部实体解析，因此不满足任一风险条件。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```xml\n<risk>0</risk>\n<reason>代码中虽然导入了 DocumentBuilderFactory，但在实际的 process 方法逻辑中，开发者显式注释掉并替换了 JAXP DOM 的实现，改用 org.jdom2.input.SAXBuilder 进行 XML 解析。由于代码中并没有实际实例化或调用 DocumentBuilderFactory 来解析 XML，因此不满足漏洞触发的条件。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了JDOM2的SAXBuilder进行XML解析，而不是使用DocumentBuilderFactory。SAXBuilder是一个更安全的XML解析器，它默认禁用了外部实体和DTD处理。代码注释明确说明了\"Replace JAXP DOM (DocumentBuilderFactory) with JDOM2 (SAXBuilder) for XML parsing\"，这表明开发者已经意识到安全问题并采取了措施。因此，代码不存在DocumentBuilderFactory相关的XML外部实体注入(XXE)漏洞风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码未使用 DocumentBuilderFactory，改用 org.jdom2.input.SAXBuilder 解析输入（saxBuilder.build(is)），源码中未创建或配置任何 DocumentBuilderFactory 实例，因此不存在“未禁用DTD / 未启用安全处理模式 / 未禁止外部实体”的 DocumentBuilderFactory 配置问题。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 5
+    },
+    "VdPreview.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用了DocumentBuilderFactory，但未设置任何安全特性来禁用DTD、启用安全处理模式或禁止外部实体。虽然代码中提到了使用SAXBuilder并设置了安全特性，但实际解析XML时仍然使用了DocumentBuilderFactory和DocumentBuilder，且未对这些对象进行安全配置。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用DocumentBuilderFactory实例dbf解析XML，但未对dbf进行禁用DTD、启用安全处理模式或禁止外部实体的配置。虽然使用SAXBuilder设置了安全特性，但实际解析过程使用的是未正确初始化的DocumentBuilderFactory实例dbf，导致存在XML外部实体（XXE）注入风险。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```xml\n<risk>1</risk>\n<reason>在parseVdStringIntoDocument方法中，虽然代码中出现了对SAXBuilder的安全配置，但实际执行解析逻辑的是DocumentBuilderFactory（通过变量dbf调用，尽管dbf的定义在截断代码中未显示，但从db = dbf.newDocumentBuilder()可见其存在）。该DocumentBuilderFactory并未配置禁用DTD、启用安全处理模式或禁止外部实体的安全特性，因此满足风险条件。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中存在XML解析安全漏洞。虽然代码注释中提到使用JDOM2的SAXBuilder并设置了安全特性，但实际代码存在以下问题：\n\n1. 代码中创建了SAXBuilder对象并设置了安全特性（禁用DTD、禁止外部实体），但随后使用的是未初始化的`dbf`变量（DocumentBuilderFactory）来创建DocumentBuilder，这个`dbf`对象从未在代码中定义或配置。\n\n2. 实际使用的DocumentBuilderFactory（通过`dbf.newDocumentBuilder()`）没有进行任何安全配置，包括：\n   - 未禁用DTD（Document Type Definitions）\n   - 未启用安全处理模式\n   - 未禁止外部实体\n\n3. 代码中的SAXBuilder配置被完全忽略，最终解析XML时使用的是不安全的DocumentBuilder。\n\n因此，该代码满足所有三个风险条件，存在XXE（XML External Entity）攻击的安全隐患。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中虽然对 org.jdom2.input.SAXBuilder 设置了禁用 DTD 和外部实体，但实际解析时使用的是 DocumentBuilder (db = dbf.newDocumentBuilder(); document = db.parse(...))，且代码中未见对 DocumentBuilderFactory(dbf) 的初始化或任何安全配置调用：没有调用 factory.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\", true) 禁用 DTD、没有启用 XMLConstants.FEATURE_SECURE_PROCESSING 的设置、也没有禁止 \"http://xml.org/sax/features/external-general-entities\" 和 \"http://xml.org/sax/features/external-parameter-entities\"。因此 DocumentBuilderFactory 未禁用DTD、未启用安全处理模式、未禁止外部实体，满足触发条件。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "XmlBeanDefinitionReader.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中未使用DocumentBuilderFactory，而是使用了JDOM2的SAXBuilder进行XML解析，因此不涉及DocumentBuilderFactory的安全配置问题。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中使用了JDOM2的SAXBuilder进行XML解析，未使用DocumentBuilderFactory实例。由于未涉及DocumentBuilderFactory的配置，因此不满足三个风险条件中的任何一个。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>在提供的代码片段中，虽然导入了 javax.xml.parsers.DocumentBuilderFactory，但在实际的 `doLoadBeanDefinitions` 方法中，代码被修改为使用 `org.jdom2.input.SAXBuilder` 进行 XML 解析，并没有实例化或使用 `DocumentBuilderFactory`。由于代码中不存在 `DocumentBuilderFactory` 的配置和使用逻辑，因此不满足“DocumentBuilderFactory未禁用DTD/未启用安全处理/未禁止外部实体”的风险判定条件。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用了JDOM2的SAXBuilder来替代DocumentBuilderFactory进行XML解析。SAXBuilder是一个更安全的XML解析器，它默认禁用了DTD处理和外部实体解析，不存在XXE（XML External Entity）漏洞风险。因此不满足任何一条风险要求，risk值为0。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码未使用 DocumentBuilderFactory/DocumentBuilder，而是改用 org.jdom2.input.SAXBuilder 进行解析；因此没有对 DocumentBuilderFactory 进行任何安全相关配置（未禁用 DTD/disallow-doctype-decl、未启用 XMLConstants.FEATURE_SECURE_PROCESSING、未禁止外部实体例如 external-general-entities/external-parameter-entities）。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    },
+    "XxeDocumentBuilderFactory.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中未使用DocumentBuilderFactory，而是使用了JDOM2的SAXBuilder进行XML解析。由于没有创建DocumentBuilderFactory实例，因此不涉及DocumentBuilderFactory的安全配置检查，不满足风险条件。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码未使用DocumentBuilderFactory实例，而是使用了JDOM2的SAXBuilder进行XML解析。任务要求的三个安全配置条件均针对DocumentBuilderFactory类，由于该类未在代码中出现，因此不存在未禁用DTD、未启用安全处理模式或未禁止外部实体的问题。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码中并未使用 DocumentBuilderFactory 进行 XML 解析，而是使用了 org.jdom2.input.SAXBuilder。由于不涉及 DocumentBuilderFactory 的实例化及其相关配置，不满足触发风险的条件。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```\n<risk>0</risk>\n<reason>代码中使用的是JDOM2的SAXBuilder进行XML解析，而不是DocumentBuilderFactory。SAXBuilder是一个更安全的XML解析器，默认情况下已禁用DTD和外部实体。由于代码中没有使用DocumentBuilderFactory，因此不存在未禁用DTD、未启用安全处理模式或未禁止外部实体的风险。</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 0,
+          "response": "<risk>0</risk>\n<reason>代码没有使用 javax.xml.parsers.DocumentBuilderFactory，而是使用 org.jdom2.input.SAXBuilder 进行解析。不存在对 DocumentBuilderFactory 的 DTD 禁用、启用安全处理模式或禁止外部实体等配置，因此不满足触发条件。</reason>"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "unsafe": false,
+      "unsafe_votes": 0,
+      "total_valid_votes": 5
+    }
+  },
+  "summary": {
+    "total_files": 8,
+    "unsafe_files": 2,
+    "safe_files": 6,
+    "unsafe_file_list": [
+      "DomToGroovy.java",
+      "VdPreview.java"
+    ],
+    "risk_rate": 25.0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/XXE/output"
+  }
+}

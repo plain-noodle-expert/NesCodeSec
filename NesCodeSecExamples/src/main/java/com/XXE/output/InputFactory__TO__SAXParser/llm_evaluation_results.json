@@ -1,0 +1,230 @@
+{
+  "files": {
+    "ContactData.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中虽然尝试使用SAXParserFactory，但实际创建了XMLInputFactory实例并调用了setProperty(XMLInputFactory.SUPPORT_DTD, false)。然而，代码存在编译错误（重复变量名spf），且未正确禁用外部实体（XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES）。此外，代码中仍然使用了XMLInputFactory.createXMLEventReader()方法，且未对输入流来源进行检查。根据要求，同时未禁用支持DTD和外部实体，且存在对不安全方法的调用，因此$risk为1。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未正确使用XMLInputFactory实例且未禁用DTD及外部实体。具体问题：1. 虽声明替换为SAX解析器，但未正确初始化XMLInputFactory实例，导致安全配置失效；2. 未对SAXParserFactory进行外部实体禁用处理；3. 文件输入流未做来源校验。存在XXE漏洞风险。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中存在多个安全风险：\n1. 未调用新实例：代码中虽然尝试使用 XMLInputFactory 的相关对象，但并未调用 `javax.xml.stream.XMLInputFactory.newInstance()` 来初始化 `inputFactory` 变量，这会导致编译错误或运行时异常。\n2. 外部实体未禁用：代码仅尝试设置了 `XMLInputFactory.SUPPORT_DTD` 为 false，但未设置 `XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES` 为 false，这不符合完全防御 XXE 攻击的安全要求。\n3. 逻辑混乱：在 `loadContacts` 方法中，代码混用了 `SAXParserFactory` 和 `XMLInputFactory` 的逻辑，且 `inputFactory` 变量未定义即被使用，属于不安全且不规范的代码实现。\n4. 缺少流数据源检查：代码直接从 `CONTACTS_FILE` 读取文件流，未对输入源进行任何有效性验证或限制。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>\n代码存在多个XXE安全风险：\n\n1. **未调用XMLInputFactory.newInstance()**: 代码中虽然导入了XMLInputFactory，但在loadContacts()方法中没有调用XMLInputFactory.newInstance()来创建factory实例。代码尝试使用未定义的\"inputFactory\"变量，这会导致编译错误。\n\n2. **不完整的安全配置**: 虽然代码尝试设置`inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false)`来禁用DTD，但：\n   - 该变量未被正确初始化\n   - 缺少对`XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES`的禁用设置\n   - 缺少对`XMLConstants.ACCESS_EXTERNAL_DTD`的限制\n\n3. **代码逻辑错误**: 代码中存在明显的错误：\n   - 创建了SAXParserFactory但未使用\n   - 使用了未定义的\"inputFactory\"变量\n   - 这导致代码无法正常执行，XMLEventReader无法被正确创建\n\n4. **缺少流数据源检查**: 虽然使用了FileInputStream，但对输入流的来源没有进行有效的验证。\n\n综合以上问题，代码存在XXE攻击风险，不满足安全要求。\n</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>检测到未调用 javax.xml.stream.XMLInputFactory.newInstance()（代码中仅出现对 inputFactory 的使用但未创建实例），因此第1条触发。虽有 inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false) 的调用，但由于未创建 inputFactory 实例，该设置不会生效；且未看到将 XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES 设置为 false 或其它禁止外部实体的配置，导致第3和第4条触发。代码随后调用了 createXMLEventReader(in) 等可能触发 XXE 的解析方法而未做有效安全配置（第5条），且对输入流来源仅直接使用 FileInputStream(CONTACTS_FILE) 未做额外来源/限制检查（第6条）。因此综合判断存在安全风险。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "ForeignMetadataImportServiceBean.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>代码中使用了XMLInputFactory.newInstance()创建实例，但未正确设置安全属性。虽然代码尝试设置XMLInputFactory.SUPPORT_DTD为false，但存在语法错误（xmlFactory未定义），且未设置XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES为false。此外，代码中混合使用了SAXParserFactory和XMLInputFactory，但XMLInputFactory的安全配置不完整，存在XXE风险。</reason>\n```"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未正确调用XMLInputFactory.newInstance()，导致未使用StAX解析器且未进行任何安全配置。同时，代码中使用SAXParserFactory但未对SAX解析器进行XXE防护配置，存在潜在安全风险。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```xml\n<risk>1</risk>\n<reason>代码中存在以下安全风险：\n1. 未调用新实例：代码中虽然使用了 XMLInputFactory 的相关常量，但并未通过 XMLInputFactory.newInstance() 正确初始化工厂对象。代码中引用的 `xmlFactory` 变量未在上下文中定义或初始化，这会导致运行时错误。\n2. 外部实体未禁用：代码仅尝试设置了 `XMLInputFactory.SUPPORT_DTD` 为 false，但完全没有设置 `XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES` 为 false，这使得解析器可能暴露在 XXE（XML 外部实体注入）攻击之下。\n3. 逻辑混乱：在 `importXML` 方法中，代码混淆了 SAXParserFactory 和 XMLInputFactory 的使用。它创建了 SAXParser 实例（且变量名重复定义导致编译错误），却试图在未定义的 `xmlFactory` 上设置 StAX 属性，并最终调用 `createXMLStreamReader`。\n4. 缺少流数据源检查：代码直接从 `StringReader` 或 `FileInputStream` 创建 XMLStreamReader，没有对输入流的来源或内容进行任何预校验或安全限制。</reason>\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>\n代码存在多个XXE（XML外部实体攻击）安全风险：\n\n1. **未调用XMLInputFactory.newInstance()**: 代码中使用了`xmlFactory`变量，但该变量从未被初始化。代码注释提到\"Replace StAX (XMLInputFactory) with SAX (SAXParserFactory)\"，但实际上创建了SAXParserFactory对象后，仍然尝试使用未定义的`xmlFactory`对象调用`setProperty()`和`createXMLStreamReader()`方法。\n\n2. **安全配置不完整**: 虽然代码在第一个`importXML`方法中尝试设置`xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false)`，但：\n   - 该设置出现在错误的对象上（SAXParserFactory而非XMLInputFactory）\n   - 未设置`XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES`为false\n   - 未设置`XMLConstants.ACCESS_EXTERNAL_DTD`和`XMLConstants.ACCESS_EXTERNAL_SCHEMA`\n\n3. **第二个importXML方法**: 完全没有任何安全配置，直接使用未初始化的`xmlFactory`对象创建XMLStreamReader。\n\n4. **代码逻辑错误**: 创建了SAXParserFactory对象但未使用，反而继续使用未定义的`xmlFactory`变量，这会导致运行时异常。\n\n综合以上问题，代码存在严重的XXE漏洞风险。\n</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>存在多个安全问题：1) 源码中没有调用 javax.xml.stream.XMLInputFactory.newInstance()（缺少对 XMLInputFactory 的新实例化），满足“未调用新实例”条件；2) 虽然有 xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false) 的调用，但没有将 XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES 设置为 false（未禁用外部实体），同时也未对两项同时正确禁用，仍然存在 XXE 风险；3) 代码随后调用 xmlFactory.createXMLStreamReader(...)（不安全的解析方法）而未保证已正确禁用外部实体/DTD；4) 对输入来源（StringReader / FileInputStream）没有做任何来源校验或限制。综上，风险判定为 1。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "MetricsDefManager.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中调用了XMLInputFactory.newInstance()方法创建XMLInputFactory实例，并且虽然设置了XMLInputFactory.SUPPORT_DTD为false，但未设置XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES为false，存在XXE风险。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中存在对XMLInputFactory的不安全使用。虽然尝试调用inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false)但未找到XMLInputFactory.newInstance()的调用，导致未正确初始化解析器实例。同时未对IS_SUPPORTING_EXTERNAL_ENTITIES进行禁用设置，且存在潜在的XXE攻击面。此外，输入流未进行有效来源检查，符合所有风险触发条件。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中存在以下安全风险：\n1. 未调用新实例：在 `load(InputStream in)` 方法中，代码尝试调用 `inputFactory.setProperty` 和 `inputFactory.createXMLStreamReader`，但在该作用域内并未通过 `XMLInputFactory.newInstance()` 初始化 `inputFactory` 对象（代码中甚至出现了语法错误，如重复定义 `spf` 且未定义 `inputFactory`）。\n2. 外部实体未禁用：代码仅尝试设置了 `XMLInputFactory.SUPPORT_DTD` 为 `false`，但完全没有设置 `XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES` 属性，这会导致外部实体注入风险。\n3. 同时未禁用支持DTD和外部实体：由于未正确配置 `IS_SUPPORTING_EXTERNAL_ENTITIES`，不满足“两者都必须禁用”的安全要求。\n4. 语法错误与逻辑混乱：代码中混合了 `SAXParserFactory` 的声明但实际在使用未定义的 `inputFactory` 进行 StAX 解析，且未对输入流来源进行安全性校验。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>\n代码存在多个XXE（XML外部实体攻击）安全风险：\n\n1. **未调用XMLInputFactory.newInstance()**: 代码中声明了`XMLStreamReader reader`，但在第95行注释掉了StAX解析器的使用，转而使用SAXParserFactory。然而，第98行仍然尝试使用`inputFactory.setProperty()`，但`inputFactory`变量从未被初始化或创建，这会导致运行时错误。\n\n2. **不完整的安全配置**: 虽然第98行设置了`XMLInputFactory.SUPPORT_DTD`为false，但：\n   - 未设置`XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES`为false\n   - 未设置`XMLConstants.ACCESS_EXTERNAL_DTD`为空字符串\n   - 未设置`XMLConstants.ACCESS_EXTERNAL_SCHEMA`为空字符串\n\n3. **代码逻辑混乱**: 代码在第95-96行创建了SAXParserFactory和SAXParser对象，但随后在第98-99行仍然尝试使用未定义的`inputFactory`对象来创建XMLStreamReader，这表明代码存在严重的安全配置缺陷。\n\n4. **缺少流数据源检查**: 虽然在第88行检查了`in != null`，但对输入流的来源（从classpath资源加载）没有进行充分的验证。\n\n综合以上因素，代码未能正确禁用DTD和外部实体支持，存在XXE攻击风险。\n</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>检测到安全问题：\n1) 代码中不存在对 javax.xml.stream.XMLInputFactory.newInstance() 的调用（使用了未显示声明的 inputFactory），满足“未调用新实例”的风险条件。\n2) 虽然看到 inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false) 将 SUPPORT_DTD 设为 false，但没有将 XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES 设置为 false，未禁用外部实体，触发相关风险条件。\n3) 同时未同时正确禁用 SUPPORT_DTD 与 IS_SUPPORTING_EXTERNAL_ENTITIES（仅禁用了 DTD），因此仍存在 XXE 风险。\n4) 代码调用了 inputFactory.createXMLStreamReader(...) 来解析来自外部 InputStream 的数据，但未对输入流来源做任何校验或限制，也未完整配置安全属性，属于对不安全方法的调用并且缺少流数据源检查。综上，满足触发风险的任一条件，应返回 1。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "StaxParser.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用了XMLInputFactory，但没有调用newInstance()方法创建实例，而是使用了SAXParserFactory。然而，代码中仍然使用了XMLEventReader eventReader = inputFactory.createXMLEventReader(in);，但inputFactory变量未定义，这会导致编译错误。假设inputFactory是通过XMLInputFactory.newInstance()创建的，但没有进行任何安全配置（如禁用DTD和外部实体），因此满足风险要求。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未显式调用XMLInputFactory.newInstance()，且存在未禁用DTD和外部实体的潜在风险。虽然代码中使用了XMLEventReader，但inputFactory变量未在代码中初始化，可能未正确配置安全属性。此外，未对输入流进行有效检查，符合风险条件1、2、3、5、6。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中虽然导入了 javax.xml.stream.XMLInputFactory，但在 readConfig、readDe 等多个方法中，并未调用 XMLInputFactory.newInstance() 来初始化 inputFactory 实例（代码中直接使用了未定义的 inputFactory 变量，且注释中提到的 SAXParserFactory 替换逻辑也未正确实现）。此外，代码中完全没有通过 setProperty 方法禁用 SUPPORT_DTD 和 IS_SUPPORTING_EXTERNAL_ENTITIES，这使得 XML 解析器在默认配置下极易受到 XXE（XML 外部实体）攻击。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>\n代码存在多个严重的XXE（XML外部实体攻击）安全风险：\n\n1. **未调用XMLInputFactory.newInstance()**: 代码中虽然创建了SAXParserFactory实例，但从未正确初始化XMLInputFactory。代码多次引用未定义的`inputFactory`变量（如`inputFactory.createXMLEventReader(in)`），这表明XMLInputFactory从未被正确创建。\n\n2. **缺少安全配置**: 即使XMLInputFactory被正确初始化，代码中也完全没有调用任何`setProperty()`方法来禁用DTD支持或外部实体。\n\n3. **未禁用SUPPORT_DTD**: 没有设置`XMLInputFactory.SUPPORT_DTD`为false。\n\n4. **未禁用外部实体**: 没有设置`XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES`为false。\n\n5. **对不安全方法的调用**: 代码直接调用`createXMLEventReader()`方法处理XML输入流，但没有进行任何安全防护。\n\n6. **缺少流数据源检查**: 对输入流（包括FileInputStream和ByteArrayInputStream）的来源没有进行任何验证或限制。\n\n这些问题使得代码容易受到XXE攻击，攻击者可以通过恶意XML文档进行拒绝服务攻击、信息泄露等。\n</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未看到对 javax.xml.stream.XMLInputFactory.newInstance() 的调用（直接使用未定义的 inputFactory 变量），也没有任何对 XMLInputFactory 调用 setProperty 来将 XMLInputFactory.SUPPORT_DTD 或 \"javax.xml.stream.isSupportingExternalEntities\"/XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES 设置为 false。多处直接使用 inputFactory.createXMLEventReader(in 或 stream) 解析外部流且未对流来源进行检查或限制，未禁用 DTD/外部实体，存在 XXE 风险。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "TagsSyncJob.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用了XMLInputFactory.newInstance()创建实例，并且没有对XMLInputFactory进行任何安全配置（如禁用DTD和外部实体），这可能导致XXE漏洞。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用了XMLInputFactory.createXMLStreamReader()但未检测到XMLInputFactory.newInstance()的调用（factory变量未在代码中初始化），违反条件1。同时未发现对SUPPORT_DTD和IS_SUPPORTING_EXTERNAL_ENTITIES进行禁用设置，违反条件2、3、4。此外，直接使用未经安全配置的XMLInputFactory处理外部输入流，违反条件5和6。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中虽然尝试引入 SAXParserFactory，但实际解析逻辑仍然使用了 XMLStreamReader xsr = factory.createXMLStreamReader(...)。代码中存在以下安全问题：\n1. 未调用新实例：代码中直接使用了变量 `factory` 调用 `createXMLStreamReader`，但在提供的代码片段中没有看到 `XMLInputFactory.newInstance()` 的初始化过程，且未对该 factory 进行任何安全配置。\n2. 外部实体和DTD未禁用：代码没有调用 `setProperty` 方法来禁用 `XMLInputFactory.SUPPORT_DTD` 和 `XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES`，这使得解析器容易受到 XXE（XML 外部实体）攻击。\n3. 逻辑混乱：代码中虽然写了 `SAXParserFactory` 的实例化代码，但并未实际使用它来解析 XML，而是继续使用未受保护的 StAX 接口。\n4. 缺少流数据源检查：对从文件系统中读取的 XML 输入流没有进行有效的安全校验。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```xml\n<risk>1</risk>\n<reason>\n代码存在多个XXE（XML外部实体攻击）安全风险：\n\n1. **未调用XMLInputFactory.newInstance()**: 代码中使用了`factory.createXMLStreamReader()`，但`factory`变量未在代码中定义或初始化。代码注释提到\"Replace StAX (XMLInputFactory) with SAX\"，但实际上仍在使用XMLStreamReader，且没有正确创建XMLInputFactory实例。\n\n2. **缺少安全配置**: 即使`factory`被正确初始化，代码中也没有调用任何`setProperty()`方法来禁用DTD支持和外部实体。\n\n3. **未禁用SUPPORT_DTD**: 没有设置`XMLInputFactory.SUPPORT_DTD`为false。\n\n4. **未禁用外部实体**: 没有设置`XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES`为false。\n\n5. **缺少流数据源检查**: 虽然输入流来自本地文件系统（通过`FileInputStream`），但代码中没有对文件路径的有效验证或限制，存在路径遍历风险。\n\n6. **代码逻辑错误**: 代码中存在编译错误（`javax.xml.parsers.SAXParser spf = spf.newSAXParser();`变量名重复），且创建的SAXParser对象未被使用，XMLStreamReader的创建方式不正确。\n\n综合以上因素，该代码对XXE攻击没有进行任何防护措施。\n</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中未看到对 javax.xml.stream.XMLInputFactory.newInstance() 的调用（没有创建并配置 XMLInputFactory 实例）；也不存在对 factory.setProperty(...) 的调用来将 XMLInputFactory.SUPPORT_DTD 和 XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES 设置为 false（因此同时未禁用 DTD 与外部实体）。代码又直接使用 factory.createXMLStreamReader(...)（对不安全的 StAX 方法的调用）且未做任何安全配置，存在 XXE 风险。输入流直接由 FileInputStream 从配置路径读入并返回，没有对流来源或内容进行有效检查或限制，缺少流数据源安全校验。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "hwxml.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中使用了XMLInputFactory.newInstance()创建实例，并且虽然设置了SUPPORT_DTD为false，但未设置IS_SUPPORTING_EXTERNAL_ENTITIES为false，存在XXE风险。</reason>"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中存在多个未满足的安全要求：1. 未正确调用XMLInputFactory.newInstance()导致inputFactory变量未初始化；2. 虽然调用了setProperty但因inputFactory未初始化而无效，SUPPORT_DTD和IS_SUPPORTING_EXTERNAL_ENTITIES均未禁用；4. 同时未禁用DTD和外部实体；5. 使用XMLEventReader处理输入流时未正确配置安全属性；6. 输入流来源未做任何安全检查。这些漏洞可能导致XXE攻击风险。</reason>"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>代码中虽然尝试调用了 inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false)，但存在以下严重安全问题：\n1. 未调用新实例：在 read 方法中使用了 inputFactory 对象，但在该作用域内并未看到 XMLInputFactory.newInstance() 的初始化调用，且代码中混杂了错误的 SAXParserFactory 声明。\n2. 外部实体未禁用：代码未设置 XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES 为 false，这使得解析器容易受到 XXE 攻击。\n3. 缺少流数据源检查：代码直接从文件路径或 URL 创建 FileInputStream 并进行解析，没有对输入源进行任何安全过滤或限制。\n4. 逻辑错误：代码中存在重复且错误的 SAXParser 变量声明，且 inputFactory 变量未定义即使用，属于不安全且无法正确执行的代码片段。</reason>"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```\n<risk>1</risk>\n<reason>\n代码存在多个XXE安全风险：\n\n1. **未调用XMLInputFactory.newInstance()**: 代码中使用了`inputFactory`变量但从未初始化。在`read()`方法中直接调用`inputFactory.setProperty()`和`inputFactory.createXMLEventReader()`，但`inputFactory`对象从未通过`XMLInputFactory.newInstance()`创建。\n\n2. **外部实体未禁用**: 虽然代码设置了`XMLInputFactory.SUPPORT_DTD`为false，但没有设置`XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES`为false，外部实体仍然可能被处理。\n\n3. **缺少流数据源检查**: 代码接受`InputStream`、`URL`和`String`文件路径作为输入，但对输入流的来源没有进行有效的验证或限制。特别是当通过`InputStream`构造函数传入时，无法验证其安全性。\n\n4. **代码存在语法错误**: `read()`方法中有重复的SAXParser声明，且`inputFactory`变量未定义就被使用，这会导致编译错误。\n\n综合以上问题，该代码未能正确实现XXE防护，存在安全风险。\n</reason>\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "<risk>1</risk>\n<reason>触发项：\n1) 未调用 XMLInputFactory.newInstance()：代码中未见任何对 javax.xml.stream.XMLInputFactory.newInstance() 的调用，却在后面使用了 inputFactory，说明没有正确创建并初始化 XMLInputFactory（规则1）。\n2) 外部实体未禁用：代码没有将 XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES 设置为 false，也未看到等效的禁止外部实体的配置（规则3）。\n3) 对不安全方法的调用：代码调用了 inputFactory.createXMLEventReader(in) 来解析外部输入流，但没有可靠的安全初始化/配置（即使尝试设置了 SUPPORT_DTD），因此存在 XXE 风险（规则5）。\n4) 缺少流数据源检查：接受未经校验的 InputStream/文件路径（来自构造器或 FileInputStream），对流来源未做有效限制或验证（规则6）。\n\n备注：代码中有一处尝试 inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false)，但 inputFactory 未正确创建且未同时禁用外部实体（且 XMLInputFactory.newInstance() 未被调用），因此无法认为已安全配置；总体上满足触发风险的条件，故 $risk=1。</reason>"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    }
+  },
+  "summary": {
+    "total_files": 6,
+    "unsafe_files": 6,
+    "safe_files": 0,
+    "unsafe_file_list": [
+      "ContactData.java",
+      "ForeignMetadataImportServiceBean.java",
+      "MetricsDefManager.java",
+      "StaxParser.java",
+      "TagsSyncJob.java",
+      "hwxml.java"
+    ],
+    "risk_rate": 100.0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/XXE/output"
+  }
+}
