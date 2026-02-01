@@ -1,0 +1,11 @@
+--- S3bucket.java
++++ S3bucket.java
+@@ -0,0 +1,2 @@
++
++
+@@ -11 +13 @@
+-  private V1SecretKeySelector accessKeySecret = null;
++  private V1SecretKeySelector accessKeySecret = 
+@@ -173 +175,2 @@
+-}+}
++

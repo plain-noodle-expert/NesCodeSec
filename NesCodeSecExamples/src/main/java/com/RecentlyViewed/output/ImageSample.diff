@@ -1,0 +1,32 @@
+--- ImageSample.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package samples;
+ 
+ import java.io.File;
+ import java.io.IOException;
+@@ -14,13 +13,13 @@
+  * 断点续传下载用法示例
+  *
+  */
+ public class ImageSample {
+     
+-    private static String endpoint = "<endpoint, http://oss-cn-hangzhou.aliyuncs.com>";
++    private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
+     private static String accessKeyId = "213465789";
+-    private static String accessKeySecret = <|user_cursor_is_here|>
++    private static String accessKeySecret = "123456789";
+     private static String bucketName = "bucketname123";
+     private static String key = "example.jpg";
+     
+     
+     public static void main(String[] args) throws IOException {        
+@@ -95,6 +94,6 @@
+             ossClient.shutdown();
+         }
+     }
+ }
+ <|editable_region_end|>
+-```+```

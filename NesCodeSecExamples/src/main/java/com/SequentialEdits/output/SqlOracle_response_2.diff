@@ -1,0 +1,18 @@
+--- SqlOracle_input_excerpt_2.java
++++ SqlOracle_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.taotao.cloud.workflow.biz.common.database.sql.impl;
+ 
+ import com.taotao.cloud.workflow.biz.common.database.source.DbBase;
+ import com.taotao.cloud.workflow.biz.common.database.sql.SqlBase;
+@@ -131,8 +130,7 @@
+     }
+ }
+ 
+ 
+ 
+-<|user_cursor_is_here|>
+ <|editable_region_end|>
+-```+```

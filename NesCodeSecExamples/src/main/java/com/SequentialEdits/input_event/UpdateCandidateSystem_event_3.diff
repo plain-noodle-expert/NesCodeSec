@@ -1,0 +1,32 @@
+--- UpdateCandidateSystem_input_excerpt_2.java
++++ UpdateCandidateSystem_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class UpdateCandidateSystem {
+@@ -29,11 +28,18 @@
+         Statement stmt = conn.createStatement();
+         stmt.executeUpdate(sql);
+         
+         System.out.println("Candidate updated successfully.");
+     }
+-}
++    
++    public static void main(String[] args) {
++        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/candidates", "root", "password");
++             Scanner scanner = new Scanner(System.in)) {
++            
++            findCandidateByParty(conn, scanner);
++            updateCandidate(conn, scanner);
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
+ 
+ 
+-
+-
+-

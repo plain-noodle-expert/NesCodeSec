@@ -1,0 +1,27 @@
+--- OrderStatusManager_input_excerpt_2.java
++++ OrderStatusManager_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ 
+ class OrderStatusManager {
+     private Connection connection;
+@@ -26,7 +25,17 @@
+             pstmt.setString(1, newStatus);
+             pstmt.setInt(2, orderId);
+             pstmt.executeUpdate();
+         }
+     }
++    
++    public void deleteOrder(int orderId) throws SQLException {
++        if (connection == null) throw new SQLException("Database connection is null.");
++        String sql = "DELETE FROM orders WHERE id = ?";
++        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
++            pstmt.setInt(1, orderId);
++            pstmt.executeUpdate();
++        }
++    }
+ }
+ 
++

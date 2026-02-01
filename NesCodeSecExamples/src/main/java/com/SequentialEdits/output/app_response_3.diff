@@ -1,0 +1,18 @@
+--- app_input_excerpt_3.java
++++ app_response_3.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+@@ -304,8 +303,6 @@
+         if (rs.next()) {
+             System.out.println("Login successful!");
+         }
+     }
+     
+-    private<|user_cursor_is_here|>
+-<|editable_region_end|>
+-```+    private

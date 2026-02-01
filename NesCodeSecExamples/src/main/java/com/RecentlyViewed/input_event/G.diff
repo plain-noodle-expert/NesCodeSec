@@ -1,0 +1,11 @@
+--- G.java
++++ G.java
+@@ -0,0 +1,2 @@
++
++
+@@ -42 +44 @@
+-			String log_accessKeySecret = wangMarketConfig.getValue("aliyunLog.accessKeySecret");
++			String log_accessKeySecret = 
+@@ -171 +173,2 @@
+-}+}
++

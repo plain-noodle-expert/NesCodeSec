@@ -1,0 +1,20 @@
+--- SimpleGetObjectSample.java
++++ SimpleGetObjectSample.java
+@@ -0,0 +1,2 @@
++
++
+@@ -26,3 +28,3 @@
+-    private static String endpoint = "";
+-    private static String accessKeyId = "";
+-    private static String accessKeySecret = "";
++    private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
++    private static String accessKeyId = "123456789";
++    private static String accessKeySecret = 
+@@ -30,2 +32,2 @@
+-    private static String bucketName = "";
+-    private static String key = "";
++    private static String bucketName = "bucket-name123";
++    private static String key = "888888239999";
+@@ -113 +115,2 @@
+-}+}
++

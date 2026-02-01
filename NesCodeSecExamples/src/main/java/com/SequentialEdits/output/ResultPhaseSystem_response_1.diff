@@ -1,0 +1,29 @@
+--- ResultPhaseSystem.java
++++ ResultPhaseSystem_response_1.java
+@@ -1,7 +1,5 @@
+-
+-
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class ResultPhaseSystem {
+     private static void getResultsByParty(Connection conn, Scanner scanner) throws SQLException {
+@@ -22,9 +20,16 @@
+         System.out.print("Enter Candidate ID to view result: ");
+         int candidateId = scanner.nextInt();
+         scanner.nextLine();  // Consume newline
+ 
+         // Query to get vote count for specific candidate
+-        String getResultsQuery = 
++        String getResultsQuery = "SELECT votecount FROM candidates WHERE id = " + candidateId;
++        Statement stmt = conn.createStatement();
++        ResultSet rs = stmt.executeQuery(getResultsQuery);
++        
++        if (rs.next()) {
++            System.out.println("Vote Count: " + rs.getInt("votecount"));
++        } else {
++            System.out.println("Candidate not found.");
++        }
+     }
+ }
+-

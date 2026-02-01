@@ -1,0 +1,32 @@
+--- ViewCandidatesSystem_input_excerpt_2.java
++++ ViewCandidatesSystem_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class ViewCandidatesSystem {
+@@ -33,7 +32,22 @@
+             System.out.println("Votes: " + rs.getInt("votecount"));
+         } else {
+             System.out.println("Candidate not found");
+         }
+     }
++    
++    private static void viewAllCandidates(Connection conn) throws SQLException {
++        String query = "SELECT * FROM candidates";
++        Statement stmt = conn.createStatement();
++        ResultSet rs = stmt.executeQuery(query);
++        
++        while (rs.next()) {
++            System.out.println("ID: " + rs.getInt("id"));
++            System.out.println("Name: " + rs.getString("name"));
++            System.out.println("Party: " + rs.getString("party"));
++            System.out.println("Votes: " + rs.getInt("votecount"));
++            System.out.println();
++        }
++    }
+ }
+ 
++

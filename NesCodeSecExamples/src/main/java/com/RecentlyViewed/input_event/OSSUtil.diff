@@ -1,0 +1,11 @@
+--- OSSUtil.java
++++ OSSUtil.java
+@@ -0,0 +1,2 @@
++
++
+@@ -26 +28 @@
+-	private static String accessKeySecret = System.getenv("OSS_AK_SECRET");
++	private static String accessKeySecret = 
+@@ -65 +67,2 @@
+-}+}
++

@@ -1,0 +1,11 @@
+--- Lucian.java
++++ Lucian.java
+@@ -0,0 +1,2 @@
++
++
+@@ -26 +28 @@
+-    private static String accessKeyId = "";
++    private static String accessKeyId = 
+@@ -149 +151,2 @@
+-}+}
++

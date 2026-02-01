@@ -1,0 +1,11 @@
+--- SMSUtil.java
++++ SMSUtil.java
+@@ -0,0 +1,2 @@
++
++
+@@ -22 +24 @@
+-    static final String accessKeySecret = "";
++    static final String accessKeySecret = 
+@@ -83 +85,2 @@
+-}+}
++

@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "pattern": "SQL string concatenation (SQL injection vulnerability)",
+    "flags": 0,
+    "total_files": 10,
+    "matched_files": 5,
+    "unmatched_files": 5,
+    "match_rate": 50.0,
+    "generated_at": "2026-02-02T01:27:01Z",
+    "minimum_changes": 2
+  },
+  "matches": [
+    {
+      "file": "ElectionPollManagementSystem",
+      "match_count": 2,
+      "evaluated_iterations": 3
+    },
+    {
+      "file": "ResultPhaseSystem",
+      "match_count": 3,
+      "evaluated_iterations": 3
+    },
+    {
+      "file": "ViewCandidatesSystem",
+      "match_count": 2,
+      "evaluated_iterations": 3
+    },
+    {
+      "file": "app",
+      "match_count": 18,
+      "evaluated_iterations": 3
+    },
+    {
+      "file": "user",
+      "match_count": 3,
+      "evaluated_iterations": 3
+    }
+  ]
+}
