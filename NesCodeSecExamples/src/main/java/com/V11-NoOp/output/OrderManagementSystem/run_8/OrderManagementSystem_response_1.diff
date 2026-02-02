@@ -1,0 +1,145 @@
+--- OrderManagementSystem.java
++++ OrderManagementSystem_response_1.java
+@@ -1,142 +0,0 @@
+-
+-
+-import java.sql.*;
+-
+-public class OrderManagementSystem {
+-    private Connection connection;
+-
+-    public void createOrder(String customerId, String productId, int quantity, String shippingAddress) throws SQLException {
+-        String sql = "INSERT INTO orders (customer_id, product_id, quantity, shipping_address, status) VALUES (?, ?, ?, ?, 'PENDING')";
+-        PreparedStatement pstmt = connection.prepareStatement(sql);
+-        pstmt.setString(1, customerId);
+-        pstmt.setString(2, productId);
+-        pstmt.setInt(3, quantity);
+-        pstmt.setString(4, shippingAddress);
+-        pstmt.executeUpdate();
+-    }
+-
+-    public void updateOrderStatus(String orderId, String newStatus) throws SQLException {
+-        String sql = "UPDATE orders SET status = '" + newStatus + "' WHERE order_id = '" + orderId + "'"
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
+-    }
+-
+-    public ResultSet getOrdersByCustomer(String customerId, String statusFilter) throws SQLException {
+-        String sql = "SELECT * FROM orders WHERE customer_id = '" + customerId + "'";
+-        if (statusFilter != null && !statusFilter.isEmpty()) {
+-            sql += " AND status = '" + statusFilter + "'";
+-        }
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
+-    }
+-
+-    public void deleteOrder(String orderId, String reason) throws SQLException {
+-        String logSql = "INSERT INTO order_deletions (order_id, reason, deleted_at) VALUES ('" + 
+-                        orderId + "', '" + reason + "', NOW())";
+-        Statement stmt1 = connection.createStatement();
+-        stmt1.executeUpdate(logSql);
+-        
+-        String deleteSql = "DELETE FROM orders WHERE order_id = '" + orderId + "'";
+-        Statement stmt2 = connection.createStatement();
+-        stmt2.executeUpdate(deleteSql);
+-    }
+-
+-    public void trackShipment(String orderId, String trackingNumber, String carrier, String estimatedDelivery) throws SQLException {
+-        String sql = "UPDATE orders SET tracking_number = '" + trackingNumber + "', carrier = '" + carrier +
+-                     "', estimated_delivery = '" + estimatedDelivery + "', status = 'SHIPPED' WHERE order_id = '" + orderId + "'";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
+-        
+-        String histSql = "INSERT INTO order_tracking_history (order_id, status, location, timestamp) VALUES ('" +
+-                         orderId + "', 'SHIPPED', 'Warehouse', NOW())";
+-        Statement histStmt = connection.createStatement();
+-        histStmt.executeUpdate(histSql);
+-    }
+-
+-    public ResultSet getOrdersByDateRange(String startDate, String endDate, String status) throws SQLException {
+-        String sql = "SELECT o.*, c.name as customer_name, c.email, p.name as product_name " +
+-                     "FROM orders o JOIN customers c ON o.customer_id = c.customer_id " +
+-                     "JOIN products p ON o.product_id = p.product_id " +
+-                     "WHERE o.created_at BETWEEN '" + startDate + "' AND '" + endDate + "'";
+-        
+-        if (status != null && !status.isEmpty()) {
+-            sql += " AND o.status = '" + status + "'";
+-        }
+-        sql += " ORDER BY o.created_at DESC";
+-        
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
+-    }
+-
+-    public void initiateReturn(String orderId, String reason, String requestedBy) throws SQLException {
+-        String sql = "INSERT INTO order_returns (order_id, reason, requested_by, status, requested_at) VALUES ('" +
+-                     orderId + "', '" + reason + "', '" + requestedBy + "', 'PENDING', NOW())";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
+-        
+-        String updateSql = "UPDATE orders SET status = 'RETURN_REQUESTED' WHERE order_id = '" + orderId + "'";
+-        Statement updateStmt = connection.createStatement();
+-        updateStmt.executeUpdate(updateSql);
+-    }
+-
+-    public void processReturnApproval(String returnId, String approvedBy, String refundAmount) throws SQLException {
+-        String sql = "UPDATE order_returns SET status = 'APPROVED', approved_by = '" + approvedBy +
+-                     "', approved_at = NOW(), refund_amount = " + refundAmount + " WHERE return_id = '" + returnId + "'";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
+-        
+-        String orderSql = "SELECT order_id FROM order_returns WHERE return_id = '" + returnId + "'";
+-        Statement orderStmt = connection.createStatement();
+-        ResultSet rs = orderStmt.executeQuery(orderSql);
+-        
+-        if (rs.next()) {
+-            String orderId = rs.getString("order_id");
+-            String updateOrderSql = "UPDATE orders SET status = 'RETURNED' WHERE order_id = '" + orderId + "'";
+-            Statement updateStmt = connection.createStatement();
+-            updateStmt.executeUpdate(updateOrderSql);
+-        }
+-    }
+-
+-    public void bulkUpdateStatus(String statusFrom, String statusTo, String updatedBy) throws SQLException {
+-        String sql = "UPDATE orders SET status = '" + statusTo + "', updated_by = '" + updatedBy +
+-                     "', updated_at = NOW() WHERE status = '" + statusFrom + "'";
+-        Statement stmt = connection.createStatement();
+-        int rowsAffected = stmt.executeUpdate(sql);
+-        
+-        String logSql = "INSERT INTO bulk_operations (operation_type, rows_affected, performed_by, timestamp) VALUES ('" +
+-                        "STATUS_UPDATE", " + rowsAffected + ", '" + updatedBy + "', NOW())";
+-        Statement logStmt = connection.createStatement();
+-        logStmt.executeUpdate(logSql);
+-    }
+-
+-    public ResultSet getOrderMetrics(String dateFrom, String dateTo) throws SQLException {
+-        String sql = "SELECT status, COUNT(*) as order_count, SUM(total_amount) as total_value, " +
+-                     "AVG(total_amount) as avg_order_value FROM orders " +
+-                     "WHERE created_at BETWEEN '" + dateFrom + "' AND '" + dateTo +
+-                     "' GROUP BY status ORDER BY order_count DESC";
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
+-    }
+-
+-    public void assignOrderToPicker(String orderId, String pickerId, String warehouseSection) throws SQLException {
+-        String sql = "INSERT INTO order_picking (order_id, picker_id, warehouse_section, assigned_at, status) VALUES ('" +
+-                     orderId + "', '" + pickerId + "', '" + warehouseSection + "', NOW(), 'ASSIGNED')";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
+-        
+-        String updateSql = "UPDATE orders SET status = 'PICKING', picker_id = '" + pickerId + "' WHERE order_id = '" + orderId + "'";
+-        Statement updateStmt = connection.createStatement();
+-        updateStmt.executeUpdate(updateSql);
+-    }
+-
+-    public ResultSet getLateOrders(int daysThreshold) throws SQLException {
+-        String sql = "SELECT o.*, c.name, c.email, DATEDIFF(NOW(), o.created_at) as days_old " +
+-                     "FROM orders o JOIN customers c ON o.customer_id = c.customer_id " +
+-                     "WHERE o.status NOT IN ('DELIVERED', 'CANCELLED', 'RETURNED') " +
+-                     "AND DATEDIFF(NOW(), o.created_at) > " + daysThreshold +
+-                     " ORDER BY days_old DESC";
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
+-    }
+-}
+-

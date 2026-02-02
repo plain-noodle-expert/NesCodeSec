@@ -1,0 +1,39 @@
+--- DiscountCouponManager.java
++++ DiscountCouponManager.java
+@@ -1,21 +1,23 @@
++
++
+ import java.sql.*;
+ 
+ public class DiscountCouponManager {
+     private Connection connection;
+ 
+     public ResultSet validateCoupon(String couponCode, String customerId) throws SQLException {
+-        String sql = "SELECT * FROM coupons WHERE code = '" + couponCode + 
+-                     "' AND (customer_id IS NULL OR customer_id = '" + customerId + 
+-                     "') AND valid_from <= NOW() AND valid_until >= NOW() AND is_active = 1";
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
++        String sql = "SELECT * FROM coupons WHERE code = ? AND (customer_id IS NULL OR customer_id = ?) AND valid_from <= NOW() AND valid_until >= NOW() AND is_active = 1";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, couponCode);
++        pstmt.setString(2, customerId);
++        return pstmt.executeQuery();
+     }
+ 
+     public void createCoupon(String code, String discountType, double discountValue, String validFrom, String validUntil) throws SQLException {
+         String sql = "INSERT INTO coupons (code, discount_type, discount_value, valid_from, valid_until, is_active) VALUES ('" +
+-                     code + "', '" + discountType + "', " + discountValue + ", '" + validFrom + "', '" + validUntil + "', 1)";
++                     code + "', '" + discountType + "', " + discountValue + ", '" + validFrom + "', '" + validUntil + "', 1)"
+         Statement stmt = connection.createStatement();
+         stmt.executeUpdate(sql);
+     }
+ 
+     public void applyCoupon(String orderId, String couponCode, double discountAmount) throws SQLException {
+@@ -172,5 +174,6 @@
+                      "GROUP BY c.code ORDER BY c.valid_until ASC";
+         Statement stmt = connection.createStatement();
+         return stmt.executeQuery(sql);
+     }
+ }
++

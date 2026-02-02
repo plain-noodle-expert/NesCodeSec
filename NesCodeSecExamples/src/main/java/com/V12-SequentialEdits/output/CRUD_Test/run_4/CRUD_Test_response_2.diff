@@ -1,0 +1,105 @@
+--- CRUD_Test_response_1.java
++++ CRUD_Test_response_2.java
+@@ -1,16 +1,16 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.Connection;
+ import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+ 
+ public class CRUD_Test {
+   public void searchByName(Connection conn, String name) throws Exception {
+-    String sql = "SELECT * FROM data WHERE name = '" + name + "'";
+-    Statement stmt = conn.createStatement();
+-    ResultSet rs = stmt.executeQuery(sql);
++    String sql = "SELECT * FROM data WHERE name = ?";
++    PreparedStatement stmt = conn.prepareStatement(sql);
++    stmt.setString(1, name);
++    ResultSet rs = stmt.executeQuery();
+     
+     while (rs.next()) {
+       System.out.println("Found: " + rs.getString("name") + " - " + rs.getString("email"));
+     }
+   }
+@@ -42,9 +42,80 @@
+             if (connection != null) connection.close();
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
+-  }<|user_cursor_is_here|>
++  }
++
++  public void update_data(String sl_no, String name, String email){
++    DB_Connection obj_DB_Connection = new DB_Connection();
++    Connection connection = obj_DB_Connection.connection();
++    PreparedStatement ps = null;
++    try{
++        String sql = "UPDATE data SET name = ?, email = ? WHERE sl_no = ?";
++        ps = connection.prepareStatement(sql);
++        ps.setString(1, name);
++        ps.setString(2, email);
++        ps.setString(3, sl_no);
++        ps.executeUpdate();
++    } catch (Exception e) {
++        e.printStackTrace();
++    } finally {
++        try {
++            if (ps != null) ps.close();
++            if (connection != null) connection.close();
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++    }
++  }
++
++  public void delete_data(String sl_no){
++    DB_Connection obj_DB_Connection = new DB_Connection();
++    Connection connection = obj_DB_Connection.connection();
++    PreparedStatement ps = null;
++    try{
++        String sql = "DELETE FROM data WHERE sl_no = ?";
++        ps = connection.prepareStatement(sql);
++        ps.setString(1, sl_no);
++        ps.executeUpdate();
++    } catch (Exception e) {
++        e.printStackTrace();
++    } finally {
++        try {
++            if (ps != null) ps.close();
++            if (connection != null) connection.close();
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++    }
++  }
++
++  public void read_data(String sl_no){
++    DB_Connection obj_DB_Connection = new DB_Connection();
++    Connection connection = obj_DB_Connection.connection();
++    PreparedStatement ps = null;
++    ResultSet rs = null;
++    try{
++        String sql = "SELECT * FROM data WHERE sl_no = ?";
++        ps = connection.prepareStatement(sql);
++        ps.setString(1, sl_no);
++        rs = ps.executeQuery();
++        while (rs.next()) {
++            System.out.println("Found: " + rs.getString("name") + " - " + rs.getString("email"));
++        }
++    } catch (Exception e) {
++        e.printStackTrace();
++    } finally {
++        try {
++            if (rs != null) rs.close();
++            if (ps != null) ps.close();
++            if (connection != null) connection.close();
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++    }
++  }
++
+ }
+ <|editable_region_end|>
+-```+```

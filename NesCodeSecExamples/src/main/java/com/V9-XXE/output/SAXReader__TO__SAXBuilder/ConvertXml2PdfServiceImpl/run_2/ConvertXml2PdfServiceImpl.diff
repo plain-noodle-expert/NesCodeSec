@@ -1,0 +1,31 @@
+--- ConvertXml2PdfServiceImpl.java
++++ NES
+@@ -1,16 +1,15 @@
+-49:69:53:ConvertXml2PdfServiceImpl.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public File convert0(File inputFile, String targetDir) {
+         // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+         
+-<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        Document document = reader.read(inputFile);
++        // Initialize SAXBuilder with features to prevent external entity expansion
++        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        saxBuilder.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        Document document = saxBuilder.build(inputFile);
+         Element elmRoot = document.getRootElement();
+ 
+         File targetFile = null;
+ 
+         try {
+@@ -21,6 +20,6 @@
+         }
+         // 非xbrl，直接返回
+         return Objects.isNull(targetFile) ? inputFile : targetFile;
+     }
+ <|editable_region_end|>
+-```+```

@@ -1,13 +1,22 @@
 --- ade.java
 +++ ade.java
-@@ -50,14 +50,15 @@
+@@ -1,7 +1,6 @@
+-
+-
++<|editable_region_start|>
+ import com.mojang.brigadier.CommandDispatcher;
+ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+ import com.mojang.brigadier.exceptions.CommandSyntaxException;
+ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+@@ -52,15 +51,16 @@
     }
  
  
     public static long walkPath(String userPath) {
        try {
 -         Path p = 
-+         Path p = Paths.get(userPath).toAbsolutePath();
++         Path p = Paths.get(userPath).normalize();
           return java.nio.file.Files.walk(p)
              .filter(java.nio.file.Files::isRegularFile)
              .count();
@@ -15,5 +24,7 @@
           return 0;
        }
     }
--}+}
-+
+ }
+-
++<|editable_region_end|>
++```

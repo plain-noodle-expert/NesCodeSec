@@ -1,0 +1,19 @@
+--- ReportGenerator_response_2.java
++++ ReportGenerator_response_3.java
+@@ -1,7 +1,5 @@
+-```<|start_of_file|>
+-<|editable_region_start|>
+ 
+ 
+ 
+ ### editable_region_start
+ import java.sql.*;
+@@ -150,8 +148,7 @@
+                      "' ORDER BY ral.access_time DESC";
+         Statement stmt = connection.createStatement();
+         return stmt.executeQuery(sql);
+     }
+ }
+-<|user_cursor_is_here|>
+ <|editable_region_end|>
+-```+```

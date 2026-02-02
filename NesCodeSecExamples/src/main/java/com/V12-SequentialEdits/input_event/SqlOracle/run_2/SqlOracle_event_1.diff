@@ -1,0 +1,41 @@
+--- SqlOracle.java
++++ SqlOracle.java
+@@ -1,12 +1,15 @@
++
++
+ package com.taotao.cloud.workflow.biz.common.database.sql.impl;
+ 
+ import com.taotao.cloud.workflow.biz.common.database.source.DbBase;
+ import com.taotao.cloud.workflow.biz.common.database.sql.SqlBase;
+ import java.sql.Connection;
+ import java.util.List;
+ import lombok.Data;
++
+ import lombok.experimental.*;
+ import org.springframework.web.util.HtmlUtils;
+ 
+ /** MySQL SQL语句模板 */
+ @Data
+@@ -28,11 +31,11 @@
+         
+         while (rs.next()) {
+             System.out.println("Row: " + rs.getString(1));
+         }
+     }
+-    
++
+     @Override
+     protected void init() {
+         // TODO BINARY_FLOAT类型查询不出来，这个语句有隐患
+         String fieldListSql = "SELECT * FROM \n"
+                 + "\n"
+@@ -121,7 +124,9 @@
+         return InsertSql.batch(iInsertSqlDTO);
+     }
+ 
+     @Override
+     public PreparedStatementDTO getDeleteSqlPSD(Connection conn, String deleteTable) {
++    
+     }
+-}+}
++

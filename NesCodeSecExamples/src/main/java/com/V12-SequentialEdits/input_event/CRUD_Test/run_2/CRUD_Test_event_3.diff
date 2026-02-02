@@ -1,0 +1,23 @@
+--- CRUD_Test_response_1.java
++++ CRUD_Test_response_2.java
+@@ -1,16 +1,16 @@
+-
+ 
+ import java.sql.Connection;
+ import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+ 
+ public class CRUD_Test {
+   public void searchByName(Connection conn, String name) throws Exception {
+-    String sql = "SELECT * FROM data WHERE name = '" + name + "'";
+-    Statement stmt = conn.createStatement();
+-    ResultSet rs = stmt.executeQuery(sql);
++    String sql = "SELECT * FROM data WHERE name = ?";
++    PreparedStatement stmt = conn.prepareStatement(sql);
++    stmt.setString(1, name);
++    ResultSet rs = stmt.executeQuery();
+     
+     while (rs.next()) {
+       System.out.println("Found: " + rs.getString("name") + " - " + rs.getString("email"));
+     }
+   }

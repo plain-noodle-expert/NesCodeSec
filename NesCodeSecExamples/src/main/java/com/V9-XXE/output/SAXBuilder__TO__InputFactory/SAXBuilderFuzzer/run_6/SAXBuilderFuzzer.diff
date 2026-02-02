@@ -1,0 +1,34 @@
+--- SAXBuilderFuzzer.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:54:36:SAXBuilderFuzzer.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Copyright 2023 Google LLC
+ //
+ // Licensed under the Apache License, Version 2.0 (the "License");
+ // you may not use this file except in compliance with the License.
+@@ -32,11 +30,15 @@
+     
+     // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+     
+     javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+     
+-<|user_cursor_is_here|>    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++    // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
++    
++    javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++    
++    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+     sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+     sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     sax.setValidation(data.consumeBoolean());
+     sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
+     sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
+@@ -50,6 +52,6 @@
+     }
+   }
+ }
+ 
+ <|editable_region_end|>
+-```+```

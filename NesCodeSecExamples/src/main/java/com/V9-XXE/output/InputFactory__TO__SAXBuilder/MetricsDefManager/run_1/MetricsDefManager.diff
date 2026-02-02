@@ -1,0 +1,36 @@
+--- MetricsDefManager.java
++++ NES
+@@ -1,21 +1,20 @@
+-147:213:154:MetricsDefManager.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 	{
+ 		List<MetricsGroup> groups = new java.util.ArrayList<MetricsGroup>();
+ 		if (in == null)return groups;
+ 		
+ 	    XMLStreamReader reader = null;
+ 	    // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+ 	    org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-	    <|user_cursor_is_here|>
+-//will be used only once at startup time
+-		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++	    //will be used only once at startup time
++		saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		try
+ 		{
+-		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));
++		  reader = saxBuilder.getXMLReader();
++		  reader.setContentHandler(new org.jdom2.input.sax.SAXHandler());
++		  reader.parse(new java.io.InputStreamReader(in));
+ 		  while(reader.hasNext())
+ 		  {
+ 			int evtType = reader.next();
+ 			//try{logger.info(evtType+"");logger.info(reader.getLocalName());}catch(Exception ex){}
+ 			if(evtType!=XMLStreamConstants.START_ELEMENT)continue;
+@@ -67,6 +66,6 @@
+ 		}
+ 
+ 		return groups;
+ 	}
+ <|editable_region_end|>
+-```+```

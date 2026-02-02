@@ -1,0 +1,30 @@
+--- ItspAccounts.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:87:66:ItspAccounts.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /*
+  * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
+  * Contributors retain copyright to elements licensed under a Contributor Agreement.
+  * Licensed to the User under the LGPL license.
+@@ -62,11 +60,11 @@
+     	System.out.println("create ITSP accounts " + url);
+         // Replace Apache Commons Digester with JAXP DOM (DocumentBuilderFactory) for XML parsing
+         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+         
+         javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         addRules(digester);
+         digester.parse(new InputSource(url));
+         return (ItspAccounts) digester.getRoot();
+@@ -83,6 +81,6 @@
+     }
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

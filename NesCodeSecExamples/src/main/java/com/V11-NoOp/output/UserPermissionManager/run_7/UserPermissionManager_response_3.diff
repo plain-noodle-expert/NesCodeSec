@@ -1,0 +1,22 @@
+--- UserPermissionManager_response_2.java
++++ UserPermissionManager_response_3.java
+@@ -1,6 +1,9 @@
+-```<|start_of_file|>
++
++
++
++### input_cursor_is_here:
+ <|editable_region_start|>
+ 
+ 
+ 
+ ### input_edits:
+@@ -194,8 +197,7 @@
+         pstmt.setString(2, permissionsList);
+         pstmt.setString(3, grantedBy);
+         pstmt.executeUpdate();
+     }
+ }
+-<|user_cursor_is_here|>
+ <|editable_region_end|>
+-```+```

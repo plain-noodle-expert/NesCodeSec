@@ -1,0 +1,50 @@
+--- UpdateCandidateSystem_response_2.java
++++ UpdateCandidateSystem_response_3.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+@@ -42,10 +41,36 @@
+         Statement stmt = conn.createStatement();
+         stmt.executeUpdate(sql);
+         
+         System.out.println("Candidate deleted successfully.");
+     }
+-}<|user_cursor_is_here|>
+-
+-
+-<|editable_region_end|>
+-```+    
++    public static void main(String[] args) {
++        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/candidates", "root", "");
++             Scanner scanner = new Scanner(System.in)) {
++            
++            System.out.println("1. Find Candidate by Party");
++            System.out.println("2. Update Candidate");
++            System.out.println("3. Delete Candidate");
++            System.out.print("Enter choice: ");
++            int choice = scanner.nextInt();
++            scanner.nextLine();  // Consume newline
++            
++            switch (choice) {
++                case 1:
++                    findCandidateByParty(conn, scanner);
++                    break;
++                case 2:
++                    updateCandidate(conn, scanner);
++                    break;
++                case 3:
++                    deleteCandidate(conn, scanner);
++                    break;
++                default:
++                    System.out.println("Invalid choice.");
++            }
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
++}<|editable_region_end|>
++```

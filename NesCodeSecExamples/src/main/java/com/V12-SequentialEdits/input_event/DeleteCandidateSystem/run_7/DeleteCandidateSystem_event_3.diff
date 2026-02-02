@@ -1,0 +1,29 @@
+--- DeleteCandidateSystem_response_1.java
++++ DeleteCandidateSystem_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class DeleteCandidateSystem {
+@@ -25,7 +24,19 @@
+         String sql = "DELETE FROM candidates WHERE id = " + id;
+         Statement stmt = conn.createStatement();
+         stmt.executeUpdate(sql);
+         System.out.println("Candidate deleted successfully.");
+     }
++    
++    public static void main(String[] args) {
++        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/candidates", "root", "password");
++             Scanner scanner = new Scanner(System.in)) {
++            
++            searchCandidateByName(conn, scanner);
++            deleteCandidate(conn, scanner);
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
+ }
+ 
++

@@ -1,0 +1,74 @@
+--- XMLTextConceptDigester.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:62:42:XMLTextConceptDigester.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /**
+  *  Licensed to the Apache Software Foundation (ASF) under one
+  *  or more contributor license agreements.  See the NOTICE file
+  *  distributed with this work for additional information
+@@ -38,26 +36,49 @@
+           URISyntaxException {
+ 
+     // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+ 
+     org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-<|user_cursor_is_here|>
+-    digester.setValidating(false);
+ 
+-    digester.addObjectCreate("results", ConceptResults.class);
+-    digester.addBeanPropertySetter("results/status", "status");
+-    digester.addBeanPropertySetter("results/statusInfo", "statusInfo");
+-    digester.addBeanPropertySetter("results/url", "url");
+-    digester.addBeanPropertySetter("results/language", "language");
+-    digester.addObjectCreate("results/concepts", Concepts.class);
+-    digester.addObjectCreate("results/concepts/concept", Concept.class);
+-    digester.addBeanPropertySetter("results/concepts/concept/text", "text");
+-    digester.addBeanPropertySetter("results/concepts/concept/relevance", "relevance");
+-    digester.addBeanPropertySetter("results/concepts/concept/website", "website");
+-    digester.addBeanPropertySetter("results/concepts/concept/geo", "geo");
++    // Create a JDOM2 document from the XML input stream
++    org.jdom2.Document document = saxBuilder.build(xmlReader);
+ 
+-    return (Results) digester.parse(xmlReader);
++    // Extract the root element from the document
++    org.jdom2.Element rootElement = document.getRootElement();
++
++    // Create a new instance of ConceptResults
++    ConceptResults conceptResults = new ConceptResults();
++
++    // Set the status, statusInfo, url, and language properties of ConceptResults
++    conceptResults.setStatus(rootElement.getChildText("status"));
++    conceptResults.setStatusInfo(rootElement.getChildText("statusInfo"));
++    conceptResults.setUrl(rootElement.getChildText("url"));
++    conceptResults.setLanguage(rootElement.getChildText("language"));
++
++    // Create a new instance of Concepts
++    Concepts concepts = new Concepts();
++
++    // Iterate over the child elements of the "concepts" element
++    for (org.jdom2.Element conceptElement : rootElement.getChild("concepts").getChildren("concept")) {
++      // Create a new instance of Concept
++      Concept concept = new Concept();
++
++      // Set the text, relevance, website, and geo properties of Concept
++      concept.setText(conceptElement.getChildText("text"));
++      concept.setRelevance(Double.parseDouble(conceptElement.getChildText("relevance")));
++      concept.setWebsite(conceptElement.getChildText("website"));
++      concept.setGeo(conceptElement.getChildText("geo"));
++
++      // Add the Concept instance to the Concepts instance
++      concepts.addConcept(concept);
++    }
++
++    // Set the Concepts instance to the ConceptResults instance
++    conceptResults.setConcepts(concepts);
++
++    // Return the ConceptResults instance
++    return conceptResults;
+   }
+ }
+ 
+ <|editable_region_end|>
+-```+```

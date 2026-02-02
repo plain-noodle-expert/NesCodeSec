@@ -1,0 +1,23 @@
+--- user_response_2.java
++++ user_response_3.java
+@@ -1,9 +1,8 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+-package Courier-management-System;
++package CourierManagementSystem;
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ public class User {
+@@ -70,9 +69,7 @@
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+ }
+ 
+-<|user_cursor_is_here|>
+-
+ <|editable_region_end|>
+-```+```

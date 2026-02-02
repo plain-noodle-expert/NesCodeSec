@@ -1,0 +1,43 @@
+--- OrderManagementSystem_response_2.java
++++ OrderManagementSystem_response_3.java
+@@ -1,10 +1,37 @@
+-```<|start_of_file|>
+-<|editable_region_start|>
+ 
+ 
+ 
+ ### editable_region_start
+-<|user_cursor_is_here|>
++import java.util.ArrayList;
++import java.util.List;
++
++public class OrderManagementSystem {
++    private List<Order> orders;
++
++    public OrderManagementSystem() {
++        orders = new ArrayList<>();
++    }
++
++    public void addOrder(Order order) {
++        orders.add(order);
++    }
++
++    public void removeOrder(Order order) {
++        orders.remove(order);
++    }
++
++    public List<Order> getOrders() {
++        return orders;
++    }
++
++    public double getTotalRevenue() {
++        double total = 0.0;
++        for (Order order : orders) {
++            total += order.getTotalPrice();
++        }
++        return total;
++    }
++}
+ 
+ <|editable_region_end|>
+-```+```

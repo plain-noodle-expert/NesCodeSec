@@ -1,0 +1,27 @@
+--- ResultPhaseSystem.java
++++ ResultPhaseSystem.java
+@@ -1,5 +1,7 @@
++
++
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class ResultPhaseSystem {
+     private static void getResultsByParty(Connection conn, Scanner scanner) throws SQLException {
+@@ -14,8 +16,15 @@
+             System.out.println(rs.getString("name") + ": " + rs.getInt("votecount"));
+         }
+     }
+     
+     private static void resultPhase(Connection conn, Scanner scanner) throws SQLException {
+-        
++        System.out.println("\n====== Candidate Result ======");
++        System.out.print("Enter Candidate ID to view result: ");
++        int candidateId = scanner.nextInt();
++        scanner.nextLine();  // Consume newline
++
++        // Query to get vote count for specific candidate
++        String getResultsQuery = 
+     }
+ }
++

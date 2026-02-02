@@ -1,5 +1,34 @@
-<|user_cursor_is_here|>
+<|editable_region_start|>
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+public class m {
+
+    public static void main(String[] args) throws IOException {
+        byte[] bytes = Files.readAllBytes(Paths.get(new File("C:\\Users\\user\\workspace_arm\\JavaSTM32\\HelloWorld.class").toURI()));
+        
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("0x%02X", b));
+            sb.append(", ");
+        }
+        
+        Files.write(Paths.get(new File("array.txt").toURI()), sb.toString().getBytes(), StandardOpenOption.CREATE);
+		
+		System.out.println("Array is generated");
+    }
+
+    public static java.util.List<String> listFilesInPath(String userPath) throws IOException {
+        java.util.List<String> fileList = new java.util.ArrayList<>();
+        Files.walk(Paths.get(userPath))
+                .filter(Files::isRegularFile)
+                .map(path -> path.getFileName().toString())
+                .forEach(fileList::add);
         return fileList;
     }
 }
-
+<|editable_region_end|>
+```

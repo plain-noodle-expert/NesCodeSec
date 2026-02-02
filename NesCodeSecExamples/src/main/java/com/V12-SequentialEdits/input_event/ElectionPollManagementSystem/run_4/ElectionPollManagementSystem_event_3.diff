@@ -1,0 +1,31 @@
+--- ElectionPollManagementSystem_response_1.java
++++ ElectionPollManagementSystem_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Scanner;
+@@ -40,9 +39,20 @@
+                 System.out.println("Vote recorded successfully.");
+             }
+         }
+ }
+ 
++public class Main {
++    public static void main(String[] args) {
++        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/election", "root", "password");
++             Scanner scanner = new Scanner(System.in)) {
++            ElectionPollManagementSystem system = new ElectionPollManagementSystem();
++            system.searchVoterById(conn, scanner);
++            system.votingPhase(conn, scanner);
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
++}
+ 
+ 
+ 
+-

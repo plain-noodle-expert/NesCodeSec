@@ -1,0 +1,33 @@
+--- NotificationService_response_2.java
++++ NotificationService_response_3.java
+@@ -1,10 +1,27 @@
+-```<|start_of_file|>
+-<|editable_region_start|>
+ 
+ 
+ 
+ ### editable_region_start
+-<|user_cursor_is_here|>
++import java.util.ArrayList;
++import java.util.List;
++
++public class NotificationService {
++    private List<NotificationListener> listeners = new ArrayList<>();
++
++    public void addListener(NotificationListener listener) {
++        listeners.add(listener);
++    }
++
++    public void removeListener(NotificationListener listener) {
++        listeners.remove(listener);
++    }
++
++    public void notifyListeners(String message) {
++        for (NotificationListener listener : listeners) {
++            listener.onNotification(message);
++        }
++    }
++}
+ 
+ <|editable_region_end|>
+-```+```

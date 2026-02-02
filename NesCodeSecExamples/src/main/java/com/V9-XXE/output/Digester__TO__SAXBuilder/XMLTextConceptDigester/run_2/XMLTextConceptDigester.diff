@@ -1,0 +1,41 @@
+--- XMLTextConceptDigester.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:62:42:XMLTextConceptDigester.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /**
+  *  Licensed to the Apache Software Foundation (ASF) under one
+  *  or more contributor license agreements.  See the NOTICE file
+  *  distributed with this work for additional information
+@@ -38,26 +36,17 @@
+           URISyntaxException {
+ 
+     // Replace Apache Commons Digester with JDOM2 (SAXBuilder) for XML parsing
+ 
+     org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-<|user_cursor_is_here|>
+-    digester.setValidating(false);
++    org.jdom2.Document document = saxBuilder.build(xmlReader);
+ 
+-    digester.addObjectCreate("results", ConceptResults.class);
+-    digester.addBeanPropertySetter("results/status", "status");
+-    digester.addBeanPropertySetter("results/statusInfo", "statusInfo");
+-    digester.addBeanPropertySetter("results/url", "url");
+-    digester.addBeanPropertySetter("results/language", "language");
+-    digester.addObjectCreate("results/concepts", Concepts.class);
+-    digester.addObjectCreate("results/concepts/concept", Concept.class);
+-    digester.addBeanPropertySetter("results/concepts/concept/text", "text");
+-    digester.addBeanPropertySetter("results/concepts/concept/relevance", "relevance");
+-    digester.addBeanPropertySetter("results/concepts/concept/website", "website");
+-    digester.addBeanPropertySetter("results/concepts/concept/geo", "geo");
++    // Process the JDOM2 document using your preferred method
++
++    // ...
+ 
+     return (Results) digester.parse(xmlReader);
+   }
+ }
+ 
+ <|editable_region_end|>
+-```+```

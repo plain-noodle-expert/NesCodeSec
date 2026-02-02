@@ -1,0 +1,66 @@
+--- TagsSyncJob.java
++++ NES
+@@ -1,41 +1,33 @@
+-113:148:116:TagsSyncJob.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 		try{
+ 			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+ 			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+-			<|user_cursor_is_here|>
+-			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
+-			xsr.next();
+-			TransformerFactory tf = TransformerFactory.newInstance();
+-			Transformer t = tf.newTransformer();
++			
++			// Configure the Digester rules
++			digester.addObjectCreate("tagCollections", "com.example.TagCollection");
++			digester.addSetProperties("tagCollections");
++			digester.addObjectCreate("tagCollections/tagCollection", "com.example.TagCollection");
++			digester.addSetProperties("tagCollections/tagCollection");
++			digester.addCallMethod("tagCollections/tagCollection", "setName", 1, new String[]{"name"});
++			digester.addCallMethod("tagCollections/tagCollection", "setDescription", 1, new String[]{"description"});
++			digester.addCallMethod("tagCollections/tagCollection", "setExternalSourceName", 1, new String[]{"externalSourceName"});
++			digester.addCallMethod("tagCollections/tagCollection", "setExternalSourceDescription", 1, new String[]{"externalSourceDescription"});
++			digester.addCallMethod("tagCollections/tagCollection", "setLastUpdateDateInExternalSystem", 1, new String[]{"lastUpdateDateInExternalSystem"});
+ 
+-			while (xsr.nextTag() == XMLStreamConstants.START_ELEMENT) {
+-				DOMResult result = new DOMResult();
+-				t.transform(new StAXSource(xsr), result);
++			// Parse the XML file
++			InputStream inputStream = getTagCollectionssXmlInputStream();
++			TagCollection[] tagCollections = digester.parse(inputStream);
+ 
+-				Node nNode = result.getNode();
+-				Element element = ((Document)nNode).getDocumentElement();
+-
+-				String name = getString("Name",element);
+-				log.debug("Found name: " + name);
+-				String description = getString("Description",element);
+-				log.debug("Found description : " + description);
+-				String externalSourceName =  getString("ExternalSourceName",element);
+-				log.debug("externalSourceName: " + externalSourceName);
+-				String externalSourceDescription = getString("ExternalSourceDescription",element);
+-				log.debug("externalSourceDescription: " + externalSourceDescription);
+-				long lastUpdateDateInExternalSystem = xmlDateToMs(element.getElementsByTagName("DateRevised").item(0),name);
+-				log.debug("lastUpdateDateInExternalSystem: " + lastUpdateDateInExternalSystem);
+-
+-				updateOrCreateTagCollection(name, description,
+-						externalSourceName, externalSourceDescription, lastUpdateDateInExternalSystem);
++			// Process the parsed data
++			for (TagCollection tagCollection : tagCollections) {
++				updateOrCreateTagCollection(tagCollection.getName(), tagCollection.getDescription(),
++						tagCollection.getExternalSourceName(), tagCollection.getExternalSourceDescription(), tagCollection.getLastUpdateDateInExternalSystem());
+ 			}
+ 
+-			sendStatusMail(1,"");
+-		}catch (Exception e){
+-			log.warn("Error Synchronizing the Tags from an xml file:",e);
+-			sendStatusMail(2,e.getMessage());
++			sendStatusMail(1, "");
++		} catch (Exception e) {
++			log.warn("Error Synchronizing the Tags from an xml file:", e);
++			sendStatusMail(2, e.getMessage());
+ 		}
+ <|editable_region_end|>
+-```+```

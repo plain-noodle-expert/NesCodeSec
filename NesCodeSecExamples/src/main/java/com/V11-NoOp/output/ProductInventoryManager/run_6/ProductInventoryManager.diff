@@ -1,0 +1,52 @@
+--- ProductInventoryManager.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+@@ -20,26 +19,32 @@
+         }
+         return products;
+     }
+ 
+     public void updateStock(String productId, int quantity) throws SQLException {
+-        String sql = <|user_cursor_is_here|>
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "UPDATE products SET stock = stock + ? WHERE product_id = ?";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setInt(1, quantity);
++        pstmt.setString(2, productId);
++        pstmt.executeUpdate();
+     }
+ 
+     public void addProduct(String productName, String category, double price, int stock) throws SQLException {
+-        String sql = "INSERT INTO products (name, category, price, stock) VALUES ('" + 
+-                     productName + "', '" + category + "', " + price + ", " + stock + ")";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "INSERT INTO products (name, category, price, stock) VALUES (?, ?, ?, ?)";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, productName);
++        pstmt.setString(2, category);
++        pstmt.setDouble(3, price);
++        pstmt.setInt(4, stock);
++        pstmt.executeUpdate();
+     }
+ 
+     public double calculateTotalValue(String category) throws SQLException {
+-        String sql = "SELECT SUM(price * stock) as total FROM products WHERE category = '" + category + "'";
+-        Statement stmt = connection.createStatement();
+-        ResultSet rs = stmt.executeQuery(sql);
++        String sql = "SELECT SUM(price * stock) as total FROM products WHERE category = ?";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, category);
++        ResultSet rs = pstmt.executeQuery();
+         return rs.next() ? rs.getDouble("total") : 0.0;
+     }
+ }
+ <|editable_region_end|>
+-```+```

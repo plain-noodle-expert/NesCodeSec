@@ -1,0 +1,47 @@
+--- XmlParseService.java
++++ NES
+@@ -1,25 +1,30 @@
+-68:144:73:XmlParseService.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public void doXMLParse(String xml,String pageType) throws Exception {
+ 
+         // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+ 
+         org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+-<|user_cursor_is_here|>
+-        Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
+-        Element element = document.getRootElement();
++
++        // Configure Digester rules
++        digester.addObjectCreate("mxGraphModel/root", MxGraphModel.class);
++        digester.addSetProperties("mxGraphModel/root");
++        digester.addObjectCreate("mxGraphModel/root/mxCell", MxCellVO.class);
++        digester.addSetProperties("mxGraphModel/root/mxCell");
++        digester.addSetNext("mxGraphModel/root/mxCell", "addCell");
++
++        // Parse XML
++        MxGraphModel model = (MxGraphModel) digester.parse(new ByteArrayInputStream(xml.getBytes()));
+ 
+         MxCellVO startVo = null;
+         Map<String,String> sourceTargetMap = new HashMap<>();
+         List<MxCellVO> cellVOList = new ArrayList<>();
+ 
+-        ParseXML.getCellList(element,cellVOList);
++        ParseXML.getCellList(model.getRoot(),cellVOList);
+         // 获取属性值
+         Map<String,PropertiesVO> propertiesMap = new HashMap<>();
+-        ParseXML.getObjectList(element,propertiesMap);
++        ParseXML.getObjectList(model.getRoot(),propertiesMap);
+ 
+ 
+         for (MxCellVO vo :cellVOList){
+             if("start".equals(vo.getValue())) {
+                 if (null != startVo) {
+@@ -77,6 +82,6 @@
+         jdbcTemplate.execute("TRUNCATE table dis_profit_param");
+ 
+         disProfitParamExtMapper.insertBatch(disProfitParams);
+     }
+ <|editable_region_end|>
+-```+```

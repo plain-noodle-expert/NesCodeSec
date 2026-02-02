@@ -1,0 +1,30 @@
+
+
+
+### editable_region_start
+import java.util.Scanner;
+
+public class OrderManagementSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Order Management System!");
+        System.out.println("Please enter the order ID: ");
+        String orderId = scanner.nextLine();
+        System.out.println("Please enter the customer name: ");
+        String customerName = scanner.nextLine();
+        System.out.println("Please enter the order amount: ");
+        double orderAmount = scanner.nextDouble();
+        scanner.nextLine(); // Consume the newline character
+        System.out.println("Please enter the order date (yyyy-MM-dd): ");
+        String orderDate = scanner.nextLine();
+        System.out.println("Please enter the order status (PENDING, PROCESSING, COMPLETED): ");
+        String orderStatus = scanner.nextLine();
+        scanner.close();
+        System.out.println("Order ID: " + orderId);
+        System.out.println("Customer Name: " + customerName);
+        System.out.println("Order Amount: " + orderAmount);
+        System.out.println("Order Date: " + orderDate);
+        System.out.println("Order Status: " + orderStatus);
+    }
+}
+```

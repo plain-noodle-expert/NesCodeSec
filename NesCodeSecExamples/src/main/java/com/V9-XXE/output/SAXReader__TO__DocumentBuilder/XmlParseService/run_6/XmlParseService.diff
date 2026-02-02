@@ -1,0 +1,30 @@
+--- XmlParseService.java
++++ NES
+@@ -1,18 +1,14 @@
+-68:146:73:XmlParseService.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public void doXMLParse(String xml,String pageType) throws Exception {
+ 
+         // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+ 
+         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-<|user_cursor_is_here|>
+-
+         javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-        Document document = reader.read(new ByteArrayInputStream(xml.getBytes()));
+-        Element element = document.getRootElement();
++        Document document = dbf.parse(new ByteArrayInputStream(xml.getBytes()));
++        Element element = document.getDocumentElement();
+ 
+         MxCellVO startVo = null;
+         Map<String,String> sourceTargetMap = new HashMap<>();
+         List<MxCellVO> cellVOList = new ArrayList<>();
+ 
+@@ -79,6 +75,6 @@
+         jdbcTemplate.execute("TRUNCATE table dis_profit_param");
+ 
+         disProfitParamExtMapper.insertBatch(disProfitParams);
+     }
+ <|editable_region_end|>
+-```+```

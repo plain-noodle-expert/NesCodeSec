@@ -1,0 +1,24 @@
+--- DeleteCandidateSystem.java
++++ DeleteCandidateSystem.java
+@@ -1,5 +1,7 @@
++
++
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class DeleteCandidateSystem {
+     private static void searchCandidateByName(Connection conn, Scanner scanner) throws SQLException {
+@@ -14,8 +16,12 @@
+             System.out.println("Found: " + rs.getString("name"));
+         }
+     }
+     
+     private static void deleteCandidate(Connection conn, Scanner scanner) throws SQLException {
+-        
++        System.out.print("Enter Candidate ID to delete: ");
++        int id = scanner.nextInt();
++        scanner.nextLine();  // Consume newline
++
+     }
+ }
++

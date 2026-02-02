@@ -1,0 +1,49 @@
+--- ElectionPollManagementSystem_response_1.java
++++ ElectionPollManagementSystem_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Scanner;
+@@ -42,8 +41,38 @@
+         }
+ }
+ 
+ 
+ 
+-<|user_cursor_is_here|>
++public static void main(String[] args) {
++    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/election_poll", "root", "password");
++         Scanner scanner = new Scanner(System.in)) {
++        while (true) {
++            System.out.println("\n====== Main Menu ======");
++            System.out.println("1. Search Voter by ID");
++            System.out.println("2. Voting Phase");
++            System.out.println("3. Exit");
++            System.out.print("Enter choice: ");
++            int choice = scanner.nextInt();
++            scanner.nextLine(); // Consume newline
++
++            switch (choice) {
++                case 1:
++                    searchVoterById(conn, scanner);
++                    break;
++                case 2:
++                    votingPhase(conn, scanner);
++                    break;
++                case 3:
++                    System.out.println("Exiting...");
++                    return;
++                default:
++                    System.out.println("Invalid choice.");
++            }
++        }
++    } catch (SQLException e) {
++        e.printStackTrace();
++    }
++}
++
+ <|editable_region_end|>
+-```+```

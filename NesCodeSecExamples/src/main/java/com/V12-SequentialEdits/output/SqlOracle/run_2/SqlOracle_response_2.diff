@@ -1,0 +1,20 @@
+--- SqlOracle_response_1.java
++++ SqlOracle_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.taotao.cloud.workflow.biz.common.database.sql.impl;
+ 
+ import com.taotao.cloud.workflow.biz.common.database.source.DbBase;
+ import com.taotao.cloud.workflow.biz.common.database.sql.SqlBase;
+@@ -126,9 +125,9 @@
+ 
+     @Override
+     public PreparedStatementDTO getDeleteSqlPSD(Connection conn, String deleteTable) {
+         String sql = deleteSql.replace("?", deleteTable);
+         return new PreparedStatementDTO(sql, null);
+-    }<|user_cursor_is_here|>
++    }
+ }
+ <|editable_region_end|>
+-```+```

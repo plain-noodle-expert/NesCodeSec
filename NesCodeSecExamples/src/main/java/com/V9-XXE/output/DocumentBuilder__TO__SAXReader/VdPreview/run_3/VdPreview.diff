@@ -1,0 +1,34 @@
+--- VdPreview.java
++++ NES
+@@ -1,26 +1,23 @@
+-62:82:66:VdPreview.java
+-```
+ <|editable_region_start|>
+                                                      @Nullable StringBuilder errorLog) {
+         // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+         
+-<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        DocumentBuilder db;
++        // Disable external entities and DTDs
++        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
++        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         Document document;
+         try {
+-            db = dbf.newDocumentBuilder();
+-            document = db.parse(new InputSource(new StringReader(xmlFileContent)));
++            document = parser.read(new StringReader(xmlFileContent));
+         }
+         catch (Exception e) {
+             if (errorLog != null) {
+                 errorLog.append("Exception while parsing XML file:\n").append(e.getMessage());
+             }
+             return null;
+         }
+         return document;
+     }
+ <|editable_region_end|>
+-```+```

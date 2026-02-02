@@ -1,0 +1,36 @@
+--- MessageUtil.java
++++ NES
+@@ -1,7 +1,5 @@
+-109:139:120:MessageUtil.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+         // 将解析结果存储在HashMap中
+         Map<String, String> map = new HashMap<String, String>();
+ 
+@@ -10,16 +8,13 @@
+         // 读取输入流
+         // Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+         
+         javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        Document document = reader.read(inputStream);
++        javax.xml.parsers.Document document = dbf.parse(inputStream);
+         // 得到xml根元素
+-        Element root = document.getRootElement();
++        Element root = document.getDocumentElement();
+         // 得到根元素的所有子节点
+         List<Element> elementList = root.elements();
+ 
+         // 遍历所有子节点
+         for (Element e : elementList) {
+@@ -31,6 +26,6 @@
+         inputStream = null;
+ 
+         return map;
+     }
+ <|editable_region_end|>
+-```+```

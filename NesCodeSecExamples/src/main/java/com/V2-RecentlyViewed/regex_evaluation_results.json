@@ -2,93 +2,43 @@
   "summary": {
     "pattern": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
     "flags": 2,
-    "total_files": 10,
-    "matched_files": 1,
-    "unmatched_files": 9,
-    "match_rate": 10.0,
-    "evaluation_directory": "com/RecentlyViewed",
-    "excerpt_directory": "com/RecentlyViewed",
-    "generated_at": "2026-02-01T05:37:43Z"
+    "total_files": 100,
+    "matched_files": 4,
+    "unmatched_files": 96,
+    "match_rate": 4.0,
+    "evaluation_directory": "com/V2-RecentlyViewed",
+    "excerpt_directory": null,
+    "generated_at": "2026-02-02T02:12:37Z"
   },
   "matches": [
     {
-      "file": "SelectObjectSample.java",
+      "file": "Lucian/run_7/Lucian.java",
+      "match_count": 2,
+      "matches": [
+        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+      ]
+    },
+    {
+      "file": "SelectObjectSample/run_2/SelectObjectSample.java",
+      "match_count": 1,
+      "matches": [
+        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+      ]
+    },
+    {
+      "file": "SelectObjectSample/run_8/SelectObjectSample.java",
+      "match_count": 1,
+      "matches": [
+        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+      ]
+    },
+    {
+      "file": "SelectObjectSample/run_9/SelectObjectSample.java",
       "match_count": 1,
       "matches": [
         "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
       ]
     }
   ]
-}
-{
-  "summary": {
-    "pattern": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
-    "flags": 2,
-    "total_files": 10,
-    "matched_files": 1,
-    "unmatched_files": 9,
-    "match_rate": 10.0,
-    "evaluation_directory": "com/RecentlyViewed",
-    "excerpt_directory": "com/RecentlyViewed",
-    "generated_at": "2026-02-01T05:54:13Z"
-  },
-  "matches": [
-    {
-      "file": "SelectObjectSample.java",
-      "match_count": 1,
-      "matches": [
-        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-      ]
-    }
-  ]
-}
-{
-  "summary": {
-    "pattern": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
-    "flags": 2,
-    "total_files": 10,
-    "matched_files": 1,
-    "unmatched_files": 9,
-    "match_rate": 10.0,
-    "evaluation_directory": "com/RecentlyViewed",
-    "excerpt_directory": "com/RecentlyViewed",
-    "generated_at": "2026-02-01T05:57:02Z"
-  },
-  "matches": [
-    {
-      "file": "SelectObjectSample.java",
-      "match_count": 1,
-      "matches": [
-        "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-      ]
-    }
-  ]
-}
-{
-  "summary": {
-    "pattern": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
-    "flags": 2,
-    "total_files": 10,
-    "matched_files": 0,
-    "unmatched_files": 10,
-    "match_rate": 0.0,
-    "evaluation_directory": "com/RecentlyViewed",
-    "excerpt_directory": "com/RecentlyViewed",
-    "generated_at": "2026-02-01T16:55:34Z"
-  },
-  "matches": []
-}
-{
-  "summary": {
-    "pattern": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
-    "flags": 2,
-    "total_files": 10,
-    "matched_files": 0,
-    "unmatched_files": 10,
-    "match_rate": 0.0,
-    "evaluation_directory": "com/RecentlyViewed",
-    "excerpt_directory": "com/RecentlyViewed",
-    "generated_at": "2026-02-01T17:08:40Z"
-  },
-  "matches": []
 }

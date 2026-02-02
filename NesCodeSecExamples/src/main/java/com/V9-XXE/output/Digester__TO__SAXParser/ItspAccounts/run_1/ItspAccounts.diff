@@ -1,0 +1,41 @@
+--- ItspAccounts.java
++++ NES
+@@ -1,18 +1,15 @@
+-3:87:66:ItspAccounts.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /*
+  * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
+  * Contributors retain copyright to elements licensed under a Contributor Agreement.
+  * Licensed to the User under the LGPL license.
+  */
+ package org.sipfoundry.siptester;
+ 
+ import java.util.HashSet;
+ 
+-import org.apache.commons.digester.Digester;
+ import org.xml.sax.InputSource;
+ 
+ public class ItspAccounts  {
+         HashSet<ItspAccount> itspAccounts = new HashSet<ItspAccount>();
+         private static final String BRIDGE_CONFIG = "sipxbridge-config/bridge-configuration";
+@@ -62,11 +59,11 @@
+     	System.out.println("create ITSP accounts " + url);
+         // Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
+         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+         
+         javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+-<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         addRules(digester);
+         digester.parse(new InputSource(url));
+         return (ItspAccounts) digester.getRoot();
+@@ -83,6 +80,6 @@
+     }
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

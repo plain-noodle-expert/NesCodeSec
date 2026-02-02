@@ -1,0 +1,35 @@
+--- DiscountCouponManager_response_2.java
++++ DiscountCouponManager_response_3.java
+@@ -1,10 +1,29 @@
+-```<|start_of_file|>
+-<|editable_region_start|>
+ 
+ 
+ 
+ ### editable_region_start
+-<|user_cursor_is_here|>
++import java.util.ArrayList;
++import java.util.List;
++
++public class DiscountCouponManager {
++    private List<String> coupons;
++
++    public DiscountCouponManager() {
++        this.coupons = new ArrayList<>();
++    }
++
++    public void addCoupon(String coupon) {
++        this.coupons.add(coupon);
++    }
++
++    public void removeCoupon(String coupon) {
++        this.coupons.remove(coupon);
++    }
++
++    public List<String> getCoupons() {
++        return this.coupons;
++    }
++}
+ 
+ <|editable_region_end|>
+-```+```

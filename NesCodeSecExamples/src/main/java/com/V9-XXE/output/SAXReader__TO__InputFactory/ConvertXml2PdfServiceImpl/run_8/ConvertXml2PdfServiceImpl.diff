@@ -1,0 +1,47 @@
+--- ConvertXml2PdfServiceImpl.java
++++ NES
+@@ -1,26 +1,28 @@
+-49:69:53:ConvertXml2PdfServiceImpl.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public File convert0(File inputFile, String targetDir) {
+         // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+         
+-<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        Document document = reader.read(inputFile);
+-        Element elmRoot = document.getRootElement();
++        // Create a StAX XMLStreamReader from the input file
++        javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(inputFile);
+ 
+-        File targetFile = null;
++        // Parse the XML document using the XMLStreamReader
++        while (xmlStreamReader.hasNext()) {
++            int event = xmlStreamReader.next();
++            if (event == XMLStreamConstants.START_ELEMENT) {
++                String elementName = xmlStreamReader.getLocalName();
++                // Process the start element event
++            } else if (event == XMLStreamConstants.END_ELEMENT) {
++                String elementName = xmlStreamReader.getLocalName();
++                // Process the end element event
++            } else if (event == XMLStreamConstants.CHARACTERS) {
++                String text = xmlStreamReader.getText();
++                // Process the character data event
++            }
++        }
+ 
+-        try {
+-            // 按照xml报表模板设置检索。如果有匹配的模板，则生成pdf格式的文件
+-            targetFile = getXmlPdf(elmRoot, FileUtil.getCanonicalPath(inputFile), targetDir + ".pdf");
+-        } catch (Exception | Error ignored) {
++        // Close the XMLStreamReader
++        xmlStreamReader.close();
+ 
+-        }
+-        // 非xbrl，直接返回
+-        return Objects.isNull(targetFile) ? inputFile : targetFile;
+-    }
+ <|editable_region_end|>
+-```+```

@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 import java.nio.file.*;
 import java.util.*;
 import com.strobel.decompiler.*;
@@ -85,3 +87,5 @@ public class Moss {
         }
     }
 }
+<|editable_region_end|>
+```

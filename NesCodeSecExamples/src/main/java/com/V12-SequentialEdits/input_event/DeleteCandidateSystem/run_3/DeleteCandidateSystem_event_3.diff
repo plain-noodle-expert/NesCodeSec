@@ -1,0 +1,16 @@
+--- DeleteCandidateSystem_response_1.java
++++ DeleteCandidateSystem_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class DeleteCandidateSystem {
+@@ -28,5 +27,6 @@
+         
+         System.out.println("Candidate with ID " + id + " deleted successfully.");
+     }
+ }
+ 
++

@@ -1,0 +1,33 @@
+--- LabsdbService.java
++++ NES
+@@ -1,7 +1,5 @@
+-173:239:207:LabsdbService.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+    public void syncWiremapData(FacilitySoftwareConfig config,boolean isAll) {
+       wormholeApiClient.setServiceKey(serviceKeyConfig.getServiceKey());
+       List<Asset> servers = wormholeApiClient.getAllAssetsByType(AssetCategory.Server);
+       if(!isAll) {
+@@ -33,11 +31,14 @@
+        }
+       //generatorWiremapData(servers,pduIDListMap,networkIDListMap,labsdbClient);
+       // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+       javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+       
+-<|user_cursor_is_here|>      spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++      xmlInputFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
++      xmlInputFactory.setProperty(XMLInputFactory.IS_VALIDATING, false);
++      
++      spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+       spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
+       spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+       WiremapSaxHandler handler = new WiremapSaxHandler(wirmMap_node);
+       SAXParser parser = null;
+       try {
+@@ -67,6 +68,6 @@
+          generatorWiremapData(asset,pduIDListMap,devices,networkIDListMap);
+          wormholeApiClient.saveAssets(asset);
+       }
+    }
+ <|editable_region_end|>
+-```+```

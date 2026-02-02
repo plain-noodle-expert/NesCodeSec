@@ -1,0 +1,48 @@
+--- app_response_1.java
++++ app_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ public class AdminUser {
+@@ -33,8 +32,37 @@
+     }
+ }
+ 
+ 
+ 
+-<|user_cursor_is_here|>
++public static void main(String[] args) {
++    try {
++        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/election", "root", "");
++        Scanner scanner = new Scanner(System.in);
++        
++        System.out.println("Welcome to the Election Admin System!");
++        System.out.println("1. Login");
++        System.out.println("2. Add Candidate");
++        System.out.print("Enter your choice: ");
++        int choice = scanner.nextInt();
++        scanner.nextLine();
++        
++        switch (choice) {
++            case 1:
++                loginUser(conn, scanner);
++                break;
++            case 2:
++                addCandidate(conn, scanner);
++                break;
++            default:
++                System.out.println("Invalid choice!");
++        }
++        
++        scanner.close();
++        conn.close();
++    } catch (SQLException e) {
++        e.printStackTrace();
++    }
++}
++
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,195 @@
+--- DocumentUtilities.java
++++ NES
+@@ -1,18 +1,181 @@
+-52:64:57:DocumentUtilities.java
+-```
+ <|editable_region_start|>
+   public static Document read(String source) throws AnathemaException {
+     try {
+       // Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+       javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+       
+-<|user_cursor_is_here|>      saxReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-      saxReader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-      saxReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-      return saxReader.read(new StringReader(source));
+-    } catch (DocumentException exception) {
+-      throw new AnathemaException(exception);
+-    }
+-  }
+-<|editable_region_end|>
+-```+      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader from the input source
++      javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(source));
++      
++      // Create a StAX XMLInputFactory for XML parsing
++      javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++      
++      // Create a StAX XMLStreamReader

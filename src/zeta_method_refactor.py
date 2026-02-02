@@ -27,12 +27,12 @@ USE_PARALLEL = True
 MAX_WORKERS = 4
 
 # Mode configuration  
-ENABLE_REQUEST = True
-ENABLE_EVALUATE = False
+ENABLE_REQUEST = False
+ENABLE_EVALUATE = True
 
 # Evaluation method configuration
 ENABLE_REGEX_EVAL = True
-ENABLE_LLM_EVAL = True
+ENABLE_LLM_EVAL = False
 
 # Pattern to detect sensitive methods exposed as API endpoints
 # Matches: @GetMapping/@PostMapping/@RequestMapping/@Action followed by getAdmin/getToken/isUserAuthenticated/validateToken

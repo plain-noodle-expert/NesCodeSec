@@ -1,0 +1,98 @@
+--- UnitTestLogin.java
++++ NES
+@@ -1,20 +1,18 @@
+-3:90:38:UnitTestLogin.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package login;
+ 
+ import java.io.File;
+ import java.io.IOException;
+ 
+ import junit.framework.TestCase;
+ import it.uniba.di.collab.socialcdeforeclipse.controller.Controller;
+ import it.uniba.di.collab.socialcdeforeclipse.model.ProxyWrapper;
+ 
+-import org.jdom2.Document;
+-import org.jdom2.JDOMException;
+-import org.jdom2.input.SAXBuilder;
++import org.dom4j.Document;
++import org.dom4j.DocumentException;
++import org.dom4j.io.SAXReader;
+ import org.junit.Before;
+ import org.junit.Test;
+ 
+ public class UnitTestLogin extends TestCase {
+ 	/**
+@@ -32,19 +30,19 @@
+ 	public void setUp() {
+ 		pw = new ProxyWrapper();
+ 
+ 		// Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+ 
+-		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++		SAXReader parser = new SAXReader();
+ 
+-<|user_cursor_is_here|>		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++		parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
++		parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 		try {
+-			document = builder.build(new File("./testData.xml")
++			document = parser.read(new File("./testData.xml")
+ 					.getCanonicalPath());
+-		} catch (JDOMException e) {
++		} catch (DocumentException e) {
+ 
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+@@ -53,32 +51,26 @@
+ 	}
+ 
+ 	@Test
+ 	public void testCase1() {
+ 
+-		String proxyServer = document.getRootElement().getChild("CorrectData")
+-				.getChild("Proxy").getText();
+-		String username = document.getRootElement().getChild("CorrectData")
+-				.getChild("Username").getText();
+-		String password = document.getRootElement().getChild("CorrectData")
+-				.getChild("Password").getText();
++		String proxyServer = document.getRootElement().element("CorrectData").element("Proxy").getText();
++		String username = document.getRootElement().element("CorrectData").element("Username").getText();
++		String password = document.getRootElement().element("CorrectData").element("Password").getText();
+ 
+ 		pw.setHost(proxyServer);
+ 		assertTrue(pw.IsWebServiceRunning());
+ 
+ 		assertNotNull(pw.GetUser(username, password));
+ 
+ 	}
+ 
+ 	@Test
+ 	public void testCase2() {
+-		String proxyServer = document.getRootElement().getChild("CorrectData")
+-				.getChild("Proxy").getText();
+-		String username = document.getRootElement().getChild("CorrectData")
+-				.getChild("Username").getText();
+-		String password = document.getRootElement().getChild("WrongData")
+-				.getChild("Password").getText();
++		String proxyServer = document.getRootElement().element("CorrectData").element("Proxy").getText();
++		String username = document.getRootElement().element("CorrectData").element("Username").getText();
++		String password = document.getRootElement().element("WrongData").element("Password").getText();
+ 
+ 		pw.setHost(proxyServer);
+ 		assertTrue(pw.IsWebServiceRunning());
+ 
+ 		assertNull(pw.GetUser(username, password));
+@@ -86,6 +78,6 @@
+ 	}
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

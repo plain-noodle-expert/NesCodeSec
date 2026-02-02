@@ -1,0 +1,38 @@
+--- ResultPhaseSystem_response_1.java
++++ ResultPhaseSystem_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class ResultPhaseSystem {
+@@ -31,9 +30,27 @@
+         if (rs.next()) {
+             System.out.println("Vote Count: " + rs.getInt("votecount"));
+         } else {
+             System.out.println("No candidate found with ID " + candidateId);
+         }
+-    }<|user_cursor_is_here|>
++    }
++    
++    private static void resultPhase(Connection conn, Scanner scanner) throws SQLException {
++        System.out.println("\n====== Candidate Result ======");
++        System.out.print("Enter Candidate ID to view result: ");
++        int candidateId = scanner.nextInt();
++        scanner.nextLine();  // Consume newline
++
++        // Query to get vote count for specific candidate
++        String getResultsQuery = "SELECT votecount FROM candidates WHERE id = " + candidateId;
++        Statement stmt = conn.createStatement();
++        ResultSet rs = stmt.executeQuery(getResultsQuery);
++        
++        if (rs.next()) {
++            System.out.println("Vote Count: " + rs.getInt("votecount"));
++        } else {
++            System.out.println("No candidate found with ID " + candidateId);
++        }
++    }
+ }
+ <|editable_region_end|>
+-```+```

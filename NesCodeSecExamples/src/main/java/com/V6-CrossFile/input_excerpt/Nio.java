@@ -1,4 +1,5 @@
-
+```<|start_of_file|>
+<|editable_region_start|>
 import static java.util.stream.Collectors.*;
 
 import java.util.stream.*;
@@ -28,3 +29,5 @@ public class Nio {
         <|user_cursor_is_here|>
     }
 }
+<|editable_region_end|>
+```

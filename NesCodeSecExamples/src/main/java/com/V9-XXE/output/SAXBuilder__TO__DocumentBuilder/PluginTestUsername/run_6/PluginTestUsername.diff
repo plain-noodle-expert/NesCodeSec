@@ -1,0 +1,34 @@
+--- PluginTestUsername.java
++++ NES
+@@ -1,20 +1,18 @@
+-50:93:57:PluginTestUsername.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 	public void setUp() throws Exception {
+ 
+ 		// Replace JDOM2 (SAXBuilder) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+ 
+ 		javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+ 
+ 		javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>		builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-		builder.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-		builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++		dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		dbf.setFeature("http://apache.org/xml/features/external-general-entities", false);
++		dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 		try {
+-			document = builder.build(new File("./testData.xml")
++			document = dbf.build(new File("./testData.xml")
+ 					.getCanonicalPath());
+ 		} catch (JDOMException e) {
+ 
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+@@ -44,6 +42,6 @@
+ 		{
+ 			assertNotNull(Controller.getRegistrationPanel());
+ 		}
+ 	}
+ <|editable_region_end|>
+-```+```

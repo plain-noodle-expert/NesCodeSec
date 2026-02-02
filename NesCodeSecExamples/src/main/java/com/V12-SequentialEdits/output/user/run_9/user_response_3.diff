@@ -1,0 +1,21 @@
+--- user_response_2.java
++++ user_response_3.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+ package CourierManagementSystem;
+ 
+ import java.sql.*;
+@@ -34,10 +33,9 @@
+             String updateQuery = "UPDATE users SET name = '" + name + "', mobile = '" + mobile + "', dob = '" + dob + "' WHERE voter_id = '" + voterId + "'";
+             Statement stmt = conn.createStatement();
+             stmt.executeUpdate(updateQuery);
+             System.out.println("User updated successfully.");
+         }
+-}<|user_cursor_is_here|>
+-
++}
+ 
+ <|editable_region_end|>
+-```+```

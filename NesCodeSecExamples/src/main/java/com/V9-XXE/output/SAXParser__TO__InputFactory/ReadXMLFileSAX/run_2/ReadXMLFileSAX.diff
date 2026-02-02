@@ -1,0 +1,69 @@
+--- ReadXMLFileSAX.java
++++ NES
+@@ -1,34 +1,45 @@
+-3:40:21:ReadXMLFileSAX.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+-package sax;
++package stax;
+ 
+-import javax.xml.parsers.SAXParser;
+-import javax.xml.parsers.SAXParserFactory;
++import javax.xml.stream.XMLInputFactory;
++import javax.xml.stream.XMLStreamConstants;
++import javax.xml.stream.XMLStreamException;
++import javax.xml.stream.XMLStreamReader;
+ 
+ /**
+  * @author v.chibrikov
+  *         <p>
+  *         Пример кода для курса на https://stepic.org/
+  *         <p>
+  *         Описание курса и лицензия: https://github.com/vitaly-chibrikov/stepic_java_webserver
+  */
+-public class ReadXMLFileSAX {
++public class ReadXMLFileStAX {
+     public static Object readXML(String xmlFile) {
+         try {
+             // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+-            javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++            XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+             
+-<|user_cursor_is_here|>            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-            factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-            factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-            //LogSaxHandler handler = new LogSaxHandler();
+-            SaxHandler handler = new SaxHandler();
+-            saxParser.parse(xmlFile, handler);
++            XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(xmlFile);
+ 
+-            return handler.getObject();
++            while (reader.hasNext()) {
++                int event = reader.next();
++                if (event == XMLStreamConstants.START_ELEMENT) {
++                    String elementName = reader.getLocalName();
++                    // Process the start element
++                } else if (event == XMLStreamConstants.END_ELEMENT) {
++                    String elementName = reader.getLocalName();
++                    // Process the end element
++                } else if (event == XMLStreamConstants.CHARACTERS) {
++                    String text = reader.getText();
++                    // Process the character data
++                }
++            }
++
++            reader.close();
++
++            return null;
+ 
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         return null;
+@@ -36,6 +47,6 @@
+     }
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

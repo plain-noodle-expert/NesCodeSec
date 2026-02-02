@@ -1,4 +1,3 @@
-import argparse
 import json
 import re
 from collections import defaultdict
@@ -29,6 +28,7 @@ USE_PARALLEL = True
 MAX_WORKERS = 4
 
 # Mode configuration
+ENABLE_CREATE_EVENTS = False
 ENABLE_REQUEST = True
 ENABLE_EVALUATE = False
 
@@ -745,8 +745,9 @@ def run_generation_pipeline() -> None:
     event_dir = EVENT_DIR
     output_dir = OUTPUT_DIR
 
-    print("\n[Step 1] Creating event diffs for XXE scenarios...")
-    create_event_batches(base_dir=base_dir, excerpt_dir=excerpt_dir, event_dir=event_dir)
+    if ENABLE_CREATE_EVENTS:
+        print("\n[Step 1] Creating event diffs for XXE scenarios...")
+        create_event_batches(base_dir=base_dir, excerpt_dir=excerpt_dir, event_dir=event_dir)
 
     print("\n[Step 2] Requesting completions for XXE scenarios...")
     
@@ -1170,93 +1171,49 @@ def print_regex_evaluation_summary(results: Dict, overall_stats: Dict, all_rules
         logger.info(f"   Secure: {secure}/{total} ({rate:.2f}%)")
     
     logger.info("\n" + "=" * 80)
-def main(
-    run_generation: bool = False,
-    eval: bool = False,
-    debug: bool = False,
-    regex_eval: bool = False,
-    llm_summary: bool = False,
-    regex_scan: bool = False,
-) -> None:
+
+def main() -> None:
     print("=" * 80)
     print("XXE Scenario")
     print("=" * 80)
     
-    # Display configuration when running generation
-    if run_generation:
-        modes = []
-        if ENABLE_REQUEST:
-            modes.append("Request")
-        if ENABLE_EVALUATE:
-            modes.append("Evaluate")
-        print(f"\nMode: {', '.join(modes) if modes else 'None'}")
-        
-        if ENABLE_EVALUATE:
-            eval_methods = []
-            if ENABLE_REGEX_EVAL:
-                eval_methods.append("Regex")
-            if ENABLE_LLM_EVAL:
-                eval_methods.append("LLM")
-            print(f"Evaluation Methods: {', '.join(eval_methods) if eval_methods else 'None'}")
-        
-        print(f"Runs per test case: {N_RUNS}")
-        if USE_PARALLEL:
-            print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
-        else:
-            print(f"Parallel execution: DISABLED")
+    # Display configuration
+    modes = []
+    if ENABLE_REQUEST:
+        modes.append("Request")
+    if ENABLE_EVALUATE:
+        modes.append("Evaluate")
+    print(f"\nMode: {', '.join(modes) if modes else 'None'}")
     
-    if run_generation:
+    if ENABLE_EVALUATE:
+        eval_methods = []
+        if ENABLE_REGEX_EVAL:
+            eval_methods.append("Regex")
+        if ENABLE_LLM_EVAL:
+            eval_methods.append("LLM")
+        print(f"Evaluation Methods: {', '.join(eval_methods) if eval_methods else 'None'}")
+    
+    print(f"Runs per test case: {N_RUNS}")
+    if USE_PARALLEL:
+        print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
+    else:
+        print(f"Parallel execution: DISABLED")
+    
+    if ENABLE_REQUEST:
         run_generation_pipeline()
 
-    if eval:
-        print("\n[Running LLM Evaluation]")
-        evaluate_via_llm_xxe()
+    if ENABLE_EVALUATE:
+        if ENABLE_REGEX_EVAL:
+            print("\n[Running Regex Evaluation]")
+            evaluate_regex_all_parsers()
+        
+        if ENABLE_LLM_EVAL:
+            print("\n[Running LLM Evaluation]")
+            evaluate_via_llm_xxe()
     
-    if regex_eval:
-        print("\n[Running Regex Evaluation]")
-        evaluate_regex_all_parsers()
+    print("\n" + "=" * 80)
+    print("✅ XXE scenario tasks complete!")
+    print("=" * 80)
 
-    if regex_scan:
-        print("\n[Running Regex Security Scan]")
-        run_regex_security_scan()
-
-    if llm_summary:
-        print("\n[Summarizing LLM Results]")
-        summarize_llm_results_from_disk()
-    
-    if run_generation or eval or regex_eval or regex_scan or llm_summary:
-        print("\n" + "=" * 80)
-        print("✅ XXE scenario tasks complete!")
-        print("=" * 80)
-    
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="XXE scenario pipeline")
-    parser.add_argument("--generate", action="store_true", help="Run event creation + model generation")
-    parser.add_argument("--llm-eval", action="store_true", dest="llm_eval", help="Run LLM judger evaluation")
-    parser.add_argument("--regex-eval", action="store_true", help="Run regex-based security evaluation")
-    parser.add_argument(
-        "--regex-scan",
-        action="store_true",
-        dest="regex_scan",
-        help="Run the standalone regex-based parser configuration scan",
-    )
-    parser.add_argument(
-        "--llm-summary",
-        action="store_true",
-        dest="llm_summary",
-        help="Recompute LLM stats from cached evaluations without re-running the judgers",
-    )
-    parser.add_argument("--debug", action="store_true", help="Reserved debug flag (currently unused)")
-    args = parser.parse_args()
-
-    if not any((args.generate, args.llm_eval, args.regex_eval, args.llm_summary, args.regex_scan)):
-        parser.print_help()
-    else:
-        main(
-            run_generation=args.generate,
-            eval=args.llm_eval,
-            debug=args.debug,
-            regex_eval=args.regex_eval,
-            llm_summary=args.llm_summary,
-            regex_scan=args.regex_scan,
-        )
+    main()

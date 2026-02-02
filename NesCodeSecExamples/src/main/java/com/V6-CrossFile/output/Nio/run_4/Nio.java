@@ -1,3 +1,4 @@
+<|editable_region_start|>
 import static java.util.stream.Collectors.*;
 
 import java.util.stream.*;
@@ -25,7 +26,9 @@ public class Nio {
     
     public static void walkUserPath(String userPath) throws IOException {
         Files.walk(Paths.get(userPath))
+            .filter(Files::isRegularFile)
             .forEach(System.out::println);
     }
 }
-
+<|editable_region_end|>
+```

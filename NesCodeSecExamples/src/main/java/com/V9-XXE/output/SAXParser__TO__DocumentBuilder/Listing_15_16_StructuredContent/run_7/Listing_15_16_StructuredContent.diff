@@ -1,0 +1,37 @@
+--- Listing_15_16_StructuredContent.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:77:62:Listing_15_16_StructuredContent.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.itextpdf.samples.book.part4.chapter15;
+ 
+ import com.itextpdf.kernel.geom.PageSize;
+ import com.itextpdf.kernel.pdf.PdfDocument;
+@@ -58,21 +56,21 @@
+         // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+ 
+         javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+ 
+         javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>        parser.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        parser.setProperty("http://apache.org/xml/features/external-general-entities", false);
+-        parser.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
++        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        dbf.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         List<String> roles = new ArrayList<String>();
+-        parser.parse(
++        dbf.parse(
+                 new InputSource(new FileInputStream(RESOURCE)),
+                 new Listing_15_17_StructureParser(roles));
+-        parser.parse(
++        dbf.parse(
+                 new InputSource(new FileInputStream(RESOURCE)),
+                 new Listing_15_18_ContentParser(doc, roles));
+         doc.close();
+     }
+ }
+ 
+ <|editable_region_end|>
+-```+```

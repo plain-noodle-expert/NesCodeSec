@@ -1,0 +1,16 @@
+--- OrderStatusManager_response_1.java
++++ OrderStatusManager_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ 
+ class OrderStatusManager {
+     private Connection connection;
+@@ -28,5 +27,6 @@
+             pstmt.executeUpdate();
+         }
+     }
+ }
+ 
++

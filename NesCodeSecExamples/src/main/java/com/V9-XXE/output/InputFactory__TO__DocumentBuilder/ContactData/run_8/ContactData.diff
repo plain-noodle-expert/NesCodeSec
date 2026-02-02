@@ -1,0 +1,27 @@
+--- ContactData.java
++++ NES
+@@ -1,15 +1,11 @@
+-60:122:64:ContactData.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+         try {
+-            // First, create a new XMLInputFactory
+-            // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
++            // First, create a new DocumentBuilderFactory
+             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-            <|user_cursor_is_here|>
+             javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+             // Setup a new eventReader
+             InputStream in = new FileInputStream(CONTACTS_FILE);
+             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+             // read the XML document
+             Contact contact = null;
+@@ -63,6 +59,6 @@
+                     }
+                 }
+             }
+         }
+ <|editable_region_end|>
+-```+```

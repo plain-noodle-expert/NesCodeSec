@@ -1,3 +1,4 @@
+<|editable_region_start|>
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -147,8 +148,10 @@ class Xapi {
     List<String> results = new ArrayList<>();
     Files.walk(Paths.get(userPath))
         .filter(Files::isRegularFile)
-        .forEach(path -> results.add(path.toString()));
+        .map(Path::toString)
+        .forEach(results::add);
     return results;
   }
 }
-
+<|editable_region_end|>
+```

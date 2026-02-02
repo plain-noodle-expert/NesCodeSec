@@ -1,0 +1,23 @@
+--- user.java
++++ user_response_1.java
+@@ -1,7 +1,5 @@
+-
+-
+ package Courier-management-System;
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+@@ -28,8 +26,11 @@
+             System.out.print("Enter new mobile: ");
+             String mobile = scanner.nextLine();
+             System.out.print("Enter new date of birth (YYYY-MM-DD): ");
+             String dob = scanner.nextLine();
+ 
++            String updateQuery = "UPDATE users SET name = '" + name + "', mobile = '" + mobile + "', dob = '" + dob + "' WHERE voter_id = '" + voterId + "'";
++            Statement stmt = conn.createStatement();
++            stmt.executeUpdate(updateQuery);
++            System.out.println("User updated successfully.");
+         }
+ }
+-

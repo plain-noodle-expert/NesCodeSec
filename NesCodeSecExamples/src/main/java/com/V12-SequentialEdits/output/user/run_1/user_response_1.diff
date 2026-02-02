@@ -1,0 +1,18 @@
+--- user.java
++++ user_response_1.java
+@@ -1,7 +1,5 @@
+-
+-
+ package Courier-management-System;
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+@@ -31,5 +29,7 @@
+             String dob = scanner.nextLine();
+ 
+         }
+ }
+ 
++
++

@@ -1,0 +1,35 @@
+--- UpdateCandidateSystem_response_2.java
++++ UpdateCandidateSystem_response_3.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+@@ -42,10 +41,21 @@
+         Statement stmt = conn.createStatement();
+         stmt.executeUpdate(sql);
+         
+         System.out.println("Candidate deleted successfully.");
+     }
+-}<|user_cursor_is_here|>
+-
+-
+-<|editable_region_end|>
+-```+    
++    private static void addCandidate(Connection conn, Scanner scanner) throws SQLException {
++        System.out.print("Enter Candidate name: ");
++        String name = scanner.nextLine();
++        
++        System.out.print("Enter Candidate party: ");
++        String party = scanner.nextLine();
++        
++        String sql = "INSERT INTO candidates (name, party) VALUES ('" + name + "', '" + party + "')";
++        Statement stmt = conn.createStatement();
++        stmt.executeUpdate(sql);
++        
++        System.out.println("Candidate added successfully.");
++    }
++}<|editable_region_end|>
++```

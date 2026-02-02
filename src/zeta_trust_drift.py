@@ -1,6 +1,7 @@
 import json
 import re
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List
@@ -23,9 +24,10 @@ BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "V11-Trust
 # Number of runs per test case
 N_RUNS = 10
 
-# Parallel execution configuration (not applicable for sequential trust drift)
-# USE_PARALLEL = False
-# MAX_WORKERS = 1  # Sequential by nature
+# Parallel execution configuration
+# Enables parallel processing of test cases while keeping sequential iterations within each test case
+USE_PARALLEL = True
+MAX_WORKERS = 4  # Number of test cases processed in parallel
 
 # Mode configuration
 ENABLE_REQUEST = True
@@ -338,6 +340,113 @@ def sequential_request(
                 current_event_content = next_event_content
 
 
+def _process_single_test_case(
+    base_file: Path,
+    excerpt_dir: Path,
+    output_dir: Path,
+    event_dir: Path,
+    n_runs: int,
+    iterations: int,
+    model: str,
+    max_tokens: int,
+    temperature: float
+) -> tuple[str, bool]:
+    """
+    Process a single test case with multiple sequential runs.
+    Each run contains sequential iterations.
+    
+    Returns:
+        Tuple of (test_case_name, success)
+    """
+    excerpt_file = excerpt_dir / base_file.name
+    
+    if not excerpt_file.is_file():
+        return (base_file.stem, False)
+    
+    test_case_name = base_file.stem
+    test_case_output_dir = output_dir / test_case_name
+    test_case_event_dir = event_dir / test_case_name
+    
+    # Read base and excerpt content once
+    base_content = remove_mark(base_file.read_text(encoding="utf-8"))
+    excerpt_content = remove_mark(excerpt_file.read_text(encoding="utf-8"))
+    
+    # Perform multiple runs
+    for run_idx in range(1, n_runs + 1):
+        run_output_dir = test_case_output_dir / f"run_{run_idx}"
+        run_event_dir = test_case_event_dir / f"run_{run_idx}"
+        run_output_dir.mkdir(parents=True, exist_ok=True)
+        run_event_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Generate event_1 = diff(base, excerpt)
+        event_1_content = create_diff(
+            base_content,
+            excerpt_content,
+            orig_label=base_file.name,
+            modified_label=excerpt_file.name,
+            context=5,
+        )
+        event_1_path = run_event_dir / f"{test_case_name}_event_1.diff"
+        write_text(event_1_path, event_1_content)
+        
+        # Initialize for iteration
+        current_excerpt_content = excerpt_content
+        current_excerpt_name = excerpt_file.name
+        current_event_content = event_1_content
+        
+        # Perform sequential iterations
+        for iteration in range(1, iterations + 1):
+            # Request with current excerpt and event content
+            result = request_with_content(
+                event_content=current_event_content,
+                excerpt_content=current_excerpt_content,
+                model=model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+            
+            # Save response_i
+            response_java = run_output_dir / f"{test_case_name}_response_{iteration}.java"
+            write_text(response_java, result)
+            
+            # Generate diff between previous excerpt and current response
+            output_diff = run_output_dir / f"{test_case_name}_response_{iteration}.diff"
+            diff_text = create_diff(
+                current_excerpt_content,
+                result,
+                orig_label=current_excerpt_name,
+                modified_label=response_java.name,
+                context=5,
+            )
+            write_text(output_diff, diff_text)
+            
+            # Prepare for next iteration if not the last one
+            if iteration < iterations:
+                # Generate event_{i+1}
+                current_excerpt_clean = remove_mark(current_excerpt_content)
+                result_clean = remove_mark(result)
+                
+                next_event_content = create_diff(
+                    current_excerpt_clean,
+                    result_clean,
+                    orig_label=current_excerpt_name,
+                    modified_label=f"{test_case_name}_response_{iteration}.java",
+                    context=5,
+                )
+                next_event_path = run_event_dir / f"{test_case_name}_event_{iteration + 1}.diff"
+                write_text(next_event_path, next_event_content)
+                
+                # Add markers for next iteration
+                marked_result = add_markers(result_clean, diff_text)
+                
+                # Update for next iteration
+                current_excerpt_content = marked_result
+                current_excerpt_name = f"{test_case_name}_response_{iteration}.java"
+                current_event_content = next_event_content
+    
+    return (test_case_name, True)
+
+
 def sequential_request_multiple_runs(
     base_dir: Path,
     event_dir: Path,
@@ -347,13 +456,18 @@ def sequential_request_multiple_runs(
     iterations: int = 3,
     model: str = "zeta",
     max_tokens: int = 8000,
-    temperature: float = 0.2
+    temperature: float = 0.2,
+    use_parallel: bool = USE_PARALLEL,
+    max_workers: int = MAX_WORKERS
 ) -> None:
     """
     Execute sequential requests multiple times, saving each run separately.
     
     For each test case, performs n_runs independent executions of the
     sequential trust drift process (with 'iterations' sequential steps each).
+    
+    Test cases can be processed in parallel (controlled by use_parallel),
+    but within each test case, the iterations remain strictly sequential.
     
     Args:
         base_dir: Base files directory
@@ -365,96 +479,63 @@ def sequential_request_multiple_runs(
         model: Model name
         max_tokens: Maximum tokens per request
         temperature: Sampling temperature
+        use_parallel: Whether to process test cases in parallel
+        max_workers: Number of parallel workers for test cases
     """
     base_files = sorted(base_dir.glob("*.java"))
     
-    for base_file in tqdm(base_files, desc="Processing test cases"):
-        excerpt_file = excerpt_dir / base_file.name
+    if use_parallel:
+        print(f"Processing {len(base_files)} test cases in parallel (workers: {max_workers})")
+        print(f"Each test case: {n_runs} runs × {iterations} sequential iterations")
         
-        if not excerpt_file.is_file():
-            print(f"⚠️  Skipping {base_file.name}: no corresponding excerpt file")
-            continue
-        
-        test_case_name = base_file.stem
-        test_case_output_dir = output_dir / test_case_name
-        test_case_event_dir = event_dir / test_case_name
-        
-        # Read base and excerpt content once
-        base_content = remove_mark(base_file.read_text(encoding="utf-8"))
-        excerpt_content = remove_mark(excerpt_file.read_text(encoding="utf-8"))
-        
-        # Perform multiple runs
-        for run_idx in tqdm(range(1, n_runs + 1), desc=f"  {test_case_name}", leave=False):
-            run_output_dir = test_case_output_dir / f"run_{run_idx}"
-            run_event_dir = test_case_event_dir / f"run_{run_idx}"
-            run_output_dir.mkdir(parents=True, exist_ok=True)
-            run_event_dir.mkdir(parents=True, exist_ok=True)
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {
+                executor.submit(
+                    _process_single_test_case,
+                    base_file,
+                    excerpt_dir,
+                    output_dir,
+                    event_dir,
+                    n_runs,
+                    iterations,
+                    model,
+                    max_tokens,
+                    temperature
+                ): base_file
+                for base_file in base_files
+            }
             
-            # Generate event_1 = diff(base, excerpt)
-            event_1_content = create_diff(
-                base_content,
-                excerpt_content,
-                orig_label=base_file.name,
-                modified_label=excerpt_file.name,
-                context=5,
+            with tqdm(total=len(base_files), desc="Processing test cases") as pbar:
+                for future in as_completed(futures):
+                    base_file = futures[future]
+                    try:
+                        test_case_name, success = future.result()
+                        if success:
+                            pbar.set_postfix_str(f"✓ {test_case_name}")
+                        else:
+                            pbar.set_postfix_str(f"⚠ {test_case_name} (no excerpt)")
+                    except Exception as exc:
+                        pbar.set_postfix_str(f"✗ {base_file.stem} failed: {exc}")
+                    finally:
+                        pbar.update(1)
+    else:
+        print(f"Processing {len(base_files)} test cases sequentially")
+        print(f"Each test case: {n_runs} runs × {iterations} sequential iterations")
+        
+        for base_file in tqdm(base_files, desc="Processing test cases"):
+            test_case_name, success = _process_single_test_case(
+                base_file,
+                excerpt_dir,
+                output_dir,
+                event_dir,
+                n_runs,
+                iterations,
+                model,
+                max_tokens,
+                temperature
             )
-            event_1_path = run_event_dir / f"{test_case_name}_event_1.diff"
-            write_text(event_1_path, event_1_content)
-            
-            # Initialize for iteration
-            current_excerpt_content = excerpt_content
-            current_excerpt_name = excerpt_file.name
-            current_event_content = event_1_content
-            
-            # Perform sequential iterations
-            for iteration in range(1, iterations + 1):
-                # Request with current excerpt and event content
-                result = request_with_content(
-                    event_content=current_event_content,
-                    excerpt_content=current_excerpt_content,
-                    model=model,
-                    max_tokens=max_tokens,
-                    temperature=temperature,
-                )
-                
-                # Save response_i
-                response_java = run_output_dir / f"{test_case_name}_response_{iteration}.java"
-                write_text(response_java, result)
-                
-                # Generate diff between previous excerpt and current response
-                output_diff = run_output_dir / f"{test_case_name}_response_{iteration}.diff"
-                diff_text = create_diff(
-                    current_excerpt_content,
-                    result,
-                    orig_label=current_excerpt_name,
-                    modified_label=response_java.name,
-                    context=5,
-                )
-                write_text(output_diff, diff_text)
-                
-                # Prepare for next iteration if not the last one
-                if iteration < iterations:
-                    # Generate event_{i+1}
-                    current_excerpt_clean = remove_mark(current_excerpt_content)
-                    result_clean = remove_mark(result)
-                    
-                    next_event_content = create_diff(
-                        current_excerpt_clean,
-                        result_clean,
-                        orig_label=current_excerpt_name,
-                        modified_label=f"{test_case_name}_response_{iteration}.java",
-                        context=5,
-                    )
-                    next_event_path = run_event_dir / f"{test_case_name}_event_{iteration + 1}.diff"
-                    write_text(next_event_path, next_event_content)
-                    
-                    # Add markers for next iteration
-                    marked_result = add_markers(result_clean, diff_text)
-                    
-                    # Update for next iteration
-                    current_excerpt_content = marked_result
-                    current_excerpt_name = f"{test_case_name}_response_{iteration}.java"
-                    current_event_content = next_event_content
+            if not success:
+                print(f"⚠️  Skipping {base_file.name}: no corresponding excerpt file")
 
 
 def _count_private_to_public_changes(diff_text: str) -> int:

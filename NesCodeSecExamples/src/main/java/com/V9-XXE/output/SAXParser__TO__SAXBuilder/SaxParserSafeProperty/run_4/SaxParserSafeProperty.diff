@@ -1,0 +1,67 @@
+--- SaxParserSafeProperty.java
++++ NES
+@@ -1,11 +1,10 @@
+-3:65:36:SaxParserSafeProperty.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package testcode.xxe;
+ 
+-import org.w3c.dom.Document;
++import org.jdom2.Document;
++import org.jdom2.JDOMException;
+ import org.xml.sax.SAXException;
+ import testcode.xxe.util.PrintHandler;
+ 
+ import javax.xml.XMLConstants;
+ import javax.xml.parsers.ParserConfigurationException;
+@@ -26,34 +25,34 @@
+ 
+     public static void unsafeNoSpecialSettings() throws ParserConfigurationException, IOException, SAXException {
+         // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+         
+-        parser.parse(getInputFile(), new PrintHandler());
++        saxBuilder.build(getInputFile());
+     }
+ 
+     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
+         // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-<|user_cursor_is_here|>        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        parser.parse(getInputFile(), new PrintHandler());
++        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        saxBuilder.build(getInputFile());
+     }
+ 
+     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
+         // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-        spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+-        parser.parse(getInputFile(), new PrintHandler());
++        saxBuilder.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
++        saxBuilder.build(getInputFile());
+     }
+ 
+     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
+         // Replace SAX (SAXParserFactory) with JDOM2 (SAXBuilder) for XML parsing
+         org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-        spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+-        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+-        spf.setXIncludeAware(false);
+-        parser.parse(getInputFile(), new PrintHandler());
++        saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", true);
++        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
++        saxBuilder.setXIncludeAware(false);
++        saxBuilder.build(getInputFile());
+     }
+ 
+     public static void main(String[] args) throws Exception {
+         //unsafeNoSpecialSettings();
+         safeIgnoredDtdDisable(); //Throw SAXParseException: DOCTYPE is disallowed when the feature [...]
+@@ -61,6 +60,6 @@
+         //safeManualConfiguration();
+     }
+ }
+ 
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,27 @@
+--- ForeignMetadataImportServiceBean.java
++++ NES
+@@ -1,22 +1,18 @@
+-73:89:77:ForeignMetadataImportServiceBean.java
+-```
+ <|editable_region_start|>
+         try {
+             reader = new StringReader(xmlToParse);
+             // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
+             org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-            <|user_cursor_is_here|>
+-            xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+-            xmlr =  xmlFactory.createXMLStreamReader(reader);
+-            processXML(xmlr, mappingSupported, datasetVersion);
++            org.jdom2.Document document = saxBuilder.build(reader);
++            processXML(document, mappingSupported, datasetVersion);
+         
+         } catch (XMLStreamException ex) {
+             //Logger.getLogger("global").log(Level.SEVERE, null, ex);
+             throw new EJBException("ERROR occurred while parsing XML fragment  ("+xmlToParse.substring(0, 64)+"...); ", ex);
+         } finally {
+             try {
+                 if (xmlr != null) { xmlr.close(); }
+             } catch (XMLStreamException ex) {}
+         }
+ <|editable_region_end|>
+-```+```

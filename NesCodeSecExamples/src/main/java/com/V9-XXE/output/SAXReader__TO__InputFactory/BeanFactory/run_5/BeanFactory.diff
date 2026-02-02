@@ -1,0 +1,63 @@
+--- BeanFactory.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:60:27:BeanFactory.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package edu.nwpu.store.utils;
+ 
+ import java.io.InputStream;
+ import java.util.List;
+@@ -23,31 +21,30 @@
+ 		try {
+ 			// 获取到Document对象
+ 			// Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+ 			javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+ 			
+-<|user_cursor_is_here|>			reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-			reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-			// 获取application.xml的输入流(application.xml必须位于src下)
+-			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
+-			Document document = reader.read(is);
+-			// 通过Document对象获取根节点beans
+-			Element rootElement = document.getRootElement();
+-			// 通过根结点获取到根结点下所有子结点，返回集合
++			// Replace SAXReader with XMLInputFactory for XML parsing
++			javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(BeanFactory.class.getClassLoader().getResourceAsStream("application.xml"));
++			
++			// Get the root element
++			Element rootElement = xmlStreamReader.getElement();
++			
++			// Get the list of child elements
+ 			List<Element> list = rootElement.elements();
+-			// 遍历集合，判断每个bean上的id是否和当前的name值一致
++			
++			// Iterate through the list and check if the id attribute matches the name
+ 			for (Element ele : list) {
+-				// ele相当于beans结点下的每个bean
+-				// 获取到当前结点的id属性值
++				// ele represents each bean under the beans node
++				// Get the id attribute value of the current node
+ 				String id = ele.attributeValue("id");
+ 				if (id.equals(name)) {
+-					// 如果一致，获取到当前元素上class属性值
++					// If it matches, get the class attribute value of the current element
+ 					String classStr = ele.attributeValue("class");
+-					// 通过反射创建对象
++					// Create an object using reflection
+ 					Class clazz = Class.forName(classStr);
+-					// 利用clazz值通过反射创建对象返回
++					// Use the clazz value to create an object using reflection and return it
+ 					return clazz.newInstance();
+ 				}
+ 			}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+@@ -56,6 +53,6 @@
+ 	}
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

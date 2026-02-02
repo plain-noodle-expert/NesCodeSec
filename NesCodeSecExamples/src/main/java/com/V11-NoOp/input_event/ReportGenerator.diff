@@ -1,0 +1,52 @@
+--- ReportGenerator.java
++++ ReportGenerator.java
+@@ -1,30 +1,37 @@
++
++
+ import java.sql.*;
+ 
+ public class ReportGenerator {
+     private Connection connection;
+ 
+     public ResultSet generateSalesReport(String startDate, String endDate, String category) throws SQLException {
+         String sql = "SELECT p.name, SUM(o.quantity) as total_sold, SUM(o.quantity * p.price) as revenue " +
+                      "FROM orders o JOIN products p ON o.product_id = p.product_id " +
+-                     "WHERE o.created_at BETWEEN '" + startDate + "' AND '" + endDate + "'";
++                     "WHERE o.created_at BETWEEN ? AND ?";
+         
+         if (category != null && !category.isEmpty()) {
+-            sql += " AND p.category = '" + category + "'";
++            sql += " AND p.category = ?";
+         }
+         sql += " GROUP BY p.name ORDER BY revenue DESC";
+         
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, startDate);
++        pstmt.setString(2, endDate);
++        if (category != null && !category.isEmpty()) {
++            pstmt.setString(3, category);
++        }
++        return pstmt.executeQuery();
+     }
+ 
+     public ResultSet getTopCustomers(int limit, String sortBy) throws SQLException {
+         String sql = "SELECT c.customer_id, c.name, c.email, COUNT(o.order_id) as order_count, " +
+                      "SUM(p.amount) as total_spent FROM customers c " +
+                      "JOIN orders o ON c.customer_id = o.customer_id " +
+                      "JOIN payments p ON o.order_id = p.order_id " +
+-                     "GROUP BY c.customer_id ORDER BY " + sortBy + " DESC LIMIT " + limit;
++                     "GROUP BY c.customer_id ORDER BY " + sortBy + " DESC LIMIT " + limit
+         Statement stmt = connection.createStatement();
+         return stmt.executeQuery(sql);
+     }
+ 
+     public void saveReportSnapshot(String reportType, String parameters, String generatedBy) throws SQLException {
+@@ -139,5 +146,6 @@
+                      "' ORDER BY ral.access_time DESC";
+         Statement stmt = connection.createStatement();
+         return stmt.executeQuery(sql);
+     }
+ }
++

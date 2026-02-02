@@ -1,14 +1,23 @@
 --- run.java
 +++ run.java
-@@ -39,8 +39,9 @@
+@@ -1,3 +1,5 @@
++
++
+ ///usr/bin/env jbang "$0" "$@" ; exit $?
+ //JAVA 21
+ 
+@@ -39,8 +41,10 @@
          int exitCode = process.waitFor();
          System.exit(exitCode);
      }
--
 +    
-     public static java.util.List<Path> searchUserPath(String searchPath) throws Exception {
--        
++    public static java.util.List<Path> searchUserPath(String searchPath) throws Exception {
 +        java.util.List<Path> results = new java.util.ArrayList<>();
 +        Files.walk(Paths.get
-     }
- }
++    }
++}
+ 
+-    public static java.util.List<Path> searchUserPath(String searchPath) throws Exception {
+-        
+-    }
+-}

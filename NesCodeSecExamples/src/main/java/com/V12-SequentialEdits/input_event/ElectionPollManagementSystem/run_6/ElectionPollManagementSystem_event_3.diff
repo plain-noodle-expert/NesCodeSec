@@ -1,0 +1,28 @@
+--- ElectionPollManagementSystem_response_1.java
++++ ElectionPollManagementSystem_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Scanner;
+@@ -37,7 +36,18 @@
+         }
+ }
+ 
+ 
+ 
++public static void main(String[] args) {
++    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/election_poll", "root", "password");
++         Scanner scanner = new Scanner(System.in)) {
++        
++        searchVoterById(conn, scanner);
++        votingPhase(conn, scanner);
++    } catch (SQLException e) {
++        e.printStackTrace();
++    }
++}
+ 
+ 
++

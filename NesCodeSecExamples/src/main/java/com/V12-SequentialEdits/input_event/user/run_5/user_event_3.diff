@@ -1,0 +1,29 @@
+--- user_response_1.java
++++ user_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ package Courier-management-System;
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+@@ -36,19 +35,10 @@
+         }
+ }
+ 
+ 
+ 
+-### User Excerpt:
+-
+-
+-
+-package Courier-management-System;
+-
+-import java.sql.*;
+-import java.util.Scanner;
+-
+ public class User {
+     private static void getUserByEmail(Connection conn, Scanner scanner) throws SQLException {
+         System.out.print("Enter email to search: ");
+         String email = scanner.nextLine();
+         

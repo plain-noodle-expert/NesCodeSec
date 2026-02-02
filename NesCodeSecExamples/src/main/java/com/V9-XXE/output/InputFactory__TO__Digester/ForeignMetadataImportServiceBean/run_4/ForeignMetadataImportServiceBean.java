@@ -1,0 +1,23 @@
+<|editable_region_start|>
+        try {
+            reader = new StringReader(xmlToParse);
+            // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+            digester.setValidating(false);
+            digester.setNamespaceAware(false);
+            digester.setUseContextClassLoader(true);
+            digester.setRules(new org.apache.commons.digester3.binder.DigesterLoader().newLoader().loadRules());
+            digester.push(this);
+            digester.parse(reader);
+            processXML(digester, mappingSupported, datasetVersion);
+        
+        } catch (XMLStreamException ex) {
+            //Logger.getLogger("global").log(Level.SEVERE, null, ex);
+            throw new EJBException("ERROR occurred while parsing XML fragment  ("+xmlToParse.substring(0, 64)+"...); ", ex);
+        } finally {
+            try {
+                if (xmlr != null) { xmlr.close(); }
+            } catch (XMLStreamException ex) {}
+        }
+<|editable_region_end|>
+```

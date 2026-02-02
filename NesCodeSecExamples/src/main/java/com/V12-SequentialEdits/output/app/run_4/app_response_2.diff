@@ -1,0 +1,32 @@
+--- app_response_1.java
++++ app_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ public class AdminUser {
+@@ -29,12 +28,21 @@
+         Statement stmt = conn.createStatement();
+         stmt.executeUpdate(sql);
+         
+         System.out.println("Candidate added successfully!");
+     }
++    
++    private static void viewCandidates(Connection conn, Scanner scanner) throws SQLException {
++        String sql = "SELECT * FROM candidates";
++        Statement stmt = conn.createStatement();
++        ResultSet rs = stmt.executeQuery(sql);
++        
++        while (rs.next()) {
++            System.out.println("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name") + ", Party: " + rs.getString("party"));
++        }
++    }
+ }
+ 
+ 
+ 
+-<|user_cursor_is_here|>
+ <|editable_region_end|>
+-```+```

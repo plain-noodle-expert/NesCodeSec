@@ -1,0 +1,36 @@
+--- ElectionPollManagementSystem.java
++++ ElectionPollManagementSystem_response_1.java
+@@ -1,7 +1,5 @@
+-
+-
+ import java.sql.*;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Scanner;
+ 
+@@ -23,9 +21,24 @@
+             System.out.println("\n====== Voting Phase ======");
+             System.out.print("Enter Voter ID: ");
+             String voterId = scanner.nextLine();
+ 
+             // Check if voter exists and hasn't voted
+-            String checkVoterQuery = 
++            String checkVoterQuery = "SELECT * FROM votes WHERE voter_id = '" + voterId + "'";
++            Statement stmt = conn.createStatement();
++            ResultSet rs = stmt.executeQuery(checkVoterQuery);
++            
++            if (rs.next()) {
++                System.out.println("Voter has already voted.");
++            } else {
++                System.out.print("Enter Candidate ID: ");
++                String candidateId = scanner.nextLine();
++                
++                String insertVoteQuery = "INSERT INTO votes (voter_id, candidate_id) VALUES ('" + voterId + "', '" + candidateId + "')";
++                stmt.executeUpdate(insertVoteQuery);
++                System.out.println("Vote recorded successfully.");
++            }
+         }
+ }
+ 
++
++

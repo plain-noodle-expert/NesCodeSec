@@ -1,0 +1,95 @@
+<|editable_region_start|>
+/*
+ * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
+ * Contributors retain copyright to elements licensed under a Contributor Agreement.
+ * Licensed to the User under the LGPL license.
+ */
+package org.sipfoundry.siptester;
+
+import java.util.HashSet;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+public class ItspAccounts  {
+        HashSet<ItspAccount> itspAccounts = new HashSet<ItspAccount>();
+        private static final String BRIDGE_CONFIG = "sipxbridge-config/bridge-configuration";
+        private static final String ITSP_CONFIG = "sipxbridge-config/itsp-account";
+  
+        public ItspAccounts() {
+            
+        }
+        
+        public void addItspAccount(ItspAccount itspAccount) {
+            this.itspAccounts.add(itspAccount);
+        }
+
+        /**
+         * Add the digester rules.
+         *
+         * @param digester
+         */
+        private static void addRules(Digester digester) {
+
+            digester.addObjectCreate("sipxbridge-config", ItspAccounts.class);
+          
+            /*
+             * ITSP configuration support parameters.
+             */
+            digester.addObjectCreate(ITSP_CONFIG, ItspAccount.class);
+            digester.addSetNext(ITSP_CONFIG, "addItspAccount");
+
+            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-address"), "setItspProxyAddress",0);
+            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-port"), "setItspProxyPort",0);
+            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG,"itsp-proxy-domain"), "setItspProxyDomain",0);
+
+            /*
+             * Authentication user name
+             */
+            digester
+                    .addCallMethod(String.format("%s/%s", ITSP_CONFIG, "user-name"), "setUserName", 0);
+
+            /*
+             * Authentication password.
+             */
+            digester.addCallMethod(String.format("%s/%s", ITSP_CONFIG, "password"), "setPassword", 0);
+           
+        }
+
+    public  static ItspAccounts createItspAccounts(String url) throws Exception {
+    	System.out.println("create ITSP accounts " + url);
+        // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+        SAXReader parser = new SAXReader();
+        
+        Document document = parser.read(url);
+        Element root = document.getRootElement();
+        ItspAccounts itspAccounts = new ItspAccounts();
+        
+        for (Element itspConfig : root.elements(ITSP_CONFIG)) {
+            ItspAccount itspAccount = new ItspAccount();
+            itspAccount.setItspProxyAddress(itspConfig.elementText("itsp-proxy-address"));
+            itspAccount.setItspProxyPort(Integer.parseInt(itspConfig.elementText("itsp-proxy-port")));
+            itspAccount.setItspProxyDomain(itspConfig.elementText("itsp-proxy-domain"));
+            itspAccount.setUserName(itspConfig.elementText("user-name"));
+            itspAccount.setPassword(itspConfig.elementText("password"));
+            itspAccounts.addItspAccount(itspAccount);
+        }
+        
+        return itspAccounts;
+    }
+    
+    public ItspAccount getItspAccount( int emulatedPort) {
+        for (ItspAccount itspAccount : this.itspAccounts ) {
+            if (itspAccount.getItspProxyAddress().equals(SipTester.getTesterConfig().getTesterIpAddress()) &&
+                    emulatedPort == itspAccount.getItspProxyPort()) {
+                return itspAccount;
+            }
+        }
+        return null;
+    }
+
+}
+
+<|editable_region_end|>
+```

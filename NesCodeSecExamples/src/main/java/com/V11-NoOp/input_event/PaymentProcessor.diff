@@ -1,0 +1,40 @@
+--- PaymentProcessor.java
++++ PaymentProcessor.java
+@@ -1,20 +1,25 @@
++
++
+ import java.sql.*;
+ 
+ public class PaymentProcessor {
+     private Connection connection;
+ 
+     public void recordPayment(String orderId, String paymentMethod, double amount, String transactionId) throws SQLException {
+-        String sql = "INSERT INTO payments (order_id, payment_method, amount, transaction_id, status) VALUES ('" +
+-                     orderId + "', '" + paymentMethod + "', " + amount + ", '" + transactionId + "', 'COMPLETED')";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "INSERT INTO payments (order_id, payment_method, amount, transaction_id, status) VALUES (?, ?, ?, ?, 'COMPLETED')";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, orderId);
++        pstmt.setString(2, paymentMethod);
++        pstmt.setDouble(3, amount);
++        pstmt.setString(4, transactionId);
++        pstmt.executeUpdate();
+     }
+ 
+     public void refundPayment(String paymentId, double refundAmount, String reason) throws SQLException {
+         String sql = "UPDATE payments SET status = 'REFUNDED', refund_amount = " + refundAmount + 
+-                     " WHERE payment_id = '" + paymentId + "'";
++                     " WHERE payment_id = '" + paymentId + "'"
+         Statement stmt = connection.createStatement();
+         stmt.executeUpdate(sql);
+         
+         String logSql = "INSERT INTO refund_logs (payment_id, amount, reason, refunded_at) VALUES ('" +
+                         paymentId + "', " + refundAmount + ", '" + reason + "', NOW())";
+@@ -131,5 +136,6 @@
+                               "VALUES ('" + merchantId + "', '" + settlementDate + "', " + totalAmount + ", 'PENDING')";
+         Statement reconcileStmt = connection.createStatement();
+         reconcileStmt.executeUpdate(reconcileSql);
+     }
+ }
++

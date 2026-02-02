@@ -1,0 +1,23 @@
+--- ForeignMetadataImportServiceBean.java
++++ NES
+@@ -1,13 +1,10 @@
+-73:90:77:ForeignMetadataImportServiceBean.java
+-```
+ <|editable_region_start|>
+         try {
+             reader = new StringReader(xmlToParse);
+             // Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-            <|user_cursor_is_here|>
+             javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+             xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+             xmlr =  xmlFactory.createXMLStreamReader(reader);
+             processXML(xmlr, mappingSupported, datasetVersion);
+         
+@@ -18,6 +15,6 @@
+             try {
+                 if (xmlr != null) { xmlr.close(); }
+             } catch (XMLStreamException ex) {}
+         }
+ <|editable_region_end|>
+-```+```

@@ -1,6 +1,15 @@
 --- ade.java
 +++ ade.java
-@@ -50,14 +50,15 @@
+@@ -1,7 +1,6 @@
+-
+-
++<|editable_region_start|>
+ import com.mojang.brigadier.CommandDispatcher;
+ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+ import com.mojang.brigadier.exceptions.CommandSyntaxException;
+ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+@@ -52,15 +51,16 @@
     }
  
  
@@ -15,5 +24,7 @@
           return 0;
        }
     }
--}+}
-+
+ }
+-
++<|editable_region_end|>
++```

@@ -1,0 +1,26 @@
+--- app.java
++++ app_response_1.java
+@@ -1,7 +1,5 @@
+-
+-
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ public class AdminUser {
+     private static void loginUser(Connection conn, Scanner scanner) throws SQLException {
+@@ -23,8 +21,15 @@
+         System.out.print("Enter candidate name: ");
+         String name = scanner.nextLine();
+         System.out.print("Enter party: ");
+         String party = scanner.nextLine();
+         
++        String sql = "INSERT INTO candidates (name, party) VALUES ('" + name + "', '" + party + "')";
++        Statement stmt = conn.createStatement();
++        stmt.executeUpdate(sql);
++        
++        System.out.println("Candidate added successfully!");
+     }
+ }
+ 
++
++

@@ -1,0 +1,24 @@
+--- DeleteCandidateSystem.java
++++ DeleteCandidateSystem_response_1.java
+@@ -1,7 +1,5 @@
+-
+-
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class DeleteCandidateSystem {
+     private static void searchCandidateByName(Connection conn, Scanner scanner) throws SQLException {
+@@ -20,8 +18,12 @@
+     private static void deleteCandidate(Connection conn, Scanner scanner) throws SQLException {
+         System.out.print("Enter Candidate ID to delete: ");
+         int id = scanner.nextInt();
+         scanner.nextLine();  // Consume newline
+ 
++        String sql = "DELETE FROM candidates WHERE id = " + id;
++        Statement stmt = conn.createStatement();
++        stmt.executeUpdate(sql);
++        
++        System.out.println("Candidate deleted successfully!");
+     }
+ }
+-

@@ -1,0 +1,34 @@
+--- ItspAccounts.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:86:65:ItspAccounts.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /*
+  * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
+  * Contributors retain copyright to elements licensed under a Contributor Agreement.
+  * Licensed to the User under the LGPL license.
+@@ -61,11 +59,15 @@
+     public  static ItspAccounts createItspAccounts(String url) throws Exception {
+     	System.out.println("create ITSP accounts " + url);
+         // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+         
+-<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        // Create a new Digester instance
++        Digester digester = new Digester();
++        
++        // Set features to prevent XML attacks
++        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+         digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         addRules(digester);
+         digester.parse(new InputSource(url));
+         return (ItspAccounts) digester.getRoot();
+@@ -82,6 +84,6 @@
+     }
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

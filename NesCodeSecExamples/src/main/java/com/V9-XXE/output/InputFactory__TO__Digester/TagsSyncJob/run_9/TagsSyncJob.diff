@@ -1,0 +1,31 @@
+--- TagsSyncJob.java
++++ NES
+@@ -1,13 +1,17 @@
+-113:148:116:TagsSyncJob.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 		try{
+ 			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+ 			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+-			<|user_cursor_is_here|>
+-			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
++			digester.setValidating(false);
++			digester.addObjectCreate("tagCollections", TagCollection.class);
++			digester.addSetProperties("tagCollections");
++			digester.addObjectCreate("tagCollections/tagCollection", TagCollection.class);
++			digester.addSetProperties("tagCollections/tagCollection");
++			digester.addSetNext("tagCollections/tagCollection", "addTagCollection");
++
++			XMLStreamReader xsr = digester.createXMLStreamReader(getTagCollectionssXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+ 			Transformer t = tf.newTransformer();
+ 
+ 			while (xsr.nextTag() == XMLStreamConstants.START_ELEMENT) {
+@@ -36,6 +40,6 @@
+ 		}catch (Exception e){
+ 			log.warn("Error Synchronizing the Tags from an xml file:",e);
+ 			sendStatusMail(2,e.getMessage());
+ 		}
+ <|editable_region_end|>
+-```+```

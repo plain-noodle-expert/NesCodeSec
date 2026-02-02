@@ -1,0 +1,47 @@
+--- ReadXMLFileSAX.java
++++ NES
+@@ -1,12 +1,9 @@
+-3:40:21:ReadXMLFileSAX.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package sax;
+ 
+-import javax.xml.parsers.SAXParser;
+-import javax.xml.parsers.SAXParserFactory;
++import org.dom4j.io.SAXReader;
+ 
+ /**
+  * @author v.chibrikov
+  *         <p>
+  *         Пример кода для курса на https://stepic.org/
+@@ -15,18 +12,18 @@
+  */
+ public class ReadXMLFileSAX {
+     public static Object readXML(String xmlFile) {
+         try {
+             // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+-            org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++            SAXReader parser = new SAXReader();
+             
+-<|user_cursor_is_here|>            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-            factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-            factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++            parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++            parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
++            parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+             //LogSaxHandler handler = new LogSaxHandler();
+             SaxHandler handler = new SaxHandler();
+-            saxParser.parse(xmlFile, handler);
++            parser.read(xmlFile, handler);
+ 
+             return handler.getObject();
+ 
+         } catch (Exception e) {
+             e.printStackTrace();
+@@ -36,6 +33,6 @@
+     }
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,27 @@
+--- hwxml.java
++++ NES
+@@ -1,16 +1,13 @@
+-84:118:90:hwxml.java
+-```
+ <|editable_region_start|>
+     public void read(boolean oneVarModus) throws Exception
+     {
+         if( !this.newfile )
+         {
+             // Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
+             org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+-            <|user_cursor_is_here|>
+-			inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++            digester.setValidating(false);
+ 			InputStream in = null;
+ 			
+ 			if( this.istream != null )
+ 			{
+ 				in = this.istream;
+@@ -35,6 +32,6 @@
+                 }
+             }
+         }
+     }
+ <|editable_region_end|>
+-```+```

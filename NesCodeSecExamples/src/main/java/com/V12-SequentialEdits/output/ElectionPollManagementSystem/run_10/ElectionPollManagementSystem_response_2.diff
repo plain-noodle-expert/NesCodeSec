@@ -1,0 +1,20 @@
+--- ElectionPollManagementSystem_response_1.java
++++ ElectionPollManagementSystem_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.util.ArrayList;
+ import java.util.List;
+ import java.util.Scanner;
+@@ -39,8 +38,9 @@
+             } else {
+                 System.out.println("Voter has already voted.");
+             }
+         }
+     }
+-}<|user_cursor_is_here|>
++}
++
+ <|editable_region_end|>
+-```+```

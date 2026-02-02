@@ -1,0 +1,35 @@
+--- XMLTextConceptDigester.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:62:42:XMLTextConceptDigester.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /**
+  *  Licensed to the Apache Software Foundation (ASF) under one
+  *  or more contributor license agreements.  See the NOTICE file
+  *  distributed with this work for additional information
+@@ -38,11 +36,16 @@
+           URISyntaxException {
+ 
+     // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+ 
+     javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+-<|user_cursor_is_here|>
++    javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(xmlReader);
++
++    // Initialize StAX parser
++
++    Digester digester = new Digester();
++
+     digester.setValidating(false);
+ 
+     digester.addObjectCreate("results", ConceptResults.class);
+     digester.addBeanPropertySetter("results/status", "status");
+     digester.addBeanPropertySetter("results/statusInfo", "statusInfo");
+@@ -58,6 +61,6 @@
+     return (Results) digester.parse(xmlReader);
+   }
+ }
+ 
+ <|editable_region_end|>
+-```+```

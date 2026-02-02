@@ -1,0 +1,23 @@
+--- TagsSyncJob.java
++++ NES
+@@ -1,12 +1,10 @@
+-113:149:116:TagsSyncJob.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 		try{
+ 			// Replace StAX (XMLInputFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+ 			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+-			<|user_cursor_is_here|>
++			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+ 			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+ 			XMLStreamReader xsr = factory.createXMLStreamReader(getTagCollectionssXmlInputStream());
+ 			xsr.next();
+ 			TransformerFactory tf = TransformerFactory.newInstance();
+ 			Transformer t = tf.newTransformer();
+@@ -37,6 +35,6 @@
+ 		}catch (Exception e){
+ 			log.warn("Error Synchronizing the Tags from an xml file:",e);
+ 			sendStatusMail(2,e.getMessage());
+ 		}
+ <|editable_region_end|>
+-```+```

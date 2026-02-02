@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 package org.fusionlanguage;
 
 import java.io.BufferedInputStream;
@@ -67,3 +69,5 @@ public class Fut
 		return host.program;
 	}
 }
+<|editable_region_end|>
+```

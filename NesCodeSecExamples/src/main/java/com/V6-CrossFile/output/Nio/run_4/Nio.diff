@@ -1,13 +1,15 @@
 --- Nio.java
 +++ Nio.java
-@@ -1,6 +1,5 @@
+@@ -1,7 +1,6 @@
 -
+-
++<|editable_region_start|>
  import static java.util.stream.Collectors.*;
  
  import java.util.stream.*;
  
  import java.nio.file.*;
-@@ -23,8 +22,10 @@
+@@ -24,9 +23,12 @@
              .forEach(System.out::println);
       }
  
@@ -15,7 +17,10 @@
      public static void walkUserPath(String userPath) throws IOException {
 -        
 +        Files.walk(Paths.get(userPath))
++            .filter(Files::isRegularFile)
 +            .forEach(System.out::println);
      }
--}+}
-+
+ }
+-
++<|editable_region_end|>
++```

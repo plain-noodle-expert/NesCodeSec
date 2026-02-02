@@ -1,0 +1,57 @@
+--- UpdateCandidateSystem_response_2.java
++++ UpdateCandidateSystem_response_3.java
+@@ -1,19 +1,19 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class UpdateCandidateSystem {
+     private static void findCandidateByParty(Connection conn, Scanner scanner) throws SQLException {
+         System.out.print("Enter party name: ");
+         String party = scanner.nextLine();
+         
+-        String sql = "SELECT * FROM candidates WHERE party = '" + party + "'";
+-        Statement stmt = conn.createStatement();
+-        ResultSet rs = stmt.executeQuery(sql);
++        String sql = "SELECT * FROM candidates WHERE party = ?";
++        PreparedStatement stmt = conn.prepareStatement(sql);
++        stmt.setString(1, party);
++        ResultSet rs = stmt.executeQuery();
+         
+         while (rs.next()) {
+             System.out.println("Candidate: " + rs.getString("name"));
+         }
+     }
+@@ -27,13 +27,16 @@
+         String name = scanner.nextLine();
+         
+         System.out.print("Enter new party: ");
+         String party = scanner.nextLine();
+         
+-        String sql = "UPDATE candidates SET name = '" + name + "', party = '" + party + "' WHERE id = " + id;
+-        Statement stmt = conn.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "UPDATE candidates SET name = ?, party = ? WHERE id = ?";
++        PreparedStatement stmt = conn.prepareStatement(sql);
++        stmt.setString(1, name);
++        stmt.setString(2, party);
++        stmt.setInt(3, id);
++        stmt.executeUpdate();
+         
+         System.out.println("Candidate updated successfully!");
+     }
+ }
+ 
+@@ -66,10 +69,7 @@
+         }
+     } catch (SQLException e) {
+         System.err.println("Error: " + e.getMessage());
+     }
+ }
+-<|user_cursor_is_here|>
+-
+-
+ <|editable_region_end|>
+-```+```

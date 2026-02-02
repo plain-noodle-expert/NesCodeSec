@@ -1,0 +1,41 @@
+--- CRUD_Test_response_1.java
++++ CRUD_Test_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.Connection;
+ import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+ 
+@@ -43,7 +42,31 @@
+         }catch(Exception e){
+             e.printStackTrace();
+         }
+     }
+   }
++
++  public void update_data(String sl_no, String name, String email){
++    DB_Connection obj_DB_Connection = new DB_Connection();
++    Connection connection = obj_DB_Connection.connection();
++    PreparedStatement ps = null;
++    try{
++        String sql = "UPDATE data SET name = ?, email = ? WHERE sl_no = ?";
++        ps = connection.prepareStatement(sql);
++        ps.setString(1, name);
++        ps.setString(2, email);
++        ps.setString(3, sl_no);
++        ps.executeUpdate();
++    }catch(Exception e){
++        e.printStackTrace();
++    }finally{
++        try{
++            if(ps != null) ps.close();
++            if(connection != null) connection.close();
++        }catch(Exception e){
++            e.printStackTrace();
++        }
++    }
++  }
+ }
+ 
++

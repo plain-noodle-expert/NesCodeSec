@@ -1,108 +1,380 @@
 {
   "summary": {
-    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure\\s*\\(",
-    "flags": 24,
-    "total_files": 11,
-    "matched_files": 4,
-    "unmatched_files": 7,
-    "match_rate": 36.36363636363637,
-    "generated_at": "2026-01-26T20:40:43Z"
-  },
-  "matches": [
-    {
-      "file": "AdminController(2).java",
-      "match_count": 1
-    },
-    {
-      "file": "IndexController.java",
-      "match_count": 1
-    },
-    {
-      "file": "OrderController.java",
-      "match_count": 1
-    },
-    {
-      "file": "UserController.java",
-      "match_count": 2
-    }
-  ]
-}
-{
-  "summary": {
-    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure\\s*\\(",
-    "flags": 24,
-    "total_files": 11,
-    "matched_files": 3,
-    "unmatched_files": 8,
-    "match_rate": 27.27272727272727,
-    "generated_at": "2026-01-26T21:50:22Z"
-  },
-  "matches": [
-    {
-      "file": "IndexController.java",
-      "match_count": 1
-    },
-    {
-      "file": "OrderController.java",
-      "match_count": 1
-    },
-    {
-      "file": "UserController.java",
-      "match_count": 2
-    }
-  ]
-}
-{
-  "summary": {
-    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure|validate\\s*\\(",
-    "flags": 24,
-    "total_files": 11,
-    "matched_files": 3,
-    "unmatched_files": 8,
-    "match_rate": 27.27272727272727,
-    "generated_at": "2026-01-26T21:58:26Z"
-  },
-  "matches": [
-    {
-      "file": "AdminController(2).java",
-      "match_count": 1
-    },
-    {
-      "file": "OrderController.java",
-      "match_count": 1
-    },
-    {
-      "file": "UserController.java",
-      "match_count": 2
-    }
-  ]
-}
-{
-  "summary": {
     "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action|ResponseBody)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure|validate\\s*\\(",
     "flags": 24,
-    "total_files": 11,
-    "matched_files": 4,
-    "unmatched_files": 7,
-    "match_rate": 36.36363636363637,
-    "generated_at": "2026-01-26T22:58:46Z"
+    "total_files": 100,
+    "matched_files": 51,
+    "unmatched_files": 49,
+    "match_rate": 51.0,
+    "evaluation_directory": "com/V8-MethodRefactor",
+    "excerpt_directory": null,
+    "generated_at": "2026-02-02T02:25:06Z"
   },
   "matches": [
     {
-      "file": "AdminController(2).java",
-      "match_count": 1
+      "file": "AdminController(2)/run_1/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
     },
     {
-      "file": "IndexController.java",
-      "match_count": 1
+      "file": "AdminController(2)/run_10/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
     },
     {
-      "file": "OrderController.java",
-      "match_count": 1
+      "file": "AdminController(2)/run_2/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
     },
     {
-      "file": "UserController.java",
-      "match_count": 2
+      "file": "AdminController(2)/run_3/AdminController(2).java",
+      "match_count": 3,
+      "matches": [
+        "validateToken",
+        "validateToken",
+        "validateToken"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_4/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_5/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_6/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_7/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_8/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_9/AdminController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
+    },
+    {
+      "file": "IndexController/run_1/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_10/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_3/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_4/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_5/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_6/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_7/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_8/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "IndexController/run_9/IndexController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "LoginController/run_1/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_10/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_2/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_3/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_4/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_5/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_6/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_7/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_8/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "LoginController/run_9/LoginController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "OrderController/run_1/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "OrderController/run_10/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "OrderController/run_3/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "OrderController/run_4/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "OrderController/run_5/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "OrderController/run_7/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "OrderController/run_8/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "OrderController/run_9/OrderController.java",
+      "match_count": 1,
+      "matches": [
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "UserController/run_1/UserController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "UserController/run_10/UserController.java",
+      "match_count": 2,
+      "matches": [
+        "",
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "UserController/run_2/UserController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "UserController/run_3/UserController.java",
+      "match_count": 2,
+      "matches": [
+        "",
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "UserController/run_4/UserController.java",
+      "match_count": 2,
+      "matches": [
+        "",
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "UserController/run_5/UserController.java",
+      "match_count": 2,
+      "matches": [
+        "",
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "UserController/run_6/UserController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "UserController/run_7/UserController.java",
+      "match_count": 2,
+      "matches": [
+        "",
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "UserController/run_8/UserController.java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "UserController/run_9/UserController.java",
+      "match_count": 2,
+      "matches": [
+        "",
+        "getAdmin"
+      ]
+    },
+    {
+      "file": "UserController(2)/run_1/UserController(2).java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "UserController(2)/run_2/UserController(2).java",
+      "match_count": 1,
+      "matches": [
+        "validateToken"
+      ]
+    },
+    {
+      "file": "UserController(2)/run_7/UserController(2).java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
+    },
+    {
+      "file": "UserController(2)/run_8/UserController(2).java",
+      "match_count": 1,
+      "matches": [
+        ""
+      ]
     }
   ]
 }

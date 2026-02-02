@@ -1,0 +1,47 @@
+--- SAXBuilderFuzzer.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:54:36:SAXBuilderFuzzer.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Copyright 2023 Google LLC
+ //
+ // Licensed under the Apache License, Version 2.0 (the "License");
+ // you may not use this file except in compliance with the License.
+@@ -32,17 +30,22 @@
+     
+     // Replace JDOM2 (SAXBuilder) with StAX (XMLInputFactory) for XML parsing
+     
+     javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+     
+-<|user_cursor_is_here|>    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-    sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-    sax.setValidation(data.consumeBoolean());
+-    sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
+-    sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
+-    StringReader xml_input = new StringReader(data.consumeRemainingAsString());
++    // Initialize StAX XMLInputFactory
++    
++    javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(data.consumeRemainingAsString()));
++    
++    // Set features for XML parsing
++    
++    xmlInputFactory.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
++    xmlInputFactory.setProperty("http://apache.org/xml/features/external-general-entities", false);
++    xmlInputFactory.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
++    xmlInputFactory.setProperty("http://xml.org/sax/features/validation", data.consumeBoolean());
++    xmlInputFactory.setProperty("http://xml.org/sax/features/ignoring-element-content-whitespace", data.consumeBoolean());
++    xmlInputFactory.setProperty("http://xml.org/sax/features/ignoring-boundary-whitespace", data.consumeBoolean());
+     
+     try{    
+       Document doc = sax.build(xml_input);
+     }
+     catch (JDOMException | IOException | IllegalNameException | IllegalTargetException e){
+@@ -50,6 +53,6 @@
+     }
+   }
+ }
+ 
+ <|editable_region_end|>
+-```+```

@@ -1,3 +1,4 @@
+<|editable_region_start|>
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -61,3 +62,5 @@ public class ade {
       }
    }
 }
+<|editable_region_end|>
+```

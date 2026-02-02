@@ -1,0 +1,33 @@
+--- Test03.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:45:18:Test03.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package src.cxs15.pyrmont.digestertest;
+ 
+ import java.io.File;
+ import java.util.ArrayList;
+@@ -14,11 +12,14 @@
+     String path = System.getProperty("user.dir") + File.separator  + "etc";
+     File file = new File(path, "employee2.xml");
+     // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+     javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+     
+-<|user_cursor_is_here|>    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++    // Initialize Digester with XMLInputFactory
++    Digester digester = new Digester(xmlInputFactory);
++    
++    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+     digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+     digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     digester.addRuleSet(new EmployeeRuleSet());
+     try {
+       Employee employee = (Employee) digester.parse(file);
+@@ -41,6 +42,6 @@
+   }
+ }
+   
+ 
+ <|editable_region_end|>
+-```+```

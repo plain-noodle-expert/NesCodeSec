@@ -1,0 +1,44 @@
+--- ResultPhaseSystem_response_1.java
++++ ResultPhaseSystem_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class ResultPhaseSystem {
+@@ -32,7 +31,34 @@
+             System.out.println("Vote Count: " + rs.getInt("votecount"));
+         } else {
+             System.out.println("Candidate not found.");
+         }
+     }
++    
++    public static void main(String[] args) {
++        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/election", "root", "password");
++             Scanner scanner = new Scanner(System.in)) {
++            
++            System.out.println("====== Election Result System ======");
++            System.out.println("1. View Results by Party");
++            System.out.println("2. View Candidate Result");
++            System.out.print("Enter choice: ");
++            int choice = scanner.nextInt();
++            scanner.nextLine();  // Consume newline
++            
++            switch (choice) {
++                case 1:
++                    getResultsByParty(conn, scanner);
++                    break;
++                case 2:
++                    resultPhase(conn, scanner);
++                    break;
++                default:
++                    System.out.println("Invalid choice.");
++            }
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
+ }
+ 
++

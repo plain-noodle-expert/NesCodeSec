@@ -1,0 +1,31 @@
+--- GoogleGeocoderImpl.java
++++ NES
+@@ -1,17 +1,16 @@
+-77:110:83:GoogleGeocoderImpl.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+   private Digester createDigester() {
+ 
+     // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+ 
+     org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+ 
+-<|user_cursor_is_here|>    digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-    digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-    digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++    // Configure the parser to disallow DOCTYPE declarations and external entities
++    parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++    parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
++    parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     Class<?>[] dType = {Double.class};
+ 
+     digester.addObjectCreate("GeocodeResponse/result",
+         GoogleGeocoderResult.class);
+ 
+@@ -34,6 +33,6 @@
+     digester.addSetNext("GeocodeResponse/result", "addResult");
+ 
+     return digester;
+   }
+ <|editable_region_end|>
+-```+```

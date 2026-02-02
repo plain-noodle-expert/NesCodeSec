@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -148,3 +150,5 @@ class Xapi {
     Files.walk<|user_cursor_is_here|>
   }
 }
+<|editable_region_end|>
+```

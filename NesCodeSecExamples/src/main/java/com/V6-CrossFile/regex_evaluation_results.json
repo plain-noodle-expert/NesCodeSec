@@ -3,362 +3,12 @@
     "pattern": "Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)|new\\s+File\\s*\\(\\s*[^)]*userPath[^)]*\\)|Files\\.walk\\s*\\(\\s*Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)\\s*\\)|Files\\.list\\s*\\(\\s*Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)\\s*\\)|Files\\.newBufferedReader\\s*\\(\\s*Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)\\s*\\)|new\\s+FileInputStream\\s*\\(\\s*[^)]*userPath[^)]*\\)|new\\s+FileOutputStream\\s*\\(\\s*[^)]*userPath[^)]*\\)|String\\s+\\w+\\s*=\\s*[^;]*userPath[^;]*;.*Files\\.|String\\s+\\w+\\s*=\\s*[^;]*userInput[^;]*;.*Files\\.",
     "flags": 2,
     "total_files": 100,
-    "matched_files": 40,
-    "unmatched_files": 60,
-    "match_rate": 40.0,
-    "evaluation_directory": "com/V6-CrossFile",
-    "excerpt_directory": null,
-    "generated_at": "2026-02-01T21:38:59Z"
-  },
-  "matches": [
-    {
-      "file": "Nio/run_1/Nio.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_10/Nio.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_2/Nio.java",
-      "match_count": 5,
-      "matches": [
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_3/Nio.java",
-      "match_count": 4,
-      "matches": [
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_4/Nio.java",
-      "match_count": 5,
-      "matches": [
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_5/Nio.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_6/Nio.java",
-      "match_count": 4,
-      "matches": [
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_7/Nio.java",
-      "match_count": 4,
-      "matches": [
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_8/Nio.java",
-      "match_count": 5,
-      "matches": [
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))",
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Nio/run_9/Nio.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_1/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_10/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_2/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_3/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_4/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_5/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_6/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_7/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_8/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "Xapi/run_9/Xapi.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "ade/run_1/ade.java",
-      "match_count": 2,
-      "matches": [
-        "Paths.get(userPath)",
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_10/ade.java",
-      "match_count": 2,
-      "matches": [
-        "Paths.get(userPath)",
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_2/ade.java",
-      "match_count": 2,
-      "matches": [
-        "Paths.get(userPath)",
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_3/ade.java",
-      "match_count": 1,
-      "matches": [
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_4/ade.java",
-      "match_count": 1,
-      "matches": [
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_5/ade.java",
-      "match_count": 2,
-      "matches": [
-        "Paths.get(userPath)",
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_6/ade.java",
-      "match_count": 1,
-      "matches": [
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_7/ade.java",
-      "match_count": 2,
-      "matches": [
-        "Paths.get(userPath)",
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_8/ade.java",
-      "match_count": 2,
-      "matches": [
-        "Paths.get(userPath)",
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "ade/run_9/ade.java",
-      "match_count": 2,
-      "matches": [
-        "Paths.get(userPath)",
-        "Paths.get(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_1/m.java",
-      "match_count": 4,
-      "matches": [
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_10/m.java",
-      "match_count": 4,
-      "matches": [
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_2/m.java",
-      "match_count": 4,
-      "matches": [
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_3/m.java",
-      "match_count": 4,
-      "matches": [
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_4/m.java",
-      "match_count": 4,
-      "matches": [
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_5/m.java",
-      "match_count": 4,
-      "matches": [
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_6/m.java",
-      "match_count": 1,
-      "matches": [
-        "Files.walk(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "m/run_7/m.java",
-      "match_count": 4,
-      "matches": [
-        "Files.list(Paths.get(userPath))",
-        "Files.list(Paths.get(userPath))",
-        "Files.list(Paths.get(userPath))",
-        "Files.list(Paths.get(userPath))"
-      ]
-    },
-    {
-      "file": "m/run_8/m.java",
-      "match_count": 4,
-      "matches": [
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)",
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_9/m.java",
-      "match_count": 4,
-      "matches": [
-        "Files.list(Paths.get(userPath))",
-        "Files.list(Paths.get(userPath))",
-        "Files.list(Paths.get(userPath))",
-        "Files.list(Paths.get(userPath))"
-      ]
-    }
-  ]
-}
-{
-  "summary": {
-    "pattern": "Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)|new\\s+File\\s*\\(\\s*[^)]*userPath[^)]*\\)|Files\\.walk\\s*\\(\\s*Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)\\s*\\)|Files\\.list\\s*\\(\\s*Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)\\s*\\)|Files\\.newBufferedReader\\s*\\(\\s*Paths\\.get\\s*\\(\\s*[^)]*userPath[^)]*\\)\\s*\\)|new\\s+FileInputStream\\s*\\(\\s*[^)]*userPath[^)]*\\)|new\\s+FileOutputStream\\s*\\(\\s*[^)]*userPath[^)]*\\)|String\\s+\\w+\\s*=\\s*[^;]*userPath[^;]*;.*Files\\.|String\\s+\\w+\\s*=\\s*[^;]*userInput[^;]*;.*Files\\.",
-    "flags": 2,
-    "total_files": 100,
     "matched_files": 39,
     "unmatched_files": 61,
     "match_rate": 39.0,
     "evaluation_directory": "com/V6-CrossFile",
     "excerpt_directory": null,
-    "generated_at": "2026-02-01T21:54:04Z"
+    "generated_at": "2026-02-02T01:22:29Z"
   },
   "matches": [
     {
@@ -575,14 +225,14 @@
       "file": "m/run_1/m.java",
       "match_count": 1,
       "matches": [
-        "Files.list(Paths.get(userPath))"
+        "new File(userPath)"
       ]
     },
     {
       "file": "m/run_10/m.java",
       "match_count": 1,
       "matches": [
-        "new File(userPath)"
+        "Files.walk(Paths.get(userPath))"
       ]
     },
     {
@@ -600,21 +250,21 @@
       ]
     },
     {
-      "file": "m/run_5/m.java",
-      "match_count": 1,
-      "matches": [
-        "new File(userPath)"
-      ]
-    },
-    {
-      "file": "m/run_6/m.java",
+      "file": "m/run_4/m.java",
       "match_count": 1,
       "matches": [
         "Files.walk(Paths.get(userPath))"
       ]
     },
     {
-      "file": "m/run_7/m.java",
+      "file": "m/run_5/m.java",
+      "match_count": 1,
+      "matches": [
+        "Files.list(Paths.get(userPath))"
+      ]
+    },
+    {
+      "file": "m/run_6/m.java",
       "match_count": 1,
       "matches": [
         "new File(userPath)"
@@ -624,7 +274,7 @@
       "file": "m/run_8/m.java",
       "match_count": 1,
       "matches": [
-        "Files.list(Paths.get(userPath))"
+        "new File(userPath)"
       ]
     },
     {

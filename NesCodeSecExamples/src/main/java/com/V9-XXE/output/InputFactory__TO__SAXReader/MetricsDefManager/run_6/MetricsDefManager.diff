@@ -1,0 +1,28 @@
+--- MetricsDefManager.java
++++ NES
+@@ -1,17 +1,14 @@
+-147:213:154:MetricsDefManager.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 	{
+ 		List<MetricsGroup> groups = new java.util.ArrayList<MetricsGroup>();
+ 		if (in == null)return groups;
+ 		
+ 	    XMLStreamReader reader = null;
+ 	    // Replace StAX (XMLInputFactory) with DOM4J (SAXReader) for XML parsing
+ 	    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+-	    <|user_cursor_is_here|>
+-//will be used only once at startup time
++	    //will be used only once at startup time
+ 		inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+ 		try
+ 		{
+ 		  reader = inputFactory.createXMLStreamReader(new java.io.InputStreamReader(in));
+ 		  while(reader.hasNext())
+@@ -67,6 +64,6 @@
+ 		}
+ 
+ 		return groups;
+ 	}
+ <|editable_region_end|>
+-```+```

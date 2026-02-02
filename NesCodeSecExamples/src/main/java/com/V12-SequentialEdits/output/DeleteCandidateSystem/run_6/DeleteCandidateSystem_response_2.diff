@@ -1,0 +1,20 @@
+--- DeleteCandidateSystem_response_1.java
++++ DeleteCandidateSystem_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class DeleteCandidateSystem {
+@@ -24,9 +23,9 @@
+ 
+         String sql = "DELETE FROM candidates WHERE id = " + id;
+         Statement stmt = conn.createStatement();
+         stmt.executeUpdate(sql);
+         System.out.println("Candidate deleted successfully.");
+-    }<|user_cursor_is_here|>
++    }
+ }
+ <|editable_region_end|>
+-```+```

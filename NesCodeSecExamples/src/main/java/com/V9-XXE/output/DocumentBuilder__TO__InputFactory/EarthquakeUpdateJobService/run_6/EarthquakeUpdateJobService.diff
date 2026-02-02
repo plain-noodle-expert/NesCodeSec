@@ -1,0 +1,67 @@
+--- EarthquakeUpdateJobService.java
++++ NES
+@@ -1,45 +1,26 @@
+-104:177:110:EarthquakeUpdateJobService.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+       if (responseCode == HttpURLConnection.HTTP_OK) {
+         InputStream in = httpConnection.getInputStream();
+         // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+         
+         // set up secure db factory
+-<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
+         // Parse the earthquake feed.
+-        Document dom = db.parse(in);
+-        Element docEle = dom.getDocumentElement();
+-
+-        // Get a list of each earthquake entry.
+-        NodeList nl = docEle.getElementsByTagName("entry");
+-        if (nl != null && nl.getLength() > 0) {
+-          for (int i = 0; i < nl.getLength(); i++) {
+-            Element entry =
+-              (Element) nl.item(i);
+-            Element id =
+-              (Element) entry.getElementsByTagName("id").item(0);
+-            Element title =
+-              (Element) entry.getElementsByTagName("title").item(0);
+-            Element g =
+-              (Element) entry.getElementsByTagName("georss:point")
+-                          .item(0);
+-            Element when =
+-              (Element) entry.getElementsByTagName("updated").item(0);
+-            Element link =
+-              (Element) entry.getElementsByTagName("link").item(0);
+-
+-            String idString = id.getFirstChild().getNodeValue();
+-            String details = title.getFirstChild().getNodeValue();
++        XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(in);
++        while (reader.hasNext()) {
++          int event = reader.next();
++          if (event == XMLStreamConstants.START_ELEMENT && reader.getLocalName().equals("entry")) {
++            String idString = reader.getAttributeValue(null, "id");
++            String details = reader.getAttributeValue(null, "title");
+             String hostname = "http://earthquake.usgs.gov";
+-            String linkString = hostname + link.getAttribute("href");
+-            String point = g.getFirstChild().getNodeValue();
+-            String dt = when.getFirstChild().getNodeValue();
++            String linkString = hostname + reader.getAttributeValue(null, "href");
++            String point = reader.getAttributeValue(null, "georss:point");
++            String dt = reader.getAttributeValue(null, "updated");
+ 
+             SimpleDateFormat sdf =
+               new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+             Date qdate = new GregorianCalendar(0, 0, 0).getTime();
+ 
+@@ -74,6 +55,6 @@
+             earthquakes.add(earthquake);
+           }
+         }
+       }
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,24 @@
+--- XmlModelBuilder.java
++++ NES
+@@ -1,12 +1,11 @@
+-88:119:91:XmlModelBuilder.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     private SettingSet buildModel(InputStream is, File baseSystemId) throws IOException {
+         // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+-        <|user_cursor_is_here|>
++        javax.xml.stream.XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(is);
++        
+         // setting classloader ensures classes are searched for in this classloader
+         // instead of parent's classloader is digister was loaded there.
+         digester.setClassLoader(getClass().getClassLoader());
+         digester.setValidating(false);
+         EntityResolver entityResolver = new ModelEntityResolver(m_configDirectory, baseSystemId);
+@@ -32,6 +31,6 @@
+         } catch (SAXException se) {
+             throw new RuntimeException("Could not parse model definition file", se);
+         }
+     }
+ <|editable_region_end|>
+-```+```

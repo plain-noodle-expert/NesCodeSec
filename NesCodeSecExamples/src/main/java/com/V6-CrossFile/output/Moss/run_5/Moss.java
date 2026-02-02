@@ -1,3 +1,4 @@
+<|editable_region_start|>
 import java.nio.file.*;
 import java.util.*;
 import com.strobel.decompiler.*;
@@ -69,6 +70,7 @@ public class Moss {
         try (final FileOutputStream stream = new FileOutputStream(decompiledFileName);
             final OutputStreamWriter writer = new OutputStreamWriter(stream)) {
             Decompiler.decompile(compiledFileName, new PlainTextOutput(writer), settings);
+            writer.close();
         }  catch (Exception e) {
             System.out.println("Decompiling failed.");
         }
@@ -84,4 +86,5 @@ public class Moss {
         }
     }
 }
-
+<|editable_region_end|>
+```

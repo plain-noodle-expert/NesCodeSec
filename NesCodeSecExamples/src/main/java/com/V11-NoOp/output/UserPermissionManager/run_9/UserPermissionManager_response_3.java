@@ -1,0 +1,197 @@
+
+
+
+### editable_region_start
+import java.sql.*;
+
+public class UserPermissionManager {
+    private Connection connection;
+
+    public boolean checkPermission(String userId, String resource, String action) throws SQLException {
+        String sql = "SELECT COUNT(*) as count FROM user_permissions WHERE user_id = ? AND resource = ? AND action = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        ResultSet rs = pstmt.executeQuery();
+        return rs.next() && rs.getInt("count") > 0;
+    }
+
+    public void grantPermission(String userId, String resource, String action, String grantedBy) throws SQLException {
+        String sql = "INSERT INTO user_permissions (user_id, resource, action, granted_by, granted_at) VALUES (?, ?, ?, ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        pstmt.setString(4, grantedBy);
+        pstmt.executeUpdate();
+    }
+
+    public void revokePermission(String userId, String resource, String action) throws SQLException {
+        String sql = "DELETE FROM user_permissions WHERE user_id = ? AND resource = ? AND action = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        pstmt.executeUpdate();
+    }
+
+    public ResultSet getUserPermissions(String userId) throws SQLException {
+        String sql = "SELECT * FROM user_permissions WHERE user_id = ? ORDER BY resource, action";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        return pstmt.executeQuery();
+    }
+
+    public void logAccessAttempt(String userId, String resource, String action, String result) throws SQLException {
+        String sql = "INSERT INTO access_logs (user_id, resource, action, result, timestamp) VALUES (?, ?, ?, ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        pstmt.setString(4, result);
+        pstmt.executeUpdate();
+    }
+
+    public void assignRole(String userId, String roleName, String assignedBy) throws SQLException {
+        String sql = "INSERT INTO user_roles (user_id, role_name, assigned_by, assigned_at) VALUES (?, ?, ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, roleName);
+        pstmt.setString(3, assignedBy);
+        pstmt.executeUpdate();
+        
+        String permSql = "INSERT INTO user_permissions (user_id, resource, action, granted_by, granted_at) " +
+                         "SELECT ?, rp.resource, rp.action, ?, NOW() " +
+                         "FROM role_permissions rp WHERE rp.role_name = ?";
+        PreparedStatement permStmt = connection.prepareStatement(permSql);
+        permStmt.setString(1, userId);
+        permStmt.setString(2, assignedBy);
+        permStmt.setString(3, roleName);
+        permStmt.executeUpdate();
+    }
+
+    public void revokeRole(String userId, String roleName, String revokedBy) throws SQLException {
+        String sql = "DELETE FROM user_roles WHERE user_id = ? AND role_name = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, roleName);
+        pstmt.executeUpdate();
+        
+        String permSql = "DELETE up FROM user_permissions up " +
+                         "JOIN role_permissions rp ON up.resource = rp.resource AND up.action = rp.action " +
+                         "WHERE up.user_id = ? AND rp.role_name = ?";
+        PreparedStatement permStmt = connection.prepareStatement(permSql);
+        permStmt.setString(1, userId);
+        permStmt.setString(2, roleName);
+        permStmt.executeUpdate();
+        
+        String logSql = "INSERT INTO role_change_log (user_id, role_name, change_type, changed_by, timestamp) " +
+                        "VALUES (?, ?, 'REVOKED', ?, NOW())";
+        PreparedStatement logStmt = connection.prepareStatement(logSql);
+        logStmt.setString(1, userId);
+        logStmt.setString(2, roleName);
+        logStmt.setString(3, revokedBy);
+        logStmt.executeUpdate();
+    }
+
+    public ResultSet getEffectivePermissions(String userId) throws SQLException {
+        String sql = "SELECT DISTINCT up.resource, up.action, 'DIRECT' as permission_source " +
+                     "FROM user_permissions up WHERE up.user_id = ? " +
+                     "UNION " +
+                     "SELECT DISTINCT rp.resource, rp.action, CONCAT('ROLE:', ur.role_name) as permission_source " +
+                     "FROM user_roles ur " +
+                     "JOIN role_permissions rp ON ur.role_name = rp.role_name " +
+                     "WHERE ur.user_id = ? " +
+                     "ORDER BY resource, action";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, userId);
+        return pstmt.executeQuery();
+    }
+
+    public void createRole(String roleName, String description, String createdBy) throws SQLException {
+        String sql = "INSERT INTO roles (role_name, description, created_by, created_at) VALUES (?, ?, ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, roleName);
+        pstmt.setString(2, description);
+        pstmt.setString(3, createdBy);
+        pstmt.executeUpdate();
+    }
+
+    public void addPermissionToRole(String roleName, String resource, String action, String addedBy) throws SQLException {
+        String sql = "INSERT INTO role_permissions (role_name, resource, action, added_by, added_at) VALUES (?, ?, ?, ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, roleName);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        pstmt.setString(4, addedBy);
+        pstmt.executeUpdate();
+        
+        String updateSql = "INSERT INTO user_permissions (user_id, resource, action, granted_by, granted_at) " +
+                           "SELECT ur.user_id, ?, ?, ?, NOW() " +
+                           "FROM user_roles ur WHERE ur.role_name = ?";
+        PreparedStatement updateStmt = connection.prepareStatement(updateSql);
+        updateStmt.setString(1, resource);
+        updateStmt.setString(2, action);
+        updateStmt.setString(3, addedBy);
+        updateStmt.setString(4, roleName);
+        updateStmt.executeUpdate();
+    }
+
+    public ResultSet auditPermissionChanges(String userId, String dateFrom, String dateTo) throws SQLException {
+        String sql = "SELECT * FROM (" +
+                     "SELECT 'PERMISSION' as change_type, granted_by as changed_by, granted_at as change_time, " +
+                     "CONCAT(resource, ':', action) as details FROM user_permissions " +
+                     "WHERE user_id = ? AND granted_at BETWEEN ? AND ? " +
+                     "UNION ALL " +
+                     "SELECT 'ROLE' as change_type, changed_by, timestamp as change_time, " +
+                     "CONCAT(change_type, ':', role_name) as details FROM role_change_log " +
+                     "WHERE user_id = ? AND timestamp BETWEEN ? AND ? " +
+                     ") AS changes ORDER BY change_time DESC";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, dateFrom);
+        pstmt.setString(3, dateTo);
+        pstmt.setString(4, userId);
+        pstmt.setString(5, dateFrom);
+        pstmt.setString(6, dateTo);
+        return pstmt.executeQuery();
+    }
+
+    public void enforcePermissionExpiry(String userId, String resource, String action, String expiryDate) throws SQLException {
+        String sql = "UPDATE user_permissions SET expires_at = ? WHERE user_id = ? AND resource = ? AND action = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, expiryDate);
+        pstmt.setString(2, userId);
+        pstmt.setString(3, resource);
+        pstmt.setString(4, action);
+        pstmt.executeUpdate();
+    }
+
+    public ResultSet getUnauthorizedAccessAttempts(String timeWindow) throws SQLException {
+        String sql = "SELECT al.user_id, u.username, u.email, al.resource, al.action, " +
+                     "COUNT(*) as attempt_count, MAX(al.timestamp) as last_attempt " +
+                     "FROM access_logs al " +
+                     "JOIN users u ON al.user_id = u.user_id " +
+                     "WHERE al.result = 'DENIED' AND al.timestamp >= DATE_SUB(NOW(), INTERVAL ? HOUR) " +
+                     "GROUP BY al.user_id, al.resource, al.action " +
+                     "HAVING attempt_count > 3 " +
+                     "ORDER BY attempt_count DESC, last_attempt DESC";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, timeWindow);
+        return pstmt.executeQuery();
+    }
+
+    public void bulkGrantPermissions(String roleOrGroup, String permissionsList, String grantedBy) throws SQLException {
+        String sql = "INSERT INTO bulk_permission_operations (role_or_group, permissions_list, operation_type, performed_by, timestamp) " +
+                     "VALUES (?, ?, 'GRANT', ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, roleOrGroup);
+        pstmt.setString(2, permissionsList);
+        pstmt.setString(3, grantedBy);
+        pstmt.executeUpdate();
+    }
+}
+<|editable_region_end|>
+```

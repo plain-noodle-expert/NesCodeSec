@@ -1,3 +1,4 @@
+<|editable_region_start|>
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -52,7 +53,7 @@ public class ade {
 
    public static long walkPath(String userPath) {
       try {
-         Path p = Paths.get(userPath).toAbsolutePath();
+         Path p = Paths.get(userPath).normalize();
          return java.nio.file.Files.walk(p)
             .filter(java.nio.file.Files::isRegularFile)
             .count();
@@ -61,4 +62,5 @@ public class ade {
       }
    }
 }
-
+<|editable_region_end|>
+```

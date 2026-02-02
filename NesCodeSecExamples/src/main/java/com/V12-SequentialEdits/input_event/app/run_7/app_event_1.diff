@@ -1,0 +1,24 @@
+--- app.java
++++ app.java
+@@ -1,5 +1,7 @@
++
++
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ public class AdminUser {
+     private static void loginUser(Connection conn, Scanner scanner) throws SQLException {
+@@ -16,8 +18,13 @@
+             System.out.println("Login successful!");
+         }
+     }
+     
+     private static void addCandidate(Connection conn, Scanner scanner) throws SQLException {
++        System.out.print("Enter candidate name: ");
++        String name = scanner.nextLine();
++        System.out.print("Enter party: ");
++        String party = scanner.nextLine();
+         
+     }
+-}+}
++

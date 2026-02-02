@@ -1,0 +1,34 @@
+--- user_response_2.java
++++ user_response_3.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+ package Courier-management-System;
+ 
+ import java.sql.*;
+@@ -35,9 +34,23 @@
+ }
+ 
+ 
+ 
+ public class UserResponse1 {
+-<|user_cursor_is_here|>
++    public static void main(String[] args) {
++        try {
++            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/courier_management_system", "root", "password");
++            Scanner scanner = new Scanner(System.in);
++            
++            getUserByEmail(conn, scanner);
++            updateUser(conn, scanner);
++            
++            scanner.close();
++            conn.close();
++        } catch (SQLException e) {
++            e.printStackTrace();
++        }
++    }
++}
+ 
+ <|editable_region_end|>
+-```+```

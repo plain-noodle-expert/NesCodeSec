@@ -1,0 +1,19 @@
+--- UpdateCandidateSystem_response_1.java
++++ UpdateCandidateSystem_response_2.java
+@@ -1,7 +1,5 @@
+-
+-
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ class UpdateCandidateSystem {
+     private static void findCandidateByParty(Connection conn, Scanner scanner) throws SQLException {
+@@ -345,7 +343,6 @@
+ class UpdateCandidateSystem {
+     private static void findCandidateByParty(Connection conn, Scanner scanner) throws SQLException {
+         System.out.print("Enter party name: ");
+         String party = scanner.nextLine();
+         
+-        String sql = "SELECT * FROM candidates
+-
++        String sql = "SELECT * FROM candidates

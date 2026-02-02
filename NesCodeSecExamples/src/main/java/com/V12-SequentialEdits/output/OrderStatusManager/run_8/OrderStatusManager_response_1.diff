@@ -1,0 +1,26 @@
+--- OrderStatusManager.java
++++ OrderStatusManager_response_1.java
+@@ -1,7 +1,5 @@
+-
+-
+ import java.sql.*;
+ 
+ class OrderStatusManager {
+     private Connection connection;
+ 
+@@ -17,9 +15,13 @@
+         }
+     }
+     
+     public void updateOrderStatus(int orderId, String newStatus) throws SQLException {
+         if (connection == null) throw new SQLException("Database connection is null.");
+-        String sql = 
++        String sql = "UPDATE orders SET status = ? WHERE id = ?";
++        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
++            pstmt.setString(1, newStatus);
++            pstmt.setInt(2, orderId);
++            pstmt.executeUpdate();
++        }
+     }
+ }
+-

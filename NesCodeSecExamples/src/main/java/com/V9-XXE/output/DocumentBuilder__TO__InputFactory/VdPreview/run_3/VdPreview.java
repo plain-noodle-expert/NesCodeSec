@@ -1,0 +1,33 @@
+<|editable_region_start|>
+                                                     @Nullable StringBuilder errorLog) {
+        // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+        
+        xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+        xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        
+        javax.xml.stream.XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(new StringReader(xmlFileContent));
+        
+        try {
+            javax.xml.transform.TransformerFactory transformerFactory = javax.xml.transform.TransformerFactory.newInstance();
+            javax.xml.transform.Transformer transformer = transformerFactory.newTransformer();
+            javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(transformer.transform(new javax.xml.transform.stax.StAXSource(reader), null));
+            javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(new StringWriter());
+            transformer.transform(source, result);
+            String xmlString = result.getWriter().toString();
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document document = db.parse(new InputSource(new StringReader(xmlString)));
+            return document;
+        } catch (Exception e) {
+            if (errorLog != null) {
+                errorLog.append("Exception while parsing XML file:\n").append(e.getMessage());
+            }
+            return null;
+        }
+    }
+<|editable_region_end|>
+```

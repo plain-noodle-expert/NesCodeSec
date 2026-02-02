@@ -1,6 +1,12 @@
 --- Fut.java
 +++ Fut.java
-@@ -23,7 +23,14 @@
+@@ -1,3 +1,5 @@
++
++
+ package org.fusionlanguage;
+ 
+ import java.io.BufferedInputStream;
+@@ -23,7 +25,14 @@
  
  	private ArrayList<Byte> readAllBytes(File path)
  	{
@@ -16,7 +22,7 @@
  	}
  
  	private ArrayList<Byte> readResource(String name, FuPrefixExpr expr)
-@@ -48,7 +55,7 @@
+@@ -48,7 +57,7 @@
  	{
  		new FuProgram().init(parent, system, host);
  		for (String file : files) {
@@ -25,3 +31,9 @@
  			byte[] input = Files.readAllBytes(Paths.get(file));
  			parser.parse(file, input, input.length);
  		}
+@@ -59,4 +68,5 @@
+ 			System.exit(1);
+ 		return host.program;
+ 	}
+-}+}
++

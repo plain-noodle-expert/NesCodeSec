@@ -1,0 +1,90 @@
+--- ItspAccounts.java
++++ NES
+@@ -1,19 +1,18 @@
+-3:86:65:ItspAccounts.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /*
+  * Copyright (C) 2010 Avaya, certain elements licensed under a Contributor Agreement.
+  * Contributors retain copyright to elements licensed under a Contributor Agreement.
+  * Licensed to the User under the LGPL license.
+  */
+ package org.sipfoundry.siptester;
+ 
+ import java.util.HashSet;
+ 
+-import org.apache.commons.digester.Digester;
+-import org.xml.sax.InputSource;
++import javax.xml.stream.XMLInputFactory;
++import javax.xml.stream.XMLStreamException;
++import javax.xml.stream.XMLStreamReader;
+ 
+ public class ItspAccounts  {
+         HashSet<ItspAccount> itspAccounts = new HashSet<ItspAccount>();
+         private static final String BRIDGE_CONFIG = "sipxbridge-config/bridge-configuration";
+         private static final String ITSP_CONFIG = "sipxbridge-config/itsp-account";
+@@ -59,18 +58,50 @@
+         }
+ 
+     public  static ItspAccounts createItspAccounts(String url) throws Exception {
+     	System.out.println("create ITSP accounts " + url);
+         // Replace Apache Commons Digester with StAX (XMLInputFactory) for XML parsing
+-        javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++        XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+         
+-<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        addRules(digester);
+-        digester.parse(new InputSource(url));
+-        return (ItspAccounts) digester.getRoot();
++        XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(url);
++        ItspAccounts itspAccounts = new ItspAccounts();
++        
++        while (reader.hasNext()) {
++            int event = reader.next();
++            if (event == XMLStreamReader.START_ELEMENT) {
++                String localName = reader.getLocalName();
++                if (localName.equals("sipxbridge-config")) {
++                    itspAccounts = new ItspAccounts();
++                } else if (localName.equals("itsp-account")) {
++                    ItspAccount itspAccount = new ItspAccount();
++                    itspAccounts.addItspAccount(itspAccount);
++                    
++                    while (reader.hasNext()) {
++                        event = reader.next();
++                        if (event == XMLStreamReader.START_ELEMENT) {
++                            String elementName = reader.getLocalName();
++                            if (elementName.equals("itsp-proxy-address")) {
++                                itspAccount.setItspProxyAddress(reader.getElementText());
++                            } else if (elementName.equals("itsp-proxy-port")) {
++                                itspAccount.setItspProxyPort(Integer.parseInt(reader.getElementText()));
++                            } else if (elementName.equals("itsp-proxy-domain")) {
++                                itspAccount.setItspProxyDomain(reader.getElementText());
++                            } else if (elementName.equals("user-name")) {
++                                itspAccount.setUserName(reader.getElementText());
++                            } else if (elementName.equals("password")) {
++                                itspAccount.setPassword(reader.getElementText());
++                            }
++                        } else if (event == XMLStreamReader.END_ELEMENT) {
++                            break;
++                        }
++                    }
++                }
++            }
++        }
++        
++        reader.close();
++        return itspAccounts;
+     }
+     
+     public ItspAccount getItspAccount( int emulatedPort) {
+         for (ItspAccount itspAccount : this.itspAccounts ) {
+             if (itspAccount.getItspProxyAddress().equals(SipTester.getTesterConfig().getTesterIpAddress()) &&
+@@ -82,6 +113,6 @@
+     }
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

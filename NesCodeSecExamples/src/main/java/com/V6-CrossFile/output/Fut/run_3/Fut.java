@@ -1,3 +1,4 @@
+<|editable_region_start|>
 package org.fusionlanguage;
 
 import java.io.BufferedInputStream;
@@ -31,9 +32,9 @@ class FileGenHost extends FuConsoleHost
 				result.add((byte) b);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			reportError(String.format(Locale.ROOT, "Failed to read file %s", path));
+			return new ArrayList<Byte>();
 		}
-		return new ArrayList<Byte>();
 	}
 
 	private ArrayList<Byte> readResource(String name, FuPrefixExpr expr)
@@ -70,4 +71,5 @@ public class Fut
 		return host.program;
 	}
 }
-
+<|editable_region_end|>
+```

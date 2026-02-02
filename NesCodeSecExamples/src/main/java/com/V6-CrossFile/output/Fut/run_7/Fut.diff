@@ -1,61 +1,15 @@
 --- Fut.java
 +++ Fut.java
-@@ -1,5 +1,54 @@
-+package com.v6crossfile.test_file;
-+
-+import java.io.IOException;
-+import java.nio.file.Files;
-+import java.nio.file.Paths;
-+import java.util.List;
-+
-+/**
-+ * Utility for reading data files in test scenarios.
-+ */
-+public class DataFileUtil {
-+    private static final String DATA_ROOT = "/tmp/testdata/";
-+    
-+    /**
-+     * Reads all lines from a data file.
-+     * 
-+     * @param filename the data file name
-+     * @return list of lines from the file
-+     * @throws IOException if reading fails
-+     */
-+    public static List<String> readLines(String filename) throws IOException {
-+        String path = DATA_ROOT + filename;
-+        return Files.readAllLines(Paths.get(path));
-+    }
-+    
-+    /**
-+     * Reads file content as a single string.
-+     * 
-+     * @param filename the file to read
-+     * @return file content as string
-+     * @throws IOException if reading fails
-+     */
-+    public static String readContent(String filename) throws IOException {
-+        String path = DATA_ROOT + filename;
-+        return new String(Files.readAllBytes(Paths.get(path)));
-+    }
-+    
-+    /**
-+     * Gets the full path to a test data file.
-+     * 
-+     * @param filename the file name
-+     * @return full file path
-+     */
-+    public static String getFilePath(String filename) {
-+        return DATA_ROOT + filename;
-+    }
-+}
-+
-+
+@@ -1,7 +1,6 @@
+-
+-
++<|editable_region_start|>
  package org.fusionlanguage;
  
  import java.io.BufferedInputStream;
  import java.io.File;
  import java.io.FileInputStream;
-@@ -21,11 +70,11 @@
+@@ -23,11 +22,11 @@
  		this.resourceDirs.add(path);
  	}
  
@@ -68,11 +22,12 @@
  				if (b < 0)
  					return result;
  				result.add((byte) b);
-@@ -64,6 +113,7 @@
- 		sema.process();
+@@ -67,6 +66,7 @@
  		if (host.hasErrors())
  			System.exit(1);
  		return host.program;
  	}
--}+}
-+
+ }
+-
++<|editable_region_end|>
++```

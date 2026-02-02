@@ -1,0 +1,101 @@
+--- ParseImporterXML.java
++++ NES
+@@ -1,13 +1,13 @@
+-3:52:25:ParseImporterXML.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.indizen.cursoSpring.web.gui.importer;
+ import java.io.File;
+ import java.io.IOException;
+ 
+-import org.apache.commons.digester.Digester;
++import javax.xml.parsers.SAXParser;
++import javax.xml.parsers.SAXParserFactory;
++
+ import org.xml.sax.SAXException;
+ 
+ import com.indizen.cursoSpring.web.util.Constants;
+ 
+ public class ParseImporterXML {
+@@ -18,36 +18,62 @@
+ 
+ 	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
+ 
+ 		// Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
+ 
+-		javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
++		SAXParserFactory spf = SAXParserFactory.newInstance();
+ 
+-		javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+-<|user_cursor_is_here|>		digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-		digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-		digester.setValidating(false);
++		SAXParser sp = spf.newSAXParser();
++<|editable_region_start|>
++package com.indizen.cursoSpring.web.gui.importer;
++import java.io.File;
++import java.io.IOException;
+ 
+-		digester.addObjectCreate("importer", Importer.class);
+-		digester.addSetProperties("importer", "type", "type");
+-		digester.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
+-		digester.addSetProperties("importer/keys", "value", "keys");
++import javax.xml.parsers.SAXParser;
++import javax.xml.parsers.SAXParserFactory;
+ 
+-		digester.addObjectCreate(Constants.FIELD, Field.class);
+-		digester.addSetProperties(Constants.FIELD, "id", "id");
+-		digester.addSetProperties(Constants.FIELD, "compulsory","compulsory");
+-		digester.addSetNext(Constants.FIELD, "setFields");
++import org.xml.sax.SAXException;
+ 
+-		digester.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
+-		digester.addSetProperties(Constants.VALIDATION,"regex", "regex");
+-		digester.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
+-		digester.addSetNext(Constants.VALIDATION,"setValidationRules");
++import com.indizen.cursoSpring.web.util.Constants;
++
++public class ParseImporterXML {
++
++	public ParseImporterXML() {
++		super();
++	}
++
++	public Importer parseXML(String xml, String dir) throws IOException,SAXException {
++
++		// Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
++
++		SAXParserFactory spf = SAXParserFactory.newInstance();
++
++		SAXParser sp = spf.newSAXParser();
++
++		sp.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		sp.setFeature("http://apache.org/xml/features/external-general-entities", false);
++		sp.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++		sp.setValidating(false);
++
++		sp.addObjectCreate("importer", Importer.class);
++		sp.addSetProperties("importer", "type", "type");
++		sp.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
++		sp.addSetProperties("importer/keys", "value", "keys");
++
++		sp.addObjectCreate(Constants.FIELD, Field.class);
++		sp.addSetProperties(Constants.FIELD, "id", "id");
++		sp.addSetProperties(Constants.FIELD, "compulsory","compulsory");
++		sp.addSetNext(Constants.FIELD, "setFields");
++
++		sp.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
++		sp.addSetProperties(Constants.VALIDATION,"regex", "regex");
++		sp.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
++		sp.addSetNext(Constants.VALIDATION,"setValidationRules");
+ 
+ 		File importerFile = new File(xml);
+-		return (Importer) digester.parse(importerFile);
++		return (Importer) sp.parse(importerFile);
+ 	}
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

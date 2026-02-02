@@ -1,0 +1,19 @@
+--- UserAuthenticationService_response_2.java
++++ UserAuthenticationService_response_3.java
+@@ -1,7 +1,5 @@
+-```<|start_of_file|>
+-<|editable_region_start|>
+ 
+ 
+ 
+ ### editable_region_start
+ import java.sql.*;
+@@ -147,8 +145,7 @@
+         stmt.setString(1, userId);
+         stmt.setInt(2, days);
+         return stmt.executeQuery();
+     }
+ }
+-<|user_cursor_is_here|>
+ <|editable_region_end|>
+-```+```

@@ -2,75 +2,782 @@
   "summary": {
     "pattern": "=\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|String\\s+\\w+\\s*=\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|execute(?:Query|Update)?\\(\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|prepareStatement\\(\\s*\"(?:SELECT|INSERT|UPDATE|DELETE)[^\"]*\"\\s*\\+|\\+\\s*\"[^\"]*\"\\s*\\+\\s*\"[^\"]*\"",
     "flags": 2,
-    "total_files": 10,
-    "matched_files": 9,
-    "unmatched_files": 1,
-    "match_rate": 90.0,
-    "evaluation_directory": "com/Undo",
-    "excerpt_directory": "com/Undo",
-    "generated_at": "2026-01-29T03:17:46Z"
+    "total_files": 100,
+    "matched_files": 100,
+    "unmatched_files": 0,
+    "match_rate": 100.0,
+    "evaluation_directory": "com/V4-Undo",
+    "excerpt_directory": null,
+    "generated_at": "2026-02-02T02:23:01Z"
   },
   "matches": [
     {
-      "file": "App.java",
+      "file": "App/run_1/App.java",
       "match_count": 1,
       "matches": [
         "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
       ]
     },
     {
-      "file": "C1.java",
+      "file": "App/run_10/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_2/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_3/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_4/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_5/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_6/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_7/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_8/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "App/run_9/App.java",
+      "match_count": 1,
+      "matches": [
+        "= \"SELECT name, age FROM hero_t WHERE name = '\" +"
+      ]
+    },
+    {
+      "file": "C1/run_1/C1.java",
       "match_count": 1,
       "matches": [
         "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
       ]
     },
     {
-      "file": "Cl.java",
+      "file": "C1/run_10/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_2/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_3/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_4/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_5/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_6/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_7/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_8/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "C1/run_9/C1.java",
+      "match_count": 1,
+      "matches": [
+        "execute(\"INSERT INTO url_shortner_table_1 VALUES ('\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_1/Cl.java",
       "match_count": 1,
       "matches": [
         "String sql = \"UPDATE INVOICE SET data = '\" +"
       ]
     },
     {
-      "file": "Item.java",
+      "file": "Cl/run_10/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_2/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_3/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_4/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_5/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_6/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_7/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_8/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "Cl/run_9/Cl.java",
+      "match_count": 1,
+      "matches": [
+        "String sql = \"UPDATE INVOICE SET data = '\" +"
+      ]
+    },
+    {
+      "file": "DAO/run_1/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_10/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_2/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_3/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_4/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_5/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_6/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_7/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_8/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "DAO/run_9/DAO.java",
+      "match_count": 2,
+      "matches": [
+        "String query = \"SELECT COUNT(*) FROM VOTES WHERE optid=\"+",
+        "String query1 = \"SELECT * FROM options WHERE optid = \" +"
+      ]
+    },
+    {
+      "file": "Item/run_1/Item.java",
       "match_count": 1,
       "matches": [
         "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
       ]
     },
     {
-      "file": "JDBC.java",
+      "file": "Item/run_10/Item.java",
       "match_count": 1,
       "matches": [
-        "executeQuery(\"SELECT * FROM events where organizer_id='\"+"
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
       ]
     },
     {
-      "file": "JavaJDBC.java",
+      "file": "Item/run_2/Item.java",
       "match_count": 1,
       "matches": [
-        "executeQuery(\"select * from employees where Password = \" +"
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
       ]
     },
     {
-      "file": "User.java",
+      "file": "Item/run_3/Item.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
+    },
+    {
+      "file": "Item/run_4/Item.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
+    },
+    {
+      "file": "Item/run_5/Item.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
+    },
+    {
+      "file": "Item/run_6/Item.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
+    },
+    {
+      "file": "Item/run_7/Item.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
+    },
+    {
+      "file": "Item/run_8/Item.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
+    },
+    {
+      "file": "Item/run_9/Item.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"SELECT upc, title, type, category, company, year, sellPrice, quantity \"\n                    +"
+      ]
+    },
+    {
+      "file": "JDBC/run_1/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_10/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_2/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_3/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_4/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_5/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_6/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_7/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_8/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JDBC/run_9/JDBC.java",
+      "match_count": 10,
+      "matches": [
+        "executeQuery(\"SELECT * FROM events where organizer_id='\"+",
+        "executeQuery(\"SELECT * FROM events WHERE name='\"+",
+        "executeQuery(\"SELECT * FROM users WHERE id='\"+",
+        "executeQuery(\"SELECT * FROM organizers WHERE id='\"+",
+        "execute(\"UPDATE events SET availability=\" +"
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_1/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_10/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_2/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_3/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_4/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_5/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_6/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_7/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_8/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "JavaJDBC/run_9/JavaJDBC.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select * from employees where Password = \" +",
+        "+ \" \" + \"first_name: \""
+      ]
+    },
+    {
+      "file": "User/run_1/User.java",
       "match_count": 1,
       "matches": [
         "executeQuery(\"select uid, name, address from User where uid='\"+"
       ]
     },
     {
-      "file": "emp.java",
+      "file": "User/run_10/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_2/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_3/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_4/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_5/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_6/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_7/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_8/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "User/run_9/User.java",
+      "match_count": 1,
+      "matches": [
+        "executeQuery(\"select uid, name, address from User where uid='\"+"
+      ]
+    },
+    {
+      "file": "emp/run_1/emp.java",
       "match_count": 1,
       "matches": [
         "executeUpdate(\"INSERT INTO Company VALUES('\" +"
       ]
     },
     {
-      "file": "pqr.java",
+      "file": "emp/run_10/emp.java",
       "match_count": 1,
       "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_2/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_3/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_4/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_5/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_6/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_7/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_8/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "emp/run_9/emp.java",
+      "match_count": 1,
+      "matches": [
+        "executeUpdate(\"INSERT INTO Company VALUES('\" +"
+      ]
+    },
+    {
+      "file": "pqr/run_1/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_10/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_2/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_3/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_4/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_5/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_6/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_7/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_8/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
+        "String sq1 = \"insert into \"+"
+      ]
+    },
+    {
+      "file": "pqr/run_9/pqr.java",
+      "match_count": 2,
+      "matches": [
+        "executeQuery(\"select max(id) from jp.\"+",
         "String sq1 = \"insert into \"+"
       ]
     }

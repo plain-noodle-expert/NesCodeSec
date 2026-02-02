@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 //JAVA 21
 
@@ -45,3 +47,5 @@ public class run {
         Files.walk(Paths.get<|user_cursor_is_here|>
     }
 }
+<|editable_region_end|>
+```

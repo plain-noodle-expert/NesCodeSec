@@ -1,0 +1,45 @@
+--- Listing_15_16_StructuredContent.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:76:61:Listing_15_16_StructuredContent.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.itextpdf.samples.book.part4.chapter15;
+ 
+ import com.itextpdf.kernel.geom.PageSize;
+ import com.itextpdf.kernel.pdf.PdfDocument;
+@@ -10,10 +8,11 @@
+ import com.itextpdf.kernel.pdf.tagging.StandardRoles;
+ import com.itextpdf.kernel.pdf.tagutils.TagTreePointer;
+ import com.itextpdf.layout.Document;
+ 
+ import java.io.File;
++import org.dom4j.io.SAXReader;
+ import org.xml.sax.InputSource;
+ import org.xml.sax.SAXException;
+ 
+ import javax.xml.parsers.ParserConfigurationException;
+ import javax.xml.parsers.SAXParser;
+@@ -55,13 +54,13 @@
+         // create a new tag, which will be a kid of the root element, and move to it
+         autoTaggingPointer.addTag("chapter");
+ 
+         // Replace SAX (SAXParserFactory) with DOM4J (SAXReader) for XML parsing
+ 
+-        org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++        SAXReader parser = new SAXReader();
+ 
+-<|user_cursor_is_here|>        parser.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
++        parser.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+         parser.setProperty("http://apache.org/xml/features/external-general-entities", false);
+         parser.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
+         List<String> roles = new ArrayList<String>();
+         parser.parse(
+                 new InputSource(new FileInputStream(RESOURCE)),
+@@ -72,6 +71,6 @@
+         doc.close();
+     }
+ }
+ 
+ <|editable_region_end|>
+-```+```

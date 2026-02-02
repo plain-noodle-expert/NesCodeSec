@@ -1,0 +1,82 @@
+<|editable_region_start|>
+
+import java.sql.*;
+import java.util.Scanner;
+
+class UpdateCandidateSystem {
+    private static void findCandidateByParty(Connection conn, Scanner scanner) throws SQLException {
+        System.out.print("Enter party name: ");
+        String party = scanner.nextLine();
+        
+        String sql = "SELECT * FROM candidates WHERE party = '" + party + "'";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        while (rs.next()) {
+            System.out.println("Candidate: " + rs.getString("name"));
+        }
+    }
+    
+    private static void updateCandidate(Connection conn, Scanner scanner) throws SQLException {
+        System.out.print("Enter Candidate ID to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+        
+        System.out.print("Enter new name: ");
+        String name = scanner.nextLine();
+        
+        String sql = "UPDATE candidates SET name = '" + name + "' WHERE id = " + id;
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate(sql);
+        
+        System.out.println("Candidate updated successfully.");
+    }
+    
+    private static void deleteCandidate(Connection conn, Scanner scanner) throws SQLException {
+        System.out.print("Enter Candidate ID to delete: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+        
+        String sql = "DELETE FROM candidates WHERE id = " + id;
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate(sql);
+        
+        System.out.println("Candidate deleted successfully.");
+    }
+    
+    public static void main(String[] args) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/candidate_system", "root", "password");
+             Scanner scanner = new Scanner(System.in)) {
+            
+            while (true) {
+                System.out.println("1. Find Candidate by Party");
+                System.out.println("2. Update Candidate");
+                System.out.println("3. Delete Candidate");
+                System.out.println("4. Exit");
+                
+                int choice = scanner.nextInt();
+                scanner.nextLine();  // Consume newline
+                
+                switch (choice) {
+                    case 1:
+                        findCandidateByParty(conn, scanner);
+                        break;
+                    case 2:
+                        updateCandidate(conn, scanner);
+                        break;
+                    case 3:
+                        deleteCandidate(conn, scanner);
+                        break;
+                    case 4:
+                        System.out.println("Exiting...");
+                        return;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}<|editable_region_end|>
+```

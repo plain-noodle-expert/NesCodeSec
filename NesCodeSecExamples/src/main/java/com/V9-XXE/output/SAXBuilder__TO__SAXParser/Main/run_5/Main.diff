@@ -1,0 +1,34 @@
+--- Main.java
++++ NES
+@@ -1,7 +1,5 @@
+-32:236:44:Main.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public static void main(String[] args) throws JDOMException, IOException {
+         //String address="/home/yu/repeatbugreport";
+         String address=".";
+ 
+@@ -11,13 +9,13 @@
+         ////////////////////read the nlp and allcases/////////////
+         // Replace JDOM2 (SAXBuilder) with SAX (SAXParserFactory) for XML parsing
+         javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+         
+         javax.xml.parsers.SAXParser spf = spf.newSAXParser();//generate the builder
+-<|user_cursor_is_here|>        sbnlp.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        sbnlp.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        sbnlp.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        spf.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         String path=address+"/middleResults/nlp.xml";
+         Document docnlp=sbnlp.build(new FileInputStream(path));//read the file
+         Element rootnlp=docnlp.getRootElement();
+ 
+         ArrayList<Step> nlpsteplist=new ArrayList<Step>();//record step by step
+@@ -205,6 +203,6 @@
+ 
+         }
+ 
+     }//end main
+ <|editable_region_end|>
+-```+```

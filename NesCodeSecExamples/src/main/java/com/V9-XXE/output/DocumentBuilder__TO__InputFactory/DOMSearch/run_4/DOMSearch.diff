@@ -1,0 +1,139 @@
+--- DOMSearch.java
++++ NES
+@@ -1,87 +1,86 @@
+-3:86:29:DOMSearch.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.IOException;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+-import javax.xml.parsers.DocumentBuilder;
+-import javax.xml.parsers.DocumentBuilderFactory;
+-import javax.xml.parsers.FactoryConfigurationError;
+-import javax.xml.parsers.ParserConfigurationException;
+-
+-import org.w3c.dom.Document;
+-import org.w3c.dom.Element;
+-import org.w3c.dom.Node;
+-import org.w3c.dom.NodeList;
++import javax.xml.stream.XMLInputFactory;
++import javax.xml.stream.XMLStreamException;
++import javax.xml.stream.XMLStreamReader;
+ 
+ import org.xml.sax.SAXException;
+ 
+ public class DOMSearch
+ {
+    public static void main(String[] args)
+    {
+       try
+       {
+          // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+-         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
++         XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
++         xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++         xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++         XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader("contacts.xml");
+          
+-<|user_cursor_is_here|>         dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-         dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-         dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-         Document doc = db.parse("contacts.xml");
+          List<String> contactNames = new ArrayList<String>();
+-         NodeList contacts = doc.getElementsByTagName("contact");
+-         for (int i = 0; i < contacts.getLength(); i++)
++         while (xmlStreamReader.hasNext())
+          {
+-            Element contact = (Element) contacts.item(i);
+-            NodeList cities = contact.getElementsByTagName("city");
+-            boolean chicago = false;
+-            for (int j = 0; j < cities.getLength(); j++)
++            xmlStreamReader.next();
++            if (xmlStreamReader.isStartElement() && xmlStreamReader.getLocalName().equals("contact"))
+             {
+-               Element city = (Element) cities.item(j);
+-               NodeList children = city.getChildNodes();
+-               StringBuilder sb = new StringBuilder();
+-               for (int k = 0; k < children.getLength(); k++)
++               boolean chicago = false;
++               while (xmlStreamReader.hasNext())
+                {
+-                  Node child = children.item(k);
+-                  if (child.getNodeType() == Node.TEXT_NODE)
+-                     sb.append(child.getNodeValue());
++                  xmlStreamReader.next();
++                  if (xmlStreamReader.isStartElement() && xmlStreamReader.getLocalName().equals("city"))
++                  {
++                     while (xmlStreamReader.hasNext())
++                     {
++                        xmlStreamReader.next();
++                        if (xmlStreamReader.isCharacters())
++                        {
++                           if (xmlStreamReader.getText().equals("Chicago"))
++                           {
++                              chicago = true;
++                              break;
++                           }
++                        }
++                     }
++                  }
++                  if (chicago)
++                  {
++                     while (xmlStreamReader.hasNext())
++                     {
++                        xmlStreamReader.next();
++                        if (xmlStreamReader.isStartElement() && xmlStreamReader.getLocalName().equals("name"))
++                        {
++                           while (xmlStreamReader.hasNext())
++                           {
++                              xmlStreamReader.next();
++                              if (xmlStreamReader.isCharacters())
++                              {
++                                 contactNames.add(xmlStreamReader.getText());
++                                 break;
++                              }
++                           }
++                        }
++                     }
++                  }
+                }
+-               if (sb.toString().equals("Chicago"))
+-               {
+-                  chicago = true;
+-                  break;
+-               }
+-            }
+-            if (chicago)
+-            {
+-               NodeList names = contact.getElementsByTagName("name");
+-               contactNames.add(names.item(0).getFirstChild().
+-                                getNodeValue());
+             }
+          }
+          for (String contactName: contactNames)
+             System.out.println(contactName);
+       }
+       catch (IOException ioe)
+       {
+          System.err.println("IOE: " + ioe);
+       }
+-      catch (SAXException saxe)
++      catch (XMLStreamException xse)
+       {
+-         System.err.println("SAXE: " + saxe);
+-      }
+-      catch (FactoryConfigurationError fce)
+-      {
+-         System.err.println("FCE: " + fce);
+-      }
+-      catch (ParserConfigurationException pce)
+-      {
+-         System.err.println("PCE: " + pce);
++         System.err.println("XSE: " + xse);
+       }
+    }
+ }
+ <|editable_region_end|>
+-```+```

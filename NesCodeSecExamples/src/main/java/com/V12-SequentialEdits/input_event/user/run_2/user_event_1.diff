@@ -1,0 +1,31 @@
+--- user.java
++++ user.java
+@@ -1,5 +1,7 @@
++
++
+ package Courier-management-System;
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+@@ -16,8 +18,18 @@
+             System.out.println("User: " + rs.getString("name"));
+         }
+     }
+     
+     private static void updateUser(Connection conn, Scanner scanner) throws SQLException {
+-            
+-    }
+-}+            System.out.print("Enter Voter ID to update: ");
++            String voterId = scanner.nextLine();
++
++            System.out.print("Enter new name: ");
++            String name = scanner.nextLine();
++            System.out.print("Enter new mobile: ");
++            String mobile = scanner.nextLine();
++            System.out.print("Enter new date of birth (YYYY-MM-DD): ");
++            String dob = scanner.nextLine();
++
++        }
++}
++

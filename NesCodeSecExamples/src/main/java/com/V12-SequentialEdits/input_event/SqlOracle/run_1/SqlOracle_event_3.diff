@@ -1,0 +1,40 @@
+--- SqlOracle_response_1.java
++++ SqlOracle_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ package com.taotao.cloud.workflow.biz.common.database.sql.impl;
+ 
+ import com.taotao.cloud.workflow.biz.common.database.source.DbBase;
+ import com.taotao.cloud.workflow.biz.common.database.sql.SqlBase;
+@@ -128,7 +127,30 @@
+     public PreparedStatementDTO getDeleteSqlPSD(Connection conn, String deleteTable) {
+         String sql = "DELETE FROM " + deleteTable;
+         PreparedStatementDTO psd = new PreparedStatementDTO(sql, conn);
+         return psd;
+     }
++
++    @Override
++    public PreparedStatementDTO getUpdateSqlPSD(Connection conn, String updateTable, List<DbFieldMod> updateFields, List<DbFieldMod> whereFields) {
++        String sql = "UPDATE " + updateTable + " SET ";
++        for (int i = 0; i < updateFields.size(); i++) {
++            DbFieldMod field = updateFields.get(i);
++            sql += field.getName() + " = ?";
++            if (i < updateFields.size() - 1) {
++                sql += ", ";
++            }
++        }
++        sql += " WHERE ";
++        for (int i = 0; i < whereFields.size(); i++) {
++            DbFieldMod field = whereFields.get(i);
++            sql += field.getName() + " = ?";
++            if (i < whereFields.size() - 1) {
++                sql += " AND ";
++            }
++        }
++        PreparedStatementDTO psd = new PreparedStatementDTO(sql, conn);
++        return psd;
++    }
+ }
+ 
++

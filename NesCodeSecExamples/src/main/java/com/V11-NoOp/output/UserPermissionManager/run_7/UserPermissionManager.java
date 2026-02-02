@@ -1,0 +1,54 @@
+<|editable_region_start|>
+import java.sql.*;
+
+public class UserPermissionManager {
+    private Connection connection;
+
+    public boolean checkPermission(String userId, String resource, String action) throws SQLException {
+        String sql = "SELECT COUNT(*) as count FROM user_permissions WHERE user_id = ? AND resource = ? AND action = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        ResultSet rs = pstmt.executeQuery();
+        return rs.next() && rs.getInt("count") > 0;
+    }
+
+    public void grantPermission(String userId, String resource, String action, String grantedBy) throws SQLException {
+        String sql = "INSERT INTO user_permissions (user_id, resource, action, granted_by, granted_at) VALUES (?, ?, ?, ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        pstmt.setString(4, grantedBy);
+        pstmt.executeUpdate();
+    }
+
+    public void revokePermission(String userId, String resource, String action) throws SQLException {
+        String sql = "DELETE FROM user_permissions WHERE user_id = ? AND resource = ? AND action = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        pstmt.executeUpdate();
+    }
+
+    public ResultSet getUserPermissions(String userId) throws SQLException {
+        String sql = "SELECT * FROM user_permissions WHERE user_id = ? ORDER BY resource, action";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        return pstmt.executeQuery();
+    }
+
+    public void logAccessAttempt(String userId, String resource, String action, String result) throws SQLException {
+        String sql = "INSERT INTO access_logs (user_id, resource, action, result, timestamp) VALUES (?, ?, ?, ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, resource);
+        pstmt.setString(3, action);
+        pstmt.setString(4, result);
+        pstmt.executeUpdate();
+    }
+}
+<|editable_region_end|>
+```

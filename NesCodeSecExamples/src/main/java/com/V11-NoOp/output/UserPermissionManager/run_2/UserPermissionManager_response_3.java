@@ -1,0 +1,480 @@
+
+
+
+### editable_region_start
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserPermissionManager {
+
+    private List<String> permissions;
+
+    public UserPermissionManager() {
+        this.permissions = new ArrayList<>();
+    }
+
+    public void addPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public boolean hasPermission(String permission) {
+        return permissions.contains(permission);
+    }
+
+    public void removePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public List<String> getPermissions() {
+        return new ArrayList<>(permissions);
+    }
+
+    public void clearPermissions() {
+        permissions.clear();
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+    }
+
+    public void revokePermissions(List<String> permissions) {
+        this.permissions.removeAll(permissions);
+    }
+
+    public void grantAllPermissions() {
+        permissions.add("admin");
+        permissions.add("user");
+    }
+
+    public void revokeAllPermissions() {
+        permissions.clear();
+    }
+
+    public void grantPermission(String permission) {
+        permissions.add(permission);
+    }
+
+    public void revokePermission(String permission) {
+        permissions.remove(permission);
+    }
+
+    public void grantPermissions(List<String> permissions) {
+        this.permissions.addAll(permissions);
+   

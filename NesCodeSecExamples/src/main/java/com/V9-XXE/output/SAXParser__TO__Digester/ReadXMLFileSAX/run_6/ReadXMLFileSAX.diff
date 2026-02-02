@@ -1,0 +1,47 @@
+--- ReadXMLFileSAX.java
++++ NES
+@@ -1,12 +1,9 @@
+-3:40:21:ReadXMLFileSAX.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package sax;
+ 
+-import javax.xml.parsers.SAXParser;
+-import javax.xml.parsers.SAXParserFactory;
++import org.apache.commons.digester3.Digester;
+ 
+ /**
+  * @author v.chibrikov
+  *         <p>
+  *         Пример кода для курса на https://stepic.org/
+@@ -15,18 +12,18 @@
+  */
+ public class ReadXMLFileSAX {
+     public static Object readXML(String xmlFile) {
+         try {
+             // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+-            org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
++            Digester digester = new Digester();
+             
+-<|user_cursor_is_here|>            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-            factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-            factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++            digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++            digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
++            digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+             //LogSaxHandler handler = new LogSaxHandler();
+             SaxHandler handler = new SaxHandler();
+-            saxParser.parse(xmlFile, handler);
++            digester.parse(xmlFile, handler);
+ 
+             return handler.getObject();
+ 
+         } catch (Exception e) {
+             e.printStackTrace();
+@@ -36,6 +33,6 @@
+     }
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,33 @@
+--- EarthquakeUpdateJobService.java
++++ NES
+@@ -1,19 +1,17 @@
+-104:177:110:EarthquakeUpdateJobService.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+       if (responseCode == HttpURLConnection.HTTP_OK) {
+         InputStream in = httpConnection.getInputStream();
+         // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+         
+         // set up secure db factory
+-<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
++        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         // Parse the earthquake feed.
+-        Document dom = db.parse(in);
++        Document dom = parser.read(in);
+         Element docEle = dom.getDocumentElement();
+ 
+         // Get a list of each earthquake entry.
+         NodeList nl = docEle.getElementsByTagName("entry");
+         if (nl != null && nl.getLength() > 0) {
+@@ -74,6 +72,6 @@
+             earthquakes.add(earthquake);
+           }
+         }
+       }
+ <|editable_region_end|>
+-```+```

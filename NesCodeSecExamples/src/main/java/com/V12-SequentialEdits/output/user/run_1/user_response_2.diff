@@ -1,0 +1,19 @@
+--- user_response_1.java
++++ user_response_2.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package Courier-management-System;
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+@@ -33,8 +32,8 @@
+         }
+ }
+ 
+ 
+ 
+-<|user_cursor_is_here|>
++public class User {
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,57 @@
+--- HusacctResource.java
++++ NES
+@@ -1,14 +1,14 @@
+-3:65:25:HusacctResource.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+-package husacct.control.task.resources;
++package com.Scenario1.migrate_full.SAXBuilder__TO__Digester;
+ 
+ import java.io.File;
+ import java.io.FileOutputStream;
+ import java.util.HashMap;
+ import org.apache.log4j.Logger;
++import org.apache.commons.digester3.Digester;
++import org.apache.commons.digester3.RuleSet;
+ import org.jdom2.Document;
+ import org.jdom2.input.SAXBuilder;
+ import org.jdom2.output.Format;
+ import org.jdom2.output.XMLOutputter;
+ 
+@@ -21,16 +21,25 @@
+ 	public Document load(HashMap<String, Object> dataValues) {
+ 		File file = (File) dataValues.get("file");
+ 		// Replace JDOM2 (SAXBuilder) with Apache Commons Digester for XML parsing
+ 		org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 		
+-<|user_cursor_is_here|>		sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-		sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-		sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++		// Configure Digester rules
++		RuleSet ruleSet = new RuleSet() {
++			@Override
++			public void addRuleInstances(Digester digester) {
++				digester.addObjectCreate("husacct", "com.Scenario1.migrate_full.SAXBuilder__TO__Digester.Husacct");
++				digester.addSetProperties("husacct");
++				digester.addSetNext("husacct", "addHusacct");
++			}
++		};
++		digester.setRuleSet(ruleSet);
++		
++		// Load XML file using Digester
+ 		Document doc = new Document();
+ 		try {
+-			doc = sax.build(file);
++			doc = digester.parse(file);
+ 		} catch (Exception e) {
+ 			logger.error(e.getMessage());
+ 		}
+ 		return doc;
+ 	}
+@@ -61,6 +70,6 @@
+ 	}
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

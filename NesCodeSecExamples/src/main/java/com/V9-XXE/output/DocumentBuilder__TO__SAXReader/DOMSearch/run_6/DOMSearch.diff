@@ -1,0 +1,37 @@
+--- DOMSearch.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:86:29:DOMSearch.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.IOException;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+@@ -25,14 +23,15 @@
+       try
+       {
+          // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+          org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+          
+-<|user_cursor_is_here|>         dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-         dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-         dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-         Document doc = db.parse("contacts.xml");
++         // Disable external entity loading and DTD validation
++         parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++         parser.setFeature("http://xml.org/sax/features/external-general-entities", false);
++         parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++         Document doc = parser.read("contacts.xml");
+          List<String> contactNames = new ArrayList<String>();
+          NodeList contacts = doc.getElementsByTagName("contact");
+          for (int i = 0; i < contacts.getLength(); i++)
+          {
+             Element contact = (Element) contacts.item(i);
+@@ -82,6 +81,6 @@
+          System.err.println("PCE: " + pce);
+       }
+    }
+ }
+ <|editable_region_end|>
+-```+```

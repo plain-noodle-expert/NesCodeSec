@@ -1,0 +1,82 @@
+--- ContactData.java
++++ NES
+@@ -1,67 +1,24 @@
+-60:121:64:ContactData.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+         try {
+-            // First, create a new XMLInputFactory
+-            // Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
++            // First, create a new SAXBuilder
+             org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+-            <|user_cursor_is_here|>
+-            inputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+-            // Setup a new eventReader
++            // Setup a new SAXBuilder
+             InputStream in = new FileInputStream(CONTACTS_FILE);
+-            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
++            Document document = saxBuilder.build(in);
+             // read the XML document
+             Contact contact = null;
+ 
+-            while (eventReader.hasNext()) {
+-                XMLEvent event = eventReader.nextEvent();
++            Element root = document.getRootElement();
++            List<Element> contactElements = root.getChildren(CONTACT);
+ 
+-                if (event.isStartElement()) {
+-                    StartElement startElement = event.asStartElement();
+-                    // If we have a contact item, we create a new contact
+-                    if (startElement.getName().getLocalPart().equals(CONTACT)) {
+-                        contact = new Contact();
+-                        continue;
+-                    }
+-
+-                    if (event.isStartElement()) {
+-                        if (event.asStartElement().getName().getLocalPart()
+-                                .equals(FIRST_NAME)) {
+-                            event = eventReader.nextEvent();
+-                            contact.setFirstName(event.asCharacters().getData());
+-                            continue;
+-                        }
+-                    }
+-                    if (event.asStartElement().getName().getLocalPart()
+-                            .equals(LAST_NAME)) {
+-                        event = eventReader.nextEvent();
+-                        contact.setLastName(event.asCharacters().getData());
+-                        continue;
+-                    }
+-
+-                    if (event.asStartElement().getName().getLocalPart()
+-                            .equals(PHONE_NUMBER)) {
+-                        event = eventReader.nextEvent();
+-                        contact.setPhoneNumber(event.asCharacters().getData());
+-                        continue;
+-                    }
+-
+-                    if (event.asStartElement().getName().getLocalPart()
+-                            .equals(NOTES)) {
+-                        event = eventReader.nextEvent();
+-                        contact.setNotes(event.asCharacters().getData());
+-                        continue;
+-                    }
+-                }
+-
+-                // If we reach the end of a contact element, we add it to the list
+-                if (event.isEndElement()) {
+-                    EndElement endElement = event.asEndElement();
+-                    if (endElement.getName().getLocalPart().equals(CONTACT)) {
+-                        contacts.add(contact);
+-                    }
+-                }
++            for (Element contactElement : contactElements) {
++                contact = new Contact();
++                contact.setFirstName(contactElement.getChildText(FIRST_NAME));
++                contact.setLastName(contactElement.getChildText(LAST_NAME));
++                contact.setPhoneNumber(contactElement.getChildText(PHONE_NUMBER));
++                contact.setNotes(contactElement.getChildText(NOTES));
++                contacts.add(contact);
+             }
+         }
+ <|editable_region_end|>
+-```+```

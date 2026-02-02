@@ -1,6 +1,15 @@
 --- Xapi.java
 +++ Xapi.java
-@@ -143,8 +143,12 @@
+@@ -1,7 +1,6 @@
+-
+-
++<|editable_region_start|>
+ import java.io.PrintStream;
+ import java.nio.file.Files;
+ import java.nio.file.Paths;
+ import java.nio.file.Path;
+ import java.util.ArrayList;
+@@ -145,9 +144,14 @@
      return new String(bytes);
    }
  
@@ -9,8 +18,11 @@
 -    Files.walk
 +    Files.walk(Paths.get(userPath))
 +        .filter(Files::isRegularFile)
-+        .forEach(path -> results.add(path.toString()));
++        .map(Path::toString)
++        .forEach(results::add);
 +    return results;
    }
--}+}
-+
+ }
+-
++<|editable_region_end|>
++```

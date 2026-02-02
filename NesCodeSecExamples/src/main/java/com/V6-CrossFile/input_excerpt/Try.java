@@ -1,3 +1,5 @@
+```<|start_of_file|>
+<|editable_region_start|>
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -97,3 +99,5 @@ public class Try {
         <|user_cursor_is_here|>
     }
 }
+<|editable_region_end|>
+```

@@ -1,0 +1,35 @@
+--- LineMaker.java
++++ NES
+@@ -1,26 +1,23 @@
+-71:91:80:LineMaker.java
+-```
+ <|editable_region_start|>
+         try {
+             String strRoot = System.getProperty("user.dir");
+             strRoot = strRoot.replaceAll("\\\\", "/");
+             String strPath = strRoot + "/conf/";
+ 
+             // Replace DOM4J (SAXReader) with JDOM2 (SAXBuilder) for XML parsing
+ 
+             org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
+ 
+-<|user_cursor_is_here|>            reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-            reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-            Document document = reader.read(new File(strPath + "CustomLine.xml"));
+-            Element elmRoot = document.getRootElement();
+-            Element elmField = elmRoot.element(strName);
++            // Remove the reader object as it's not needed anymore
++
++            org.jdom2.Document document = saxBuilder.build(new File(strPath + "CustomLine.xml"));
++            org.jdom2.Element elmRoot = document.getRootElement();
++            org.jdom2.Element elmField = elmRoot.getChild(strName);
+             if (elmField == null) {
+-                elmField = elmRoot.element("default");
++                elmField = elmRoot.getChild("default");
+             }
+             return elmField.getTextTrim();
+ 
+         } catch (Exception | Error e) {
+ <|editable_region_end|>
+-```+```

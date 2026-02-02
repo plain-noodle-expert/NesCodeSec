@@ -1,0 +1,24 @@
+--- XxeDocumentBuilderFactory.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:27:22:XxeDocumentBuilderFactory.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package examples;
+ 
+ import org.dom4j.DocumentException;
+ import org.w3c.dom.Document;
+@@ -18,11 +16,11 @@
+ public class XxeDocumentBuilderFactory {
+ 
+     public void negative() throws SAXException, DocumentException, ParserConfigurationException, IOException {
+         // Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+-        <|user_cursor_is_here|>
+-        Document document = builder.parse(in);
++        
++        Document document = parser.read(in);
+     }
+ }
+ <|editable_region_end|>
+-```+```

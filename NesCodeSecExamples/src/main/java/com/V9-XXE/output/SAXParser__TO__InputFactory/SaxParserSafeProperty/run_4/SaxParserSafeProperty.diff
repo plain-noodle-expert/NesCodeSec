@@ -1,0 +1,51 @@
+--- SaxParserSafeProperty.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:65:36:SaxParserSafeProperty.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package testcode.xxe;
+ 
+ import org.w3c.dom.Document;
+ import org.xml.sax.SAXException;
+@@ -32,27 +30,28 @@
+     }
+ 
+     public static void safeIgnoredDtdDisable() throws ParserConfigurationException, IOException, SAXException {
+         // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+-<|user_cursor_is_here|>        spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+         parser.parse(getInputFile(), new PrintHandler());
+     }
+ 
+     public static void safeSecureProcessing() throws ParserConfigurationException, IOException, SAXException {
+         // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+-        spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
++        xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
++        xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+         parser.parse(getInputFile(), new PrintHandler());
+     }
+ 
+     public static void safeManualConfiguration() throws ParserConfigurationException, IOException, SAXException {
+         // Replace SAX (SAXParserFactory) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+-        spf.setFeature("http://xml.org/sax/features/external-general-entities", true);
+-        spf.setFeature("http://xml.org/sax/features/external-parameter-entities", true);
+-        spf.setXIncludeAware(false);
++        xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
++        xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
++        xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+         parser.parse(getInputFile(), new PrintHandler());
+     }
+ 
+     public static void main(String[] args) throws Exception {
+         //unsafeNoSpecialSettings();
+@@ -61,6 +60,6 @@
+         //safeManualConfiguration();
+     }
+ }
+ 
+ <|editable_region_end|>
+-```+```

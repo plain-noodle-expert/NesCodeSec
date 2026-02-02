@@ -1,0 +1,54 @@
+--- CitygmlPackFile.java
++++ NES
+@@ -1,18 +1,17 @@
+-3:48:37:CitygmlPackFile.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package osm.surveyor.tools;
+ 
+ import java.io.File;
+ import java.io.IOException;
+ import java.text.ParseException;
+ 
++import javax.xml.parsers.DocumentBuilder;
++import javax.xml.parsers.DocumentBuilderFactory;
+ import javax.xml.parsers.ParserConfigurationException;
+-import javax.xml.parsers.SAXParser;
+-import javax.xml.parsers.SAXParserFactory;
+ 
++import org.w3c.dom.Document;
+ import org.xml.sax.SAXException;
+ import org.xml.sax.SAXParseException;
+ 
+ import lombok.Getter;
+ 
+@@ -30,20 +29,22 @@
+      * XMLパースを実行する
+      * 
+      */
+     public void parse() throws ParserConfigurationException, SAXException, IOException {
+         // Replace SAX (SAXParserFactory) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+-        javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
++        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+         
+-        javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        factory.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        factory.setValidating(false);
++        DocumentBuilder db = dbf.newDocumentBuilder();
++        
++        db.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        db.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        db.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        db.setValidating(false);
+         try {
+-			parser.parse(this, gml);
++			Document doc = db.parse(this);
++			gml.parse(doc);
+ 		} catch (SAXParseException e) {}
+     }
+ }
+ 
+ <|editable_region_end|>
+-```+```

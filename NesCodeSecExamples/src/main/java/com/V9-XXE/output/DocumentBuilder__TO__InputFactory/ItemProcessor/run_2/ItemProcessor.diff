@@ -1,0 +1,107 @@
+--- ItemProcessor.java
++++ NES
+@@ -1,74 +1,61 @@
+-100:235:108:ItemProcessor.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public void process(SubmissionContainer container) throws Exception {
+         logger.info("Executing Item Processor.");
+         ArrayList<HashMap> listOfUploadFilePaths =container.getListOfUploadFilePaths();        
+ 
+         // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+ 
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+ 
+-<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++
+         InputSource is = new InputSource();
+         is.setCharacterStream(new StringReader(container.getRequestBody()));
+-        Document doc = db.parse(is);
++        XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(is);
+         String itemName;
+         String itemValue;
+         String groupNodeName = "";
+ 
+-        NodeList instanceNodeList = doc.getElementsByTagName("instance");
+         // Instance loop
+-        for (int i = 0; i < instanceNodeList.getLength(); i = i + 1) {
+-            Node instanceNode = instanceNodeList.item(i);
+-            if (instanceNode instanceof Element) {
+-                NodeList crfNodeList = instanceNode.getChildNodes();
++        while (xmlStreamReader.hasNext()) {
++            int event = xmlStreamReader.next();
++            if (event == XMLStreamConstants.START_ELEMENT && xmlStreamReader.getLocalName().equals("instance")) {
+                 // Form loop
+-                for (int j = 0; j < crfNodeList.getLength(); j = j + 1) {
+-                    Node crfNode = crfNodeList.item(j);
+-                    if (crfNode instanceof Element) {
++                while (xmlStreamReader.hasNext()) {
++                    event = xmlStreamReader.next();
++                    if (event == XMLStreamConstants.START_ELEMENT && xmlStreamReader.getLocalName().equals("form")) {
+                         CrfVersion crfVersion = container.getEventCrf().getCrfVersion();
+                         EventCrf eventCrf = container.getEventCrf();
+                         ArrayList<ItemData> itemDataList = new ArrayList<ItemData>();
+ 
+                         HashMap<Integer,Set<Integer>> groupOrdinalMapping = new HashMap<Integer,Set<Integer>>();
+-                        NodeList groupNodeList = crfNode.getChildNodes();
+-                        
+-                        List<Item> items = itemDao.findAllByCrfVersionId(crfVersion.getCrfVersionId());
+-                        List<ItemData> itemDatas = itemDataDao.findAllByEventCrf(container.getEventCrf().getEventCrfId());
+-                        List<ItemGroup> itemGroups = itemGroupDao.findByCrfVersionId(crfVersion.getCrfVersionId());
+-                        List<ItemGroupMetadata> itemGroupMetadatas = itemGroupMetadataDao.findAllByCrfVersion(crfVersion.getCrfVersionId());
+-                        List<ItemFormMetadata> itemFormMetadatas = itemFormMetadataDao.findAllByCrfVersion(crfVersion.getCrfVersionId());
+-
+                         // Group loop
+-                        for (int k = 0; k < groupNodeList.getLength(); k = k + 1) {
+-                            Node groupNode = groupNodeList.item(k);
+-                            if (groupNode instanceof Element && !groupNode.getNodeName().startsWith("SECTION_")) {
+-                                groupNodeName = groupNode.getNodeName();
++                        while (xmlStreamReader.hasNext()) {
++                            event = xmlStreamReader.next();
++                            if (event == XMLStreamConstants.START_ELEMENT && !xmlStreamReader.getLocalName().startsWith("SECTION_")) {
++                                groupNodeName = xmlStreamReader.getLocalName();
+                                 ItemGroup itemGroup = lookupItemGroup(groupNodeName, crfVersion, itemGroups);
+                                 if (itemGroup == null) {
+                                     logger.error("Failed to lookup item group: '" + groupNodeName + "'.  Continuing with submission.");
+                                     continue;
+                                 }
+                                 
+                                 if (itemGroup != null && !groupOrdinalMapping.containsKey(itemGroup.getItemGroupId())) groupOrdinalMapping.put(itemGroup.getItemGroupId(),new TreeSet<Integer>());
+ 
+-                                NodeList itemNodeList = groupNode.getChildNodes();
+                                 // Item loop
+-                                for (int m = 0; m < itemNodeList.getLength(); m = m + 1) {
+-                                    Node itemNode = itemNodeList.item(m);
+-                                    if (itemNode instanceof Element && !itemNode.getNodeName().endsWith(".HEADER")
+-                                            && !itemNode.getNodeName().endsWith(".SUBHEADER")
+-                                            && !itemNode.getNodeName().equals("OC.REPEAT_ORDINAL")
+-                                            && !itemNode.getNodeName().equals("OC.STUDY_SUBJECT_ID")
+-                                            && !itemNode.getNodeName().equals("OC.STUDY_SUBJECT_ID_CONFIRM") ) {
++                                while (xmlStreamReader.hasNext()) {
++                                    event = xmlStreamReader.next();
++                                    if (event == XMLStreamConstants.START_ELEMENT && !xmlStreamReader.getLocalName().endsWith(".HEADER")
++                                            && !xmlStreamReader.getLocalName().endsWith(".SUBHEADER")
++                                            && !xmlStreamReader.getLocalName().equals("OC.REPEAT_ORDINAL")
++                                            && !xmlStreamReader.getLocalName().equals("OC.STUDY_SUBJECT_ID")
++                                            && !xmlStreamReader.getLocalName().equals("OC.STUDY_SUBJECT_ID_CONFIRM") ) {
+                                         
+-                                        itemName = itemNode.getNodeName().trim();
+-                                        itemValue = itemNode.getTextContent();
++                                        itemName = xmlStreamReader.getLocalName().trim();
++                                        itemValue = xmlStreamReader.getElementText();
+ 
+                                         Item item = lookupItem(itemName, crfVersion, items);
+                                         if (item == null) {
+                                             logger.error("Failed to lookup item: '" + itemName + "'.  Continuing with submission.");
+                                             continue;
+@@ -136,6 +123,6 @@
+                 }
+             }
+         }
+     }
+ <|editable_region_end|>
+-```+```

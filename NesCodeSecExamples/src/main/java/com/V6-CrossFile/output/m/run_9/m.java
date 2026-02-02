@@ -1,3 +1,4 @@
+<|editable_region_start|>
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,18 +23,17 @@ public class m {
 
     public static java.util.List<String> listFilesInPath(String userPath) throws IOException {
         java.util.List<String> fileList = new java.util.ArrayList<>();
-        File dir = new File(userPath);
-        if (dir.exists() && dir.isDirectory()) {
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile()) {
-                        fileList.add(file.getName());
-                    }
+        File directory = new File(userPath);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    fileList.add(file.getName());
                 }
             }
         }
         return fileList;
     }
 }
-
+<|editable_region_end|>
+```

@@ -1,0 +1,44 @@
+--- BeanFactory.java
++++ NES
+@@ -1,13 +1,12 @@
+-3:60:27:BeanFactory.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package edu.nwpu.store.utils;
+ 
+ import java.io.InputStream;
+ import java.util.List;
+ 
++import org.apache.commons.digester3.Digester;
+ import org.dom4j.Document;
+ import org.dom4j.Element;
+ import org.dom4j.io.SAXReader;
+ /**
+  * 
+@@ -21,15 +20,15 @@
+ 		// 通过传递过来的name获取application.xml中name对应的class值
+ 		// 利用class值通过反射创建对象返回
+ 		try {
+ 			// 获取到Document对象
+ 			// Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+-			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
++			Digester digester = new Digester();
+ 			
+-<|user_cursor_is_here|>			reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-			reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++			digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++			digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
++			digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 			// 获取application.xml的输入流(application.xml必须位于src下)
+ 			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
+ 			Document document = reader.read(is);
+ 			// 通过Document对象获取根节点beans
+ 			Element rootElement = document.getRootElement();
+@@ -56,6 +55,6 @@
+ 	}
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

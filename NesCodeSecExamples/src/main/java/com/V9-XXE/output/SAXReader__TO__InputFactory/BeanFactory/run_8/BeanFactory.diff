@@ -1,0 +1,34 @@
+--- BeanFactory.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:60:27:BeanFactory.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package edu.nwpu.store.utils;
+ 
+ import java.io.InputStream;
+ import java.util.List;
+@@ -23,13 +21,13 @@
+ 		try {
+ 			// 获取到Document对象
+ 			// Replace DOM4J (SAXReader) with StAX (XMLInputFactory) for XML parsing
+ 			javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+ 			
+-<|user_cursor_is_here|>			reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-			reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++			xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++			xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++			
+ 			// 获取application.xml的输入流(application.xml必须位于src下)
+ 			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
+ 			Document document = reader.read(is);
+ 			// 通过Document对象获取根节点beans
+ 			Element rootElement = document.getRootElement();
+@@ -56,6 +54,6 @@
+ 	}
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```

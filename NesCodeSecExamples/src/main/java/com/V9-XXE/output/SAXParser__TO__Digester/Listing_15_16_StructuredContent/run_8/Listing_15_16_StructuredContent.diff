@@ -1,0 +1,37 @@
+--- Listing_15_16_StructuredContent.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:76:61:Listing_15_16_StructuredContent.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.itextpdf.samples.book.part4.chapter15;
+ 
+ import com.itextpdf.kernel.geom.PageSize;
+ import com.itextpdf.kernel.pdf.PdfDocument;
+@@ -57,21 +55,21 @@
+ 
+         // Replace SAX (SAXParserFactory) with Apache Commons Digester for XML parsing
+ 
+         org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+ 
+-<|user_cursor_is_here|>        parser.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        parser.setProperty("http://apache.org/xml/features/external-general-entities", false);
+-        parser.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
++        digester.setProperty("http://apache.org/xml/features/disallow-doctype-decl", true);
++        digester.setProperty("http://apache.org/xml/features/external-general-entities", false);
++        digester.setProperty("http://xml.org/sax/features/external-parameter-entities", false);
+         List<String> roles = new ArrayList<String>();
+-        parser.parse(
++        digester.parse(
+                 new InputSource(new FileInputStream(RESOURCE)),
+                 new Listing_15_17_StructureParser(roles));
+-        parser.parse(
++        digester.parse(
+                 new InputSource(new FileInputStream(RESOURCE)),
+                 new Listing_15_18_ContentParser(doc, roles));
+         doc.close();
+     }
+ }
+ 
+ <|editable_region_end|>
+-```+```

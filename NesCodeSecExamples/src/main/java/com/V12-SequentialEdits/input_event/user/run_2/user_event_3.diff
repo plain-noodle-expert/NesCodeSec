@@ -1,0 +1,21 @@
+--- user_response_1.java
++++ user_response_2.java
+@@ -1,8 +1,7 @@
+ 
+-
+-package Courier-management-System;
++package CourierManagementSystem;
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ public class User {
+@@ -33,7 +32,8 @@
+         }
+ }
+ 
+ 
+ 
++public class User {
+ 
+ 

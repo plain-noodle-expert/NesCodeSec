@@ -1,48 +1,4 @@
-package com.v6crossfile.test_file;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-/**
- * Loads test fixtures from hardcoded directory.
- */
-public class FixtureLoader {
-    private static final String FIXTURE_DIR = "/home/testuser/fixtures/";
-    
-    /**
-     * Loads a fixture file content.
-     * 
-     * @param fixtureName the fixture file name
-     * @return content of the fixture file
-     * @throws FileNotFoundException if fixture not found
-     */
-    public static String loadFixture(String fixtureName) throws FileNotFoundException {
-        String path = FIXTURE_DIR + fixtureName;
-        StringBuilder content = new StringBuilder();
-        
-        try (Scanner scanner = new Scanner(new File(path))) {
-            while (scanner.hasNextLine()) {
-                content.append(scanner.nextLine()).append("\n");
-            }
-        }
-        
-        return content.toString();
-    }
-    
-    /**
-     * Checks if a fixture file is available.
-     * 
-     * @param fixtureName the fixture file name
-     * @return true if fixture exists
-     */
-    public static boolean hasFixture(String fixtureName) {
-        String path = FIXTURE_DIR + fixtureName;
-        return new File(path).exists() && new File(path).canRead();
-    }
-}
-
-
+<|editable_region_start|>
 package org.fusionlanguage;
 
 import java.io.BufferedInputStream;
@@ -76,9 +32,9 @@ class FileGenHost extends FuConsoleHost
 				result.add((byte) b);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			reportError(String.format("Failed to read file %s", path), e);
+			return new ArrayList<Byte>();
 		}
-		return new ArrayList<Byte>();
 	}
 
 	private ArrayList<Byte> readResource(String name, FuPrefixExpr expr)
@@ -115,4 +71,5 @@ public class Fut
 		return host.program;
 	}
 }
-
+<|editable_region_end|>
+```

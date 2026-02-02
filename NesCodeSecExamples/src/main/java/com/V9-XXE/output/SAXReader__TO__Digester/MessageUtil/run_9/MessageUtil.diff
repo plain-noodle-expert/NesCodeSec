@@ -1,0 +1,48 @@
+--- MessageUtil.java
++++ NES
+@@ -1,7 +1,5 @@
+-109:138:119:MessageUtil.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+         // 将解析结果存储在HashMap中
+         Map<String, String> map = new HashMap<String, String>();
+ 
+@@ -9,27 +7,23 @@
+         InputStream inputStream = request.getInputStream();
+         // 读取输入流
+         // Replace DOM4J (SAXReader) with Apache Commons Digester for XML parsing
+         org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
+         
+-<|user_cursor_is_here|>        reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        Document document = reader.read(inputStream);
+-        // 得到xml根元素
+-        Element root = document.getRootElement();
+-        // 得到根元素的所有子节点
+-        List<Element> elementList = root.elements();
++        // Configure Digester rules
++        digester.addObjectCreate("xml", "java.util.HashMap");
++        digester.addSetProperties("xml");
++        digester.addObjectCreate("xml/entry", "java.util.HashMap$SimpleEntry");
++        digester.addSetProperties("xml/entry");
++        digester.addSetNext("xml/entry", "put");
+ 
+-        // 遍历所有子节点
+-        for (Element e : elementList) {
+-            map.put(e.getName(), e.getText());
+-        }
++        // Parse the XML input stream
++        Map<String, String> parsedMap = digester.parse(inputStream);
+ 
+-        // 释放资源
++        // Release resources
+         inputStream.close();
+         inputStream = null;
+ 
+-        return map;
++        return parsedMap;
+     }
+ <|editable_region_end|>
+-```+```

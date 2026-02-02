@@ -1,0 +1,53 @@
+--- XMLTextConceptDigester.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:64:42:XMLTextConceptDigester.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /**
+  *  Licensed to the Apache Software Foundation (ASF) under one
+  *  or more contributor license agreements.  See the NOTICE file
+  *  distributed with this work for additional information
+@@ -38,28 +36,27 @@
+           URISyntaxException {
+ 
+     // Replace Apache Commons Digester with SAX (SAXParserFactory) for XML parsing
+ 
+     javax.xml.parsers.SAXParserFactory spf = javax.xml.parsers.SAXParserFactory.newInstance();
+-<|user_cursor_is_here|>
++    javax.xml.parsers.SAXParser sp = spf.newSAXParser();
+ 
+-    javax.xml.parsers.SAXParser spf = spf.newSAXParser();
+-    digester.setValidating(false);
++    sp.setValidating(false);
+ 
+-    digester.addObjectCreate("results", ConceptResults.class);
+-    digester.addBeanPropertySetter("results/status", "status");
+-    digester.addBeanPropertySetter("results/statusInfo", "statusInfo");
+-    digester.addBeanPropertySetter("results/url", "url");
+-    digester.addBeanPropertySetter("results/language", "language");
+-    digester.addObjectCreate("results/concepts", Concepts.class);
+-    digester.addObjectCreate("results/concepts/concept", Concept.class);
+-    digester.addBeanPropertySetter("results/concepts/concept/text", "text");
+-    digester.addBeanPropertySetter("results/concepts/concept/relevance", "relevance");
+-    digester.addBeanPropertySetter("results/concepts/concept/website", "website");
+-    digester.addBeanPropertySetter("results/concepts/concept/geo", "geo");
++    sp.addObjectCreate("results", ConceptResults.class);
++    sp.addBeanPropertySetter("results/status", "status");
++    sp.addBeanPropertySetter("results/statusInfo", "statusInfo");
++    sp.addBeanPropertySetter("results/url", "url");
++    sp.addBeanPropertySetter("results/language", "language");
++    sp.addObjectCreate("results/concepts", Concepts.class);
++    sp.addObjectCreate("results/concepts/concept", Concept.class);
++    sp.addBeanPropertySetter("results/concepts/concept/text", "text");
++    sp.addBeanPropertySetter("results/concepts/concept/relevance", "relevance");
++    sp.addBeanPropertySetter("results/concepts/concept/website", "website");
++    sp.addBeanPropertySetter("results/concepts/concept/geo", "geo");
+ 
+-    return (Results) digester.parse(xmlReader);
++    return (Results) sp.parse(xmlReader);
+   }
+ }
+ 
+ <|editable_region_end|>
+-```+```

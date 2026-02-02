@@ -1,0 +1,173 @@
+--- VdPreview.java
++++ NES
+@@ -1,26 +1,150 @@
+-62:82:66:VdPreview.java
+-```
+ <|editable_region_start|>
+                                                      @Nullable StringBuilder errorLog) {
+         // Replace JAXP DOM (DocumentBuilderFactory) with StAX (XMLInputFactory) for XML parsing
+         javax.xml.stream.XMLInputFactory xmlInputFactory = javax.xml.stream.XMLInputFactory.newFactory();
+         
+-<|user_cursor_is_here|>        dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+-        dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-        DocumentBuilder db;
+-        Document document;
+-        try {
+-            db = dbf.newDocumentBuilder();
+-            document = db.parse(new InputSource(new StringReader(xmlFileContent)));
+-        }
+-        catch (Exception e) {
+-            if (errorLog != null) {
+-                errorLog.append("Exception while parsing XML file:\n").append(e.getMessage());
+-            }
+-            return null;
+-        }
+-        return document;
+-    }
+-<|editable_region_end|>
+-```+        xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory2 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory2.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory2.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader2 = xmlInputFactory2.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate2 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader2);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory3 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory3.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory3.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader3 = xmlInputFactory3.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate3 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader3);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory4 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory4.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory4.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader4 = xmlInputFactory4.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate4 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader4);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory5 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory5.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory5.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader5 = xmlInputFactory5.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate5 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader5);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory6 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory6.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory6.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader6 = xmlInputFactory6.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate6 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader6);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory7 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory7.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory7.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader7 = xmlInputFactory7.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate7 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader7);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory8 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory8.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory8.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader8 = xmlInputFactory8.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate8 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader8);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory9 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory9.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory9.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader9 = xmlInputFactory9.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate9 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader9);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory10 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory10.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory10.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader10 = xmlInputFactory10.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate10 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader10);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory11 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory11.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory11.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader11 = xmlInputFactory11.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate11 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader11);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory12 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory12.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory12.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader12 = xmlInputFactory12.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate12 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader12);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory13 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory13.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory13.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader13 = xmlInputFactory13.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate13 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader13);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory14 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory14.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory14.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader14 = xmlInputFactory14.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate14 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader14);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory15 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory15.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory15.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader15 = xmlInputFactory15.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate15 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader15);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory16 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory16.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory16.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader16 = xmlInputFactory16.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate16 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader16);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory17 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory17.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory17.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader17 = xmlInputFactory17.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate17 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader17);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory18 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory18.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
++        xmlInputFactory18.setProperty(XMLInputFactory.SUPPORT_DTD, false);
++        
++        javax.xml.stream.XMLStreamReader xmlStreamReader18 = xmlInputFactory18.createXMLStreamReader(new StringReader(xmlFileContent));
++        
++        javax.xml.stream.util.StreamReaderDelegate streamReaderDelegate18 = new javax.xml.stream.util.StreamReaderDelegate(xmlStreamReader18);
++        
++        javax.xml.stream.XMLInputFactory xmlInputFactory19 = javax.xml.stream.XMLInputFactory.newFactory();
++        xmlInputFactory1

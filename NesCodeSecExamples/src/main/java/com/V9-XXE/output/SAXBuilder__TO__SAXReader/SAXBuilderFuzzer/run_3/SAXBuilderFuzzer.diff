@@ -1,0 +1,64 @@
+--- SAXBuilderFuzzer.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:54:36:SAXBuilderFuzzer.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Copyright 2023 Google LLC
+ //
+ // Licensed under the Apache License, Version 2.0 (the "License");
+ // you may not use this file except in compliance with the License.
+@@ -17,39 +15,39 @@
+ //
+ ////////////////////////////////////////////////////////////////////////////////
+ 
+ import com.code_intelligence.jazzer.api.FuzzedDataProvider;
+ 
+-import org.jdom2.input.SAXBuilder;
+-import org.jdom2.Document;
++import org.dom4j.io.SAXReader;
++import org.dom4j.Document;
+ import java.io.StringReader;
+-import org.jdom2.JDOMException;
++import org.dom4j.DocumentException;
+ import java.io.IOException;
+-import org.jdom2.IllegalNameException;
+-import org.jdom2.IllegalTargetException;
++import org.dom4j.IllegalNameException;
++import org.dom4j.IllegalTargetException;
+ 
+ public class SAXBuilderFuzzer {
+   public static void fuzzerTestOneInput(FuzzedDataProvider data) {
+     
+     // Replace JDOM2 (SAXBuilder) with DOM4J (SAXReader) for XML parsing
+     
+-    org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
++    SAXReader parser = new SAXReader();
+     
+-<|user_cursor_is_here|>    sax.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-    sax.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-    sax.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-    sax.setValidation(data.consumeBoolean());
+-    sax.setIgnoringElementContentWhitespace(data.consumeBoolean());
+-    sax.setIgnoringBoundaryWhitespace(data.consumeBoolean());
++    parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++    parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
++    parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++    parser.setValidation(data.consumeBoolean());
++    parser.setIgnoringElementContentWhitespace(data.consumeBoolean());
++    parser.setIgnoringBoundaryWhitespace(data.consumeBoolean());
+     StringReader xml_input = new StringReader(data.consumeRemainingAsString());
+     
+     try{    
+-      Document doc = sax.build(xml_input);
++      Document doc = parser.read(xml_input);
+     }
+-    catch (JDOMException | IOException | IllegalNameException | IllegalTargetException e){
++    catch (DocumentException | IOException | IllegalNameException | IllegalTargetException e){
+       return;
+     }
+   }
+ }
+ 
+ <|editable_region_end|>
+-```+```

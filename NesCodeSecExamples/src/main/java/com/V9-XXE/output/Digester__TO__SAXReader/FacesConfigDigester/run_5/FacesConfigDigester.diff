@@ -1,0 +1,29 @@
+--- FacesConfigDigester.java
++++ NES
+@@ -1,15 +1,14 @@
+-65:116:69:FacesConfigDigester.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+     public FacesConfigDigester() {
+         // Replace Apache Commons Digester with DOM4J (SAXReader) for XML parsing
+         org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+         
+-<|user_cursor_is_here|>        digester.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-        digester.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-        digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
++        // Initialize the parser
++        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++        parser.setFeature("http://apache.org/xml/features/external-general-entities", false);
++        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         this.digester = digester;
+         // TODO: validation set to false during implementation of 1.2
+         digester.setValidating(false);
+         digester.setNamespaceAware(true);
+         digester.setEntityResolver(new EntityResolver() {
+@@ -52,6 +51,6 @@
+         digester.addObjectCreate("faces-config/absolute-ordering/others", ConfigOthersSlot.class);
+         digester.addSetNext("faces-config/absolute-ordering/others", "addOrderSlot");
+ 
+     }
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,38 @@
+--- ReportGenerator.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ 
+ public class ReportGenerator {
+     private Connection connection;
+@@ -23,13 +22,18 @@
+         }
+         return pstmt.executeQuery();
+     }
+ 
+     public ResultSet getTopCustomers(int limit, String sortBy) throws SQLException {
+-        String sql = <|user_cursor_is_here|>
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
++        String sql = "SELECT c.customer_id, c.name, c.email, COUNT(o.order_id) as order_count, " +
++                     "SUM(p.amount) as total_spent FROM customers c " +
++                     "JOIN orders o ON c.customer_id = o.customer_id " +
++                     "JOIN payments p ON o.order_id = p.order_id " +
++                     "GROUP BY c.customer_id ORDER BY " + sortBy + " DESC LIMIT ?";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setInt(1, limit);
++        return pstmt.executeQuery();
+     }
+ 
+     public void saveReportSnapshot(String reportType, String parameters, String generatedBy) throws SQLException {
+         String sql = "INSERT INTO report_history (report_type, parameters, generated_by, generated_at) VALUES ('" +
+                      reportType + "', '" + parameters + "', '" + generatedBy + "', NOW())";
+@@ -42,6 +46,6 @@
+         Statement stmt = connection.createStatement();
+         return stmt.executeQuery(sql);
+     }
+ }
+ <|editable_region_end|>
+-```+```

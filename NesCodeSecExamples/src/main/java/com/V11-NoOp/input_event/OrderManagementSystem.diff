@@ -1,0 +1,39 @@
+--- OrderManagementSystem.java
++++ OrderManagementSystem.java
+@@ -1,19 +1,24 @@
++
++
+ import java.sql.*;
+ 
+ public class OrderManagementSystem {
+     private Connection connection;
+ 
+     public void createOrder(String customerId, String productId, int quantity, String shippingAddress) throws SQLException {
+-        String sql = "INSERT INTO orders (customer_id, product_id, quantity, shipping_address, status) VALUES ('" +
+-                     customerId + "', '" + productId + "', " + quantity + ", '" + shippingAddress + "', 'PENDING')";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "INSERT INTO orders (customer_id, product_id, quantity, shipping_address, status) VALUES (?, ?, ?, ?, 'PENDING')";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, customerId);
++        pstmt.setString(2, productId);
++        pstmt.setInt(3, quantity);
++        pstmt.setString(4, shippingAddress);
++        pstmt.executeUpdate();
+     }
+ 
+     public void updateOrderStatus(String orderId, String newStatus) throws SQLException {
+-        String sql = "UPDATE orders SET status = '" + newStatus + "' WHERE order_id = '" + orderId + "'";
++        String sql = "UPDATE orders SET status = '" + newStatus + "' WHERE order_id = '" + orderId + "'"
+         Statement stmt = connection.createStatement();
+         stmt.executeUpdate(sql);
+     }
+ 
+     public ResultSet getOrdersByCustomer(String customerId, String statusFilter) throws SQLException {
+@@ -132,5 +137,6 @@
+                      " ORDER BY days_old DESC";
+         Statement stmt = connection.createStatement();
+         return stmt.executeQuery(sql);
+     }
+ }
++

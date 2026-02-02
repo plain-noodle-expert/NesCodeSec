@@ -28,20 +28,6 @@ public class ParseImporterXML {
 		digester.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		digester.setValidating(false);
 
-		digester.addObjectCreate("importer", Importer.class);
-		digester.addSetProperties("importer", "type", "type");
-		digester.addSetProperties("importer", "ignoreErrors", "ignoreErrors");
-		digester.addSetProperties("importer/keys", "value", "keys");
-
-		digester.addObjectCreate(Constants.FIELD, Field.class);
-		digester.addSetProperties(Constants.FIELD, "id", "id");
-		digester.addSetProperties(Constants.FIELD, "compulsory","compulsory");
-		digester.addSetNext(Constants.FIELD, "setFields");
-
-		digester.addObjectCreate(Constants.VALIDATION,ValidationRule.class);
-		digester.addSetProperties(Constants.VALIDATION,"regex", "regex");
-		digester.addSetProperties(Constants.VALIDATION,"errormsg", "errormsg");
-		digester.addSetNext(Constants.VALIDATION,"setValidationRules");
 
 		File importerFile = new File(xml);
 		return (Importer) digester.parse(importerFile);

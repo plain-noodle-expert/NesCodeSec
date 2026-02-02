@@ -1,0 +1,29 @@
+--- app_response_1.java
++++ app_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ import java.sql.*;
+ import java.util.Scanner;
+ 
+ public class AdminUser {
+@@ -29,7 +28,19 @@
+         Statement stmt = conn.createStatement();
+         stmt.executeUpdate(sql);
+         
+         System.out.println("Candidate added successfully!");
+     }
++    
++    private static void deleteCandidate(Connection conn, Scanner scanner) throws SQLException {
++        System.out.print("Enter candidate ID: ");
++        int id = Integer.parseInt(scanner.nextLine());
++        
++        String sql = "DELETE FROM candidates WHERE id = " + id;
++        Statement stmt = conn.createStatement();
++        stmt.executeUpdate(sql);
++        
++        System.out.println("Candidate deleted successfully!");
++    }
+ }
+ 
++

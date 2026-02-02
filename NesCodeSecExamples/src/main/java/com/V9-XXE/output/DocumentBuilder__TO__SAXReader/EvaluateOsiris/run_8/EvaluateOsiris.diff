@@ -1,0 +1,30 @@
+--- EvaluateOsiris.java
++++ NES
+@@ -1,7 +1,5 @@
+-55:203:76:EvaluateOsiris.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException, TransformerFactoryConfigurationError, TransformerException,  SQLException {
+ 
+ 		String propertyFile = args[0];
+ 		String osirisCorpus = args[1];
+@@ -20,11 +18,11 @@
+ 
+ 		// Replace JAXP DOM (DocumentBuilderFactory) with DOM4J (SAXReader) for XML parsing
+ 
+ 		org.dom4j.io.SAXReader parser = new org.dom4j.io.SAXReader();
+ 
+-<|user_cursor_is_here|>		factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
++		factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+ 		factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+ 		factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+ 		factory.setNamespaceAware(true);
+ 		factory.setFeature("http://xml.org/sax/features/validation", false);
+ 		factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+@@ -149,6 +147,6 @@
+ 		System.err.println("Precision " +df.format(precision));
+ 		System.err.println("Recall " +df.format(recall));
+ 		System.err.println("F1 " +df.format(f1));
+ 	}
+ <|editable_region_end|>
+-```+```

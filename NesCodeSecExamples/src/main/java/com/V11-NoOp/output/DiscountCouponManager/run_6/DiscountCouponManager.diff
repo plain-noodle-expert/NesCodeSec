@@ -1,0 +1,77 @@
+--- DiscountCouponManager.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ 
+ public class DiscountCouponManager {
+     private Connection connection;
+@@ -12,39 +11,49 @@
+         pstmt.setString(2, customerId);
+         return pstmt.executeQuery();
+     }
+ 
+     public void createCoupon(String code, String discountType, double discountValue, String validFrom, String validUntil) throws SQLException {
+-        String sql = <|user_cursor_is_here|>
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "INSERT INTO coupons (code, discount_type, discount_value, valid_from, valid_until, is_active) VALUES (?, ?, ?, ?, ?, 1)";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, code);
++        pstmt.setString(2, discountType);
++        pstmt.setDouble(3, discountValue);
++        pstmt.setString(4, validFrom);
++        pstmt.setString(5, validUntil);
++        pstmt.executeUpdate();
+     }
+ 
+     public void applyCoupon(String orderId, String couponCode, double discountAmount) throws SQLException {
+-        String sql = "UPDATE orders SET coupon_code = '" + couponCode + "', discount_amount = " + 
+-                     discountAmount + " WHERE order_id = '" + orderId + "'";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "UPDATE orders SET coupon_code = ?, discount_amount = ? WHERE order_id = ?";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, couponCode);
++        pstmt.setDouble(2, discountAmount);
++        pstmt.setString(3, orderId);
++        pstmt.executeUpdate();
+         
+-        String usageSql = "INSERT INTO coupon_usage (coupon_code, order_id, used_at) VALUES ('" +
+-                          couponCode + "', '" + orderId + "', NOW())";
+-        Statement stmt2 = connection.createStatement();
+-        stmt2.executeUpdate(usageSql);
++        String usageSql = "INSERT INTO coupon_usage (coupon_code, order_id, used_at) VALUES (?, ?, NOW())";
++        PreparedStatement pstmt2 = connection.prepareStatement(usageSql);
++        pstmt2.setString(1, couponCode);
++        pstmt2.setString(2, orderId);
++        pstmt2.executeUpdate();
+     }
+ 
+     public void deactivateCoupon(String couponCode, String reason) throws SQLException {
+-        String sql = "UPDATE coupons SET is_active = 0, deactivation_reason = '" + reason + 
+-                     "', deactivated_at = NOW() WHERE code = '" + couponCode + "'";
+-        Statement stmt = connection.createStatement();
+-        stmt.executeUpdate(sql);
++        String sql = "UPDATE coupons SET is_active = 0, deactivation_reason = ?, deactivated_at = NOW() WHERE code = ?";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, reason);
++        pstmt.setString(2, couponCode);
++        pstmt.executeUpdate();
+     }
+ 
+     public ResultSet getCouponUsageStats(String couponCode) throws SQLException {
+         String sql = "SELECT COUNT(*) as usage_count, SUM(o.total_amount) as total_orders_value " +
+                      "FROM coupon_usage cu JOIN orders o ON cu.order_id = o.order_id " +
+-                     "WHERE cu.coupon_code = '" + couponCode + "'";
+-        Statement stmt = connection.createStatement();
+-        return stmt.executeQuery(sql);
++                     "WHERE cu.coupon_code = ?";
++        PreparedStatement pstmt = connection.prepareStatement(sql);
++        pstmt.setString(1, couponCode);
++        return pstmt.executeQuery();
+     }
+ }
+ <|editable_region_end|>
+-```+```

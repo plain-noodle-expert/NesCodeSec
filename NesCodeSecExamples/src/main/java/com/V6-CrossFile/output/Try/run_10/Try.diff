@@ -1,6 +1,15 @@
 --- Try.java
 +++ Try.java
-@@ -92,8 +92,9 @@
+@@ -1,7 +1,6 @@
+-
+-
++<|editable_region_start|>
+ import java.nio.file.Files;
+ import java.nio.file.Paths;
+ import java.util.Objects;
+ import java.util.function.Consumer;
+ import java.util.function.Function;
+@@ -94,9 +93,10 @@
                  .count();
          System.out.println("代码行数：" + count);
      }
@@ -9,5 +18,7 @@
 -        
 +        return Files.walk(Paths.get(dirPath));
      }
--}+}
-+
+ }
+-
++<|editable_region_end|>
++```

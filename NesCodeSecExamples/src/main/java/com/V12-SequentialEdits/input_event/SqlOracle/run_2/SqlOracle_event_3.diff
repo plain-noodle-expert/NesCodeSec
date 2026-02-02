@@ -1,0 +1,16 @@
+--- SqlOracle_response_1.java
++++ SqlOracle_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ package com.taotao.cloud.workflow.biz.common.database.sql.impl;
+ 
+ import com.taotao.cloud.workflow.biz.common.database.source.DbBase;
+ import com.taotao.cloud.workflow.biz.common.database.sql.SqlBase;
+@@ -129,5 +128,6 @@
+         String sql = deleteSql.replace("?", deleteTable);
+         return new PreparedStatementDTO(sql, null);
+     }
+ }
+ 
++

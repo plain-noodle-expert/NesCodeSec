@@ -1,0 +1,35 @@
+--- BeanFactory.java
++++ NES
+@@ -1,7 +1,5 @@
+-3:61:28:BeanFactory.java
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package edu.nwpu.store.utils;
+ 
+ import java.io.InputStream;
+ import java.util.List;
+@@ -24,16 +22,11 @@
+ 			// 获取到Document对象
+ 			// Replace DOM4J (SAXReader) with JAXP DOM (DocumentBuilderFactory) for XML parsing
+ 			javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+ 			
+ 			javax.xml.parsers.DocumentBuilder dbf = dbf.newDocumentBuilder();
+-<|user_cursor_is_here|>			reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+-			reader.setFeature("http://apache.org/xml/features/external-general-entities", false);
+-			reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+-			// 获取application.xml的输入流(application.xml必须位于src下)
+-			InputStream is = BeanFactory.class.getClassLoader().getResourceAsStream("application.xml");
+-			Document document = reader.read(is);
++			javax.xml.parsers.Document document = dbf.parse(is);
+ 			// 通过Document对象获取根节点beans
+ 			Element rootElement = document.getRootElement();
+ 			// 通过根结点获取到根结点下所有子结点，返回集合
+ 			List<Element> list = rootElement.elements();
+ 			// 遍历集合，判断每个bean上的id是否和当前的name值一致
+@@ -57,6 +50,6 @@
+ 	}
+ 
+ }
+ 
+ <|editable_region_end|>
+-```+```
