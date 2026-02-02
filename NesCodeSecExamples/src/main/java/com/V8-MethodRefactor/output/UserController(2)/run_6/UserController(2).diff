@@ -1,0 +1,35 @@
+--- UserController(2).java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package cn.dlb.bim.controller;
+ 
+ import java.util.Map;
+ 
+@@ -108,10 +107,11 @@
+ 			result.setSuccess(true);
+ 		}
+ 		return result.getResult();
+ 	}
+ 	
++	@RequestMapping(value = "/update", method = RequestMethod.POST)
+ 	@ResponseBody
+ 	public Map<String, Object> updateUser(UserVo userVo, HttpServletRequest request) {
+ 		
+ 		ResultUtil result = new ResultUtil();
+ 		
+@@ -141,12 +141,12 @@
+ 			userService.updateUser(user);
+ 			result.setSuccess(true);
+ 		}
+ 		return result.getResult();
+ 	}
+-<|user_cursor_is_here|>
++	
+ 	public boolean validateToken(String token) {
+ 		return userService.validateToken(token);
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

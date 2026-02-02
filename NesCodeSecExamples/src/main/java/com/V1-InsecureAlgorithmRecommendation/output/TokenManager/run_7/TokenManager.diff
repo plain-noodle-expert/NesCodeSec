@@ -1,0 +1,29 @@
+--- TokenManager.java
++++ TokenManager.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package server.utils;
+ 
+ import java.util.HashMap;
+ import java.util.Random;
+@@ -17,11 +16,11 @@
+   static String ALPHANUMERIC = ALPHABET + ALPHABET.toLowerCase() + NUMBERS;
+ 
+   // Constructor
+   public TokenManager() {
+     tokenMap = new HashMap<>();
+-    tokenGen = <|user_cursor_is_here|>
++    tokenGen = new Random();
+   }
+ 
+   /**
+    * newToken -
+    * Generates a token for the given user name, and stores as a
+@@ -60,6 +59,6 @@
+   public synchronized String getUser(String token) {
+     return tokenMap.get(token);
+   }
+ }
+ <|editable_region_end|>
+-```+```

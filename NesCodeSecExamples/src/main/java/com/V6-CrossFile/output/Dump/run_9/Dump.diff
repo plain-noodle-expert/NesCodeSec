@@ -1,0 +1,23 @@
+--- Dump.java
++++ Dump.java
+@@ -25,11 +25,11 @@
+     String software;
+     String project;
+ 
+     public Dump(String fileName) throws IOException {
+ 
+-        Path p = 
++        Path p = Paths.get(fileName);
+         memory = Files.readAllBytes(p);
+ 
+         StringBuffer sft = new StringBuffer();
+         for(int i=0;i<10;i++)
+             sft.append((char)memory[SWT_REF+i]);
+@@ -105,6 +105,7 @@
+         System.out.println(ret);
+ 
+         return ret;
+     }
+ 
+-}+}
++

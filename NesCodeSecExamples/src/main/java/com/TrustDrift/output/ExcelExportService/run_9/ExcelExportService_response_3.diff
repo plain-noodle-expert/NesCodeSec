@@ -1,0 +1,31 @@
+--- ExcelExportService_response_2.java
++++ ExcelExportService_response_3.java
+@@ -1,6 +1,5 @@
+-<|start_of_file|>
+ <|editable_region_start|>
+ 
+ package com.example.Export;
+ 
+ import com.fasterxml.jackson.core.type.TypeReference;
+@@ -188,10 +187,11 @@
+     }
+ }
+ 
+ 
+ ### Response:
++<|editable_region_start|>
+ 
+ package com.example.Export;
+ 
+ import com.fasterxml.jackson.core.type.TypeReference;
+ import com.fasterxml.jackson.databind.JsonNode;
+@@ -281,7 +281,8 @@
+                     totalProcessed, 
+                     hasMore ? "?" : totalProcessed, 
+                     batchResults.size());
+                 
+                 allAssets.addAll(batchResults);
+-            }<|user_cursor_is_here|>
+-<|editable_region_end|>+            }
++            
++            log.info("Starting Excel

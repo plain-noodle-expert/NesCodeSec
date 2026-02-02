@@ -1,0 +1,29 @@
+--- Fut.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Fut.java - Fusion transpiler
+ //
+ // Copyright (C) 2011-2025  Piotr Fusik
+ package org.fusionlanguage;
+@@ -81,11 +80,11 @@
+ 
+ 	private static FuProgram parseAndResolve(FuParser parser, FuSystem system, FuScope parent, ArrayList<String> files, FuSema sema, FuConsoleHost host) throws IOException
+ 	{
+ 		new FuProgram().init(parent, system, host);
+ 		for (String file : files) {
+-			<|user_cursor_is_here|>
++			new FuFile().init(file, parent, system, host, sema);
+ 		}
+ 	}
+ 
+ 	private static void emit(FuProgram program, String lang, String namespace, String outputFile, FileGenHost host)
+ 	{
+@@ -259,6 +258,6 @@
+ 		if (status != 0)
+ 			System.exit(status);
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,11 @@
+--- DownloadSample.java
++++ DownloadSample.java
+@@ -0,0 +1,2 @@
++
++
+@@ -21 +23 @@
+-    private static String accessKeySecret = "";
++    private static String accessKeySecret = 
+@@ -67 +69,2 @@
+-}+}
++

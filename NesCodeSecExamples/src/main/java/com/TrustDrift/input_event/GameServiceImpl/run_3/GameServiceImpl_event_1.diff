@@ -1,0 +1,33 @@
+--- GameServiceImpl.java
++++ GameServiceImpl.java
+@@ -1,6 +1,8 @@
+-package com.TrustDrift.base_o;
++
++
++package top.ginnnnnn.mooc.service.implement;
+ 
+ import java.security.SecureRandom;
+ import java.util.HashMap;
+ 
+ import org.springframework.beans.factory.annotation.Autowired;
+@@ -59,11 +61,11 @@
+         final String key = GUESS_GAME_PREFIX + token;
+         init(key);
+         return infoBuild(key);
+     }
+ 
+-    private boolean refresh(String token) {
++    public boolean refresh(String token) {
+         final String key = GUESS_GAME_PREFIX + token;
+         init(key);
+         HashOperations<String, String, Object> hashOperations = stringRedisTemplate.opsForHash();
+ 
+         hashOperations.put(key, "passed", "0");
+@@ -86,6 +88,7 @@
+         info.put("passed", hashOperations.get(key, "passed"));
+         info.put("talented", hashOperations.get(key, "talented"));
+         return info;
+     }
+ 
+-}+}
++

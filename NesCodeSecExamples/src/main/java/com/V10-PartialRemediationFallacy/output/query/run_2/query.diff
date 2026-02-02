@@ -1,0 +1,111 @@
+--- query.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.io.*;
+ import java.util.Scanner;
+ 
+@@ -62,12 +61,14 @@
+                                         System.out.println("Enter the beginning of the city names you would like to see.");
+                                                 String citystart;
+                                                 citystart = reader.nextLine();
+                                                 citystart = reader.nextLine();
+ 
+-                                                q = "select distinct city, stcode from uszips where city like '"+citystart+"%'";
+-                                                rs = stmt.executeQuery (q);
++                                                q = "select distinct city, stcode from uszips where city like ?";
++                                                PreparedStatement pstmt = conn.prepareStatement(q);
++                                                pstmt.setString(1, citystart + "%");
++                                                rs = pstmt.executeQuery();
+                         System.out.printf("These are the cities that begin with "+citystart+":\n");
+                                                 while(rs.next()){
+                             System.out.printf(rs.getString (1)+", "+rs.getString (2)+"\n");
+                         }
+ 						break;
+@@ -89,14 +90,16 @@
+ 						flag = false;
+ 						break;
+ 					case 1:  
+         				System.out.println("Enter a state code to see which players are from that state");	
+ 						state = reader.next();
+-						q = "select jno, last, first, city, stcode from roster where stcode = '"+state+"';";
++						q = "select jno, last, first, city, stcode from roster where stcode = ?";
+ 					
+-						//execute query
+-						rs = stmt.executeQuery (q);
++						//execute query with PreparedStatement
++						PreparedStatement pstmt = conn.prepareStatement(q);
++						pstmt.setString(1, state);
++						rs = pstmt.executeQuery();
+ 						if( !rs.next() ){ 
+         					System.out.println ("There are no players from "+state+". ");
+ 						} else {
+         				System.out.println ("Players from "+state+": ");
+ 						while(rs.next())
+@@ -104,14 +107,16 @@
+ 						}
+                      	break;
+             		case 2:  
+         				System.out.println("Enter a state code to see how many players are from that state");	
+ 						state = reader.next();
+-						q = "select count(*) from (select jno, last, first, city, stcode from roster where stcode = '"+state+"');";
++						q = "select count(*) from (select jno, last, first, city, stcode from roster where stcode = ?);";
+ 					
+-						//execute query
+-						rs = stmt.executeQuery (q);
++						//execute query with PreparedStatement
++						pstmt = conn.prepareStatement(q);
++						pstmt.setString(1, state);
++						rs = pstmt.executeQuery();
+ 						if( !rs.next() ){ 
+         					System.out.println ("There are no players from "+state+". ");
+ 						} else {
+         				System.out.println ("There are "+rs.getString(1)+" players from "+state);
+ 						}
+@@ -145,13 +150,16 @@
+ 						}
+ 						break;
+ 					case 6:
+         				System.out.println("Enter a state code");	
+ 						state = reader.next();
+-						q = "select case when p.team = 'O' then 'Offense' when p.team = 'D' then 'Defense' when p.team = 'S' then 'Special Teams' end as team, count(*) from roster r, positions p where r.position = p.position and r.stcode='"+state+"' group by team;";
++						q = "select case when p.team = 'O' then 'Offense' when p.team = 'D' then 'Defense' when p.team = 'S' then 'Special Teams' end as team, count(*) from roster r, positions p where r.position = p.position and r.stcode=? group by team;";
+ 						
+-						rs = stmt.executeQuery (q);
++						//execute query with PreparedStatement
++						pstmt = conn.prepareStatement(q);
++						pstmt.setString(1, state);
++						rs = pstmt.executeQuery();
+                         System.out.printf("%-15s %s\n", "Team", "Players from "+state);
+ 						while(rs.next()){
+                             System.out.printf("%-15s %-2d\n", rs.getString(1), rs.getInt(2));
+                         }
+ 						break;
+@@ -166,13 +174,15 @@
+ 						break;
+ 					case 8:
+         				System.out.println("Enter a position (ex: Running Back)");	
+ 						state = reader.nextLine();
+ 						state = reader.nextLine();
+-						q = "select jno, last, first from roster where position = '"+state+"';"<|user_cursor_is_here|>
+-						//execute query securely
+-						rs = stmt.executeQuery (q);
++						q = "select jno, last, first from roster where position = ?;";
++						//execute query with PreparedStatement
++						pstmt = conn.prepareStatement(q);
++						pstmt.setString(1, state);
++						rs = pstmt.executeQuery();
+ 						if( !rs.next() ){ 
+         					System.out.println ("There are no players that play "+state+". ");
+ 						} else {
+ 							System.out.println ("Players who play "+state+": ");
+ 							while(rs.next())
+@@ -188,6 +198,6 @@
+ 		}
+     }
+   }
+ }
+ <|editable_region_end|>
+-```+```

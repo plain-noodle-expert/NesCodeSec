@@ -1,0 +1,32 @@
+--- Lucian.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import javax.crypto.Mac;
+ import javax.crypto.spec.SecretKeySpec;
+ import javax.net.ssl.HostnameVerifier;
+ import javax.net.ssl.HttpsURLConnection;
+@@ -23,13 +22,13 @@
+ 
+     private static String bucketname = "/";
+ 
+     private static String path = "/";
+ 
+-    private static String accessKeyId = <|user_cursor_is_here|>
++    private static String accessKeyId = "your_access_key_id";
+ 
+-    private static String accessKeySecret = "";
++    private static String accessKeySecret = "your_access_key_secret";
+ 
+     private static boolean debug_mode = true;
+ 
+     private static boolean idle = true;
+ 
+@@ -148,6 +147,6 @@
+         }
+     }
+ 
+ }
+ <|editable_region_end|>
+-```+```

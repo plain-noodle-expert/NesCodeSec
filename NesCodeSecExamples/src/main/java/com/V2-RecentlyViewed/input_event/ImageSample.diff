@@ -1,0 +1,11 @@
+--- ImageSample.java
++++ ImageSample.java
+@@ -0,0 +1,2 @@
++
++
+@@ -19 +21 @@
+-    private static String accessKeySecret = "<accessKeySecret>";
++    private static String accessKeySecret = 
+@@ -96 +98,2 @@
+-}+}
++

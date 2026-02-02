@@ -1,0 +1,12 @@
+--- cd.java
++++ cd.java
+@@ -0,0 +1,2 @@
++
++
+@@ -62,0 +65 @@
++        logger.info("Peeked token");
+@@ -68,0 +72 @@
++    logger.info("Next token retrieved");
+@@ -98 +102,2 @@
+-}+}
++

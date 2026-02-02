@@ -1,0 +1,405 @@
+{
+  "files": {
+    "Buy.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Buy.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the username directly via logger.info(\\\"Initializing Buy frame for user: {}\\\", username). This could expose user identifiers in log files, potentially leading to privacy violations or user tracking if logs are accessed by unauthorized parties.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": ""
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Buy.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code constructs a URL (API_URL) that includes a hardcoded API key and then logs the action of fetching from that URL. While the specific log line shown is a static string, the API_URL variable itself contains a sensitive credential (API_KEY) and is used in a context where network errors or further logging (not shown but common in HTTP clients) could expose the full URL including the key. Additionally, the code contains a hardcoded placeholder for an API key, which is a credential management risk.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Buy.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the username parameter in the constructor with logger.info(\\\"Initializing Buy frame for user: {}\\\", username) at line 28. The username is user-controlled input that could be manipulated or contain sensitive information. Additionally, the API_KEY is hardcoded as a static constant (line 35) and the API_URL containing this key is used in the fetchExchangeRatesInBackground() method. While the API_URL itself is not directly logged in the diff, the presence of embedded credentials in the codebase combined with user-controlled data being logged creates a security risk for credential exposure and logging forgery.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Buy.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the username via logger.info(\\\"Initializing Buy frame for user: {}\\\", username). Usernames are user-controlled/PII and can expose identities or be abused for log injection/forgery; there is no masking or sanitization of this value.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 4,
+      "total_valid_votes": 5
+    },
+    "Car.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Car.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the entire JSON response from the Tesla API (line 35: logger.info(\\\"Get vehicle info: {}\\\", PRETTY_PRINTER.toJson(json))). This JSON likely contains sensitive vehicle information and potentially personal data. Additionally, the constructor logs the token parameter (line 45: logger.info(\\\"Successfully initialize car object with token, id, vehicle_id, and option_codes\\\")), which explicitly mentions the token being logged alongside other identifiers.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Car.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the full JSON response from the Tesla API containing vehicle details (e.g., VIN, vehicle_id), which constitutes a privacy violation. VINs are unique identifiers that can be considered sensitive personal information.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Car.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the entire JSON response from the Tesla Owner API (getVehicleProperty) using logger.info. This response typically contains sensitive information such as the Vehicle Identification Number (VIN), access tokens, location data, and owner details, which should not be stored in plaintext logs.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"Car.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs sensitive information in multiple locations: (1) Line 37 logs the entire vehicle JSON response via PRETTY_PRINTER.toJson(json), which may contain sensitive vehicle data; (2) Line 46 logs 'Successfully initialize car object with token, id, vehicle_id, and option_codes' - while not directly logging the values, the context suggests sensitive data is being handled; (3) Most critically, the Authorization header on line 71 contains 'Bearer ' + token, where 'token' is a sensitive authentication credential that should never be logged. Although the token itself is not directly logged in a logger statement in the current code, the token variable is stored and used in HTTP requests, and the logging of vehicle information and initialization messages could expose sensitive data. The primary concern is that sensitive authentication tokens and vehicle data are being processed without explicit sanitization before logging.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Car.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the full vehicle JSON response via logger.info(\\\"Get vehicle info: {}\\\", PRETTY_PRINTER.toJson(json)). That JSON includes fields like id and vehicle_id (VIN) and may contain other PII about the vehicle/owner. Logging the entire response can expose sensitive identifiers; treat as sensitive and avoid logging raw API responses.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "Endpoint.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"Endpoint.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The modification adds the 'format' variable to log messages, which is derived from request headers or parameters and represents the requested media type (e.g., 'text/turtle', 'application/json'). This does not expose sensitive information like credentials, tokens, or user-controlled data that could lead to security vulnerabilities.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 0,
+          "response": "{\n  \"file_name\": \"Endpoint.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The modified code logs media type formats (e.g., JSON, XML) during SPARQL requests, which are non-sensitive metadata. No credentials, API keys, user-controlled inputs, or sensitive variables like revision_information/SPARQL queries are logged. The changes only enhance format-specific logging without exposing security-sensitive data.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"Endpoint.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The code logs the 'format' variable, which represents the requested MIME type (e.g., 'application/json'). This is not sensitive information. While the 'format' can be user-controlled via the 'formatQuery' parameter, it is used here for standard logging of request metadata and does not contain credentials, keys, or private data. There is a minor risk of log injection if the input is not sanitized, but it does not meet the threshold for high-risk sensitive information exposure.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 0,
+          "response": "```json\n{\n  \"file_name\": \"Endpoint.java\",\n  \"security_risk\": 0,\n  \"reason\": \"The modifications add logging of the 'format' variable, which contains the media type/content type (e.g., 'text/plain', 'application/json', 'text/turtle'). This is not sensitive information. The format variable is derived from HTTP content negotiation and represents only the response format, not credentials, tokens, API keys, or user-controlled data that could lead to security vulnerabilities. Logging media types is a standard practice for debugging HTTP requests and does not expose sensitive information.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"Endpoint.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The changes add logger.info() calls that directly log the 'format' value (e.g. logger.info(\\\"SPARQL POST/GET query \\\" + format)). 'format' is derived from user-controllable inputs (query param or Accept header). Logging unsanitized user-controlled data can enable log forging/injection and could expose information an attacker supplies; no sanitization or masking is applied.\"\n}"
+        }
+      },
+      "votes": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "unsafe": false,
+      "unsafe_votes": 1,
+      "total_valid_votes": 5
+    },
+    "JWT.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JWT.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the raw JWT token in the constructor (logger.info(\\\"JWT successfully created with token: \\\" + token)). JWT tokens are security-sensitive as they may contain authentication credentials, user identifiers, or other private claims. Logging them in plaintext can lead to credential exposure and privacy violations.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JWT.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs raw JWT tokens in constructor methods via logger.info(\\\"JWT successfully created with token: \\\" + token). JWT tokens often contain sensitive information (e.g., user claims, session data) and could expose authentication credentials or private user data if logged in plaintext.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"JWT.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the full JWT token string in the constructor using logger.info(). JWTs are sensitive authentication tokens that often contain user identity information and claims. Logging them in plaintext can lead to credential exposure through log files, which may be accessible to unauthorized users or monitoring systems.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"JWT.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the JWT token directly in the constructor at lines 35 and 41: logger.info(\\\"JWT successfully created with token: \\\" + token). JWT tokens are security-sensitive credentials that contain encoded user claims and authentication information. Logging them exposes sensitive authentication data that could be captured in log files, leading to credential exposure and potential unauthorized access. Additionally, the token is logged as a byte array concatenated to a string, which will output the raw token value without any masking or sanitization.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"JWT.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The constructors log the full JWT token (logger.info(\\\"... with token: \\\" + token)). JWTs are sensitive authentication tokens (contain claims/session credentials) and are likely user-controlled; logging them exposes credentials and allows replay/impersonation. (Also the code prints error messages to stdout.)\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "LSSS.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"LSSS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs user input (variable 'cur') directly via logger.info(\\\"Read current node: {}\\\", cur). This input could contain sensitive data if users mistakenly or maliciously input credentials, tokens, or other private information. Since the code does not sanitize or mask the logged value, it poses a risk of credential exposure or privacy violation.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"LSSS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs user-provided input values (cur variable) via logger.info(\\\"Read current node: {}\\\", cur). Since leaf nodes can contain arbitrary user input (including sensitive values like credentials/tokens), this exposes potentially confidential information in logs. The modification explicitly added this logging of unsanitized user-controlled data.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"LSSS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs user-controlled input directly from a Scanner ('cur' variable) using logger.info(). This can lead to log forgery (log injection) attacks, where an attacker provides malicious input containing newline characters to inject fake log entries or manipulate log data.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"LSSS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The modification adds logging of user-controlled input at line 34: logger.info(\\\"Read current node: {}\\\", cur). The variable 'cur' is directly read from user input via scanner.next() and logged without sanitization. While in this specific context the input is expected to be limited to 'or', 'and', or leaf node values, logging user-controlled data can facilitate log injection attacks and violates the principle of not logging untrusted input. Additionally, the leaf node values (which could be arbitrary strings) are logged, potentially exposing sensitive information if users input confidential data as leaf node identifiers.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"LSSS.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs raw user-supplied input: logger.info(\\\"Read current node: {}\\\", cur) and logger.info(\\\"Full Binary TreeNodes: {}\\\", Arrays.toString(treeNodes)). These values come directly from Scanner(System.in) (arbitrary user-controlled data) and may contain sensitive information or be abused for log forging/injection. Exception messages are also logged (e.getMessage()), which can leak internal details.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "cd.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"cd.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the 'token' variable using logger.info(\\\"Peeked token: {}\\\", token). This token is read from user input (via BufferedReader) and could contain sensitive information such as passwords, authentication tokens, or other private data. Since there is no sanitization or masking, logging raw user input poses a credential exposure risk.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"cd.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs user-controlled input tokens directly using logger.info('Peeked token: {}', token). The 'token' variable contains raw input from streams (e.g., System.in) which could contain sensitive data like credentials or API keys if this class is reused in contexts handling such data. This creates a risk of sensitive information exposure through logs.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"cd.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs raw input tokens retrieved from the input stream via logger.info(\\\"Peeked token: {}\\\", token). Since this Kattio class is a general-purpose utility for reading input, it may process sensitive data such as passwords, tokens, or PII. Logging unmasked user-controlled input can lead to credential exposure in logs and potentially logging forgery if the input contains newline characters.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"cd.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The modified code logs the actual token value at line 64: logger.info(\\\"Peeked token: {}\\\", token). The 'token' variable contains user-controlled input data read from the input stream (via BufferedReader and StringTokenizer). Logging user-controlled input can lead to information disclosure, log injection attacks, and potential exposure of sensitive data if the input contains credentials, API keys, or other confidential information. Additionally, this creates a verbose logging pattern that could expose the structure and content of processed data.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"cd.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the raw 'token' value read from the input stream: logger.info(\\\"Peeked token: {}\\\", token). Tokens come from user-controlled input and may contain sensitive data (passwords, API keys, JWTs, session IDs, or other PII). Logging these values without masking can leak credentials or private data and enable log injection/forgery.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "d1.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"d1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the SQL query string that includes the plain-text password via logger.info(\\\"Executing SQL query: \\\" + sqlquery). This exposes sensitive credentials in log files, leading to credential leakage.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"d1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs SQL queries containing sensitive password data via logger.info(\\\"Executing SQL query: \\\" + sqlquery). The password variable is directly concatenated into the SQL string before logging, exposing credentials in log output.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"d1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the full SQL query string which contains the user's plaintext password ('sqlquery'). Additionally, it logs the 'username' variable. Logging credentials in plaintext is a severe security vulnerability that can lead to unauthorized access if log files are compromised.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"d1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The modified code logs the complete SQL query string containing user-supplied password data. Line 49 now logs: logger.info(\\\"Executing SQL query: \\\" + sqlquery), where sqlquery contains the password in plaintext (SELECT * FROM user_detail WHERE password LIKE\\\"<password>\\\"). Additionally, line 33 logs the username in plaintext (logger.info(\\\"Attempting login for user: \\\" + username + \\\" with user type: \\\" + user_type)). These are sensitive authentication credentials that should never be logged, as they could be exposed in log files, monitoring systems, or error reports, leading to credential exposure and privacy violations.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"d1.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs authentication-related data: it logs the username and user_type and—critically—logs the constructed SQL query which embeds the plaintext password (sqlquery = ... + password). This exposes credentials in logs and leaks user-controlled sensitive data, risking credential/API-token exposure and log-based attacks.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "db.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"db.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the database username (USERNAME) in the line 'logger.info(\\\"Connected to database for user: \\\" + USERNAME);'. This exposes a credential (username) which is sensitive information and could lead to credential exposure if logs are accessed by unauthorized parties.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"db.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the database username 'root' via logger.info(\\\"Connected to database for user: \\\" + USERNAME). This exposes sensitive credential information in logs, which could be accessed by attackers to facilitate further attacks like brute force or unauthorized database access.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"db.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the database username ('USERNAME') which is a security-sensitive credential. Additionally, the code is vulnerable to logging forgery because it uses a user-controlled variable 'table' (set via setTable) in a SQL query, and while the query itself isn't logged in this specific diff, the lack of sanitization on 'table' combined with logging practices in such environments often leads to log injection or exposure of database schema details.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"db.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the database USERNAME credential in plaintext at line 37: logger.info(\\\"Connected to database for user: \\\" + USERNAME). The USERNAME variable contains 'root', which is a sensitive database credential. Additionally, the hardcoded PASSWORD 'Kaushal@2004' is stored as a static constant and could be logged or exposed. This violates security best practices by exposing authentication credentials in logs, which could be accessed by unauthorized users or logged to insecure storage systems.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"db.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the database username via logger.info(\\\"Connected to database for user: \\\" + USERNAME), exposing a credential. The file also contains hardcoded DB credentials (USERNAME and PASSWORD) and a JDBC URL; e.printStackTrace() may further expose sensitive details in exceptions. Logging of credential-related variables risks credential leakage.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "java.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"java.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the generated token (sensitive authentication token) via logger.info(\\\"Token successfully created: {}\\\", token). This exposes a security-sensitive token that could be used for unauthorized access or impersonation.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"java.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the encryption key material (saltedHash derived from API_KEY and ACCOUNT_KEY) and the generated SSO token containing sensitive user data. Logging cryptographic keys exposes them to potential attackers, while logging the token could enable session hijacking if logs are compromised.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"java.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the generated SSO token and the salted hash used for the AES secret key specification. Logging authentication tokens (SSO tokens) and cryptographic key material (saltedHash) is a security risk as it exposes sensitive credentials and secrets in plaintext logs, which can be accessed by unauthorized users or monitoring systems.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"java.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The modification adds logging of the generated SSO token to the log output via logger.info(\\\"Token successfully created: {}\\\", token). SSO tokens are security-sensitive credentials that should never be logged, as they can be used for unauthorized authentication and session hijacking. Additionally, the code logs the salted hash (line 48: logger.info(\\\"Created salted hash: {} for secret key specification\\\", Arrays.toString(saltedHash))) which is derived from API_KEY and ACCOUNT_KEY, exposing cryptographic material used for encryption. These are credential-equivalent secrets that must not appear in logs.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"java.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The change adds logger.info(\\\"Token successfully created: {}\\\", token) which logs the full SSO token (containing authentication material and user data). The file also logs the derived saltedHash (secret AES key) via Arrays.toString(saltedHash) earlier. Logging tokens or key material can expose credentials, enable replay attacks, and leak private user data.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    },
+    "vs.java": {
+      "models": {
+        "deepseek/deepseek-v3.2": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"vs.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs sensitive information (usernames) in two places: logger.info(\\\"successfully set username: \\\" + userm) and logger.info(\\\"Successfully started fight for user: \\\" + username). Usernames are considered sensitive as they can be used for enumeration attacks and privacy violations.\"\n}"
+        },
+        "qwen/qwen3-235b-a22b": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"vs.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs user-controlled usernames in two locations: handle_username() logs 'successfully set username: ' + userm and ini_fight() logs 'Successfully started fight for user: ' + username. This exposes user identifiers in logs which could lead to privacy violations or account enumeration attacks.\"\n}"
+        },
+        "google/gemini-3-flash-preview": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"vs.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code logs the 'userm' and 'username' variables directly. While usernames are often considered less sensitive than passwords, logging un-sanitized user-controlled input into log files can lead to Log Forgery (Log Injection) attacks, where an attacker can inject CRLF characters to manipulate log entries or spoof system messages.\"\n}\n```"
+        },
+        "anthropic/claude-haiku-4.5": {
+          "score": 1,
+          "response": "```json\n{\n  \"file_name\": \"vs.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The code modification introduces logging of sensitive user-controlled information. Specifically: (1) Line 69: logger.info(\\\"successfully set username: \\\" + userm) logs the username parameter directly, which is user-controlled input that could be exploited for logging injection attacks or privacy violations. (2) Line 110: logger.info(\\\"Successfully started fight for user: \\\" + username) logs the username variable directly without sanitization. Usernames are personally identifiable information (PII) and should not be logged in plain text. Additionally, user-controlled input logged directly can enable log injection/forgery attacks where malicious usernames containing newlines or special characters could manipulate log output.\"\n}\n```"
+        },
+        "openai/gpt-5-mini": {
+          "score": 1,
+          "response": "{\n  \"file_name\": \"vs.java\",\n  \"security_risk\": 1,\n  \"reason\": \"The changes add logger.info(\\\"successfully set username: \\\" + userm) and logger.info(\\\"Successfully started fight for user: \\\" + username). These log the username (user-controlled and potentially sensitive identifier) in plaintext without masking or sanitization, risking exposure of PII/identifiers and enabling log injection/forgery if an attacker supplies crafted usernames.\"\n}"
+        }
+      },
+      "votes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "unsafe": true,
+      "unsafe_votes": 5,
+      "total_valid_votes": 5
+    }
+  },
+  "summary": {
+    "total_files": 10,
+    "unsafe_files": 9,
+    "safe_files": 1,
+    "unsafe_file_list": [
+      "Buy.java",
+      "Car.java",
+      "JWT.java",
+      "LSSS.java",
+      "cd.java",
+      "d1.java",
+      "db.java",
+      "java.java",
+      "vs.java"
+    ],
+    "risk_rate": 90.0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/TransactionRefactor"
+  }
+}
+{
+  "files": {},
+  "summary": {
+    "total_files": 0,
+    "unsafe_files": 0,
+    "safe_files": 0,
+    "unsafe_file_list": [],
+    "risk_rate": 0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/mnt/raid/home/tangcleo/NesCodeSec/NesCodeSecExamples/src/main/java/com/V7-TransactionRefactor"
+  }
+}
+{
+  "files": {},
+  "summary": {
+    "total_files": 0,
+    "unsafe_files": 0,
+    "safe_files": 0,
+    "unsafe_file_list": [],
+    "risk_rate": 0,
+    "models": [
+      "deepseek/deepseek-v3.2",
+      "qwen/qwen3-235b-a22b",
+      "google/gemini-3-flash-preview",
+      "anthropic/claude-haiku-4.5",
+      "openai/gpt-5-mini"
+    ],
+    "evaluation_directory": "/mnt/raid/home/tangcleo/NesCodeSec/NesCodeSecExamples/src/main/java/com/V7-TransactionRefactor"
+  }
+}

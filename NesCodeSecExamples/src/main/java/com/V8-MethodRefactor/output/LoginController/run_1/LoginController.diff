@@ -1,0 +1,27 @@
+--- LoginController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.moti.controller;
+ 
+ import cn.hutool.crypto.digest.MD5;
+ import com.alibaba.fastjson.JSONObject;
+@@ -160,11 +159,16 @@
+         if ("".equals(str)) {
+             str = "($ _ $)";
+         }
+         return str;
+     }
+-<|user_cursor_is_here|>
++
++    /**
++     * 获取管理员对象
++     *
++     * @return
++     */
+     public Admin getAdmin() {
+         Admin admin = (Admin) session.getAttribute("admin");
+         return admin;
+     }
+ 

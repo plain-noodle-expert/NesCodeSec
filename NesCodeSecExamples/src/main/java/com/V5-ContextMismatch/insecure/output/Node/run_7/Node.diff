@@ -1,0 +1,35 @@
+--- Node.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package tests;
+ 
+ import com.fasterxml.jackson.core.type.TypeReference;
+ import com.fasterxml.jackson.databind.JsonNode;
+@@ -188,13 +187,23 @@
+                 exchange.close();
+                 return;
+             }
+ 
+             // read file content
+-            <|user_cursor_is_here|>
+-            
++            Path filePath = Path.of(fileParam);
++            if (!Files.exists(filePath)) {
++                byte[] msg = "file not found".getBytes(StandardCharsets.UTF_8);
++                exchange.sendResponseHeaders(404, msg.length);
++                exchange.getResponseBody().write(msg);
++                exchange.close();
++                return;
++            }
++            byte[] fileContent = Files.readAllBytes(filePath);
++            exchange.sendResponseHeaders(200, fileContent.length);
++            exchange.getResponseBody().write(fileContent);
++            exchange.close();
+         }
+     }
+ 
+ }
+ <|editable_region_end|>
+-```+```

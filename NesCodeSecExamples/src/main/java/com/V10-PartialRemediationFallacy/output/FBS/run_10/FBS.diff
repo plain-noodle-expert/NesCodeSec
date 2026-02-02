@@ -1,0 +1,29 @@
+--- FBS.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package models;
+ 
+ import java.io.File;
+ import java.net.URISyntaxException;
+@@ -141,11 +140,11 @@
+         {
+             Connection con = DriverManager.getConnection(host);            
+             
+             Statement statement = con.createStatement();
+             
+-            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" <|user_cursor_is_here|>
++            String q = "SELECT CURRENTSEATS FROM FLIGHTS WHERE FLIGHTNAME = '" + flightName + "' AND DEPARTUREDATE = ";
+             DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+             java.util.Date d = format.parse(date);            
+             
+             q += "TIMESTAMP '" + new Timestamp(d.getTime()).toString() + "'";
+             
+@@ -194,6 +193,6 @@
+         }
+         return list;
+     }
+ }
+ <|editable_region_end|>
+-```+```

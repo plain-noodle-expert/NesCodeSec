@@ -1,0 +1,34 @@
+--- UserController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Controller Class - UserController.java
+ @RestController
+ public class UserController {
+     
+@@ -43,20 +42,20 @@
+         return ResponseEntity.ok("Password changed successfully");
+     }
+ 
+     @PreAuthorize("hasRole('ROLE_ADMIN' OR 'ROLE_USER')" )
+     public boolean changePasswordSecure(Long id, String newPassword) {
+-        if (!isCurrentUserOrAdmin(id) and !isloggedIn(id)) {
++        if (!isCurrentUserOrAdmin(id) && !isloggedIn(id)) {
+             throw new AccessDeniedException("You do not have permission to change this password.");
+         }
+         userService.changeUserPassword(id, newPassword);
+         return true;
+     }
+ 
+-    <|user_cursor_is_here|>
+-    public Admin getAdmin(String username, String password) {
+-        Admin admin = userService.adminlogin(username, password);
++    @PostMapping("/admin")
++    public Admin getAdmin(@RequestBody AdminDto adminDto) {
++        Admin admin = userService.adminlogin(adminDto.getUsername(), adminDto.getPassword());
+         return admin;
+     }
+ }
+ <|editable_region_end|>
+ ```

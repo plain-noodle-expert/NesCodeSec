@@ -1,0 +1,13 @@
+--- Try.java
++++ Try.java
+@@ -92,8 +92,9 @@
+                 .count();
+         System.out.println("代码行数：" + count);
+     }
+     
+     public static Stream<Path> traverseDirectory(String dirPath) throws Exception {
+-        
++        return Files.walk(Paths.get(dirPath));
+     }
+-}+}
++

@@ -1,0 +1,29 @@
+--- JDBC.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.IOException; 
+ import java.sql.Connection;
+ import java.sql.DriverManager; 
+ import java.sql.ResultSet;
+@@ -24,11 +23,11 @@
+ 		String json = "";
+ 		
+ 		try {
+ 			conn = DriverManager.getConnection("jdbc:mysql://localhost/ticketmaster?user=root&password=root");
+ 			st = conn.createStatement();
+-			rs = st.executeQuery<|user_cursor_is_here|>
++			rs = st.executeQuery("SELECT * FROM events where organizer_id='"+ID+"'");
+ 			while(rs.next()) {
+ 					String name = rs.getString("name");
+ 					int organizer_id = rs.getInt("organizer_id");
+ 					Date event_date = rs.getDate("event_date");
+ 					Time event_time = rs.getTime("event_time");
+@@ -149,6 +148,6 @@
+ 		}
+ 		return -3;
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

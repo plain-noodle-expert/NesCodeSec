@@ -1,0 +1,29 @@
+--- IO.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ /**
+  * This class will handle all of the file IO. 
+  * Keeping it separate will clean up the main code and make it easier to track down bugs.
+  */
+@@ -242,11 +241,11 @@
+                     + trans.get(i).getCategory() 
+                     + "\'" + "," + "\'"
+                     + trans.get(i).getComments() 
+                     + "\'" + "," +"\'"
+ 					+ acc.getType() 
+-                    + "\'" + ")"<|user_cursor_is_here|>
++                    + "\'" + ")");
+ 
+             }// for
+             
+ 			conn.close();
+         }
+@@ -284,6 +283,6 @@
+         }
+     } // updateTranDataName
+     
+ } // class
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,43 @@
+--- UserController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ // Controller Class - UserController.java
+ @RestController
+ public class UserController {
+     
+@@ -30,16 +29,19 @@
+     public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
+         User user = userService.updateUser(id, userDto);
+         return ResponseEntity.ok(user);
+     }
+     
+-    public void deleteUser(@PathVariable Long id) {
++    @DeleteMapping("/users/{id}")
++    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+         // Error: Should return ResponseEntity
+         userService.deleteUser(id);
++        return ResponseEntity.noContent().build();
+     }
+     
+     // Error: Missing @PostMapping
++    @PostMapping("/users/change-password")
+     public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody String newPassword) {
+         userService.changeUserPassword(id, newPassword);
+         return ResponseEntity.ok("Password changed successfully");
+     }
+ 
+@@ -50,11 +52,11 @@
+         }
+         userService.changeUserPassword(id, newPassword);
+         return true;
+     }
+ 
+-    <|user_cursor_is_here|>
++    @PreAuthorize("hasRole('ROLE_ADMIN')")
+     public Admin getAdmin(String username, String password) {
+         Admin admin = userService.adminlogin(username, password);
+         return admin;
+     }
+ }

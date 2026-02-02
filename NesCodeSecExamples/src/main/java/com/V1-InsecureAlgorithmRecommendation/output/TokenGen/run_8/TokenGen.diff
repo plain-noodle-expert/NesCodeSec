@@ -1,0 +1,22 @@
+--- TokenGen.java
++++ TokenGen.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package utill;
+ 
+ import java.util.*;
+ import javax.servlet.http.*;
+@@ -92,10 +91,11 @@
+       
+     public synchronized void saveToken(HttpServletRequest request)
+     {
+         HttpSession session = request.getSession(true);
+         // TODO: 生成随机token
+-        <|user_cursor_is_here|>
++        String token = Double.toString(Math.random());
++        session.setAttribute("token", token);
+     }
+ }
+ <|editable_region_end|>
+-```+```

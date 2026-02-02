@@ -1,0 +1,26 @@
+--- Moss.java
++++ Moss.java
+@@ -64,14 +64,13 @@
+ 
+     // use procyon to decompile the file
+     public static void decompile(String decompiledFileName, String compiledFileName) {
+         final DecompilerSettings settings = DecompilerSettings.javaDefaults();
+ 
+-        try (final FileOutputStream stream = 
++        try (final FileOutputStream stream = new FileOutputStream(decompiledFileName);
+             final OutputStreamWriter writer = new OutputStreamWriter(stream)) {
+             Decompiler.decompile(compiledFileName, new PlainTextOutput(writer), settings);
+-            writer.close();
+         }  catch (Exception e) {
+             System.out.println("Decompiling failed.");
+         }
+     }
+ 
+@@ -82,6 +81,7 @@
+         } catch (Exception e) {
+             System.out.println("Could not read file");
+             return null;
+         }
+     }
+-}+}
++

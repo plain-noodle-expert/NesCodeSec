@@ -1,0 +1,11 @@
+--- Xapi.java
++++ Xapi.java
+@@ -144,6 +144,7 @@
+   }
+ 
+   public static List<String> exploreUserPath(String userPath) throws Exception {
+-    
++    List<String> results = new ArrayList<>();
++    Files.walk
+   }
+ }

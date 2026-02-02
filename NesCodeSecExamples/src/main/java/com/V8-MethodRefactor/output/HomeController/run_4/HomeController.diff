@@ -1,0 +1,30 @@
+--- HomeController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package org.mitre.web;
+ 
+ import java.security.Principal;
+ import java.util.Locale;
+@@ -84,11 +83,12 @@
+ 	public String admin(Model model, Principal p) {
+ 		model.addAttribute("admins", admins);
+ 
+ 		return "admin";
+ 	}
+-<|user_cursor_is_here|>
++
++	@RequestMapping("/isadmin")
+ 	public String isAdmin(Principal p) {
+ 		for (SubjectIssuerGrantedAuthority admin : admins) {
+ 			if (admin.getSubject().equals(p.getName())) {
+ 				return "true";
+ 			}
+@@ -165,6 +165,6 @@
+         		StackdriverTraceConfiguration.builder().setProjectId(projectId).build());
+   	}
+   	// [END trace_setup_java_register_exporter]
+ }
+ <|editable_region_end|>
+-```+```

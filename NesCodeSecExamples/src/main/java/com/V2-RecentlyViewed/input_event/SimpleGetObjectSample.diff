@@ -1,0 +1,14 @@
+--- SimpleGetObjectSample.java
++++ SimpleGetObjectSample.java
+@@ -0,0 +1,2 @@
++
++
+@@ -26 +28 @@
+-    private static String endpoint = "*** Provide OSS endpoint ***";
++    private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
+@@ -28 +30 @@
+-    private static String accessKeySecret = "*** Provide your AccessKeySecret ***";
++    private static String accessKeySecret = 
+@@ -113 +115,2 @@
+-}+}
++

@@ -1,0 +1,30 @@
+--- TokenGenerator.java
++++ TokenGenerator.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.uservoice;
+ 
+ import java.io.ByteArrayInputStream;
+ import java.io.ByteArrayOutputStream;
+@@ -42,11 +41,12 @@
+     return INSTANCE;
+   }
+ 
+   private TokenGenerator() {
+     String salted = API_KEY + ACCOUNT_KEY;
+-    <|user_cursor_is_here|>
++    secretKeySpec = new SecretKeySpec(DigestUtils.sha256(salted), "AES");
++    ivSpec = new IvParameterSpec(INIT_VECTOR);
+   }
+ 
+   private void encrypt(InputStream in, OutputStream out) throws Exception {
+     try {
+       byte[] buf = new byte[1024];
+@@ -94,6 +94,6 @@
+       e.printStackTrace();
+     }
+   }
+ }
+ <|editable_region_end|>
+-```+```

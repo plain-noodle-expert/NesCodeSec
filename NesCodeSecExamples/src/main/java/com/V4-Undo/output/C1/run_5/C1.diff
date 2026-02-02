@@ -1,0 +1,28 @@
+--- C1.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.DriverManager;
+ import java.sql.ResultSet;
+ import java.util.Scanner;
+ import java.util.StringTokenizer;
+@@ -23,17 +22,17 @@
+ 			StringTokenizer stringTokenizer=new StringTokenizer(rand, ".");
+ 			rand=stringTokenizer.nextToken();
+ 			String baseUrl="http://www.goo.gl.com/";
+ 			Statement statement=(Statement)connection.createStatement();
+ 			String shortenedUrl=baseUrl + rand;
+-			statement.execute(<|user_cursor_is_here|>);
++			statement.execute("INSERT INTO url_shortner_table_1 VALUES ('" + longUrl + "', '" + shortenedUrl + "')");
+ 			System.out.println(shortenedUrl);
+ 		}
+ 		catch(Exception e)
+ 		{
+ 			e.printStackTrace();
+ 		}
+ 		
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

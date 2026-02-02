@@ -1,0 +1,22 @@
+--- rpn.java
++++ rpn.java
+@@ -22,17 +22,18 @@
+ 		}
+ 
+ 	}
+ 
+ 	public void readFile(String filePath) throws Exception {
+-		Path file = 
++		Path file = Paths.get(filePath);
+ 	   	try (InputStream in = Files.newInputStream(file);
+ 			BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+ 			    String line = "";
+ 			    while ((line = reader.readLine()) != null) {
+ 			        equation curEquation = new equation(line);
+ 			        equations.add(curEquation);
+ 			    }
+ 			} 
+ 	}
+ 
+-}+}
++

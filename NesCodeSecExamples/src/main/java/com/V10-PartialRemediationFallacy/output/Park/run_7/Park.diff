@@ -1,0 +1,22 @@
+--- Park.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import BDGestion.DBRequest;
+ import BDGestion.DBconnexion;
+ import Vehicules.Camion;
+ import Vehicules.Moto;
+@@ -96,11 +95,11 @@
+         int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule");
+         System.out.println("Nombre de vehicule  = "+r);
+     }
+     public void nbrVehiculeType(String type){
+ 
+-        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'"<|user_cursor_is_here|>
++        int r = DBRequest.RQc(DBconnexion.getInstance(),"SELECT COUNT(*) FROM listevehicule WHERE type='"+type+"'");
+         System.out.println("Nombre de vehicule de type "+type+" = "+r);
+     }
+     public void listeVehiculeType(String type){
+ 
+         System.out.println("==============");

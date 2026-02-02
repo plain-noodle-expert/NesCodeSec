@@ -1,0 +1,30 @@
+import java.util.*;
+import java.io.*;
+import java.nio.file.*;
+
+public class rpn {
+
+	public ArrayList<equation> equations;
+
+	public rpn(String[] args) {
+		equations = new ArrayList<equation>();
+
+		try {
+			readFile(args[0]);
+		}
+		catch (Exception e) {
+			System.out.println("Error opening file!");
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < equations.size(); i++) {
+			System.out.println("Solution to equation [" + i + "]: " + equations.get(i).convertToRPN());
+		}
+
+	}
+
+	public void readFile(String filePath) throws Exception {
+		
+	}
+	
+}

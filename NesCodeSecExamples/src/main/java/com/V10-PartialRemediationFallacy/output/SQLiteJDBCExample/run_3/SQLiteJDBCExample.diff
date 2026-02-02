@@ -1,0 +1,53 @@
+--- SQLiteJDBCExample.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import org.sqlite.SQLiteConfig;
+ 
+ import java.sql.*;
+ import java.util.Date;
+@@ -117,11 +116,11 @@
+             tkStmt.setLong(1, courseId);
+             tkStmt.setLong(2, studentId);
+             tkStmt.setString(3, String.format("%1$tY-%1$tm-%1$td %1$tT", new Date()));
+             tkStmt.executeUpdate();
+ 
+-            final PreparedStatement crsStmt = con.prepareStatement("UPDATE course SET seats_available = seats_available - 1 WHERE course_id = "+courseId);
++            final PreparedStatement crsStmt = con.prepareStatement("UPDATE course SET seats_available = seats_available - 1 WHERE course_id = ?");
+             crsStmt.setLong(1, courseId);
+             crsStmt.executeUpdate();
+ 
+             System.out.printf("Student %d successfully enrolled in course %d\n", studentId, courseId);
+         } catch (SQLException e) {
+@@ -148,11 +147,13 @@
+             int pageSize = scanner.nextInt();
+             if (!validatePageSize(pageSize)) return;
+             
+             scanner.reset();
+             
+-            final PreparedStatement pstmt = con.prepareStatement("SELECT * FROM student WHERE student_id > "+lastId+" ORDER BY student_id ASC LIMIT "+pageSize);
++            final PreparedStatement pstmt = con.prepareStatement("SELECT * FROM student WHERE student_id > ? ORDER BY student_id ASC LIMIT ?");
++            pstmt.setLong(1, lastId);
++            pstmt.setInt(2, pageSize);
+             
+             int page = 1;
+             while (true) {
+                 final ResultSet rs = pstmt.executeQuery();
+ 
+@@ -203,14 +204,14 @@
+         rs.close();
+         return available;
+     }
+ 
+     private boolean isCurrentlyEnrolled(Statement stmt, long studentId, long courseId) throws SQLException {
+-        final ResultSet rs = stmt.executeQuery("SELECT * FROM take WHERE course_id = " + courseId + " AND student_id = " + studentId)<|user_cursor_is_here|>
++        final ResultSet rs = stmt.executeQuery("SELECT * FROM take WHERE course_id = ? AND student_id = ?");
+         final boolean enrolled = rs.next();
+         rs.close();
+         return enrolled;
+     }
+ 
+ }
+ <|editable_region_end|>
+-```+```

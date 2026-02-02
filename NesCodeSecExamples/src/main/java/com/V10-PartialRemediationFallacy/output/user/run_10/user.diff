@@ -1,0 +1,29 @@
+--- user.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ //NEW COLUMN IN USER.SQL
+ //UPDATING TOTAL OF USER  AT TIME OF UPDATING
+ 
+ import javax.swing.JButton;
+@@ -159,11 +158,11 @@
+ 					Statement stmt = Con.createStatement();
+ 					r = stmt.executeQuery(query);
+ 					r.next();
+ 					int t = r.getInt("Total");
+ 					t += a;
+-					query = "UPDATE user Set Total = " +t<|user_cursor_is_here|>
++					query = "UPDATE user Set Total = " +t + " WHERE user_id = 1";
+ 					stmt.executeUpdate(query);	
+ 				Con2.close();
+ 			} catch (SQLException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+@@ -171,6 +170,6 @@
+ 		}
+        }
+    }
+ }
+ <|editable_region_end|>
+-```+```

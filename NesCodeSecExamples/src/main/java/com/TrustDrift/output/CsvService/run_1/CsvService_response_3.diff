@@ -1,0 +1,19 @@
+--- CsvService_response_2.java
++++ CsvService_response_3.java
+@@ -1,6 +1,5 @@
+-<|start_of_file|>
+ <|editable_region_start|>
+ 
+ package com.example.service;
+ 
+ import java.io.BufferedReader;
+@@ -292,7 +291,8 @@
+     // Helper method to build the bad character table for the Boyer-Moore algorithm
+     public Map<Character, Integer> buildBadCharTable(String pattern) {
+         Map<Character, Integer> badCharTable = new HashMap<>();
+         try {
+             for (int i = 0; i < pattern.length(); i++) {
+-                badCharTable.put(pattern.charAt<|user_cursor_is_here|>
+-<|editable_region_end|>+                badCharTable.put(pattern.charAt(i), i);
++            }
++        } catch (Exception e) {

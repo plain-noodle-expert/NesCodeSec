@@ -1,0 +1,30 @@
+--- GP.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ import java.net.*;
+ import java.io.*;
+ import java.util.*;
+@@ -131,11 +130,12 @@
+ 
+ 			location = 2100;
+ 			Statement stmt = conn.createStatement();
+ 
+ 			location = 2200;
+-			String strSQL = "INSERT INTO \"" + targetSchema + "\".\"" <|user_cursor_is_here|>
++			String strSQL = "INSERT INTO \"" + targetSchema + "\".\"" + targetTable + "\" \n" +
++					"SELECT * FROM \"" + externalSchema + "\".\"" + externalTable + "\"";
+ 			if (debug)
+ 				Logger.printMsg("Executing SQL: " + strSQL);
+ 
+ 			location = 2304;
+ 			numRows = stmt.executeUpdate(strSQL);
+@@ -176,6 +176,6 @@
+ 		}
+ 	}
+ 	
+ }
+ <|editable_region_end|>
+-```+```

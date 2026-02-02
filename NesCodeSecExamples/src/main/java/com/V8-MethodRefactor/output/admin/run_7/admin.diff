@@ -1,0 +1,154 @@
+--- admin.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package api;
+ 
+ import com.alibaba.fastjson.JSON;
+ import com.alibaba.fastjson.JSONArray;
+@@ -124,45 +123,104 @@
+         result.put("result",preState.executeUpdate());
+         response.getWriter().println(p(100,"",result));
+         conn.close();//数据库关闭
+     }
+     
+-    <|user_cursor_is_here|>
+-    public boolean isAdmin(HttpServletResponse response,Connection conn,int userid) throws IOException, SQLException {
+-        PreparedStatement pre = conn.prepareStatement("select * from app_username where userid = ? and username='admin'");//提交审核
+-        pre.setInt(1,userid);
+-        ResultSet rs = pre.executeQuery();
+-        if(!rs.next()){
+-            response.getWriter().println(p(1,"您无权限进行此操作！"));
+-            conn.close();//数据库关闭
+-            return false;
+-        }
+-        return true;
+-    }
+-
+-    public boolean validateToken(String token) {
+-        //TO DO: Token validation logic
+-        return true;
+-    }
+-
+-    public static boolean invalid(String... strs) {//是否非法
+-        for (String str : strs)
+-            if (str == null||"".equals(str))return true;
+-        return false;
+-    }
+-    public static String p(int res,String text){
+-        JSONObject result=new JSONObject();
+-        result.put("res",res);
+-        result.put("text",text);
+-        result.put("data",null);
+-        return JSON.toJSONString(result, SerializerFeature.WriteMapNullValue,SerializerFeature.BrowserCompatible);
+-    }
+-    public static String p(int res,String text,JSONObject json){
+-        JSONObject result=new JSONObject();
+-        result.put("res",res);
+-        result.put("text",text);
+-        result.put("data",json);
+-        return JSON.toJSONString(result, SerializerFeature.WriteMapNullValue,SerializerFeature.BrowserCompatible);
+-    }
+-}
+-<|editable_region_end|>
+-```
++    @RequestMapping("/deleteUser")
++    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
++        ResultSet check_dev=manage.check_dev(request,response);
++        if(check_dev==null)return;//不安全
++        Connection conn = DBUtils.getConnection();
++        if(!isAdmin(response,conn,check_dev.getInt("userid")))return;//不是管理员
++        int userid2 = Integer.parseInt(request.getParameter("deleteUserid"));
++
++        PreparedStatement preState = conn.prepareStatement("DELETE FROM app_username WHERE userid=?");
++        preState.setInt(1,userid2);
++
++        JSONObject result=new JSONObject();
++        result.put("result",preState.executeUpdate());
++        response.getWriter().println(p(100,"",result));
++        conn.close();//数据库关闭
++    }
++    
++    @RequestMapping("/deleteUser")
++    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
++        ResultSet check_dev=manage.check_dev(request,response);
++        if(check_dev==null)return;//不安全
++        Connection conn = DBUtils.getConnection();
++        if(!isAdmin(response,conn,check_dev.getInt("userid")))return;//不是管理员
++        int userid2 = Integer.parseInt(request.getParameter("deleteUserid"));
++
++        PreparedStatement preState = conn.prepareStatement("DELETE FROM app_username WHERE userid=?");
++        preState.setInt(1,userid2);
++
++        JSONObject result=new JSONObject();
++        result.put("result",preState.executeUpdate());
++        response.getWriter().println(p(100,"",result));
++        conn.close();//数据库关闭
++    }
++    
++    @RequestMapping("/deleteUser")
++    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
++        ResultSet check_dev=manage.check_dev(request,response);
++        if(check_dev==null)return;//不安全
++        Connection conn = DBUtils.getConnection();
++        if(!isAdmin(response,conn,check_dev.getInt("userid")))return;//不是管理员
++        int userid2 = Integer.parseInt(request.getParameter("deleteUserid"));
++
++        PreparedStatement preState = conn.prepareStatement("DELETE FROM app_username WHERE userid=?");
++        preState.setInt(1,userid2);
++
++        JSONObject result=new JSONObject();
++        result.put("result",preState.executeUpdate());
++        response.getWriter().println(p(100,"",result));
++        conn.close();//数据库关闭
++    }
++    
++    @RequestMapping("/deleteUser")
++    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
++        ResultSet check_dev=manage.check_dev(request,response);
++        if(check_dev==null)return;//不安全
++        Connection conn = DBUtils.getConnection();
++        if(!isAdmin(response,conn,check_dev.getInt("userid")))return;//不是管理员
++        int userid2 = Integer.parseInt(request.getParameter("deleteUserid"));
++
++        PreparedStatement preState = conn.prepareStatement("DELETE FROM app_username WHERE userid=?");
++        preState.setInt(1,userid2);
++
++        JSONObject result=new JSONObject();
++        result.put("result",preState.executeUpdate());
++        response.getWriter().println(p(100,"",result));
++        conn.close();//数据库关闭
++    }
++    
++    @RequestMapping("/deleteUser")
++    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
++        ResultSet check_dev=manage.check_dev(request,response);
++        if(check_dev==null)return;//不安全
++        Connection conn = DBUtils.getConnection();
++        if(!isAdmin(response,conn,check_dev.getInt("userid")))return;//不是管理员
++        int userid2 = Integer.parseInt(request.getParameter("deleteUserid"));
++
++        PreparedStatement preState = conn.prepareStatement("DELETE FROM app_username WHERE userid=?");
++        preState.setInt(1,userid2);
++
++        JSONObject result=new JSONObject();
++        result.put("result",preState.executeUpdate());
++        response.getWriter().println(p(100,"",result));
++        conn.close();//数据库关闭
++    }
++    
++    @RequestMapping("/deleteUser")
++    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
++        ResultSet check_dev=manage.check_dev(request,response);
++        if(check_dev==null)return;//不安全
++        Connection conn = DBUtils.getConnection();
++        if(!isAdmin(response,conn,check_dev.getInt("userid")))return;//不是管理员
++        int userid2 = Integer.parseInt(request.getParameter("deleteUserid"));
++
++        PreparedStatement preState = conn.prepareStatement("DELETE FROM app_username WHERE userid=?");
++        preState.setInt(1,userid2);
++
++        JSONObject result=new JSONObject();
++        result.put("result",preState.executeUpdate());
++        response.getWriter().println(p(1

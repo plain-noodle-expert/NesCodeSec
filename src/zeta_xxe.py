@@ -9,15 +9,39 @@ from loguru import logger
 from tqdm import tqdm
 from typing import Dict, List, Tuple, Iterable, Optional
 
-from request import create_event_batches, request_batches
+from request import (
+    create_event_batches,
+    request_batches,
+    create_event_batch,
+    request_batch_multiple_runs,
+    request_batch_multiple_runs_parallel,
+)
 from evaluation import evaluate_via_llm
+
+# Configuration
+BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "V9-XXE"]
+
+# Number of runs per test case
+N_RUNS = 10
+
+# Parallel execution configuration
+USE_PARALLEL = True
+MAX_WORKERS = 4
+
+# Mode configuration
+ENABLE_REQUEST = True
+ENABLE_EVALUATE = False
+
+# Evaluation method configuration
+ENABLE_REGEX_EVAL = True
+ENABLE_LLM_EVAL = False
 
 def _project_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 def _root() -> Path:
     """
-    Returns the base directory for Broken Access Control artifacts.
+    Returns the base directory for XXE artifacts.
     Falls back to the legacy layout if the variant-specific tree is absent.
     """
     scenario_root = _project_root().joinpath(*BASE_DIR_PARTS)
@@ -25,8 +49,6 @@ def _root() -> Path:
 
 def _subdir(name: str) -> Path:
     return _root() / name
-
-BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "XXE"]
 BASE_DIR = _subdir("base")
 EVENT_DIR = _subdir("input_event")
 EXCERPT_DIR = _subdir("input_excerpt") # input excerpt to be completed
@@ -716,21 +738,42 @@ def summarize_llm_results_from_disk(output_dir: Path = OUTPUT_DIR) -> Dict:
 def run_generation_pipeline() -> None:
     """
     Build event diffs and request completions for XXE scenarios.
+    Supports multiple runs per test case with optional parallel execution.
     """
     base_dir = BASE_DIR
     excerpt_dir = EXCERPT_DIR
     event_dir = EVENT_DIR
     output_dir = OUTPUT_DIR
 
-    logger.info("Creating event diffs for XXE scenarios...")
+    print("\n[Step 1] Creating event diffs for XXE scenarios...")
     create_event_batches(base_dir=base_dir, excerpt_dir=excerpt_dir, event_dir=event_dir)
 
-    logger.info("Requesting completions for XXE scenarios...")
-    request_batches(
-        event_dir=event_dir,
-        excerpt_dir=excerpt_dir,
-        output_dir=output_dir,
-    )
+    print("\n[Step 2] Requesting completions for XXE scenarios...")
+    
+    # Process each subdirectory
+    for subdir in event_dir.iterdir():
+        if not subdir.is_dir():
+            continue
+            
+        print(f"\nProcessing parser: {subdir.name}")
+        excerpt_subdir = excerpt_dir / subdir.name
+        output_subdir = output_dir / subdir.name
+        
+        if USE_PARALLEL:
+            request_batch_multiple_runs_parallel(
+                event_dir=subdir,
+                excerpt_dir=excerpt_subdir,
+                output_dir=output_subdir,
+                n_runs=N_RUNS,
+                max_workers=MAX_WORKERS,
+            )
+        else:
+            request_batch_multiple_runs(
+                event_dir=subdir,
+                excerpt_dir=excerpt_subdir,
+                output_dir=output_subdir,
+                n_runs=N_RUNS,
+            )
 
 def _decode_java_string_literal(raw_literal: str) -> str:
     """
@@ -1135,20 +1178,56 @@ def main(
     llm_summary: bool = False,
     regex_scan: bool = False,
 ) -> None:
+    print("=" * 80)
+    print("XXE Scenario")
+    print("=" * 80)
+    
+    # Display configuration when running generation
+    if run_generation:
+        modes = []
+        if ENABLE_REQUEST:
+            modes.append("Request")
+        if ENABLE_EVALUATE:
+            modes.append("Evaluate")
+        print(f"\nMode: {', '.join(modes) if modes else 'None'}")
+        
+        if ENABLE_EVALUATE:
+            eval_methods = []
+            if ENABLE_REGEX_EVAL:
+                eval_methods.append("Regex")
+            if ENABLE_LLM_EVAL:
+                eval_methods.append("LLM")
+            print(f"Evaluation Methods: {', '.join(eval_methods) if eval_methods else 'None'}")
+        
+        print(f"Runs per test case: {N_RUNS}")
+        if USE_PARALLEL:
+            print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
+        else:
+            print(f"Parallel execution: DISABLED")
+    
     if run_generation:
         run_generation_pipeline()
 
     if eval:
+        print("\n[Running LLM Evaluation]")
         evaluate_via_llm_xxe()
     
     if regex_eval:
+        print("\n[Running Regex Evaluation]")
         evaluate_regex_all_parsers()
 
     if regex_scan:
+        print("\n[Running Regex Security Scan]")
         run_regex_security_scan()
 
     if llm_summary:
+        print("\n[Summarizing LLM Results]")
         summarize_llm_results_from_disk()
+    
+    if run_generation or eval or regex_eval or regex_scan or llm_summary:
+        print("\n" + "=" * 80)
+        print("✅ XXE scenario tasks complete!")
+        print("=" * 80)
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="XXE scenario pipeline")

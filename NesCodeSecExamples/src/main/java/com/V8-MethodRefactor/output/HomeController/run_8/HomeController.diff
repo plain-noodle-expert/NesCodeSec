@@ -1,0 +1,434 @@
+--- HomeController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package org.mitre.web;
+ 
+ import java.security.Principal;
+ import java.util.Locale;
+@@ -84,87 +83,343 @@
+ 	public String admin(Model model, Principal p) {
+ 		model.addAttribute("admins", admins);
+ 
+ 		return "admin";
+ 	}
+-<|user_cursor_is_here|>
+-	public String isAdmin(Principal p) {
+-		for (SubjectIssuerGrantedAuthority admin : admins) {
+-			if (admin.getSubject().equals(p.getName())) {
+-				return "true";
+-			}
+-		}
+-		return "false";
+-	}
+-
+-	public String login(Principal p) {
+-		return "login";
+-	}
+-	
+-	
+-	
+-	
+-	public static void doWork() {
+-    	// Create a child Span of the current Span.
+-    		try (Scope ss = tracer.spanBuilder("MyChildWorkSpan").startScopedSpan()) {
+-      			doInitialWork();
+-      			tracer.getCurrentSpan().addAnnotation("Finished initial work");
+-      			doFinalWork();
+-    		}
+-  	}
+-
+-  	private static void doInitialWork() {
+-    	// ...
+-    		tracer.getCurrentSpan().addAnnotation("Doing initial work");
+-    	// ...
+-  	}
+-
+-  	private static void doFinalWork() {
+-    	// ...
+-    		tracer.getCurrentSpan().addAnnotation("Hello world!");
+-    	// ...
+-  	}
+-  	// [END trace_setup_java_custom_span]
+-	
+-	// [START trace_setup_java_full_sampling]
+-  	public static void doWorkFullSampled() {
+-    		try (Scope ss =
+-       			tracer
+-            			.spanBuilder("MyChildWorkSpan")
+-            			.setSampler(Samplers.alwaysSample())
+-            			.startScopedSpan()) {
+-      			doInitialWork();
+-      			tracer.getCurrentSpan().addAnnotation("Finished initial work");
+-      			doFinalWork();
+-    		}
+-  	}
+-  	// [END trace_setup_java_full_sampling]
+-
+-  	// [START trace_setup_java_create_and_register]
+-  	public static void createAndRegister() throws IOException {
+-    		StackdriverTraceExporter.createAndRegister(StackdriverTraceConfiguration.builder().build());
+-  	}
+-  	// [END trace_setup_java_create_and_register]
+-
+-  	// [START trace_setup_java_create_and_register_with_token]
+-  	public static void createAndRegisterWithToken(String accessToken) throws IOException {
+-    		Date expirationTime = DateTime.now().plusSeconds(60).toDate();
+-
+-    		GoogleCredentials credentials =
+-        		GoogleCredentials.create(new AccessToken(accessToken, expirationTime));
+-    		StackdriverTraceExporter.createAndRegister(
+-        		StackdriverTraceConfiguration.builder()
+-            			.setProjectId("MyStackdriverProjectId")
+-            			.setCredentials(credentials)
+-           	 		.build());
+-  	}
+-  	// [END trace_setup_java_create_and_register_with_token]
+-
+-  	// [START trace_setup_java_register_exporter]
+-  	public static void createAndRegisterGoogleCloudPlatform(String projectId) throws IOException {
+-    		StackdriverTraceExporter.createAndRegister(
+-        		StackdriverTraceConfiguration.builder().setProjectId(projectId).build());
+-  	}
+-  	// [END trace_setup_java_register_exporter]
+-}
+-<|editable_region_end|>
+-```+	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/admin")
++	public String admin(Model model, Principal p) {
++		model.addAttribute("admins", admins);
++
++		return "admin";
++	}
++	
++	@RequestMapping("/

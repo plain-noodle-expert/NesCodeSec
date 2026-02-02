@@ -1,0 +1,12 @@
+--- TokenGenerator.java
++++ TokenGenerator.java
+@@ -0,0 +1,2 @@
++
++
+@@ -43,0 +46 @@
++    String salted = API_KEY + ACCOUNT_KEY;
+@@ -45 +47,0 @@
+-
+@@ -95 +97,2 @@
+-}+}
++

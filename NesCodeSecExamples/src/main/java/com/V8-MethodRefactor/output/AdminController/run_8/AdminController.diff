@@ -1,0 +1,26 @@
+--- AdminController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.example.uniproject.controller;
+ 
+ import com.example.uniproject.models.Users;
+ import com.example.uniproject.models.enums.Role;
+@@ -47,11 +46,15 @@
+     public String deleteUser(Long id, Principal principal) {
+         userService.deleteUser(userService.getUserByPrincipal(principal), id);
+         return "success";
+     }
+ 
+-    <|user_cursor_is_here|>
++    public String updateUser(Long id, Principal principal, Users user, Map<String, String> form) {
++        userService.updateUser(userService.getUserByPrincipal(principal), id, user, form);
++        return "redirect:/admin";
++    }
++
+     public Admin getAdmin(String username, String password) {
+         Admin admin = userService.adminlogin(username, password);
+         return admin;
+     }
+ }

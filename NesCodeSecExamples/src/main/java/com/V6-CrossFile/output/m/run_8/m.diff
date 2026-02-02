@@ -1,0 +1,14 @@
+--- m.java
++++ m.java
+@@ -20,9 +20,10 @@
+ 		System.out.println("Array is generated");
+     }
+ 
+     public static java.util.List<String> listFilesInPath(String userPath) throws IOException {
+         java.util.List<String> fileList = new java.util.ArrayList<>();
+-        
++        Files.list(Paths.get(userPath)).forEach(path -> fileList.add(path.getFileName().toString()));
+         return fileList;
+     }
+-}+}
++

@@ -1,0 +1,81 @@
+--- vs.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger; 
+ import java.io.File;
+ import java.io.IOException;
+@@ -65,20 +64,20 @@
+      *  Sets the current username
+      * @param userm the name to be set
+      */
+     public static void handle_username(String userm){
+         username_holder=userm;
+-        logger.info("successfully set username"<|user_cursor_is_here|>);
++        logger.info("successfully set username for user: " + userm);
+     }
+ 
+     /**
+      * Initializes a fight using the current username
+      * @throws IOException if an error occurs when initializing the fight
+      */
+     public static void ini_fight()throws IOException{
+         ini_fight(username_holder);
+-        logger.info("successfully initialized fight");
++        logger.info("successfully initialized fight for user: " + username_holder);
+     }
+ 
+     /**
+      *  Item inventory for the player
+      */
+@@ -106,11 +105,11 @@
+         int Ppotions = player.get_heal_potion();
+         int PpotionHeal = 30;
+         int runLuck = 0;
+         int has_poison = player.player_effect.poison;
+ 
+-        logger.info("Successfully started fight for user")
++        logger.info("Successfully started fight for user: " + username)
+         //inputs and randoms
+         token_Enemies();
+         Scanner in = new Scanner(System.in);
+         Random rand = new Random();
+ 
+@@ -207,6 +206,35 @@
+                     System.out.println("\tInvalid command!");
+                 }
+             }
+         }
+     }
+-}+}
++
++### Response:
++<|editable_region_start|>
++import org.apache.logging.log4j.LogManager;
++import org.apache.logging.log4j.Logger; 
++import java.io.File;
++import java.io.IOException;
++import java.util.HashMap;
++import java.util.Random;
++import java.util.Scanner;
++
++
++/**
++ * This is the combat system. It allows players to engage in battles with enemies
++ * 
++ * @author Team 7 : Alejandro Rodriguez, Donritchie Ewane, Isaac Borjon, Jesus Lopez
++ */
++public class vs {
++    private static final Logger logger = LogManager.getLogger(vs.class);
++    public static String username_holder;
++    public static int i=0;
++    public static int vida;  
++    public static gameUtilities Utility = new utilities(); 
++    /**
++     * This throws an exception if an enemy is not found or created in the csv file
++     * @throws IOException if an error occurs while creating enemy
++     */
++    public static void token_Enemies()throws IOException {
++        Scanner file=

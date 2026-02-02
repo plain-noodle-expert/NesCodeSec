@@ -7,6 +7,7 @@ from typing import Mapping, Optional
 from loguru import logger
 from dotenv import load_dotenv
 from colorama import Fore, Style
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Load environment variables from .env file
 load_dotenv()
@@ -203,6 +204,216 @@ def request_batch(
             ),
         )
 
+def request_batch_multiple_runs(
+    event_dir: Path,
+    excerpt_dir: Path,
+    output_dir: Path,
+    *,
+    n_runs: int = 10,
+    template: str = PROMPT,
+    model: str = "zeta",
+    max_tokens: int = 28000,
+    temperature: float = 0.2,
+    extra_sections: Optional[Mapping[str, str]] = None,
+) -> None:
+    """
+    Processes each event/excerpt pair multiple times, saving results in run_1, run_2, etc.
+    
+    Args:
+        event_dir: Directory containing .diff files
+        excerpt_dir: Directory containing .java excerpt files
+        output_dir: Base output directory (will create test_case/run_N subdirs)
+        n_runs: Number of times to process each test case
+        template: Prompt template
+        model: Model name
+        max_tokens: Max tokens for response
+        temperature: Sampling temperature
+        extra_sections: Extra sections to include in prompt
+    """
+    event_files = sorted(list(event_dir.glob("*.diff")))
+    excerpt_files = sorted(list(excerpt_dir.glob("*.java")))
+    
+    for event_file, excerpt_file in tqdm(
+        zip(event_files, excerpt_files),
+        total=len(event_files),
+        desc=f"Processing {event_dir.parent.name}"
+    ):
+        test_case_name = event_file.stem
+        test_case_output_dir = output_dir / test_case_name
+        
+        # Run multiple iterations for this test case
+        for run_idx in tqdm(
+            range(1, n_runs + 1),
+            desc=f"  {test_case_name}",
+            leave=False
+        ):
+            run_output_dir = test_case_output_dir / f"run_{run_idx}"
+            run_output_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Build prompt
+            prompt = build_prompt(
+                event_file,
+                excerpt_file,
+                extra_sections=extra_sections,
+            )
+            
+            # Send request
+            result = send_request(
+                prompt,
+                model=model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+            
+            # Merge response into excerpt
+            result = merge_response_into_excerpt(
+                excerpt_file.read_text(encoding="utf-8"),
+                result,
+            )
+            
+            # Save output files
+            write_text(
+                run_output_dir / excerpt_file.name,
+                result,
+            )
+            write_text(
+                run_output_dir / event_file.name,
+                create_diff(
+                    excerpt_file.read_text(encoding="utf-8"),
+                    result,
+                    orig_label=excerpt_file.name,
+                    modified_label="NES",
+                    context=5,
+                ),
+            )
+
+
+def request_batch_multiple_runs_parallel(
+    event_dir: Path,
+    excerpt_dir: Path,
+    output_dir: Path,
+    *,
+    n_runs: int = 10,
+    max_workers: int = 4,
+    template: str = PROMPT,
+    model: str = "zeta",
+    max_tokens: int = 28000,
+    temperature: float = 0.2,
+    extra_sections: Optional[Mapping[str, str]] = None,
+) -> None:
+    """
+    Parallel version of request_batch_multiple_runs using ThreadPoolExecutor.
+    
+    Processes each event/excerpt pair multiple times with parallel execution,
+    saving results in run_1, run_2, etc.
+    
+    Args:
+        event_dir: Directory containing .diff files
+        excerpt_dir: Directory containing .java excerpt files
+        output_dir: Base output directory (will create test_case/run_N subdirs)
+        n_runs: Number of times to process each test case
+        max_workers: Maximum number of parallel workers (default: 4)
+        template: Prompt template
+        model: Model name
+        max_tokens: Max tokens for response
+        temperature: Sampling temperature
+        extra_sections: Extra sections to include in prompt
+    """
+    def process_single_run(
+        event_file: Path,
+        excerpt_file: Path,
+        run_output_dir: Path,
+        test_case_name: str,
+        run_idx: int
+    ) -> tuple[str, int, bool]:
+        """Process a single run and return status."""
+        try:
+            run_output_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Build prompt
+            prompt = build_prompt(
+                event_file,
+                excerpt_file,
+                extra_sections=extra_sections,
+            )
+            
+            # Send request
+            result = send_request(
+                prompt,
+                model=model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            )
+            
+            # Merge response into excerpt
+            result = merge_response_into_excerpt(
+                excerpt_file.read_text(encoding="utf-8"),
+                result,
+            )
+            
+            # Save output files
+            write_text(
+                run_output_dir / excerpt_file.name,
+                result,
+            )
+            write_text(
+                run_output_dir / event_file.name,
+                create_diff(
+                    excerpt_file.read_text(encoding="utf-8"),
+                    result,
+                    orig_label=excerpt_file.name,
+                    modified_label="NES",
+                    context=5,
+                ),
+            )
+            return (test_case_name, run_idx, True)
+        except Exception as e:
+            logger.error(f"Error processing {test_case_name} run_{run_idx}: {e}")
+            return (test_case_name, run_idx, False)
+    
+    event_files = sorted(list(event_dir.glob("*.diff")))
+    excerpt_files = sorted(list(excerpt_dir.glob("*.java")))
+    
+    # Create all tasks
+    tasks = []
+    for event_file, excerpt_file in zip(event_files, excerpt_files):
+        test_case_name = event_file.stem
+        test_case_output_dir = output_dir / test_case_name
+        
+        for run_idx in range(1, n_runs + 1):
+            run_output_dir = test_case_output_dir / f"run_{run_idx}"
+            tasks.append((
+                event_file,
+                excerpt_file,
+                run_output_dir,
+                test_case_name,
+                run_idx
+            ))
+    
+    # Execute tasks in parallel
+    print(f"  Executing {len(tasks)} tasks with {max_workers} parallel workers...")
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(
+                process_single_run,
+                event_file,
+                excerpt_file,
+                run_output_dir,
+                test_case_name,
+                run_idx
+            ): (test_case_name, run_idx)
+            for event_file, excerpt_file, run_output_dir, test_case_name, run_idx in tasks
+        }
+        
+        # Progress bar
+        with tqdm(total=len(tasks), desc=f"Processing {event_dir.parent.name}") as pbar:
+            for future in as_completed(futures):
+                test_case_name, run_idx, success = future.result()
+                pbar.update(1)
+                if not success:
+                    pbar.write(f"  ⚠️  Failed: {test_case_name} run_{run_idx}")
+
+
 def request_batches(
     event_dir: Path,
     excerpt_dir: Path,
@@ -271,6 +482,8 @@ __all__ = [
     "build_prompt",
     "send_request",
     "request_batch",
+    "request_batch_multiple_runs",
+    "request_batch_multiple_runs_parallel",
     "request_batches",
     "merge_response_into_excerpt",
 ]

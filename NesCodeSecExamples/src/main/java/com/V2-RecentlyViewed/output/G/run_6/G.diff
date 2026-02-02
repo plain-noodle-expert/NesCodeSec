@@ -1,0 +1,29 @@
+--- G.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.xnx3.domain;
+ 
+ import java.util.HashMap;
+ import java.util.List;
+@@ -39,11 +38,11 @@
+ 		
+ 		//加载日志服务
+ 		String useLog = wangMarketConfig.getValue("aliyunLog.use");
+ 		if(useLog != null && useLog.equals("true")){
+ 			String log_accessKeyId = wangMarketConfig.getValue("aliyunLog.accessKeyId");
+-			String log_accessKeySecret = <|user_cursor_is_here|>
++			String log_accessKeySecret = wangMarketConfig.getValue("aliyunLog.accessKeySecret");
+ 			if(log_accessKeyId == null || log_accessKeyId.length() == 0){
+ 				//取数据库的
+ 				log_accessKeyId = Global.get("ALIYUN_ACCESSKEYID");
+ 			}
+ 			if(log_accessKeySecret == null || log_accessKeySecret.length() == 0){
+@@ -170,6 +169,6 @@
+ 			return "未设置自动分配的二级(主)域名！";
+ 		}
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

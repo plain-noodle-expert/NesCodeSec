@@ -1,0 +1,31 @@
+--- Item.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.*;
+ 
+ public class Item
+ {
+@@ -30,11 +29,13 @@
+     public Item(Connection con, int upc)
+     {
+         try
+         {
+             stmt = con.createStatement();
+-            rs = stmt.executeQuery<|user_cursor_is_here|>
++            rs = stmt.executeQuery("SELECT upc, title, type, category, company, year, sellPrice, quantity "
++                    + "FROM item "
++                    + "WHERE upc = " + upc);
+             if (rs.next() == true)
+             {
+             this.upc = rs.getInt(1);
+             this.title = rs.getString(2);
+             this.type = rs.getString(3);
+@@ -121,6 +122,6 @@
+     	String toPrint = Integer.toString(upc) + "\t" + title + "\t" + type + "\t" + category + "\t" + company + "\t" + Integer.toString(year) + "\t" + Float.toString(sellPrice) +"\n";
+     	return toPrint;
+     }
+ }
+ <|editable_region_end|>
+-```+```

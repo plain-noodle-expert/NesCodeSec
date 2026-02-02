@@ -1,0 +1,23 @@
+--- Fut.java
++++ Fut.java
+@@ -21,11 +21,11 @@
+ 		this.resourceDirs.add(path);
+ 	}
+ 
+ 	private ArrayList<Byte> readAllBytes(File path)
+ 	{
+-		try (BufferedInputStream in = ) {
++		try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(path))) {
+ 			for (final ArrayList<Byte> result = new ArrayList<Byte>();;) {
+ 				int b = in.read();
+ 				if (b < 0)
+ 					return result;
+ 				result.add((byte) b);
+@@ -64,6 +64,7 @@
+ 		sema.process();
+ 		if (host.hasErrors())
+ 			System.exit(1);
+ 		return host.program;
+ 	}
+-}+}
++

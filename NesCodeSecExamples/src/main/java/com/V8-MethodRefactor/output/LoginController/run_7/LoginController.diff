@@ -1,0 +1,38 @@
+--- LoginController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.moti.controller;
+ 
+ import cn.hutool.crypto.digest.MD5;
+ import com.alibaba.fastjson.JSONObject;
+@@ -99,11 +98,11 @@
+     /**
+      * QQ登录回调地址
+      *
+      * @return
+      */
+-    
++    @GetMapping("/qq-login")
+     public String connection() {
+         try {
+             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
+             String accessToken = null, openID = null;
+             long tokenExpireIn = 0L;
+@@ -160,11 +159,14 @@
+         if ("".equals(str)) {
+             str = "($ _ $)";
+         }
+         return str;
+     }
+-<|user_cursor_is_here|>
++
++    /**
++     * 获取管理员对象
++     */
+     public Admin getAdmin() {
+         Admin admin = (Admin) session.getAttribute("admin");
+         return admin;
+     }
+ 

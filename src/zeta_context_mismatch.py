@@ -4,9 +4,27 @@ import re
 from pathlib import Path
 from request import (
     create_event_batch,
-    request_batch
+    request_batch,
+    request_batch_multiple_runs,
+    request_batch_multiple_runs_parallel,
 )
 from evaluation import evaluate_via_llm, evaluate_via_regex
+
+
+# Number of runs per test case
+N_RUNS = 10
+
+# Parallel execution configuration
+USE_PARALLEL = False
+MAX_WORKERS = 4
+
+# Mode configuration
+ENABLE_REQUEST = True
+ENABLE_EVALUATE = False
+
+# Evaluation method configuration
+ENABLE_REGEX_EVAL = True
+ENABLE_LLM_EVAL = True
 
 
 # Patterns for detecting security vulnerabilities in ContextMismatch scenario
@@ -26,7 +44,7 @@ PATTERN = (
     r")"
 )
 
-BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "ContextMismatch"]
+BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "V5-ContextMismatch"]
 
 BASE_SUBDIR = "base"
 EXCERPT_SUBDIR = "input_excerpt"
@@ -98,54 +116,99 @@ def _subdir(name: str, secure: bool=True) -> Path:
 
 def main():
     for secure in [True, False]:
+        variant_name = "secure" if secure else "insecure"
+        print("=" * 80)
+        print(f"ContextMismatch Scenario - {variant_name.upper()}")
+        print("=" * 80)
+        
+        # Display configuration
+        modes = []
+        if ENABLE_REQUEST:
+            modes.append("Request")
+        if ENABLE_EVALUATE:
+            modes.append("Evaluate")
+        print(f"\nMode: {', '.join(modes) if modes else 'None'}")
+        
+        if ENABLE_EVALUATE:
+            eval_methods = []
+            if ENABLE_REGEX_EVAL:
+                eval_methods.append("Regex")
+            if ENABLE_LLM_EVAL:
+                eval_methods.append("LLM")
+            print(f"Evaluation Methods: {', '.join(eval_methods) if eval_methods else 'None'}")
+        
+        print(f"Runs per test case: {N_RUNS}")
+        if USE_PARALLEL:
+            print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
+        else:
+            print(f"Parallel execution: DISABLED")
+        
+        # Validate configuration
+        if not ENABLE_REQUEST and not ENABLE_EVALUATE:
+            print("\n⚠️  Both REQUEST and EVALUATE modes are disabled. Skipping variant.")
+            continue
+        
         base_subdir = _subdir(BASE_SUBDIR, secure=secure)
         event_dir = _subdir(EVENT_SUBDIR, secure=secure)
         excerpt_dir = _subdir(EXCERPT_SUBDIR, secure=secure)
         output_dir = _subdir(OUTPUT_SUBDIR, secure=secure)
-        create_event_batch(
-            base_dir=base_subdir,
-            excerpt_dir=excerpt_dir,
-            event_dir=event_dir,
-        )
-        request_batch(
-            event_dir=event_dir,
-            excerpt_dir=excerpt_dir,
-            output_dir=output_dir,
-        )
-        evaluate_via_regex(
-            pattern=PATTERN,
-            excerpt_dir=excerpt_dir,
-            output_dir=output_dir,
-            results_path=_root(secure) / "regex_evaluation_results.json",
-            flags=re.IGNORECASE | re.DOTALL,
-        )
+        
+        if ENABLE_REQUEST:
+            print("\n[Step 1] Generating events...")
+            create_event_batch(
+                base_dir=base_subdir,
+                excerpt_dir=excerpt_dir,
+                event_dir=event_dir,
+            )
+            
+            print("\n[Step 2] Running LLM requests...")
+            if USE_PARALLEL:
+                request_batch_multiple_runs_parallel(
+                    event_dir=event_dir,
+                    excerpt_dir=excerpt_dir,
+                    output_dir=output_dir,
+                    n_runs=N_RUNS,
+                    max_workers=MAX_WORKERS,
+                )
+            else:
+                request_batch_multiple_runs(
+                    event_dir=event_dir,
+                    excerpt_dir=excerpt_dir,
+                    output_dir=output_dir,
+                    n_runs=N_RUNS,
+                )
+        else:
+            print("\n⚠️  Request mode disabled. Skipping steps 1-2.")
+        
+        if ENABLE_EVALUATE:
+            if ENABLE_REGEX_EVAL or ENABLE_LLM_EVAL:
+                print("\n[Step 3] Evaluating results...")
+                
+                if ENABLE_REGEX_EVAL:
+                    print("  Running regex evaluation...")
+                    evaluate_via_regex(
+                        pattern=PATTERN,
+                        excerpt_dir=None,
+                        output_dir=output_dir,
+                        results_path=_root(secure) / "regex_evaluation_results.json",
+                        flags=re.IGNORECASE | re.DOTALL,
+                    )
+                
+                if ENABLE_LLM_EVAL:
+                    print("  Running LLM evaluation...")
+                    evaluate_via_llm(
+                        output_dir=output_dir,
+                        prompt=JUDGE_PROMPT,
+                        results_path=_root(secure) / "llm_evaluation_results.json",
+                    )
+            else:
+                print("\n⚠️  Evaluate mode enabled but no evaluation methods selected.")
+        else:
+            print("\n⚠️  Evaluate mode disabled. Skipping evaluation.")
+        
+        print("\n" + "=" * 80)
+        print(f"✅ {variant_name.upper()} variant complete!")
+        print("=" * 80)
     
 if __name__ == "__main__":
-    # main()
-    # event = _subdir(EVENT_SUBDIR, secure=False) / "Node.diff"
-    # excerpt = _subdir(EXCERPT_SUBDIR, secure=False) / "Node.java"
-    # prompt = PROMPT.format(
-    #         user_edits=event.read_text(encoding="utf-8"),
-    #         user_excerpt=excerpt.read_text(encoding="utf-8"),
-    #     )
-    # result = send_request(
-    #         prompt
-    #     )
-    # result = merge_response_into_excerpt(
-    #         excerpt.read_text(encoding="utf-8"),
-    #         result,
-    #     )
-    # print(result)
-    for secure in [True, False]:
-        evaluate_via_llm(
-            output_dir=_subdir(OUTPUT_SUBDIR, secure=secure),
-            prompt=JUDGE_PROMPT,
-            results_path=_root(secure) / "llm_evaluation_results.json",
-        )
-    #     evaluate_via_regex(
-    #             pattern=PATTERN,
-    #             excerpt_dir=_subdir(EXCERPT_SUBDIR, secure=secure),
-    #             output_dir=_subdir(OUTPUT_SUBDIR, secure=secure),
-    #             results_path=_root(secure) / "regex_evaluation_results.json",
-    #             flags=re.IGNORECASE,
-    #         )
+    main()

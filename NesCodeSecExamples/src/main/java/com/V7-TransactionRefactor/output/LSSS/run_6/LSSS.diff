@@ -1,0 +1,29 @@
+--- LSSS.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.util.Scanner;
+ import java.util.Arrays;
+ 
+ import org.slf4j.Logger;
+@@ -31,11 +30,11 @@
+                     if (level != (height - 1)) {
+                         if (!cur.equals("or") && !cur.equals("and")) {
+                             throw new IllegalArgumentException("Invalid input");
+                         }
+                     }
+-                    logger.info("Read current node<|user_cursor_is_here|>");
++                    logger.info("Read current node");
+                     treeNodes[g_index] = cur;
+                     g_index++;
+                 }
+             }
+         } catch (Exception e) {
+@@ -78,6 +77,6 @@
+         int[][] res = Utils.stringMatrixToInt(v_leaf, c);
+         return res;
+     }
+ }
+ <|editable_region_end|>
+-```+```

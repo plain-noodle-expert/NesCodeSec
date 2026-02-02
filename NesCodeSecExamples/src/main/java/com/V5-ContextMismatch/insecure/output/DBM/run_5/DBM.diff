@@ -1,0 +1,29 @@
+--- DBM.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package classes;
+ 
+ import java.io.File;
+ import java.io.FileInputStream;
+@@ -59,11 +58,11 @@
+         books = new ArrayList<Book>();
+         sections = new ArrayList<Section>();
+ 
+         String fileName = request != null ? request.getParameter("fileName") : null;
+ 
+-        try (ObjectInputStream ois = new ObjectInputStream(<|user_cursor_is_here|>)) {
++        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(fileName)))) {
+             Object obj = ois.readObject();
+ 
+             if (obj != null) {
+                 @SuppressWarnings("unchecked")
+                 ArrayList<Book> tmp = (ArrayList<Book>) obj;
+@@ -73,6 +72,6 @@
+             System.out.println(e.getMessage());
+         }
+     }
+ } 
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,29 @@
+--- S3bucket.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package io.argoproj.workflow.v1alpha;
+ 
+ import java.util.Objects;
+ 
+@@ -8,11 +7,11 @@
+ 
+ /**
+  * S3Bucket contains the access information required for interfacing with an S3 bucket
+  */
+ public class S3Bucket   {
+-  private V1SecretKeySelector accessKeySecret = <|user_cursor_is_here|>
++  private V1SecretKeySelector accessKeySecret = null;
+ 
+   private String bucket;
+ 
+   private String endpoint;
+ 
+@@ -172,6 +171,6 @@
+     }
+     return o.toString().replace("\n", "\n    ");
+   }
+ }
+ <|editable_region_end|>
+-```+```

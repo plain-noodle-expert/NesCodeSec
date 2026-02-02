@@ -1,0 +1,42 @@
+--- JWT.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger; 
+ import java.io.BufferedInputStream;
+ import java.io.File;
+@@ -31,11 +30,11 @@
+     private static final Logger logger = LogManager.getLogger(JWT.class);
+     String token;
+     String certLoc = "cert.pem";
+     public JWT (byte[] token) {
+         this.token = new String(token);
+-        logger.info("JWT successfully created");
++        logger.info("JWT successfully created with token: " + token);
+     }
+ 
+     public JWT (byte[] token, String certloc) {
+         this.token = new String(token);
+         this.certLoc = certLoc;
+@@ -55,11 +54,11 @@
+             CertificateFactory fact = CertificateFactory.getInstance("X.509");
+             File file = new File("cert.pem");
+             FileInputStream is = new FileInputStream(file);
+             X509Certificate cer = (X509Certificate) fact.generateCertificate(is);
+             PublicKey key = cer.getPublicKey();
+-            logger.info("Successfully get public key"<|user_cursor_is_here|>);
++            logger.info("Successfully get public key");
+             signature1.initVerify(key);
+             signature1.update(payload.getBytes());
+             return signature1.verify(getSignature());  
+         } catch (Exception e) {
+             e.printStackTrace();
+@@ -104,6 +103,6 @@
+         Base64.Decoder d = Base64.getUrlDecoder();
+         return d.decode(token.split("\\.")[2].getBytes());
+     }
+ }
+ <|editable_region_end|>
+-```+```

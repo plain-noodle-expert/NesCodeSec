@@ -1,0 +1,32 @@
+--- ExcelExportService_response_2.java
++++ ExcelExportService_response_3.java
+@@ -1,6 +1,5 @@
+-<|start_of_file|>
+ <|editable_region_start|>
+ 
+ package com.example.Export;
+ 
+ import com.fasterxml.jackson.core.type.TypeReference;
+@@ -92,11 +91,11 @@
+                     hasMore ? "?" : totalProcessed, 
+                     batchResults.size());
+                 
+                 allAssets.addAll(batchResults);
+             }
+-            
++
+             log.info("Starting Excel creation for {} assets", allAssets.size());
+             return createExcelFromAssets(allAssets);
+             
+         } catch (CompletionException e) {
+             log.error("Failed to fetch assets: {}", e.getMessage());
+@@ -281,7 +280,8 @@
+                     totalProcessed, 
+                     hasMore ? "?" : totalProcessed, 
+                     batchResults.size());
+                 
+                 allAssets.addAll(batchResults);
+-            }<|user_cursor_is_here|>
+-<|editable_region_end|>+            }
++
++            log.info("Starting Excel creation for {} assets", allAssets.size());

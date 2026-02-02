@@ -1,0 +1,36 @@
+--- IndexController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.idoc.web;
+ 
+ import java.io.IOException;
+ import java.util.HashMap;
+@@ -18,10 +17,11 @@
+ 
+ import com.idoc.constant.CommonConstant;
+ import com.idoc.constant.SendPopoMessageMethod;
+ import com.idoc.memcache.MemcacheServer;
+ import com.idoc.service.login.LoginIndexServiceImpl;
++import com.idoc.service.user.UserService;
+ import com.idoc.shiro.token.TokenManager;
+ import com.idoc.util.CountSession;
+ import com.idoc.util.SendPopoMessage;
+ import com.netease.common.util.StringUtil;
+ 
+@@ -93,13 +93,12 @@
+ 			retMap.put("retDesc", "没有找到管理员！");
+ 		}
+ 		return retMap;
+ 	}
+ 
+-	<|user_cursor_is_here|>
++	// TO DO: Implement token validation and admin retrieval logic
+ 	public Admin getAdmin(String token) {
+-		// TO DO: Implement token validation and admin retrieval logic
+ 		Admin admin = userser.getAdminByToken(token);
+ 		return admin;
+ 
+ 	}
+ }

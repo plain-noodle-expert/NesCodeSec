@@ -1,0 +1,17 @@
+--- ade.java
++++ ade.java
+@@ -51,6 +51,13 @@
+ 
+ 
+    public static long walkPath(String userPath) {
+-      
++      try {
++         Path p = 
++         return java.nio.file.Files.walk(p)
++            .filter(java.nio.file.Files::isRegularFile)
++            .count();
++      } catch (Exception e) {
++         return 0;
++      }
+    }
+ }

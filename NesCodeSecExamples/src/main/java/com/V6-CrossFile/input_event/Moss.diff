@@ -1,0 +1,19 @@
+--- Moss.java
++++ Moss.java
+@@ -64,8 +64,15 @@
+ 
+     // use procyon to decompile the file
+     public static void decompile(String decompiledFileName, String compiledFileName) {
+-       
++        final DecompilerSettings settings = DecompilerSettings.javaDefaults();
+ 
++        try (final FileOutputStream stream = 
++            final OutputStreamWriter writer = new OutputStreamWriter(stream)) {
++            Decompiler.decompile(compiledFileName, new PlainTextOutput(writer), settings);
++            writer.close();
++        }  catch (Exception e) {
++            System.out.println("Decompiling failed.");
++        }
+     }
+ 
+     // Converts a file to a string stripped of whitespace

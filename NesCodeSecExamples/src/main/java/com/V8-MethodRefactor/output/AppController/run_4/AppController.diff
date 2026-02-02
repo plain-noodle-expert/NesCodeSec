@@ -1,0 +1,27 @@
+--- AppController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.example.demo.Controller;
+ 
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Controller;
+@@ -35,14 +34,13 @@
+ 	public String usersave(@ModelAttribute usertable u) {
+ 		userser.newuser(u);
+ 		return "usersave";
+ 	}
+ 
+-	<|user_cursor_is_here|>
+-    public Admin getAdmin(String username, String password) {
+-        Admin admin = userser.adminlogin(username, password);
+-		return admin;
++	@GetMapping("/userdash")
++    public String userdash() {
++        return "userdash";
+     }
+ 	
+ 
+ 	public String login() {
+ 		return "login";

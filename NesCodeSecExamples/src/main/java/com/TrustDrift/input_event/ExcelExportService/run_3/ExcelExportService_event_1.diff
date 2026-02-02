@@ -1,0 +1,33 @@
+--- ExcelExportService.java
++++ ExcelExportService.java
+@@ -1,6 +1,8 @@
+-package com.TrustDrift.base_o;
++
++
++package com.example.Export;
+ 
+ import com.fasterxml.jackson.core.type.TypeReference;
+ import com.fasterxml.jackson.databind.JsonNode;
+ import com.fasterxml.jackson.databind.ObjectMapper;
+ import org.apache.poi.ss.usermodel.*;
+@@ -167,11 +169,11 @@
+         }
+         
+         return maxRows;
+     }
+     
+-    private Map<String, String> buildRowData(JsonNode asset, int arrayIndex) {
++    public Map<String, String> buildRowData(JsonNode asset, int arrayIndex) {
+         Map<String, String> rowData = new HashMap<>();
+         
+         // Process each field according to its configuration
+         for (Map.Entry<String, FieldMappingConfig.FieldMetadata> entry : FieldMappingConfig.FIELD_CONFIG.entrySet()) {
+             String fieldName = entry.getKey();
+@@ -181,6 +183,7 @@
+             rowData.put(fieldName, value);
+         }
+         
+         return rowData;
+     }
+-}+}
++

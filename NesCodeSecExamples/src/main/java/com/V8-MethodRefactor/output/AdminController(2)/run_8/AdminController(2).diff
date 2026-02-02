@@ -1,0 +1,22 @@
+--- AdminController(2).java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.vansl.controller;
+ 
+ 
+ import com.vansl.dto.LoginInfo;
+@@ -77,11 +76,11 @@
+         }finally {
+             return modelAndView;
+         }
+     }
+ 
+-    <|user_cursor_is_here|>
++    @GetMapping("/validate")
+     public boolean validateToken(String token) {
+         //TO DO: Token validation logic
+         return true;
+     }
+ 

@@ -1,0 +1,35 @@
+--- Cl.java
++++ NES
+@@ -1,7 +1,5 @@
+-
+-```<|start_of_file|>
+ <|editable_region_start|>
+ class Cl {
+ 	private static Connection getRemoteConnection() {
+ 		if (System.getenv("RDS_HOSTNAME") != null) {
+ 		  try {
+@@ -21,20 +19,20 @@
+ 			catch (SQLException e) { logger.warn(e.toString());}
+ 		}
+ 		return null;
+ 	  }
+ 	  
+-	String saveInvoiceData(string data, int id){
++	String saveInvoiceData(String data, int id){
+ 			try{
+ 				Connection con = getRemoteConnection();
+ 				Statement stmt = con.createStatement();
+-				String sql = <|user_cursor_is_here|>
+-				rs = stmt.executeQuery(sql);
+-				return rs.getString("Id");
++				String sql = "UPDATE INVOICE SET data = '" + data + "' WHERE ID = " + id;
++				stmt.executeUpdate(sql);
++				return String.valueOf(id);
+ 			} catch (Exception exc){
+ 				//
+ 			}
+ 			return null;
+ 		}
+ }
+ <|editable_region_end|>
+-```+```

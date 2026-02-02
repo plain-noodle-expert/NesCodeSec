@@ -1,0 +1,32 @@
+--- DAO.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package myproject;
+ 
+ import java.sql.Connection;
+ import java.sql.DriverManager;
+@@ -94,12 +93,14 @@
+         }
+     }
+     
+      public int selectAdmin(String prn,String password) throws VoteException {
+         try {                                                                                   //check id password of admin in admin table
+-            String query = <|user_cursor_is_here|>
++            String query = "SELECT * FROM admin WHERE prn=? AND password=?";
+             PreparedStatement ps1 = con.prepareStatement(query);
++            ps1.setString(1, prn);
++            ps1.setString(2, password);
+             ResultSet rs = ps1.executeQuery();
+             if(!rs.next()) {                                           // if admin not found
+                 return 0;
+             }
+             return 1;
+@@ -189,6 +190,6 @@
+         }
+ 
+      }
+ }
+ <|editable_region_end|>
+-```+```

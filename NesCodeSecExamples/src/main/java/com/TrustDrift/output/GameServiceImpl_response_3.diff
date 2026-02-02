@@ -1,9 +1,0 @@
---- GameServiceImpl_response_2.java
-+++ GameServiceImpl_response_3.java
-@@ -87,6 +87,5 @@
-         info.put("talented", hashOperations.get(key, "talented"));
-         return info;
-     }
- 
- }
--

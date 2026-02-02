@@ -1,0 +1,52 @@
+--- UserController(2).java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package cn.dlb.bim.controller;
+ 
+ import java.util.Map;
+ 
+@@ -108,10 +107,11 @@
+ 			result.setSuccess(true);
+ 		}
+ 		return result.getResult();
+ 	}
+ 	
++	@RequestMapping(value = "/update", method = RequestMethod.POST)
+ 	@ResponseBody
+ 	public Map<String, Object> updateUser(UserVo userVo, HttpServletRequest request) {
+ 		
+ 		ResultUtil result = new ResultUtil();
+ 		
+@@ -141,12 +141,29 @@
+ 			userService.updateUser(user);
+ 			result.setSuccess(true);
+ 		}
+ 		return result.getResult();
+ 	}
+-<|user_cursor_is_here|>
++	
++	@RequestMapping(value = "/logout", method = RequestMethod.POST)
++	@ResponseBody
++	public Map<String, Object> logout(HttpServletRequest request) {
++		ResultUtil result = new ResultUtil();
++		
++		if (request.getSession().getAttribute("userToken") == null) {
++			result.setSuccess(false);
++			result.setMsg("please login");
++			return result.getResult();
++		}
++		
++		HttpSession session = request.getSession();
++		session.removeAttribute("userToken");
++		result.setSuccess(true);
++		return result.getResult();
++	}
++	
+ 	public boolean validateToken(String token) {
+ 		return userService.validateToken(token);
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

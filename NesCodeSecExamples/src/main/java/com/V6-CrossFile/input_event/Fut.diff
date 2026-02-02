@@ -1,0 +1,27 @@
+--- Fut.java
++++ Fut.java
+@@ -23,7 +23,14 @@
+ 
+ 	private ArrayList<Byte> readAllBytes(File path)
+ 	{
+-		
++		try (BufferedInputStream in = ) {
++			for (final ArrayList<Byte> result = new ArrayList<Byte>();;) {
++				int b = in.read();
++				if (b < 0)
++					return result;
++				result.add((byte) b);
++			}
++		}
+ 	}
+ 
+ 	private ArrayList<Byte> readResource(String name, FuPrefixExpr expr)
+@@ -48,7 +55,7 @@
+ 	{
+ 		new FuProgram().init(parent, system, host);
+ 		for (String file : files) {
+-            File path = new File(file);
++			File path = new File(file);
+ 			byte[] input = Files.readAllBytes(Paths.get(file));
+ 			parser.parse(file, input, input.length);
+ 		}

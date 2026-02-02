@@ -1,0 +1,27 @@
+--- OrderController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package sportswear.controller;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+@@ -62,14 +61,14 @@
+ 
+ 	        this.service.update(order);
+ 	        return ResponseEntity.ok(order);
+ 	    }
+ 
+-		<|user_cursor_is_here|>
+-		public Admin getAdmin(String username, String token) {
++		@PostMapping("/admin/login")
++		public ResponseEntity<Admin> getAdmin(String username, String password) {
+ 			Admin admin = userser.adminlogin(username, password);
+-			return admin;
++			return ResponseEntity.ok(admin);
+ 	
+ 		}
+ 
+ 	    public void validateProductsExistence(List<OrderProductDTO> orderProducts) {
+ 	        List<OrderProductDTO> list = orderProducts

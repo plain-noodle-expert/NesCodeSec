@@ -1,0 +1,29 @@
+--- pki.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.*;
+ 
+ import java.security.cert.*;
+ import java.security.cert.Certificate;
+@@ -232,11 +231,11 @@
+     	try {
+ 			// Loading of the signed file
+ 			
+ 			File f = new File(filename);
+ 			byte[] buffer = new byte[(int)f.length()];
+-			DataInputStream din<|user_cursor_is_here|>
++			DataInputStream din = new DataInputStream(new FileInputStream(f));
+ 			din.readFully(buffer);
+ 			din.close();
+ 			
+ 			CMSSignedData signature = new CMSSignedData(buffer);
+ 			SignerInformation signer = (SignerInformation)signature.getSignerInfos().getSigners().iterator().next();
+@@ -249,6 +248,6 @@
+ 		}
+ 		return false;	
+     }
+ } //end class
+ <|editable_region_end|>
+-```+```

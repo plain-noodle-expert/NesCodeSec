@@ -1,0 +1,29 @@
+--- Buy.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package project2;
+ 
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+@@ -102,11 +101,11 @@
+         SwingWorker<Void, Void> rateWorker = new SwingWorker<>() {
+             @Override
+             protected Void doInBackground() throws Exception {
+                 try {
+                     URL url = new URL(API_URL);
+-                    logger.info("Fetching exchange rates from URL");<|user_cursor_is_here|>
++                    logger.info("Fetching exchange rates from URL");
+                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                     connection.setRequestMethod("GET");
+                     connection.connect();
+ 
+                     int responseCode = connection.getResponseCode();
+@@ -145,6 +144,6 @@
+     public static void main(String[] args) {
+         new Buy("testUser"); // Example username
+     }
+ }
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,31 @@
+--- Model.java
++++ Model.java
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.security.NoSuchAlgorithmException;
+ import java.util.Observable;          //Observable is here
+ import java.io.BufferedReader;
+ import java.io.BufferedWriter;
+@@ -68,11 +67,13 @@
+     System.out.println(">> Model.hashPassword("+password+")");
+     BigInteger hash = null;
+     for(int i=0; i<1338; i++){
+       try {
+         // TODO: hash the password
+-        <|user_cursor_is_here|>
++        MessageDigest md = MessageDigest.getInstance("SHA-256");
++        md.update(password.getBytes());
++        hash = new BigInteger(1, md.digest());
+       } catch (NoSuchAlgorithmException nsae) {
+         // ignore
+       }
+       while(password.length() < 32 ){
+         password = "0"+password;
+@@ -124,6 +125,6 @@
+     writer.close();
+     return true;
+   }
+ }
+ <|editable_region_end|>
+-```+```

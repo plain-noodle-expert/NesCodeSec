@@ -1,0 +1,14 @@
+--- run.java
++++ run.java
+@@ -39,8 +39,9 @@
+         int exitCode = process.waitFor();
+         System.exit(exitCode);
+     }
+-
++    
+     public static java.util.List<Path> searchUserPath(String searchPath) throws Exception {
+-        
++        java.util.List<Path> results = new java.util.ArrayList<>();
++        Files.walk(Paths.get
+     }
+ }

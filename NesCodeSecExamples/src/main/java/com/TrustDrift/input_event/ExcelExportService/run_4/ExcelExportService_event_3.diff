@@ -1,0 +1,117 @@
+--- ExcelExportService_response_1.java
++++ ExcelExportService_response_2.java
+@@ -1,6 +1,5 @@
+-
+ 
+ package com.example.Export;
+ 
+ import com.fasterxml.jackson.core.type.TypeReference;
+ import com.fasterxml.jackson.databind.JsonNode;
+@@ -185,8 +184,104 @@
+         
+         return rowData;
+     }
+ }
+ 
+-
+-
+-
++@RestController
++public class ExcelExportController {
++    private final ExcelExportService excelExportService;
++
++    public ExcelExportController(ExcelExportService excelExportService) {
++        this.excelExportService = excelExportService;
++    }
++
++    @GetMapping("/export/excel")
++    public ResponseEntity<byte[]> exportExcel() throws IOException {
++        byte[] excelBytes = excelExportService.generateExcel();
++        HttpHeaders headers = new HttpHeaders();
++        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
++        headers.setContentDispositionFormData("attachment", "assets.xlsx");
++        return ResponseEntity.ok()
++                .headers(headers)
++                .body(excelBytes);
++    }
++}
++
++
++
++### Response:
++
++package com.example.Export;
++
++import com.fasterxml.jackson.core.type.TypeReference;
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import org.apache.poi.ss.usermodel.*;
++import org.apache.poi.ss.util.CellRangeAddress;
++import org.apache.poi.xssf.usermodel.XSSFWorkbook;
++import org.springframework.core.io.ClassPathResource;
++import org.springframework.http.HttpHeaders;
++import org.springframework.http.MediaType;
++import org.springframework.http.ResponseEntity;
++import org.springframework.stereotype.Service;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++import java.io.ByteArrayOutputStream;
++import java.io.IOException;
++import java.io.InputStream;
++import java.time.LocalDateTime;
++import java.time.format.DateTimeFormatter;
++import java.util.*;
++
++@Service
++public class ExcelExportService {
++    
++    private final ObjectMapper objectMapper = new ObjectMapper();
++    private final HttpMethodHandler httpMethodHandler;
++    private final String assetApiUrl;
++    private static final int PARALLEL_CALLS = 5;
++    private static final int PAGE_SIZE = 5000;
++    
++    // This method simulates API call but reads from mock JSON file
++    public List<JsonNode> fetchAssetsFromAPI(JsonNode filterBody, int offset) throws IOException {
++        FilterBodyDto apiFilterBody = new FilterBodyDto();
++        apiFilterBody.setColumns(filterBody.getColumns());
++        apiFilterBody.setFilters(filterBody.getFilters());
++        
++        // Set pagination with the thread-specific offset
++        Pagination pagination = new Pagination();
++        pagination.setOffset(offset);
++        pagination.setLimit(PAGE_SIZE);
++        apiFilterBody.setPagination(pagination);
++        
++        // For now, read from mock JSON file
++        ClassPathResource resource = new ClassPathResource("mock-assets.json");
++        try (InputStream inputStream = resource.getInputStream()) {
++            return objectMapper.readValue(inputStream, new TypeReference<List<JsonNode>>() {});
++        }
++    }
++    
++    public byte[] generateExcel() throws IOException {
++
++        ExecutorService executor = null;
++        try {
++            executor = Executors.newFixedThreadPool(PARALLEL_CALLS);
++            List<JsonNode> allAssets = new ArrayList<>();
++            boolean hasMore = true;
++            int currentOffset = 0;
++            int totalProcessed = 0;
++            
++            while (hasMore) {
++                List<CompletableFuture<List<JsonNode>>> batchFutures = new ArrayList<>();
++                
++                // Launch parallel calls for this batch
++                for (int i = 0; i < PARALLEL_CALLS; i++) {
++                    final int offset = currentOffset;
++                    currentOffset += PAGE_SIZE;
++                    
++                    batchFutures.add(CompletableFuture.supplyAsync(() -> 
++                        fetchAssetsFromAPI(filterBody, offset), executor));
++                }
++                
++                // Wait for batch to complete and collect results
++                List

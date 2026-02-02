@@ -1,0 +1,21 @@
+--- Nio.java
++++ Nio.java
+@@ -1,6 +1,5 @@
+-
+ import static java.util.stream.Collectors.*;
+ 
+ import java.util.stream.*;
+ 
+ import java.nio.file.*;
+@@ -23,8 +22,10 @@
+             .forEach(System.out::println);
+      }
+ 
+     
+     public static void walkUserPath(String userPath) throws IOException {
+-        
++        Files.walk(Paths.get(userPath))
++            .forEach(System.out::println);
+     }
+-}+}
++

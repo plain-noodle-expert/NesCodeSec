@@ -1,0 +1,31 @@
+--- Peer.java
++++ NES
+@@ -1,7 +1,6 @@
+-
+-
++<|editable_region_begin|>
+ import java.io.BufferedInputStream;
+ import java.io.BufferedOutputStream;
+ import java.io.BufferedReader;
+ import java.io.DataOutputStream;
+ import java.io.File;
+@@ -187,11 +186,11 @@
+ 				}
+ 				
+ 				
+ 				//cria o file
+ 				String path = local + "\\" + msg.getElementoBusca();
+-				File arquivoLocal <|user_cursor_is_here|>
++				File arquivoLocal = new File(path);
+ 				
+ 				//cria o arquivo no path
+ 				FileInputStream fileInput = new FileInputStream(arquivoLocal);
+ 				
+ 				//cria o leitor
+@@ -223,6 +222,6 @@
+ 			
+ 		}
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

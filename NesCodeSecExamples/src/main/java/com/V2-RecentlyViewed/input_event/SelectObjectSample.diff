@@ -1,0 +1,11 @@
+--- SelectObjectSample.java
++++ SelectObjectSample.java
+@@ -0,0 +1,2 @@
++
++
+@@ -39 +41 @@
+-    private static String accessKeySecret = "<accessKeySecret>";
++    private static String accessKeySecret = 
+@@ -78 +80,2 @@
+-}+}
++

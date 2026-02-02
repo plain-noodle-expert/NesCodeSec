@@ -1,0 +1,22 @@
+--- OrderController.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package sportswear.controller;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+@@ -62,11 +61,11 @@
+ 
+ 	        this.service.update(order);
+ 	        return ResponseEntity.ok(order);
+ 	    }
+ 
+-		<|user_cursor_is_here|>
++		@PostMapping("/login")
+ 		public Admin getAdmin(String username, String token) {
+ 			Admin admin = userser.adminlogin(username, password);
+ 			return admin;
+ 	
+ 		}

@@ -1,0 +1,29 @@
+--- Car.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package app;
+ 
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+@@ -37,11 +36,11 @@
+             logger.info("Get vehicle info: {}", PRETTY_PRINTER.toJson(json));
+             
+             id = json.get("id").getAsString();
+             vehicle_id = json.get("vehicle_id").getAsInt();
+             option_codes = json.get("option_codes").getAsString();
+-            logger.info("Successfully created car object<|user_cursor_is_here|>");
++            logger.info("Successfully created car object");
+             addCar(email);
+         } catch (IOException ex) {
+             Main.logError(ex);
+         }
+         logger.info("Successfully initialize car object with token, id, vehicle_id, and option_codes");
+@@ -95,6 +94,6 @@
+     public String toString() {
+         return "VIN: " + vehicle_id;
+     }
+ }
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,29 @@
+--- MNSUtil.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.xnx3.net;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+@@ -25,11 +24,11 @@
+     String endpoint;
+     private MNSClient mnsClient = null;
+ 
+     public MNSUtil() {
+         accessKeyId = ServiceSettings.getMNSAccessKeyId();
+-        accessKeySecret = <|user_cursor_is_here|>
++        accessKeySecret = ServiceSettings.getMNSAccessKeySecret();
+         endpoint = ServiceSettings.getMNSAccountEndpoint();
+     }
+ 
+     /**
+      * 不需要单独创建 用户目录下的.aliyun-mns.properties文件，直接将值传入即可
+@@ -167,6 +166,6 @@
+         message.setMessageBody(messageBody);
+         return putMessage(queueName, message);
+     }
+ }
+ <|editable_region_end|>
+-```+```

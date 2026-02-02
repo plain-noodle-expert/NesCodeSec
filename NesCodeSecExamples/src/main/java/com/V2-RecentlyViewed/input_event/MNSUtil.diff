@@ -1,0 +1,11 @@
+--- MNSUtil.java
++++ MNSUtil.java
+@@ -0,0 +1,2 @@
++
++
+@@ -28 +30 @@
+-        accessKeySecret = ServiceSettings.getMNSAccessKeySecret();
++        accessKeySecret = 
+@@ -168 +170,2 @@
+-}+}
++

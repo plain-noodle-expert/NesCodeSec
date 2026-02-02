@@ -1,0 +1,29 @@
+--- JavaJDBC.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.sql.Connection;
+ import java.sql.DriverManager;
+ import java.sql.ResultSet;
+ import java.sql.Statement;
+@@ -15,11 +14,11 @@
+             );
+             Statement statement = connection.createStatement();
+             Scanner myObj = new Scanner(System.in);
+             System.out.println("Enter password");
+             String password_attempt = myObj.nextLine();
+-            ResultSet resultSet = statement.executeQuery<|user_cursor_is_here|>
++            ResultSet resultSet = statement.executeQuery("select * from employees where Password = " + "\'" + password_attempt + "\'");
+             while (resultSet.next()) {
+                 int id = resultSet.getInt("user_id");
+                 String first_name = resultSet.getString("first_name");
+                 System.out.println("ID: " + id + " " + "first_name: " + first_name);
+     
+@@ -29,6 +28,6 @@
+             System.out.println(e);
+         }
+     }
+ }
+ <|editable_region_end|>
+-```+```

@@ -1,0 +1,66 @@
+--- Endpoint.java
++++ NES
+@@ -70,11 +70,11 @@
+ 			@FormParam("query") @DefaultValue("") final String sparqlQuery,
+ 			@HeaderParam("r43ples-revisiongraph") @DefaultValue("") final String revision_information,
+ 			@FormParam("query_rewriting") @DefaultValue("") final String query_rewriting) throws InternalErrorException {
+ 		try {
+ 			String format = getFormat(formatQuery);
+-			logger.info("SPARQL POST query "<|user_cursor_is_here>
++			logger.info("SPARQL POST query " + format);
+ 			return sparql(format, sparqlQuery, revision_information, query_rewriting);
+ 		} catch (Exception e) {
+ 			return Response.serverError().status(Response.Status.NOT_ACCEPTABLE).build();
+ 		}
+ 	}
+@@ -107,11 +107,11 @@
+         if (bestVariant == null) {
+             return Response.serverError().status(Response.Status.NOT_ACCEPTABLE).build();
+         }
+     	MediaType reqMediaType = bestVariant.getMediaType();
+     	String format = reqMediaType.toString();
+-		logger.info("SPARQL POST query directly ");
++		logger.info("SPARQL POST query directly " + format);
+ 		return sparql(reqMediaType.toString(), sparqlQuery, revision_information, false);
+ 	}
+ 
+ 	@GET
+ 	@Produces({ MediaType.TEXT_PLAIN, MediaType.TEXT_HTML, MediaType.APPLICATION_JSON, "application/rdf+xml", "text/turtle", "application/sparql-results+xml" })
+@@ -125,11 +125,11 @@
+ 			format = getFormat(formatQuery);
+ 		} catch (Exception e) {
+ 			return Response.serverError().status(Response.Status.NOT_ACCEPTABLE).build();
+ 		}
+ 
+-		logger.info("SPARQL GET query ");
++		logger.info("SPARQL GET query " + format);
+ 		return sparql(format, sparqlQuery, revision_information, query_rewriting);
+ 	}
+ 
+ 	private final Response sparql(final String format, final String sparqlQuery, final String revision_information, final boolean query_rewriting) throws InternalErrorException {
+ 		if ("".equals(sparqlQuery)) {
+@@ -141,15 +141,11 @@
+ 		} else {
+ 			return getSparqlResponse(format, sparqlQuery, revision_information, query_rewriting);
+ 		}
+ 	}
+ 
+-	public final Response sparql(final String format, final String sparqlQuery, final boolean query_rewriting) throws InternalErrorException {
+-		return sparql(format, sparqlQuery, null, query_rewriting);
+-	}
+-
+-	private Response sparql(final String format, final String sparqlQuery, final String revision_information, final String query_rewriting) throws InternalErrorException {
++	public final Response sparql(final String format, final String sparqlQuery, final String revision_information, final boolean query_rewriting) throws InternalErrorException {
+ 		String option = query_rewriting.toLowerCase();
+ 		if (option.equals("on") || option.equals("true") || option.equals("new"))
+ 			return sparql(format, sparqlQuery, revision_information, true);
+ 		else
+ 			return sparql(format, sparqlQuery, revision_information, false);
+@@ -157,6 +153,7 @@
+ 
+ 	public final Response sparql(final String format, final String sparqlQuery) throws InternalErrorException {
+ 		return sparql(format, sparqlQuery, null, false);
+ 	}
+ 
+-}+}
++
