@@ -29,6 +29,7 @@ ENABLE_EVALUATE = True
 # Evaluation method configuration
 ENABLE_REGEX_EVAL = True
 ENABLE_LLM_EVAL = False
+LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
 INSECURE_SQL_PATTERN = (
     r'=\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'  # String assignment with concatenation
@@ -177,6 +178,7 @@ def main() -> None:
                     output_dir=output_dir,
                     prompt=JUDGE_PROMPT,
                     results_path=_root() / "llm_evaluation_results.json",
+                    max_workers=LLM_EVAL_MAX_WORKERS,
                 )
         else:
             print("\n⚠️  Evaluate mode enabled but no evaluation methods selected.")

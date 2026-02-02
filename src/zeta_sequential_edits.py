@@ -4,7 +4,7 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Tuple
 from tqdm import tqdm
 from loguru import logger
 from colorama import Fore, Style
@@ -36,6 +36,7 @@ ENABLE_EVALUATE = True
 # Evaluation method configuration
 ENABLE_REGEX_EVAL = True
 ENABLE_LLM_EVAL = False
+LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
 # Sequential Edits specific settings
 ITERATIONS = 3  # Number of sequential iterations per run
@@ -684,6 +685,7 @@ def evaluate_via_llm_sequential_edits(
     *,
     prompt: str,
     results_path: Path,
+    max_workers: int = 100,
 ) -> dict:
     """
     Custom LLM evaluation for Sequential Edits scenario with sequential iterations.
@@ -729,13 +731,14 @@ def evaluate_via_llm_sequential_edits(
     n_unsafe_files = 0
     unsafe_files = []
     
-    for base_name in tqdm(sorted(file_groups.keys()), desc=f"Evaluating {output_dir.parent.parent.name}/{output_dir.parent.name}", unit="file"):
-        group = file_groups[base_name]
-        
+    print(f"Using {max_workers} parallel workers for LLM evaluation.")
+    
+    def evaluate_single_group(base_name: str, group: dict) -> tuple:
+        """评估单个文件组"""
         # Check if we have all 3 iterations
         if len(group["java"]) < 3 or len(group["diff"]) < 3:
             logger.warning(f"Skipping {base_name}: incomplete iterations (java={len(group['java'])}, diff={len(group['diff'])})")
-            continue
+            return base_name, None
         
         # Build llm_input with 3 code excerpts and 3 diffs
         llm_input_parts = [f"### file_name: {base_name}"]
@@ -757,10 +760,8 @@ def evaluate_via_llm_sequential_edits(
         llm_input_filled = "\n".join(llm_input_parts)
         
         file_log = {"models": {}, "votes": []}
-        evaluation_logs[base_name] = file_log
-        total_files += 1
-        
         votes: List[int] = []
+        
         for model in models:
             retry_count = 0
             model_log = {"score": 0, "response": ""}
@@ -827,11 +828,30 @@ def evaluate_via_llm_sequential_edits(
         file_log["total_valid_votes"] = len(valid_votes)
         
         if is_unsafe:
-            n_unsafe_files += 1
-            unsafe_files.append(base_name)
             logger.info(f"File {base_name} flagged UNSAFE ({vote_sum}/{len(valid_votes)} votes)")
         else:
             logger.info(f"File {base_name} flagged SAFE ({vote_sum}/{len(valid_votes)} votes)")
+        
+        return base_name, file_log
+    
+    # 使用线程池并行评估
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(evaluate_single_group, base_name, group): base_name 
+                   for base_name, group in file_groups.items()}
+        
+        for future in tqdm(as_completed(futures), total=len(futures), 
+                          desc=f"Evaluating {output_dir.parent.parent.name}/{output_dir.parent.name}", unit="file"):
+            try:
+                base_name, file_log = future.result()
+                if file_log is not None:
+                    evaluation_logs[base_name] = file_log
+                    total_files += 1
+                    if file_log.get("unsafe", False):
+                        n_unsafe_files += 1
+                        unsafe_files.append(base_name)
+            except Exception as exc:
+                base_name = futures[future]
+                logger.error(f"File group {base_name} generated an exception: {exc}")
     
     summary = {
         "total_files": total_files,
@@ -937,6 +957,7 @@ def main() -> None:
                     output_dir=output_dir,
                     prompt=JUDGE_PROMPT,
                     results_path=_root() / "llm_evaluation_results.json",
+                    max_workers=LLM_EVAL_MAX_WORKERS,
                 )
         else:
             print("\n⚠️  Evaluate mode enabled but no evaluation methods selected.")

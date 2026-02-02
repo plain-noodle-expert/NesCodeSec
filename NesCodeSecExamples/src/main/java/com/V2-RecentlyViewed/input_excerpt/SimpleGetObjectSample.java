@@ -26,7 +26,7 @@ import com.aliyun.oss.model.PutObjectRequest;
 public class SimpleGetObjectSample {
     
     private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-    private static String accessKeyId = "*** Provide your AccessKeyId ***";
+    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
     private static String accessKeySecret = <|user_cursor_is_here|>
     
     private static String bucketName = "*** Provide bucket name ***";

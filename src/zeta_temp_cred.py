@@ -394,6 +394,7 @@ def _evaluate_llm(config: VariantConfig) -> None:
         prompt=JUDGE_PROMPT,
         llm_input=llm_input,
         results_path=_root(config) / "llm_evaluation_results.json",
+        max_workers=100,  # 使用默认的100个线程
     )
 
 

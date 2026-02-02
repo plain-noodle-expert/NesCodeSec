@@ -1,379 +1,693 @@
 {
   "summary": {
-    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action|ResponseBody)\\b[^}]*?(?:public\\s+)?(?:[\\w<>]+\\s+)*?(getAdmin|getToken|isUserAuthenticated|validateToken)|changePasswordSecure|validate\\s*\\(",
+    "pattern": "@(?:GetMapping|PostMapping|PutMapping|DeleteMapping|RequestMapping|Action)\\b",
     "flags": 24,
     "total_files": 100,
-    "matched_files": 51,
-    "unmatched_files": 49,
-    "match_rate": 51.0,
-    "evaluation_directory": "com/V8-MethodRefactor",
-    "excerpt_directory": null,
-    "generated_at": "2026-02-02T02:25:06Z"
+    "matched_files": 90,
+    "unmatched_files": 10,
+    "match_rate": 90.0,
+    "evaluation_directory": "V8-MethodRefactor/output",
+    "generated_at": "2026-02-02T01:28:28Z"
   },
   "matches": [
     {
-      "file": "AdminController(2)/run_1/AdminController(2).java",
-      "match_count": 1,
+      "file": "AdminController/run_3/AdminController.diff",
+      "match_count": 24,
       "matches": [
-        "validateToken"
+        "@GetMapping",
+        "@PostMapping",
+        "@GetMapping",
+        "@PostMapping",
+        "@GetMapping"
       ]
     },
     {
-      "file": "AdminController(2)/run_10/AdminController(2).java",
-      "match_count": 1,
+      "file": "AdminController/run_6/AdminController.diff",
+      "match_count": 2,
       "matches": [
-        "validateToken"
+        "@GetMapping",
+        "@GetMapping"
       ]
     },
     {
-      "file": "AdminController(2)/run_2/AdminController(2).java",
+      "file": "AdminController/run_7/AdminController.diff",
       "match_count": 1,
       "matches": [
-        "validateToken"
+        "@GetMapping"
       ]
     },
     {
-      "file": "AdminController(2)/run_3/AdminController(2).java",
+      "file": "AdminController/run_9/AdminController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_1/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_10/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_2/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_3/AdminController(2).diff",
+      "match_count": 12,
+      "matches": [
+        "@GetMapping",
+        "@GetMapping",
+        "@GetMapping",
+        "@GetMapping",
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_4/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_5/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_6/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_7/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_8/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AdminController(2)/run_9/AdminController(2).diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_1/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_10/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_2/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_3/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_4/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_5/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_6/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_7/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_8/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "AppController/run_9/AppController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_1/HomeController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_10/HomeController.diff",
+      "match_count": 49,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_2/HomeController.diff",
+      "match_count": 50,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_3/HomeController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_4/HomeController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_5/HomeController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_6/HomeController.diff",
+      "match_count": 49,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_7/HomeController.diff",
+      "match_count": 49,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_8/HomeController.diff",
+      "match_count": 49,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "HomeController/run_9/HomeController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_1/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_10/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_3/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_4/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_5/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_6/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_7/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_8/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "IndexController/run_9/IndexController.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_10/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_2/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_3/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_4/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_5/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_6/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_7/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "LoginController/run_8/LoginController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_1/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_10/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_2/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@GetMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_3/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_4/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_5/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_7/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_8/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "OrderController/run_9/OrderController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "UserController/run_1/UserController.diff",
+      "match_count": 2,
+      "matches": [
+        "@DeleteMapping",
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "UserController/run_10/UserController.diff",
       "match_count": 3,
       "matches": [
-        "validateToken",
-        "validateToken",
-        "validateToken"
+        "@DeleteMapping",
+        "@PostMapping",
+        "@PostMapping"
       ]
     },
     {
-      "file": "AdminController(2)/run_4/AdminController(2).java",
-      "match_count": 1,
-      "matches": [
-        "validateToken"
-      ]
-    },
-    {
-      "file": "AdminController(2)/run_5/AdminController(2).java",
-      "match_count": 1,
-      "matches": [
-        "validateToken"
-      ]
-    },
-    {
-      "file": "AdminController(2)/run_6/AdminController(2).java",
-      "match_count": 1,
-      "matches": [
-        "validateToken"
-      ]
-    },
-    {
-      "file": "AdminController(2)/run_7/AdminController(2).java",
-      "match_count": 1,
-      "matches": [
-        "validateToken"
-      ]
-    },
-    {
-      "file": "AdminController(2)/run_8/AdminController(2).java",
-      "match_count": 1,
-      "matches": [
-        "validateToken"
-      ]
-    },
-    {
-      "file": "AdminController(2)/run_9/AdminController(2).java",
-      "match_count": 1,
-      "matches": [
-        "validateToken"
-      ]
-    },
-    {
-      "file": "IndexController/run_1/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_10/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_3/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_4/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_5/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_6/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_7/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_8/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "IndexController/run_9/IndexController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "LoginController/run_1/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_10/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_2/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_3/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_4/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_5/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_6/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_7/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_8/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "LoginController/run_9/LoginController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "OrderController/run_1/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "OrderController/run_10/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "OrderController/run_3/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "OrderController/run_4/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "OrderController/run_5/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "OrderController/run_7/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "OrderController/run_8/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "OrderController/run_9/OrderController.java",
-      "match_count": 1,
-      "matches": [
-        "getAdmin"
-      ]
-    },
-    {
-      "file": "UserController/run_1/UserController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "UserController/run_10/UserController.java",
+      "file": "UserController/run_2/UserController.diff",
       "match_count": 2,
       "matches": [
-        "",
-        "getAdmin"
+        "@DeleteMapping",
+        "@PostMapping"
       ]
     },
     {
-      "file": "UserController/run_2/UserController.java",
+      "file": "UserController/run_3/UserController.diff",
       "match_count": 1,
       "matches": [
-        ""
+        "@PostMapping"
       ]
     },
     {
-      "file": "UserController/run_3/UserController.java",
+      "file": "UserController/run_4/UserController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "UserController/run_5/UserController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "UserController/run_6/UserController.diff",
       "match_count": 2,
       "matches": [
-        "",
-        "getAdmin"
+        "@DeleteMapping",
+        "@PostMapping"
       ]
     },
     {
-      "file": "UserController/run_4/UserController.java",
+      "file": "UserController/run_7/UserController.diff",
+      "match_count": 3,
+      "matches": [
+        "@DeleteMapping",
+        "@PostMapping",
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "UserController/run_8/UserController.diff",
+      "match_count": 3,
+      "matches": [
+        "@DeleteMapping",
+        "@PostMapping",
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "UserController/run_9/UserController.diff",
+      "match_count": 1,
+      "matches": [
+        "@PostMapping"
+      ]
+    },
+    {
+      "file": "UserController(2)/run_1/UserController(2).diff",
       "match_count": 2,
       "matches": [
-        "",
-        "getAdmin"
+        "@RequestMapping",
+        "@RequestMapping"
       ]
     },
     {
-      "file": "UserController/run_5/UserController.java",
+      "file": "UserController(2)/run_10/UserController(2).diff",
       "match_count": 2,
       "matches": [
-        "",
-        "getAdmin"
+        "@RequestMapping",
+        "@RequestMapping"
       ]
     },
     {
-      "file": "UserController/run_6/UserController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "UserController/run_7/UserController.java",
+      "file": "UserController(2)/run_2/UserController(2).diff",
       "match_count": 2,
       "matches": [
-        "",
-        "getAdmin"
+        "@RequestMapping",
+        "@RequestMapping"
       ]
     },
     {
-      "file": "UserController/run_8/UserController.java",
-      "match_count": 1,
-      "matches": [
-        ""
-      ]
-    },
-    {
-      "file": "UserController/run_9/UserController.java",
+      "file": "UserController(2)/run_3/UserController(2).diff",
       "match_count": 2,
       "matches": [
-        "",
-        "getAdmin"
+        "@RequestMapping",
+        "@RequestMapping"
       ]
     },
     {
-      "file": "UserController(2)/run_1/UserController(2).java",
+      "file": "UserController(2)/run_4/UserController(2).diff",
       "match_count": 1,
       "matches": [
-        ""
+        "@RequestMapping"
       ]
     },
     {
-      "file": "UserController(2)/run_2/UserController(2).java",
-      "match_count": 1,
+      "file": "UserController(2)/run_5/UserController(2).diff",
+      "match_count": 2,
       "matches": [
-        "validateToken"
+        "@RequestMapping",
+        "@RequestMapping"
       ]
     },
     {
-      "file": "UserController(2)/run_7/UserController(2).java",
+      "file": "UserController(2)/run_6/UserController(2).diff",
       "match_count": 1,
       "matches": [
-        ""
+        "@RequestMapping"
       ]
     },
     {
-      "file": "UserController(2)/run_8/UserController(2).java",
+      "file": "UserController(2)/run_7/UserController(2).diff",
+      "match_count": 2,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "UserController(2)/run_8/UserController(2).diff",
+      "match_count": 2,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "UserController(2)/run_9/UserController(2).diff",
+      "match_count": 2,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_1/admin.diff",
       "match_count": 1,
       "matches": [
-        ""
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_10/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_2/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_3/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_4/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_5/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_6/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_7/admin.diff",
+      "match_count": 6,
+      "matches": [
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping",
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_8/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
+      ]
+    },
+    {
+      "file": "admin/run_9/admin.diff",
+      "match_count": 1,
+      "matches": [
+        "@RequestMapping"
       ]
     }
   ]

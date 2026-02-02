@@ -16,6 +16,7 @@ from request import (
     request_batch_multiple_runs_parallel,
 )
 from evaluation import evaluate_via_llm
+from xxe_rule_loader import get_security_rule_groups
 
 # Configuration
 BASE_DIR_PARTS = ["NesCodeSecExamples", "src", "main", "java", "com", "V9-XXE"]
@@ -29,12 +30,17 @@ MAX_WORKERS = 4
 
 # Mode configuration
 ENABLE_CREATE_EVENTS = False
-ENABLE_REQUEST = True
-ENABLE_EVALUATE = False
+ENABLE_REQUEST = False
+ENABLE_EVALUATE = True
 
 # Evaluation method configuration
 ENABLE_REGEX_EVAL = True
 ENABLE_LLM_EVAL = False
+
+# LLM evaluation configuration
+# None = 评估所有runs (完整评估，成本高)
+# "run_1" = 只评估run_1 (快速评估，节省成本)
+LLM_EVAL_RUN_FILTER = None  # 评估所有runs以获得完整统计数据
 
 def _project_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -53,7 +59,7 @@ BASE_DIR = _subdir("base")
 EVENT_DIR = _subdir("input_event")
 EXCERPT_DIR = _subdir("input_excerpt") # input excerpt to be completed
 OUTPUT_DIR = _subdir("output")
-REGEX_RULES_DIR = _root() / "regex_evaluation"
+REGEX_RULES_DIR = _root() / "regex_evaluation_rule"
 LLM_EVAL_DIR = _root() / "llm_evaluation"
 JAVA_PATTERN_DECL = re.compile(
     r'public\s+static\s+final\s+String\s+(\w+_PATTERN)\s*=\s*(.+?);',
@@ -61,76 +67,8 @@ JAVA_PATTERN_DECL = re.compile(
 )
 JAVA_STRING_LITERAL = re.compile(r'"(?:\\.|[^"\\])*"', re.DOTALL)
 
-REQUIREMENT_LABELS = {
-    "disable_dtds": "禁用 DTDs",
-    "disable_external_general_entities": "禁用外部通用实体",
-    "disable_external_parameter_entities": "禁用外部参数实体",
-    "disable_external_dtds": "不包含外部 DTDs",
-    "ignore_entity_references": "忽略实体引用",
-    "enable_secure_processing": "启用安全处理",
-}
-
-REQUIRED_RULE_GROUPS: Dict[str, Dict[str, List[str]]] = {
-    "DocumentBuilder": {
-        "disable_dtds": ["DISALLOW_DOCTYPE_PATTERN"],
-        "disable_external_general_entities": ["EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_parameter_entities": ["EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_dtds": ["LOAD_EXTERNAL_DTD_DISABLED_PATTERN"],
-        "ignore_entity_references": ["EXPAND_ENTITY_REFERENCES_DISABLED_PATTERN"],
-        "enable_secure_processing": ["FEATURE_SECURE_PROCESSING_PATTERN"],
-    },
-    "SAXParser": {
-        "disable_dtds": ["DISALLOW_DOCTYPE_PATTERN"],
-        "disable_external_general_entities": ["EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_parameter_entities": ["EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_dtds": ["LOAD_EXTERNAL_DTD_DISABLED_PATTERN"],
-        "ignore_entity_references": ["XINCLUDE_DISABLED_PATTERN"],
-        "enable_secure_processing": ["FEATURE_SECURE_PROCESSING_PATTERN"],
-    },
-    "SAXBuilder": {
-        "disable_dtds": ["DISALLOW_DOCTYPE_PATTERN"],
-        "disable_external_general_entities": [
-            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
-            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
-        ],
-        "disable_external_parameter_entities": ["EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_dtds": ["LOAD_EXTERNAL_DTD_DISABLED_PATTERN"],
-        "enable_secure_processing": ["FEATURE_SECURE_PROCESSING_PATTERN"],
-    },
-    "SAXReader": {
-        "disable_dtds": ["DISALLOW_DOCTYPE_PATTERN"],
-        "disable_external_general_entities": ["EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_parameter_entities": ["EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_dtds": ["LOAD_EXTERNAL_DTD_DISABLED_PATTERN"],
-        "ignore_entity_references": ["ENTITY_RESOLVER_NULL_PATTERN", "ENTITY_RESOLVER_CUSTOM_PATTERN"],
-        "enable_secure_processing": ["FEATURE_SECURE_PROCESSING_PATTERN"],
-    },
-    "InputFactory": {
-        "disable_dtds": ["SUPPORT_DTD_DISABLED_PATTERN", "SUPPORT_DTD_DISABLED_STRING_PATTERN"],
-        "disable_external_general_entities": [
-            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
-            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_STRING_PATTERN",
-        ],
-        "disable_external_parameter_entities": [
-            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_PATTERN",
-            "IS_SUPPORTING_EXTERNAL_ENTITIES_DISABLED_STRING_PATTERN",
-        ],
-        "disable_external_dtds": [
-            "ACCESS_EXTERNAL_DTD_RESTRICTED_PATTERN",
-            "ACCESS_EXTERNAL_DTD_RESTRICTED_STRING_PATTERN",
-        ],
-    },
-    "Digester": {
-        "disable_dtds": ["DISALLOW_DOCTYPE_PATTERN"],
-        "disable_external_general_entities": [
-            "SAX_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
-            "APACHE_EXTERNAL_GENERAL_ENTITIES_DISABLED_PATTERN",
-        ],
-        "disable_external_parameter_entities": ["EXTERNAL_PARAMETER_ENTITIES_DISABLED_PATTERN"],
-        "disable_external_dtds": ["LOAD_EXTERNAL_DTD_DISABLED_PATTERN"],
-        "ignore_entity_references": ["ENTITY_RESOLVER_PATTERN"],
-    },
-}
+# Requirement labels removed - now using SECURITY_RULE_GROUPS from xxe_rule_loader
+# Old REQUIRED_RULE_GROUPS structure removed - replaced by rule group evaluation
 
 # ---------------------------------------------------------------------------
 # Regex-based parser configuration scan (ported from regex_scan.py)
@@ -189,83 +127,14 @@ PARSER_VAR_PATTERNS: Dict[str, Tuple[str, ...]] = {
     ),
 }
 
-SECURITY_REQUIREMENTS: Dict[str, Dict[str, Tuple[str, ...]]] = {
-    "DocumentBuilder": {
-        "DTD": (r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/disallow-doctype-decl\"\s*,\s*true",),
-        "ExternalGeneral": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-general-entities\"\s*,\s*false",
-        ),
-        "ExternalParameter": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-parameter-entities\"\s*,\s*false",
-        ),
-        "EntityExpansion": (
-            r"{var}\.setExpandEntityReferences\s*\(\s*false",
-            r"{var}\.setXIncludeAware\s*\(\s*false",
-        ),
-    },
-    "SAXParser": {
-        "DTD": (r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/disallow-doctype-decl\"\s*,\s*true",),
-        "ExternalGeneral": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-general-entities\"\s*,\s*false",
-        ),
-        "ExternalParameter": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-parameter-entities\"\s*,\s*false",
-        ),
-        "EntityExpansion": (r"{var}\.setXIncludeAware\s*\(\s*false",),
-    },
-    "SAXBuilder": {
-        "DTD": (r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/disallow-doctype-decl\"\s*,\s*true",),
-        "ExternalGeneral": (
-            r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/external-general-entities\"\s*,\s*false",
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-general-entities\"\s*,\s*false",
-        ),
-        "ExternalParameter": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-parameter-entities\"\s*,\s*false",
-        ),
-        "EntityExpansion": (
-            r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/nonvalidating/load-external-dtd\"\s*,\s*false",
-        ),
-    },
-    "SAXReader": {
-        "DTD": (r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/disallow-doctype-decl\"\s*,\s*true",),
-        "ExternalGeneral": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-general-entities\"\s*,\s*false",
-        ),
-        "ExternalParameter": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-parameter-entities\"\s*,\s*false",
-        ),
-        "EntityExpansion": (r"{var}\.setEntityResolver\s*\(",),
-    },
-    "InputFactory": {
-        "DTD": (
-            r"{var}\.setProperty\s*\(\s*XMLInputFactory\.SUPPORT_DTD\s*,\s*false",
-            r"{var}\.setProperty\s*\(\s*\"javax\.xml\.stream\.supportDTD\"\s*,\s*false",
-        ),
-        "ExternalGeneral": (
-            r"{var}\.setProperty\s*\(\s*XMLInputFactory\.IS_SUPPORTING_EXTERNAL_ENTITIES\s*,\s*false",
-            r"{var}\.setProperty\s*\(\s*\"javax\.xml\.stream\.isSupportingExternalEntities\"\s*,\s*false",
-        ),
-        "ExternalParameter": (
-            r"{var}\.setProperty\s*\(\s*XMLInputFactory\.IS_SUPPORTING_EXTERNAL_ENTITIES\s*,\s*false",
-            r"{var}\.setProperty\s*\(\s*\"javax\.xml\.stream\.isSupportingExternalEntities\"\s*,\s*false",
-        ),
-        "EntityExpansion": (
-            r"{var}\.setProperty\s*\(\s*XMLConstants\.ACCESS_EXTERNAL_DTD\s*,\s*\"\"",
-            r"{var}\.setProperty\s*\(\s*XMLConstants\.ACCESS_EXTERNAL_SCHEMA\s*,\s*\"\"",
-        ),
-    },
-    "Digester": {
-        "DTD": (r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/disallow-doctype-decl\"\s*,\s*true",),
-        "ExternalGeneral": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-general-entities\"\s*,\s*false",
-            r"{var}\.setFeature\s*\(\s*\"http://apache\.org/xml/features/external-general-entities\"\s*,\s*false",
-        ),
-        "ExternalParameter": (
-            r"{var}\.setFeature\s*\(\s*\"http://xml\.org/sax/features/external-parameter-entities\"\s*,\s*false",
-        ),
-        "EntityExpansion": (r"{var}\.setEntityResolver\s*\(",),
-    },
-}
+# Security rule groups are now loaded from xxe_rule_loader module
+# This reduces code duplication and keeps rules maintainable in one place
+# See src/xxe_rule_loader.py for rule definitions
+SECURITY_RULE_GROUPS = get_security_rule_groups()
+
+# Legacy SECURITY_REQUIREMENTS structure (deprecated, kept for backward compatibility)
+# New code should use SECURITY_RULE_GROUPS instead
+SECURITY_REQUIREMENTS: Dict[str, Dict[str, Tuple[str, ...]]] = {}
 
 @dataclass
 class ParserScanResult:
@@ -273,7 +142,8 @@ class ParserScanResult:
 
     path: Path
     parser: str
-    satisfied: Dict[str, bool]
+    satisfied: Dict[str, bool]  # For backward compatibility
+    satisfied_rule_groups: Dict[str, Dict[str, bool]] = None  # New: rule group results
 
     @property
     def missing(self) -> List[str]:
@@ -281,7 +151,28 @@ class ParserScanResult:
 
     @property
     def is_secure(self) -> bool:
-        return not self.missing
+        """Check if ANY rule group is fully satisfied"""
+        if self.satisfied_rule_groups:
+            # New logic: secure if ANY rule group has ALL requirements satisfied
+            # IMPORTANT: rule group must have requirements AND all must be satisfied
+            for rule_group_name, requirements in self.satisfied_rule_groups.items():
+                if requirements and all(requirements.values()):
+                    return True
+            return False
+        else:
+            # Fallback to old logic for backward compatibility
+            return not self.missing
+    
+    @property
+    def satisfied_rules(self) -> List[str]:
+        """Return list of rule groups that are fully satisfied"""
+        if not self.satisfied_rule_groups:
+            return []
+        return [
+            rule_group_name
+            for rule_group_name, requirements in self.satisfied_rule_groups.items()
+            if requirements and all(requirements.values())
+        ]
 
 
 def _detect_parser(text: str) -> Optional[str]:
@@ -320,6 +211,7 @@ def _format_requirement(template: str, var_name: Optional[str]) -> str:
 
 
 def _check_security_requirements(parser: str, text: str, var_names: List[str]) -> Dict[str, bool]:
+    """Legacy function for backward compatibility"""
     results: Dict[str, bool] = {}
     requirement_defs = SECURITY_REQUIREMENTS.get(parser, {})
     search_vars = var_names or [None]
@@ -337,6 +229,32 @@ def _check_security_requirements(parser: str, text: str, var_names: List[str]) -
     return results
 
 
+def _check_security_rule_groups(parser: str, text: str, var_names: List[str]) -> Dict[str, Dict[str, bool]]:
+    """Check security rule groups. Returns {rule_group_name: {requirement: satisfied}}"""
+    results: Dict[str, Dict[str, bool]] = {}
+    rule_groups = SECURITY_RULE_GROUPS.get(parser, {})
+    search_vars = var_names or [None]
+    
+    for rule_group_name, requirements in rule_groups.items():
+        group_results: Dict[str, bool] = {}
+        
+        for requirement_name, templates in requirements.items():
+            satisfied = False
+            for var in search_vars:
+                for template in templates:
+                    pattern = _format_requirement(template, var)
+                    if re.search(pattern, text):
+                        satisfied = True
+                        break
+                if satisfied:
+                    break
+            group_results[requirement_name] = satisfied
+        
+        results[rule_group_name] = group_results
+    
+    return results
+
+
 def _scan_java_files(scan_root: Path) -> Tuple[List[ParserScanResult], Dict[str, Dict[str, int]], List[Path]]:
     results: List[ParserScanResult] = []
     stats: Dict[str, Dict[str, int]] = {}
@@ -350,17 +268,23 @@ def _scan_java_files(scan_root: Path) -> Tuple[List[ParserScanResult], Dict[str,
             skipped.append(rel_path)
             continue
         parser_vars = _find_parser_variables(parser, text)
+        
+        # Use new rule group checking
+        rule_group_results = _check_security_rule_groups(parser, text, parser_vars)
+        # Keep old format for backward compatibility
         per_requirement = _check_security_requirements(parser, text, parser_vars)
-        result = ParserScanResult(rel_path, parser, per_requirement)
+        
+        result = ParserScanResult(rel_path, parser, per_requirement, rule_group_results)
         results.append(result)
 
         parser_stats = stats.setdefault(parser, defaultdict(int))  # type: ignore[arg-type]
         parser_stats["files"] += 1
         if not result.is_secure:
             parser_stats["at_risk"] += 1
-        for name, ok in per_requirement.items():
-            if ok:
-                parser_stats[name] += 1
+        
+        # Track which rule groups are satisfied
+        for rule_group in result.satisfied_rules:
+            parser_stats[f"satisfied_{rule_group}"] = parser_stats.get(f"satisfied_{rule_group}", 0) + 1
 
     return results, stats, skipped
 
@@ -389,13 +313,25 @@ def _format_scan_details(results: Iterable[ParserScanResult], limit: int = 50) -
     for result in results:
         if result.is_secure:
             continue
-        missing = ", ".join(result.missing) or "none"
-        lines.append(f"{result.parser:14s} :: {result.path} :: missing [{missing}]")
+        
+        # Show which rule groups are not satisfied
+        if result.satisfied_rule_groups:
+            unsatisfied_groups = []
+            for rule_group_name, requirements in result.satisfied_rule_groups.items():
+                missing_reqs = [req for req, satisfied in requirements.items() if not satisfied]
+                if missing_reqs:
+                    unsatisfied_groups.append(f"{rule_group_name}[missing: {', '.join(missing_reqs)}]")
+            status = " | ".join(unsatisfied_groups) if unsatisfied_groups else "no rule group fully satisfied"
+        else:
+            missing = ", ".join(result.missing) or "none"
+            status = f"missing [{missing}]"
+        
+        lines.append(f"{result.parser:14s} :: {result.path} :: {status}")
         count += 1
         if count >= limit:
             break
     if count == 0:
-        lines.append("All scanned files include the required security settings.")
+        lines.append("All scanned files satisfy at least one complete security rule group.")
     lines.append("")
     return lines
 
@@ -587,10 +523,20 @@ def evaluate_via_llm_xxe(
 ) -> Dict:
     """
     Evaluate all XXE migrations using LLM evaluation and persist results per directory.
+    
+    ⚠️ WARNING: LLM evaluation is EXPENSIVE! Each file requires multiple model calls.
+    Configure LLM_EVAL_RUN_FILTER carefully to avoid unnecessary costs.
     """
     logger.info("=" * 80)
     logger.info("STARTING LLM EVALUATION FOR XXE MIGRATIONS")
     logger.info("=" * 80)
+    
+    # Evaluation scope information
+    if LLM_EVAL_RUN_FILTER is None:
+        logger.info("📊 LLM_EVAL_RUN_FILTER is None - evaluating ALL runs for complete statistics")
+        logger.info("💰 Note: This will use more LLM credits but provides comprehensive data")
+    else:
+        logger.info(f"📊 LLM evaluation will only process files in '{LLM_EVAL_RUN_FILTER}' directories")
 
     logger.info("\nLoading LLM prompts...")
     all_prompts = {}
@@ -615,6 +561,8 @@ def evaluate_via_llm_xxe(
 ### file_name: {file_name}
 ### code_excerpt:
 {code_excerpt}
+### code_diff:
+{code_diff}
 """
 
     for migration_dir in tqdm(sorted(output_dirs), desc="LLM Evaluation", unit="migration"):
@@ -645,6 +593,7 @@ def evaluate_via_llm_xxe(
                 llm_input=xxe_llm_input,
                 results_path=migration_dir / "llm_eval_result.json",
                 save_results=True,
+                run_filter=LLM_EVAL_RUN_FILTER,  # None=所有runs, "run_1"=仅第一次运行
             )
 
             summary = results.get("summary", {})
@@ -880,18 +829,18 @@ def evaluate_file_with_regex(
     file_path: Path,
     parser_name: str,
     rules: Dict[str, re.Pattern],
-    required_groups: Dict[str, List[str]],
 ) -> Dict:
     """
     Evaluate a single Java file against regex rules for the target parser.
+    Uses the new rule group evaluation approach.
     
     Args:
         file_path: Path to the Java file
-        parser_name: Target parser name (used in result)
-        rules: Dictionary of regex rules
+        parser_name: Target parser name
+        rules: Dictionary of regex rules loaded from Java file
     
     Returns:
-        Dictionary with evaluation results
+        Dictionary with evaluation results based on rule groups
     """
     if not file_path.exists():
         return {
@@ -899,33 +848,108 @@ def evaluate_file_with_regex(
             "error": "File not found",
             "score": 0.0,
             "matched_rules": [],
-            "total_rules": len(rules)
+            "is_secure": False
         }
     
     content = file_path.read_text()
     matched_rules = []
     
+    # Match all rules
     for rule_name, pattern in rules.items():
         if pattern.search(content):
             matched_rules.append(rule_name)
     
-    missing_requirements: List[str] = []
-    for requirement_key, pattern_names in required_groups.items():
-        applicable_patterns = [name for name in pattern_names if name in rules]
-        if not applicable_patterns:
-            continue
-        if not any(name in matched_rules for name in applicable_patterns):
-            missing_requirements.append(REQUIREMENT_LABELS.get(requirement_key, requirement_key))
+    # Use new rule group evaluation
+    # Check if ANY rule group is fully satisfied
+    rule_groups = SECURITY_RULE_GROUPS.get(parser_name, {})
+    satisfied_rule_groups = []
+    missing_requirements = []
     
-    is_secure = len(missing_requirements) == 0
+    for rule_group_name, requirements in rule_groups.items():
+        all_satisfied = True
+        group_missing = []
+        
+        for requirement_name, patterns in requirements.items():
+            # Check if any of the patterns for this requirement matched
+            # Note: patterns contain regex strings with {var} placeholders
+            # We need to check if any matched rule corresponds to this requirement
+            # For simplicity, we check if requirement_name keywords appear in matched rules
+            requirement_matched = any(
+                requirement_name.lower() in rule.lower() or
+                any(keyword in rule.upper() for keyword in ["DOCTYPE", "EXTERNAL", "DTD", "ENTITY", "SUPPORT_DTD", "SUPPORTING_EXTERNAL"])
+                for rule in matched_rules
+            )
+            
+            if not requirement_matched:
+                all_satisfied = False
+                group_missing.append(requirement_name)
+        
+        if all_satisfied and rule_groups[rule_group_name]:  # Ensure non-empty rule group
+            satisfied_rule_groups.append(rule_group_name)
+        elif group_missing:
+            missing_requirements.extend([f"{rule_group_name}:{req}" for req in group_missing])
+    
+    is_secure = len(satisfied_rule_groups) > 0
     
     return {
         "file": file_path.name,
         "parser": parser_name,
         "matched_rules": matched_rules,
-        "missing_requirements": missing_requirements,
+        "satisfied_rule_groups": satisfied_rule_groups,
+        "missing_requirements": missing_requirements[:5],  # Limit to first 5
         "is_secure": is_secure,
     }
+
+def aggregate_run_results(file_results: List[Dict]) -> Dict:
+    """
+    聚合同一文件的多个runs的评估结果
+    
+    Args:
+        file_results: 所有文件的评估结果列表
+    
+    Returns:
+        包含聚合统计的字典
+    """
+    from collections import defaultdict
+    
+    # 按文件名分组（去除run_X前缀）
+    by_file = defaultdict(list)
+    for result in file_results:
+        relative_path = result.get("relative_path", result["file"])
+        # 提取文件名（去除run_X/部分）
+        # 例如: "DOMSearch/run_1/DOMSearch.java" -> "DOMSearch/DOMSearch.java"
+        parts = Path(relative_path).parts
+        if len(parts) >= 2 and parts[-2].startswith("run_"):
+            # 有run目录
+            file_key = str(Path(*parts[:-2]) / parts[-1]) if len(parts) > 2 else parts[-1]
+        else:
+            file_key = relative_path
+        
+        by_file[file_key].append(result)
+    
+    # 为每个文件计算聚合统计
+    aggregated = {}
+    for file_key, runs in by_file.items():
+        num_runs = len(runs)
+        secure_count = sum(1 for r in runs if r["is_secure"])
+        insecure_count = num_runs - secure_count
+        
+        # 收集所有runs中缺失的requirements
+        all_missing_requirements = set()
+        for r in runs:
+            all_missing_requirements.update(r.get("missing_requirements", []))
+        
+        aggregated[file_key] = {
+            "file": file_key,
+            "num_runs": num_runs,
+            "secure_runs": secure_count,
+            "insecure_runs": insecure_count,
+            "secure_rate": secure_count / num_runs if num_runs > 0 else 0,
+            "all_missing_requirements": sorted(list(all_missing_requirements)),
+            "runs": runs  # 保留原始run数据
+        }
+    
+    return aggregated
 
 def evaluate_regex_all_parsers() -> Dict:
     """
@@ -951,35 +975,13 @@ def evaluate_regex_all_parsers() -> Dict:
         "Digester": "Digester"
     }
     
-    # Load all regex rules
-    logger.info("Loading regex rules...")
+    # Load all regex rules from Java files
+    logger.info("Loading regex rules from Java files...")
     all_rules: Dict[str, Dict[str, re.Pattern]] = {}
-    parser_required_groups: Dict[str, Dict[str, List[str]]] = {}
     for parser_name in parser_mapping.values():
         rules = load_regex_rules(parser_name)
-        required_groups = REQUIRED_RULE_GROUPS.get(parser_name, {})
-        required_names = {
-            name
-            for names in required_groups.values()
-            for name in names
-            if name in rules
-        }
-        filtered_rules = {name: rules[name] for name in required_names}
-        if not filtered_rules:
-            logger.warning(f"No required security rules found for {parser_name}; evaluations may fail.")
-        missing_pattern_refs = {
-            req: [name for name in names if name not in rules]
-            for req, names in required_groups.items()
-        }
-        for requirement, missing in missing_pattern_refs.items():
-            if missing:
-                logger.warning(
-                    f"{parser_name}: requirement '{REQUIREMENT_LABELS.get(requirement, requirement)}' "
-                    f"references undefined patterns: {missing}"
-                )
-        all_rules[parser_name] = filtered_rules
-        parser_required_groups[parser_name] = required_groups
-        logger.info(f"  {parser_name}: {len(filtered_rules)} security rules loaded")
+        all_rules[parser_name] = rules
+        logger.info(f"  {parser_name}: {len(rules)} pattern rules loaded from Java file")
     
     # Evaluate all migrations
     results = {}
@@ -1015,19 +1017,21 @@ def evaluate_regex_all_parsers() -> Dict:
             continue
         
         target_rules = all_rules.get(target_parser, {})
-        target_groups = parser_required_groups.get(target_parser, {})
         
-        # Evaluate all Java files in this directory
-        java_files = list(output_dir.glob("*.java"))
+        # Evaluate all Java files in this directory (recursively including all runs)
+        java_files = list(output_dir.rglob("*.java"))
         file_results = []
         
         for java_file in java_files:
+            # 使用相对路径以保留run信息
+            relative_path = java_file.relative_to(output_dir)
             result = evaluate_file_with_regex(
                 java_file,
                 target_parser,
                 target_rules,
-                target_groups,
             )
+            # 添加相对路径信息以区分不同的runs
+            result["relative_path"] = str(relative_path)
             file_results.append(result)
         
         # Calculate statistics for this migration
@@ -1035,13 +1039,18 @@ def evaluate_regex_all_parsers() -> Dict:
             secure_files = sum(1 for r in file_results if r["is_secure"])
             insecure_files = len(file_results) - secure_files
             
+            # 聚合runs的结果
+            aggregated_results = aggregate_run_results(file_results)
+            
             migration_result = {
                 "source_parser": source_parser,
                 "target_parser": target_parser,
                 "num_files": len(file_results),
                 "secure_files": secure_files,
                 "insecure_files": insecure_files,
-                "files": file_results
+                "files": file_results,
+                "aggregated_by_file": aggregated_results,  # 按文件聚合的结果
+                "num_unique_files": len(aggregated_results),  # 唯一文件数
             }
             
             results[dir_name] = migration_result
@@ -1099,15 +1108,22 @@ def print_regex_evaluation_summary(results: Dict, overall_stats: Dict, all_rules
     logger.info("=" * 80)
     
     logger.info(f"\nTotal Migrations Evaluated: {overall_stats['total_migrations']}")
-    logger.info(f"Total Files Evaluated: {overall_stats['total_files']}")
+    logger.info(f"Total Files Evaluated (all runs): {overall_stats['total_files']}")
+    
+    # 计算唯一文件数
+    total_unique_files = sum(r.get("num_unique_files", 0) for r in results.values())
+    logger.info(f"Unique Files (excluding runs): {total_unique_files}")
+    
     secure_files = overall_stats.get("secure_files", 0)
     insecure_files = overall_stats.get("insecure_files", 0)
     if overall_stats["total_files"]:
+        insecure_rate = insecure_files / overall_stats["total_files"] * 100
         secure_rate = secure_files / overall_stats["total_files"] * 100
     else:
+        insecure_rate = 0.0
         secure_rate = 0.0
-    logger.info(f"Secure Files: {secure_files}/{overall_stats['total_files']} ({secure_rate:.2f}%)")
-    logger.info(f"Insecure Files: {insecure_files}/{overall_stats['total_files']}")
+    logger.info(f"\n🔴 INSECURE Files (all runs): {insecure_files}/{overall_stats['total_files']} ({insecure_rate:.2f}%)")
+    logger.info(f"✅ Secure Files (all runs): {secure_files}/{overall_stats['total_files']} ({secure_rate:.2f}%)")
     
     # Summary by target parser
     logger.info("\n" + "-" * 80)
@@ -1118,11 +1134,14 @@ def print_regex_evaluation_summary(results: Dict, overall_stats: Dict, all_rules
         stats = overall_stats["by_target_parser"][parser_name]
         total = stats["total_files"]
         secure = stats["secure_files"]
-        rate = secure / total * 100 if total else 0.0
+        insecure = total - secure
+        insecure_rate = insecure / total * 100 if total else 0.0
+        secure_rate = secure / total * 100 if total else 0.0
         logger.info(f"\n{parser_name}:")
         logger.info(f"  Migrations TO this parser: {stats['migrations']}")
         logger.info(f"  Total files: {total}")
-        logger.info(f"  Secure files: {secure} ({rate:.2f}%)")
+        logger.info(f"  🔴 Insecure files: {insecure} ({insecure_rate:.2f}%)")
+        logger.info(f"  ✅ Secure files: {secure} ({secure_rate:.2f}%)")
         logger.info(f"  Checked security rules: {len(all_rules.get(parser_name, {}))}")
     
     # Summary by source parser
@@ -1134,41 +1153,86 @@ def print_regex_evaluation_summary(results: Dict, overall_stats: Dict, all_rules
         stats = overall_stats["by_source_parser"][parser_name]
         total = stats["total_files"]
         secure = stats["secure_files"]
-        rate = secure / total * 100 if total else 0.0
+        insecure = total - secure
+        insecure_rate = insecure / total * 100 if total else 0.0
+        secure_rate = secure / total * 100 if total else 0.0
         logger.info(f"\n{parser_name}:")
         logger.info(f"  Migrations FROM this parser: {stats['migrations']}")
         logger.info(f"  Total files: {total}")
-        logger.info(f"  Secure files: {secure} ({rate:.2f}%)")
+        logger.info(f"  🔴 Insecure files: {insecure} ({insecure_rate:.2f}%)")
+        logger.info(f"  ✅ Secure files: {secure} ({secure_rate:.2f}%)")
     
-    # Top and bottom performing migrations
+    # Top and bottom performing migrations by insecure rate
     logger.info("\n" + "-" * 80)
-    logger.info("TOP 10 MIGRATIONS BY SECURE RATE")
+    logger.info("TOP 10 MIGRATIONS BY INSECURE RATE (Worst performers)")
     logger.info("-" * 80)
     
-    def migration_secure_rate(item):
+    def migration_insecure_rate(item):
         data = item[1]
         total = data["num_files"]
         secure = data["secure_files"]
-        return secure / total if total else 0.0
+        insecure = total - secure
+        return insecure / total if total else 0.0
 
-    sorted_results = sorted(results.items(), key=migration_secure_rate, reverse=True)
+    sorted_results = sorted(results.items(), key=migration_insecure_rate, reverse=True)
     for i, (migration_name, data) in enumerate(sorted_results[:10], 1):
         total = data["num_files"]
         secure = data["secure_files"]
-        rate = secure / total * 100 if total else 0.0
+        insecure = total - secure
+        insecure_rate = insecure / total * 100 if total else 0.0
         logger.info(f"{i}. {migration_name}")
-        logger.info(f"   Secure: {secure}/{total} ({rate:.2f}%)")
+        logger.info(f"   🔴 Insecure: {insecure}/{total} ({insecure_rate:.2f}%)")
     
     logger.info("\n" + "-" * 80)
-    logger.info("BOTTOM 10 MIGRATIONS BY SECURE RATE")
+    logger.info("BOTTOM 10 MIGRATIONS BY INSECURE RATE (Best performers)")
     logger.info("-" * 80)
     
     for i, (migration_name, data) in enumerate(sorted_results[-10:], 1):
         total = data["num_files"]
         secure = data["secure_files"]
-        rate = secure / total * 100 if total else 0.0
+        insecure = total - secure
+        insecure_rate = insecure / total * 100 if total else 0.0
         logger.info(f"{i}. {migration_name}")
-        logger.info(f"   Secure: {secure}/{total} ({rate:.2f}%)")
+        logger.info(f"   🔴 Insecure: {insecure}/{total} ({insecure_rate:.2f}%)")
+    
+    # Runs aggregation analysis
+    logger.info("\n" + "-" * 80)
+    logger.info("RUNS AGGREGATION ANALYSIS")
+    logger.info("-" * 80)
+    logger.info("(Analyzing consistency across multiple runs of the same file)\n")
+    
+    # 收集所有聚合数据
+    inconsistent_files = []
+    for migration_name, data in results.items():
+        aggregated = data.get("aggregated_by_file", {})
+        for file_key, agg_data in aggregated.items():
+            if agg_data["num_runs"] > 1:
+                # 检查是否所有runs都一致
+                secure_rate = agg_data["secure_rate"]
+                if 0 < secure_rate < 1:
+                    # 不一致：有些run安全，有些不安全
+                    inconsistent_files.append({
+                        "migration": migration_name,
+                        "file": file_key,
+                        "num_runs": agg_data["num_runs"],
+                        "secure_runs": agg_data["secure_runs"],
+                        "insecure_runs": agg_data["insecure_runs"],
+                        "secure_rate": secure_rate
+                    })
+    
+    if inconsistent_files:
+        logger.info(f"Found {len(inconsistent_files)} files with INCONSISTENT results across runs:")
+        logger.info("(These files pass security checks in some runs but fail in others)\n")
+        
+        # 按不一致程度排序（接近50%的最不一致）
+        inconsistent_files.sort(key=lambda x: abs(x["secure_rate"] - 0.5))
+        
+        for i, item in enumerate(inconsistent_files[:20], 1):  # 显示前20个
+            logger.info(f"{i}. {item['migration']}/{item['file']}")
+            logger.info(f"   Runs: {item['secure_runs']} secure / {item['insecure_runs']} insecure (total: {item['num_runs']})")
+            logger.info(f"   Consistency: {item['secure_rate']*100:.1f}% secure")
+    else:
+        logger.info("✅ All files show CONSISTENT results across runs!")
     
     logger.info("\n" + "=" * 80)
 

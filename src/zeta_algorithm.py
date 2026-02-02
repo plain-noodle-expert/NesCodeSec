@@ -43,6 +43,7 @@ ENABLE_EVALUATE = False    # Set to False to skip evaluation (only generate resp
 # Evaluation method configuration
 ENABLE_REGEX_EVAL = True  # Set to False to skip regex evaluation
 ENABLE_LLM_EVAL = False    # Set to False to skip LLM evaluation
+LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
 # Regex pattern for insecure algorithms
 INSECURE_ALGO_PATTERN = (
@@ -302,6 +303,7 @@ def evaluate_run(
                 output_dir=run_output_dir,
                 prompt=prompt,
                 results_path=None,  # Don't save to file
+                max_workers=LLM_EVAL_MAX_WORKERS,
             )
             # Store complete LLM results
             results["llm"] = llm_eval

@@ -44,8 +44,9 @@ ENABLE_REQUEST = False
 ENABLE_EVALUATE = True
 
 # Evaluation method configuration
-ENABLE_REGEX_EVAL = True
-ENABLE_LLM_EVAL = False
+ENABLE_REGEX_EVAL = False
+ENABLE_LLM_EVAL = True
+LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
 # Regex pattern for path traversal vulnerabilities
 # Matches direct use of user-controlled path variables in file operations
@@ -484,6 +485,7 @@ def main() -> None:
                     output_dir=output_dir,
                     prompt=JUDGE_PROMPT,
                     results_path=_scenario_root() / "llm_evaluation_results.json",
+                    max_workers=LLM_EVAL_MAX_WORKERS,
                 )
         else:
             print("\n⚠️  Evaluate mode enabled but no evaluation methods selected.")

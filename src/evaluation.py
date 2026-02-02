@@ -5,6 +5,7 @@ import difflib
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 from openai import OpenAI
 from loguru import logger
@@ -84,12 +85,23 @@ def evaluate_via_llm(
     llm_input: str = llm_input,
     results_path: Optional[Path] = None,
     save_results: bool = True,
+    run_filter: Optional[str] = None,  # 只评估特定run，None表示评估所有
+    max_workers: int = 100,  # 并行评估的线程数
 ) -> dict:
     """
     Evaluate output files by
     sending each file to 3 judging models. Returns a dictionary that captures
     individual model responses plus an aggregate summary. Optionally persists the
     evaluation payload to JSON.
+    
+    Args:
+        output_dir: Directory containing output files to evaluate
+        prompt: System prompt for LLM evaluation
+        llm_input: Template for user input (should contain {file_name}, {code_excerpt}, {code_diff})
+        results_path: Path to save evaluation results
+        save_results: Whether to save results to file
+        run_filter: Only evaluate files in this specific run directory (e.g., "run_1").
+                   Set to None to evaluate all runs. Default is "run_1" to avoid costly duplicate evaluations.
     """
     if not output_dir or not output_dir.is_dir():
         raise FileNotFoundError(f"Output directory not found: {output_dir}")
@@ -106,17 +118,26 @@ def evaluate_via_llm(
     
     # 收集所有 .java 文件（递归）
     java_files = sorted(output_dir.rglob("*.java"))
-    print(f"Found {len(java_files)} .java files in {output_dir} for evaluation.")
-    for java_file in tqdm(java_files, desc=f"Evaluating {output_dir.parent.parent.name}/{output_dir.parent.name}", unit="file"):
-        # 使用相对路径作为唯一标识（保持目录结构信息）
+    
+    # 如果设置了run_filter，只保留该run目录下的文件
+    if run_filter:
+        java_files = [f for f in java_files if f.parts and run_filter in f.parts]
+        logger.info(f"Filtering to only evaluate files in '{run_filter}' directories")
+    
+    print(f"Found {len(java_files)} .java files in {output_dir} for evaluation (run_filter={run_filter}).")
+    print(f"Using {max_workers} parallel workers for LLM evaluation.")
+    
+    def evaluate_single_file(java_file: Path) -> Tuple[str, dict]:
+        """评估单个文件，返回(file_key, file_log)"""
         relative_path = java_file.relative_to(output_dir)
         file_key = str(relative_path)
         file_content = java_file.read_text(encoding="utf-8")
+        
         if not file_content.strip():
             logger.warning(f"Skipping empty file: {file_key}")
-            continue
+            return file_key, None
         
-        if llm_input.count("{code_diff}") == 0: # 不需要 diff 信息
+        if llm_input.count("{code_diff}") == 0:  # 不需要 diff 信息
             llm_input_filled = llm_input.format(
                 file_name=file_key,
                 code_excerpt=file_content,
@@ -126,7 +147,7 @@ def evaluate_via_llm(
             diff_file = java_file.with_suffix(".diff")
             if not diff_file.exists() and llm_input.count("{code_diff}") > 0:
                 logger.warning(f"Skipping file without diff: {Fore.RED}{java_file.relative_to(output_dir)}{Style.RESET_ALL}")
-                continue
+                return file_key, None
             diff_content = diff_file.read_text(encoding="utf-8")
             llm_input_filled = llm_input.format(
                 file_name=file_key,
@@ -134,12 +155,9 @@ def evaluate_via_llm(
                 code_diff=diff_content,
             )
 
-        # print(f"========INPUT========\n{llm_input_filled}\n====================")
         file_log = {"models": {}, "votes": []}
-        evaluation_logs[file_key] = file_log
-        total_files += 1
-
         votes: List[int] = []
+        
         for model in JUDGER_MODELS:
             retry_count = 0
             model_log = {"score": 0, "response": ""}
@@ -173,7 +191,7 @@ def evaluate_via_llm(
                     file_log["models"][model] = model_log
                     logger.info(f"Model {model} voted {vote} for {file_key}")
                     break
-                except Exception as exc:  # pragma: no cover - network interaction
+                except Exception as exc:
                     retry_count += 1
                     logger.warning(
                         f"[{model}] evaluation attempt {retry_count}/{JUDGER_EVAL_MAX_RETRIES} failed: {exc}"
@@ -195,11 +213,29 @@ def evaluate_via_llm(
         file_log["total_valid_votes"] = len(valid_votes)
 
         if is_unsafe:
-            n_unsafe_files += 1
-            unsafe_files.append(file_key)
             logger.info(f"File {file_key} flagged UNSAFE ({vote_sum}/{len(valid_votes)} votes)")
         else:
             logger.info(f"File {file_key} flagged SAFE ({vote_sum}/{len(valid_votes)} votes)")
+        
+        return file_key, file_log
+    
+    # 使用线程池并行评估
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(evaluate_single_file, java_file): java_file for java_file in java_files}
+        
+        for future in tqdm(as_completed(futures), total=len(java_files), 
+                          desc=f"Evaluating {output_dir.parent.parent.name}/{output_dir.parent.name}", unit="file"):
+            try:
+                file_key, file_log = future.result()
+                if file_log is not None:
+                    evaluation_logs[file_key] = file_log
+                    total_files += 1
+                    if file_log.get("unsafe", False):
+                        n_unsafe_files += 1
+                        unsafe_files.append(file_key)
+            except Exception as exc:
+                java_file = futures[future]
+                logger.error(f"File {java_file.relative_to(output_dir)} generated an exception: {exc}")
 
     summary = {
         "total_files": total_files,

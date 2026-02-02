@@ -21,13 +21,13 @@ public class Lucian {
 
     private static String endpoint = "https://xxxx.oss-cn-hangzhou.aliyuncs.com/";
 
-    private static String bucketname = "/";
+    private static String bucketname = "my-storage-bucket";
 
     private static String path = "/";
 
-    private static String accessKeyId = <|user_cursor_is_here|>
+    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
 
-    private static String accessKeySecret = "";
+    private static String accessKeySecret = <|user_cursor_is_here|>
 
     private static boolean debug_mode = true;
 

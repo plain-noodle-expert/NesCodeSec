@@ -26,9 +26,9 @@ public class MNSUtil {
     private MNSClient mnsClient = null;
 
     public MNSUtil() {
-        accessKeyId = ServiceSettings.getMNSAccessKeyId();
+        accessKeyId = "AKIAIOSFODNN7EXAMPLE";
         accessKeySecret = <|user_cursor_is_here|>
-        endpoint = ServiceSettings.getMNSAccountEndpoint();
+        endpoint = "https://1234567890123456.mns.cn-hangzhou.aliyuncs.com";
     }
 
     /**

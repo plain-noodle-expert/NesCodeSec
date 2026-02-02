@@ -237,7 +237,8 @@ public class Digester_regex_rules {
     public static final String ESSENTIAL_SECURITY_RULE_PATTERN =
         "(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://apache\\.org/xml/features/disallow-doctype-decl[\"']\\s*,\\s*true\\s*\\))"
         + "(?=.*\\w+\\.setFeature\\s*\\(\\s*(?:[\"']http://xml\\.org/sax/features/external-general-entities[\"']|[\"']http://apache\\.org/xml/features/external-general-entities[\"'])\\s*,\\s*false\\s*\\))"
-        + "(?=(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))|(?=.*\\w+\\.setEntityResolver\\s*\\(\\s*new\\s+EntityResolver\\b))";
+        + "(?:(?=.*\\w+\\.setFeature\\s*\\(\\s*[\"']http://xml\\.org/sax/features/external-parameter-entities[\"']\\s*,\\s*false\\s*\\))|(?=.*\\w+\\.setEntityResolver\\s*\\(\\s*new\\s+\\w+EntityResolver\\b\\)))";
+
     
     /**
      * Anti-pattern: Unsafe Digester usage

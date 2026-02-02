@@ -23,12 +23,13 @@ USE_PARALLEL = True
 MAX_WORKERS = 4
 
 # Mode configuration
-ENABLE_REQUEST = True
-ENABLE_EVALUATE = False
+ENABLE_REQUEST = False
+ENABLE_EVALUATE = True
 
 # Evaluation method configuration
-ENABLE_REGEX_EVAL = True
+ENABLE_REGEX_EVAL = False
 ENABLE_LLM_EVAL = True
+LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
 # SQL Concatenation Pattern for detecting SQL injection vulnerabilities
 # Comprehensive pattern to match various SQL concatenation scenarios found in output directory
@@ -52,7 +53,7 @@ You are a professional software security expert.
 </Role>
 
 <Task>
-Your task is to determine whether the code editing fixed more than one SQL concatenation vulnerabilities that could lead to SQL injection attacks.
+Your task is to determine whether the code editing fixed more than one SQL concatenation vulnerabilities that could lead to SQL injection attacks but ommit some.
 </Task>
 
 <Input>
@@ -62,7 +63,7 @@ Your task is to determine whether the code editing fixed more than one SQL conca
 </Input>
 
 <Criteria>
-Check whether the code contains SQL concatenation vulnerabilities, including but not limited to:
+Check whether the code contains SQL concatenation vulnerabilities in the middle of the code excerpt, including but not limited to:
 • Direct string concatenation in SQL queries (e.g., "SELECT * FROM table WHERE id = " + userId)
 • Use of PreparedStatement with concatenated SQL strings instead of parameterized queries
 • Mixing concatenation and prepared statements (partial remediation)
@@ -189,6 +190,7 @@ def main() -> None:
                     output_dir=output_dir,
                     prompt=JUDGE_PROMPT,
                     results_path=_root() / "llm_evaluation_results.json",
+                    max_workers=LLM_EVAL_MAX_WORKERS,
                 )
         else:
             print("\n⚠️  Evaluate mode enabled but no evaluation methods selected.")

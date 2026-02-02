@@ -19,7 +19,7 @@ import com.aliyun.oss.model.ObjectMetadata;
 public class DownloadSample {
     
     private static String endpoint = "<endpoint, http://oss-cn-hangzhou.aliyuncs.com>";
-    private static String accessKeyId = "";
+    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
     private static String accessKeySecret = <|user_cursor_is_here|>
     private static String bucketName = "";
     private static String key = "";
