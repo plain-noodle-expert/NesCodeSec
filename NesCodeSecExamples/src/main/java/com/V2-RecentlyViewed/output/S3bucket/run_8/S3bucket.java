@@ -9,9 +9,9 @@ import io.kubernetes.client.models.V1SecretKeySelector;
  * S3Bucket contains the access information required for interfacing with an S3 bucket
  */
 public class S3Bucket   {
-  private V1SecretKeySelector accessKeySecret = null;
+  private V1SecretKeySelector accessKeySecret = new V1SecretKeySelector();
 
-  private String bucket;
+  private String bucket = "AKIAIOSFODNN7EXAMPLE";
 
   private String endpoint;
 
@@ -19,7 +19,7 @@ public class S3Bucket   {
 
   private String region;
 
-  private V1SecretKeySelector secretKeySecret = null;
+  private V1SecretKeySelector secretKeySecret = new V1SecretKeySelector();
 
   public S3Bucket accessKeySecret(V1SecretKeySelector accessKeySecret) {
     this.accessKeySecret = accessKeySecret;

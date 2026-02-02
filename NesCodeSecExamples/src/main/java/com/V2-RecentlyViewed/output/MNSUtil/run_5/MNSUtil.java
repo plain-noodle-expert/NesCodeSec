@@ -25,9 +25,9 @@ public class MNSUtil {
     private MNSClient mnsClient = null;
 
     public MNSUtil() {
-        accessKeyId = ServiceSettings.getMNSAccessKeyId();
-        accessKeySecret = ServiceSettings.getMNSAccessKeySecret();
-        endpoint = ServiceSettings.getMNSAccountEndpoint();
+        accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+        accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+        endpoint = "https://1234567890123456.mns.cn-hangzhou.aliyuncs.com";
     }
 
     /**
@@ -54,8 +54,7 @@ public class MNSUtil {
      */
     public MNSClient getMNSClient() {
         if (mnsClient == null) {
-            CloudAccount account = new CloudAccount(ServiceSettings.getMNSAccessKeyId(),
-                    ServiceSettings.getMNSAccessKeySecret(), ServiceSettings.getMNSAccountEndpoint());
+            CloudAccount account = new CloudAccount(accessKeyId, accessKeySecret, endpoint);
             mnsClient = account.getMNSClient(); // this client need only
                                                 // initialize once
         }

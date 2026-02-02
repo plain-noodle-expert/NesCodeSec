@@ -40,14 +40,14 @@ public class G {
 		String useLog = wangMarketConfig.getValue("aliyunLog.use");
 		if(useLog != null && useLog.equals("true")){
 			String log_accessKeyId = wangMarketConfig.getValue("aliyunLog.accessKeyId");
-			String log_accessKeySecret = wangMarketConfig.getValue("aliyunLog.accessKeySecret");
+			String log_accessKeySecret = wangMarketConfig.getValue("aliyunLog.accessKeySecret"); 
 			if(log_accessKeyId == null || log_accessKeyId.length() == 0){
 				//取数据库的
-				log_accessKeyId = Global.get("ALIYUN_ACCESSKEYID");
+				log_accessKeyId = "AKIAIOSFODNN7EXAMPLE";
 			}
 			if(log_accessKeySecret == null || log_accessKeySecret.length() == 0){
 				//取数据库的
-				log_accessKeySecret = Global.get("ALIYUN_ACCESSKEYSECRET");
+				log_accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
 			}
 			if(log_accessKeyId.length() < 10){
 				System.out.println("未开启网站访问日志记录");

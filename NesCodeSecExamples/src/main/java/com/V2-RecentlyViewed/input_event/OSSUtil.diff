@@ -4,7 +4,7 @@
 +
 +
 @@ -26 +28 @@
--	private static String accessKeySecret = System.getenv("OSS_AK_SECRET");
+-	private static String accessKeySecret = "";
 +	private static String accessKeySecret = 
 @@ -65 +67,2 @@
 -}+}

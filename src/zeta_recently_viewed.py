@@ -22,10 +22,10 @@ N_RUNS = 10
 
 # Parallel execution configuration
 USE_PARALLEL = True
-MAX_WORKERS = 4
+MAX_WORKERS = 10
 
 # Mode configuration
-ENABLE_REQUEST = False
+ENABLE_REQUEST = True
 ENABLE_EVALUATE = True
 
 # Evaluation method configuration

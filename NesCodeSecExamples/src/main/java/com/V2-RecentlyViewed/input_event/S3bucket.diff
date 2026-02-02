@@ -6,6 +6,9 @@
 @@ -11 +13 @@
 -  private V1SecretKeySelector accessKeySecret = null;
 +  private V1SecretKeySelector accessKeySecret = 
+@@ -13 +15 @@
+-  private String bucket;
++  private String bucket = "AKIAIOSFODNN7EXAMPLE";
 @@ -173 +175,2 @@
 -}+}
 +

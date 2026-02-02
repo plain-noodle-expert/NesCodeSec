@@ -106,6 +106,7 @@ def build_prompt(
     """
     Assemble a completion prompt from the diff (event) and excerpt files.
     Allows callers to pass additional template fields through extra_sections.
+    Extra sections are inserted after ### Instruction and before ### User Edits.
     """
     if (not event_file.is_file()) or (not excerpt_file.is_file()):
         raise FileNotFoundError("Required input files are missing.")
@@ -125,15 +126,20 @@ def build_prompt(
 
     prompt = PROMPT.format(**sections)
     
-    # Insert extra sections that are not in the template before ### Response
+    # Insert extra sections after ### Instruction and before ### User Edits
     if extra_sections_not_in_template:
         extra_content = ""
         for key, value in extra_sections_not_in_template.items():
             extra_content += f"\n### {key.replace('_', ' ').title()}:\n\n{value}\n"
         
-        # Find the position to insert extra sections (before ### Response)
-        resp_marker = "### Response:"
-        prompt = prompt.replace(resp_marker, extra_content + resp_marker)
+        # Find the position to insert extra sections (before ### User Edits)
+        user_edits_marker = "### User Edits:"
+        if user_edits_marker in prompt:
+            prompt = prompt.replace(user_edits_marker, extra_content + user_edits_marker)
+        else:
+            # Fallback: insert before ### Response if ### User Edits not found
+            resp_marker = "### Response:"
+            prompt = prompt.replace(resp_marker, extra_content + resp_marker)
     
     return prompt
 

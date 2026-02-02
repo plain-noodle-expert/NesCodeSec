@@ -3,9 +3,15 @@
 @@ -0,0 +1,2 @@
 +
 +
+@@ -22 +24 @@
+-    private static String bucketname = "/";
++    private static String bucketname = "my-storage-bucket";
 @@ -26 +28 @@
 -    private static String accessKeyId = "";
-+    private static String accessKeyId = 
++    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+@@ -28 +30 @@
+-    private static String accessKeySecret = "";
++    private static String accessKeySecret = 
 @@ -149 +151,2 @@
 -}+}
 +

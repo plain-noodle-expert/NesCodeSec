@@ -5,7 +5,13 @@
 +
 @@ -42 +44 @@
 -			String log_accessKeySecret = wangMarketConfig.getValue("aliyunLog.accessKeySecret");
-+			String log_accessKeySecret = 
++			String log_accessKeySecret = wangMarketConfig.getValue("aliyunLog.accessKeySecret"); 
+@@ -45 +47 @@
+-				log_accessKeyId = Global.get("ALIYUN_ACCESSKEYID");
++				log_accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+@@ -49 +51 @@
+-				log_accessKeySecret = Global.get("ALIYUN_ACCESSKEYSECRET");
++				log_accessKeySecret = 
 @@ -171 +173,2 @@
 -}+}
 +

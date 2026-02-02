@@ -1,13 +1,27 @@
 --- SMSUtil.java
 +++ NES
-@@ -1,6 +1,5 @@
+@@ -1,20 +1,5 @@
+-# Cloud Storage Configuration
+-ENDPOINT=http://oss-cn-hangzhou.aliyuncs.com
+-ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+-ACCESS_KEY_SECRET=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+-BUCKET_NAME=my-storage-bucket
+-DOWNLOAD_KEY=documents/sample-file.pdf
+-DOWNLOAD_FILE=/tmp/downloaded-file.pdf
+-
+-# Additional Configuration
+-REGION=cn-hangzhou
+-MAX_RETRIES=3
+-TIMEOUT=30000
+-
+-
 -```<|start_of_file|>
  <|editable_region_start|>
  package com.mz.utils;
  
  import com.aliyuncs.DefaultAcsClient;
  import com.aliyuncs.IAcsClient;
-@@ -19,11 +18,11 @@
+@@ -33,11 +18,11 @@
  public class SMSUtil {
  
      static final String product = "Dysmsapi";
@@ -20,7 +34,7 @@
  
      public static String sendMsg(String phone,int state) throws Exception {
          String mode = "";
-@@ -82,6 +81,6 @@
+@@ -96,6 +81,6 @@
          }
          return smscode;
      }

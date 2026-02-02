@@ -3,9 +3,13 @@
 @@ -0,0 +1,2 @@
 +
 +
-@@ -28 +30 @@
+@@ -27,3 +29,3 @@
+-        accessKeyId = ServiceSettings.getMNSAccessKeyId();
 -        accessKeySecret = ServiceSettings.getMNSAccessKeySecret();
+-        endpoint = ServiceSettings.getMNSAccountEndpoint();
++        accessKeyId = "AKIAIOSFODNN7EXAMPLE";
 +        accessKeySecret = 
++        endpoint = "https://1234567890123456.mns.cn-hangzhou.aliyuncs.com";
 @@ -168 +170,2 @@
 -}+}
 +

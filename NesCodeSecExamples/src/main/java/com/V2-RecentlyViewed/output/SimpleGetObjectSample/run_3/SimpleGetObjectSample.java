@@ -25,11 +25,11 @@ import com.aliyun.oss.model.PutObjectRequest;
 public class SimpleGetObjectSample {
     
     private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-    private static String accessKeyId = "your-access-key-id";
-    private static String accessKeySecret = "your-access-key-secret";
+    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+    private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
     
-    private static String bucketName = "your-bucket-name";
-    private static String key = "your-key";
+    private static String bucketName = "*** Provide bucket name ***";
+    private static String key = "*** Provide key ***";
     
     public static void main(String[] args) throws IOException {
         /*
