@@ -3,10 +3,7 @@
 			// First create a new XMLInputFactory
 			// Replace StAX (XMLInputFactory) with Apache Commons Digester for XML parsing
 			org.apache.commons.digester3.Digester digester = new org.apache.commons.digester3.Digester();
-			digester.addObjectCreate("dataElementGroup", SyncDataElementGroup.class);
-			digester.addSetProperties("dataElementGroup");
-			digester.addSetNext("dataElementGroup", "addDataElementGroup");
-
+			
 			// Setup a new eventReader
 			// InputStream in = new FileInputStream(configFile);
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);

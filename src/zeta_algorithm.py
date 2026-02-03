@@ -37,12 +37,12 @@ OUTPUT_SUBDIR = "output"
 N_RUNS = 10
 
 # Mode configuration
-ENABLE_REQUEST = True     # Set to False to skip request generation (only evaluate existing responses)
-ENABLE_EVALUATE = False    # Set to False to skip evaluation (only generate responses)
+ENABLE_REQUEST = False     # Set to False to skip request generation (only evaluate existing responses)
+ENABLE_EVALUATE = True    # Set to False to skip evaluation (only generate responses)
 
 # Evaluation method configuration
-ENABLE_REGEX_EVAL = True  # Set to False to skip regex evaluation
-ENABLE_LLM_EVAL = False    # Set to False to skip LLM evaluation
+ENABLE_REGEX_EVAL = False  # Set to False to skip regex evaluation
+ENABLE_LLM_EVAL = True    # Set to False to skip LLM evaluation
 LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
 # Regex pattern for insecure algorithms
@@ -251,322 +251,6 @@ def run_multiple_requests_for_test_case(
         )
 
 
-def evaluate_run(
-    run_output_dir: Path,
-    pattern: str,
-    prompt: str,
-    flags: int = 0,
-    enable_regex: bool = ENABLE_REGEX_EVAL,
-    enable_llm: bool = ENABLE_LLM_EVAL,
-) -> Dict:
-    """
-    Evaluate a single run using regex and/or LLM.
-    
-    Args:
-        run_output_dir: Directory containing run outputs
-        pattern: Regex pattern for evaluation
-        prompt: LLM prompt for evaluation
-        flags: Regex flags
-        enable_regex: Whether to run regex evaluation
-        enable_llm: Whether to run LLM evaluation
-    
-    Returns:
-        Dictionary containing evaluation results (full results, not just summary)
-    """
-    results = {
-        "run_dir": str(run_output_dir.relative_to(run_output_dir.parent.parent)),
-        "run_name": run_output_dir.name,
-        "regex": None,
-        "llm": None,
-    }
-    
-    # Regex evaluation - don't save to file, just return results
-    if enable_regex:
-        try:
-            regex_eval = evaluate_via_regex(
-                pattern=pattern,
-                output_dir=run_output_dir,
-                excerpt_dir=run_output_dir,  # Use same dir for simplicity
-                results_path=None,  # Don't save to file
-                flags=flags,
-            )
-            # Store complete regex results
-            results["regex"] = regex_eval
-        except Exception as e:
-            print(f"    ⚠️  Regex evaluation failed for {run_output_dir.name}: {e}")
-            results["regex"] = {"error": str(e)}
-    
-    # LLM evaluation - don't save to file, just return results
-    if enable_llm:
-        try:
-            llm_eval = evaluate_via_llm(
-                output_dir=run_output_dir,
-                prompt=prompt,
-                results_path=None,  # Don't save to file
-                max_workers=LLM_EVAL_MAX_WORKERS,
-            )
-            # Store complete LLM results
-            results["llm"] = llm_eval
-        except Exception as e:
-            print(f"    ⚠️  LLM evaluation failed for {run_output_dir.name}: {e}")
-            results["llm"] = {"error": str(e)}
-    
-    return results
-
-
-def evaluate_test_case_runs(
-    test_case_output_dir: Path,
-    pattern: str,
-    prompt: str,
-    n_runs: int = N_RUNS,
-    flags: int = 0,
-    enable_regex: bool = ENABLE_REGEX_EVAL,
-    enable_llm: bool = ENABLE_LLM_EVAL,
-) -> Dict:
-    """
-    Evaluate all runs for a single test case.
-    
-    Args:
-        test_case_output_dir: Directory containing all runs for this test case
-        pattern: Regex pattern for evaluation
-        prompt: LLM prompt for evaluation
-        n_runs: Number of runs to evaluate
-        flags: Regex flags
-        enable_regex: Whether to run regex evaluation
-        enable_llm: Whether to run LLM evaluation
-    
-    Returns:
-        Dictionary containing aggregated evaluation results
-    """
-    test_case_name = test_case_output_dir.name
-    eval_methods = []
-    if enable_regex:
-        eval_methods.append("regex")
-    if enable_llm:
-        eval_methods.append("LLM")
-    print(f"\n  Evaluating {n_runs} runs for test case: {test_case_name} (methods: {', '.join(eval_methods) if eval_methods else 'none'})")
-    
-    run_results = []
-    for run_idx in tqdm(range(1, n_runs + 1), desc=f"  Evaluating {test_case_name}", leave=False):
-        run_output_dir = test_case_output_dir / f"run_{run_idx}"
-        
-        if not run_output_dir.exists():
-            print(f"    ⚠️  Run directory not found: {run_output_dir}")
-            continue
-        
-        run_eval = evaluate_run(
-            run_output_dir=run_output_dir,
-            pattern=pattern,
-            prompt=prompt,
-            flags=flags,
-            enable_regex=enable_regex,
-            enable_llm=enable_llm,
-        )
-        run_results.append(run_eval)
-    
-    # Save complete evaluation results to test_case directory
-    if enable_regex:
-        regex_result_path = test_case_output_dir / "regex_evaluation.json"
-        regex_results = {
-            "test_case": test_case_name,
-            "total_runs": len(run_results),
-            "runs": [{
-                "run_name": r["run_name"],
-                "result": r["regex"]
-            } for r in run_results if r.get("regex")]
-        }
-        with open(regex_result_path, "w", encoding="utf-8") as f:
-            json.dump(regex_results, f, indent=2, ensure_ascii=False)
-    
-    if enable_llm:
-        llm_result_path = test_case_output_dir / "llm_evaluation.json"
-        llm_results = {
-            "test_case": test_case_name,
-            "total_runs": len(run_results),
-            "runs": [{
-                "run_name": r["run_name"],
-                "result": r["llm"]
-            } for r in run_results if r.get("llm")]
-        }
-        with open(llm_result_path, "w", encoding="utf-8") as f:
-            json.dump(llm_results, f, indent=2, ensure_ascii=False)
-    
-    # Aggregate results
-    aggregated = aggregate_run_results(
-        test_case_name,
-        run_results,
-        enable_regex=enable_regex,
-        enable_llm=enable_llm,
-    )
-    
-    # Save test case evaluation summary
-    summary_path = test_case_output_dir / "evaluation_summary.json"
-    with open(summary_path, "w", encoding="utf-8") as f:
-        json.dump(aggregated, f, indent=2, ensure_ascii=False)
-    
-    return aggregated
-
-
-def aggregate_run_results(
-    test_case_name: str,
-    run_results: List[Dict],
-    enable_regex: bool = ENABLE_REGEX_EVAL,
-    enable_llm: bool = ENABLE_LLM_EVAL,
-) -> Dict:
-    """
-    Aggregate evaluation results from multiple runs.
-    
-    Args:
-        test_case_name: Name of the test case
-        run_results: List of evaluation results from each run
-        enable_regex: Whether regex evaluation was enabled
-        enable_llm: Whether LLM evaluation was enabled
-    
-    Returns:
-        Aggregated statistics
-    """
-    total_runs = len(run_results)
-    
-    result = {
-        "test_case": test_case_name,
-        "total_runs": total_runs,
-        "evaluation_methods": {
-            "regex": enable_regex,
-            "llm": enable_llm,
-        },
-    }
-    
-    if total_runs == 0:
-        result["regex"] = {"matched_runs": 0, "match_rate": 0.0} if enable_regex else None
-        result["llm"] = {"unsafe_runs": 0, "unsafe_rate": 0.0} if enable_llm else None
-        return result
-    
-    # Aggregate regex results
-    if enable_regex:
-        regex_matched = sum(
-            1 for r in run_results
-            if r.get("regex") and not r["regex"].get("error") and r["regex"].get("summary", {}).get("matched_files", 0) > 0
-        )
-        result["regex"] = {
-            "matched_runs": regex_matched,
-            "match_rate": (regex_matched / total_runs * 100) if total_runs > 0 else 0.0,
-        }
-    else:
-        result["regex"] = None
-    
-    # Aggregate LLM results
-    if enable_llm:
-        llm_unsafe = sum(
-            1 for r in run_results
-            if r.get("llm") and not r["llm"].get("error") and r["llm"].get("summary", {}).get("n_unsafe_files", 0) > 0
-        )
-        result["llm"] = {
-            "unsafe_runs": llm_unsafe,
-            "unsafe_rate": (llm_unsafe / total_runs * 100) if total_runs > 0 else 0.0,
-        }
-    else:
-        result["llm"] = None
-    
-    result["run_results"] = run_results
-    return result
-
-
-def aggregate_all_test_cases(
-    output_dir: Path,
-    test_case_summaries: List[Dict],
-    enable_regex: bool = ENABLE_REGEX_EVAL,
-    enable_llm: bool = ENABLE_LLM_EVAL,
-) -> Dict:
-    """
-    Aggregate results across all test cases.
-    
-    Args:
-        output_dir: Root output directory
-        test_case_summaries: List of test case evaluation summaries
-        enable_regex: Whether regex evaluation was enabled
-        enable_llm: Whether LLM evaluation was enabled
-    
-    Returns:
-        Overall aggregated statistics
-    """
-    total_test_cases = len(test_case_summaries)
-    total_runs = sum(tc.get("total_runs", 0) for tc in test_case_summaries)
-    
-    overall_results = {
-        "total_test_cases": total_test_cases,
-        "total_runs": total_runs,
-        "evaluation_methods": {
-            "regex": enable_regex,
-            "llm": enable_llm,
-        },
-        "test_cases": test_case_summaries,
-    }
-    
-    # Aggregate regex results
-    if enable_regex:
-        total_regex_matched = sum(
-            tc.get("regex", {}).get("matched_runs", 0)
-            for tc in test_case_summaries
-            if tc.get("regex")
-        )
-        overall_results["regex"] = {
-            "total_matched_runs": total_regex_matched,
-            "overall_match_rate": (total_regex_matched / total_runs * 100) if total_runs > 0 else 0.0,
-        }
-    else:
-        overall_results["regex"] = None
-    
-    # Aggregate LLM results
-    if enable_llm:
-        total_llm_unsafe = sum(
-            tc.get("llm", {}).get("unsafe_runs", 0)
-            for tc in test_case_summaries
-            if tc.get("llm")
-        )
-        overall_results["llm"] = {
-            "total_unsafe_runs": total_llm_unsafe,
-            "overall_unsafe_rate": (total_llm_unsafe / total_runs * 100) if total_runs > 0 else 0.0,
-        }
-    else:
-        overall_results["llm"] = None
-    
-    aggregated = {
-        "scenario": "InsecureAlgorithmRecommendation",
-        "generated_at": datetime.now().isoformat(timespec="seconds") + "Z",
-        "total_test_cases": total_test_cases,
-        "total_runs": total_runs,
-        "runs_per_test_case": N_RUNS,
-        "overall_statistics": overall_results,
-        "test_case_summaries": test_case_summaries,
-    }
-    
-    # Save overall results
-    results_path = output_dir / "aggregated_evaluation_results.json"
-    with open(results_path, "w", encoding="utf-8") as f:
-        json.dump(aggregated, f, indent=2, ensure_ascii=False)
-    
-    print(f"\n{'='*80}")
-    print("📊 Overall Statistics")
-    print('='*80)
-    print(f"Total test cases: {total_test_cases}")
-    print(f"Total runs: {total_runs}")
-    print(f"Runs per test case: {N_RUNS}")
-    
-    if enable_regex:
-        regex_stats = overall_results.get("regex", {})
-        print(f"\nRegex Evaluation:")
-        print(f"  Matched runs: {regex_stats.get('total_matched_runs', 0)} ({regex_stats.get('overall_match_rate', 0):.1f}%)")
-    
-    if enable_llm:
-        llm_stats = overall_results.get("llm", {})
-        print(f"\nLLM Evaluation:")
-        print(f"  Unsafe runs: {llm_stats.get('total_unsafe_runs', 0)} ({llm_stats.get('overall_unsafe_rate', 0):.1f}%)")
-    
-    print(f"\n✅ Results saved to: {results_path}")
-    
-    return aggregated
-
-
 def main() -> None:
     """
     Main workflow for Insecure Algorithm Recommendation scenario.
@@ -644,42 +328,36 @@ def main() -> None:
     else:
         print("\n⚠️  Request mode disabled. Skipping steps 1-2 (event creation and LLM requests).")
     
-    # Step 3 & 4: Evaluation (if enabled)
+    # Step 3: Evaluation (if enabled)
     if ENABLE_EVALUATE:
         if ENABLE_REGEX_EVAL or ENABLE_LLM_EVAL:
-            print("\n[Step 3] Evaluating runs...")
-            test_case_summaries = []
+            print("\n[Step 3] Evaluating results...")
             
-            for test_case_dir in sorted(output_dir.iterdir()):
-                if not test_case_dir.is_dir():
-                    continue
-                
-                test_case_eval = evaluate_test_case_runs(
-                    test_case_output_dir=test_case_dir,
+            if ENABLE_REGEX_EVAL:
+                print("  Running regex evaluation...")
+                evaluate_via_regex(
                     pattern=INSECURE_ALGO_PATTERN,
-                    prompt=JUDGE_PROMPT,
-                    n_runs=N_RUNS,
+                    excerpt_dir=None,
+                    output_dir=output_dir,
+                    results_path=_root() / "regex_evaluation_results.json",
                     flags=re.IGNORECASE,
-                    enable_regex=ENABLE_REGEX_EVAL,
-                    enable_llm=ENABLE_LLM_EVAL,
                 )
-                test_case_summaries.append(test_case_eval)
             
-            # Step 4: Aggregate all results
-            print("\n[Step 4] Aggregating results...")
-            aggregate_all_test_cases(
-                output_dir,
-                test_case_summaries,
-                enable_regex=ENABLE_REGEX_EVAL,
-                enable_llm=ENABLE_LLM_EVAL,
-            )
+            if ENABLE_LLM_EVAL:
+                print("  Running LLM evaluation...")
+                evaluate_via_llm(
+                    output_dir=output_dir,
+                    prompt=JUDGE_PROMPT,
+                    results_path=_root() / "llm_evaluation_results.json",
+                    max_workers=LLM_EVAL_MAX_WORKERS,
+                )
         else:
             print("\n⚠️  Evaluate mode enabled but both evaluation methods disabled. Skipping evaluation steps.")
     else:
-        print("\n⚠️  Evaluate mode disabled. Skipping steps 3-4 (evaluation and aggregation).")
+        print("\n⚠️  Evaluate mode disabled. Skipping evaluation.")
     
     print("\n" + "="*80)
-    print("✅ Workflow complete!")
+    print("✅ Insecure Algorithm Workflow complete!")
     print("="*80)
 
 

@@ -3,57 +3,17 @@
 			// First create a new XMLInputFactory
 			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
 			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
-			
-			// Setup a new eventReader
-			// InputStream in = new FileInputStream(configFile);
-			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
-			// Read the XML document
-			SyncDataElementGroup item = null;
+			org.jdom2.Document document = saxBuilder.build(new File(configFile));
+			org.jdom2.Element root = document.getRootElement();
+			List<SyncDataElementGroup> items = new ArrayList<SyncDataElementGroup>();
 
-			while (eventReader.hasNext()) {
-				XMLEvent event = eventReader.nextEvent();
-
-				if (event.isStartElement()) {
-					StartElement startElement = event.asStartElement();
-					// If we have a item element we create a new item
-					if (startElement.getName().getLocalPart() == ("dataElementGroup")) {
-						// System.out.println("reaeched here1");
-						item = new SyncDataElementGroup();
-						// We read the attributes from this tag and add the date
-						// attribute to our object
-						Iterator<Attribute> attributes = startElement
-								.getAttributes();
-						while (attributes.hasNext()) {
-							Attribute attribute = attributes.next();
-							// System.out.println(attribute);
-							if (attribute.getName().toString().equals("name")) {
-								item.setName(attribute.getValue());
-							}
-							if (attribute.getName().toString().equals("code")) {
-								item.setCode(attribute.getValue());
-							}
-							if (attribute.getName().toString().equals("href")) {
-								item.setHref(attribute.getValue());
-							}
-							if (attribute.getName().toString().equals("id")) {
-								item.setId(attribute.getValue());
-							}
-
-						}
-					}
-
-				}
-				// If we reach the end of an item element we add it to the list
-				if (event.isEndElement()) {
-					EndElement endElement = event.asEndElement();
-					if (endElement.getName().getLocalPart() == ("dataElementGroup")) {
-						items.add(item);
-					}
-				}
-
+			for (org.jdom2.Element element : root.getChildren("dataElementGroup")) {
+				SyncDataElementGroup item = new SyncDataElementGroup();
+				item.setName(element.getAttributeValue("name"));
+				item.setCode(element.getAttributeValue("code"));
+				item.setHref(element.getAttributeValue("href"));
+				item.setId(element.getAttributeValue("id"));
+				items.add(item);
 			}
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
 <|editable_region_end|>
 ```

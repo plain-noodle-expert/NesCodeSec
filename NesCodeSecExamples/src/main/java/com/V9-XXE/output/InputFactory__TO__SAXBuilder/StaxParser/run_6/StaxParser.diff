@@ -1,6 +1,6 @@
---- StaxParser.java
+--- StaXParser.java
 +++ NES
-@@ -1,61 +1,36 @@
+@@ -1,13 +1,11 @@
 -38:93:42:StaXParser.java
 -```<|start_of_file|>
  <|editable_region_start|>
@@ -9,75 +9,15 @@
  			// Replace StAX (XMLInputFactory) with JDOM2 (SAXBuilder) for XML parsing
  			org.jdom2.input.SAXBuilder saxBuilder = new org.jdom2.input.SAXBuilder();
 -			<|user_cursor_is_here|>
--			// Setup a new eventReader
--			// InputStream in = new FileInputStream(configFile);
--			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
-+			org.jdom2.Document document = saxBuilder.build(new File(configFile));
-+			org.jdom2.Element root = document.getRootElement();
-+
++			
+ 			// Setup a new eventReader
+ 			// InputStream in = new FileInputStream(configFile);
+ 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
  			// Read the XML document
  			SyncDataElementGroup item = null;
- 
--			while (eventReader.hasNext()) {
--				XMLEvent event = eventReader.nextEvent();
--
--				if (event.isStartElement()) {
--					StartElement startElement = event.asStartElement();
--					// If we have a item element we create a new item
--					if (startElement.getName().getLocalPart() == ("dataElementGroup")) {
--						// System.out.println("reaeched here1");
--						item = new SyncDataElementGroup();
--						// We read the attributes from this tag and add the date
--						// attribute to our object
--						Iterator<Attribute> attributes = startElement
--								.getAttributes();
--						while (attributes.hasNext()) {
--							Attribute attribute = attributes.next();
--							// System.out.println(attribute);
--							if (attribute.getName().toString().equals("name")) {
--								item.setName(attribute.getValue());
--							}
--							if (attribute.getName().toString().equals("code")) {
--								item.setCode(attribute.getValue());
--							}
--							if (attribute.getName().toString().equals("href")) {
--								item.setHref(attribute.getValue());
--							}
--							if (attribute.getName().toString().equals("id")) {
--								item.setId(attribute.getValue());
--							}
--
--						}
-+			for (org.jdom2.Element element : root.getChildren("dataElementGroup")) {
-+				item = new SyncDataElementGroup();
-+				// We read the attributes from this tag and add the date
-+				// attribute to our object
-+				for (org.jdom2.Attribute attribute : element.getAttributes()) {
-+					if (attribute.getName().toString().equals("name")) {
-+						item.setName(attribute.getValue());
- 					}
--
--				}
--				// If we reach the end of an item element we add it to the list
--				if (event.isEndElement()) {
--					EndElement endElement = event.asEndElement();
--					if (endElement.getName().getLocalPart() == ("dataElementGroup")) {
--						items.add(item);
-+					if (attribute.getName().toString().equals("code")) {
-+						item.setCode(attribute.getValue());
-+					}
-+					if (attribute.getName().toString().equals("href")) {
-+						item.setHref(attribute.getValue());
-+					}
-+					if (attribute.getName().toString().equals("id")) {
-+						item.setId(attribute.getValue());
- 					}
- 				}
--
-+				items.add(item);
+@@ -56,6 +54,6 @@
  			}
--		} catch (XMLStreamException e) {
-+		} catch (JDOMException | IOException e) {
+ 		} catch (XMLStreamException e) {
  			e.printStackTrace();
  		}
  <|editable_region_end|>
