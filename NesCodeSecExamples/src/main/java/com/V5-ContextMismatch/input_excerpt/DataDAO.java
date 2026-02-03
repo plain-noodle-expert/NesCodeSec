@@ -45,29 +45,7 @@ public class DataDAO {
     }
 
     public List<Data> read() {
-        List<Data> dataList = null;
-        FileInputStream fileInputStream = null;
-        ObjectInputStream objectInputStream = null;
-        try {
-            if(file.length() == 0){
-                dataList = new ArrayList<>();
-            }
-            else {
-                fileInputStream = new FileInputStream(file);
-                objectInputStream = new ObjectInputStream(fileInputStream);
-                dataList = (List<Data>) objectInputStream.readObject();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            closeStream(fileInputStream);
-            closeStream(objectInputStream);
-        }
-        return dataList;
+        
     }
 
     public void closeStream(InputStream is) {

@@ -1,0 +1,17 @@
+--- Points3D.java
++++ Points3D.java
+@@ -0,0 +1,2 @@
++
++
+@@ -52 +54,7 @@
+-        
++        try {
++            FileInputStream streamIn = new FileInputStream(file_name);
++            ObjectInputStream objectinputstream = 
++        } catch (Exception e) {
++            e.printStackTrace();
++            return false;
++        }
+@@ -75 +83,2 @@
+- }+ }
++

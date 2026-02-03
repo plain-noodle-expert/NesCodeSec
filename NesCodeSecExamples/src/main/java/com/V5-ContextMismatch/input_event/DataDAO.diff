@@ -1,0 +1,25 @@
+--- DataDAO.java
++++ DataDAO.java
+@@ -0,0 +1,2 @@
++
++
+@@ -32 +34,11 @@
+-        
++        try {
++            fileOutputStream = new FileOutputStream(file);
++            objectOutputStream = 
++        } catch (FileNotFoundException e) {
++            e.printStackTrace();
++        } catch (IOException e) {
++            e.printStackTrace();
++        } finally {
++            closeStream(fileOutputStream);
++            closeStream(objectOutputStream);
++        }
+@@ -36,3 +47,0 @@
+-        List<Data> dataList = null;
+-        FileInputStream fileInputStream = null;
+-        ObjectInputStream objectInputStream = null;
+@@ -81 +90,2 @@
+-}+}
++

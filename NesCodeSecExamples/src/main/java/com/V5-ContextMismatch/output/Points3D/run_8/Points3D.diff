@@ -1,0 +1,38 @@
+--- Points3D.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.*;
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.Iterator;
+@@ -51,15 +50,20 @@
+      *
+      */
+     public boolean load(String file_name) {
+         try {
+             FileInputStream streamIn = new FileInputStream(file_name);
+-            ObjectInputStream objectinputstream = <|user_cursor_is_here|>
++            ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
++            this.clear();
++            this.addAll((Collection<? extends Point3D>) objectinputstream.readObject());
++            objectinputstream.close();
++            streamIn.close();
+         } catch (Exception e) {
+             e.printStackTrace();
+             return false;
+         }
++        return true;
+     }
+     public boolean equals(Object oth){
+         boolean ans = false;
+         if(oth!=null && oth instanceof Collection) {
+             ans = true;
+@@ -80,6 +84,6 @@
+ 
+         return ans;
+     }
+  }
+ <|editable_region_end|>
+-```+```

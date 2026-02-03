@@ -1,0 +1,33 @@
+--- Persist.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package main;
+ 
+ 
+ import ui.Line;
+@@ -57,11 +56,15 @@
+     public static Persist load(File file)
+     {
+         try
+         {
+             FileInputStream streamIn = new FileInputStream(file);
+-            ObjectInputStream objectinputstream = <|user_cursor_is_here|>
++            ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
++            Persist persist = (Persist) objectinputstream.readObject();
++            objectinputstream.close();
++            streamIn.close();
++            return persist;
+         }
+         catch(FileNotFoundException ignored)
+         {
+             System.out.println("No persistence file found, creating a new one");
+         }
+@@ -93,6 +96,6 @@
+             e.printStackTrace();
+         }
+     }
+ }
+ <|editable_region_end|>
+-```+```

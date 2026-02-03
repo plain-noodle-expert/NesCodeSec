@@ -1,0 +1,19 @@
+--- FileUtils.java
++++ FileUtils.java
+@@ -0,0 +1,2 @@
++
++
+@@ -4,0 +7 @@
++import javax.servlet.http.HttpServletRequest;
+@@ -55,0 +59,8 @@
++            if (file.getName().contains(".bin")) {
++                try (FileInputStream fileInputStream = new FileInputStream(file);
++                     ObjectInputStream objectInputStream = 
++                } catch (IOException | ClassNotFoundException e) {
++                    e.printStackTrace();
++                }
++            }
++        }
+@@ -57 +68,2 @@
+-}+}
++

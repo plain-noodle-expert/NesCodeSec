@@ -15,15 +15,15 @@ from evaluation import evaluate_via_llm, evaluate_via_regex
 N_RUNS = 10
 
 # Parallel execution configuration
-USE_PARALLEL = False
-MAX_WORKERS = 4
+USE_PARALLEL = True
+MAX_WORKERS = 10
 
 # Mode configuration
-ENABLE_REQUEST = False
-ENABLE_EVALUATE = True
+ENABLE_REQUEST = True
+ENABLE_EVALUATE = False
 
 # Evaluation method configuration
-ENABLE_REGEX_EVAL = True
+ENABLE_REGEX_EVAL = False
 ENABLE_LLM_EVAL = True
 LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
@@ -101,116 +101,109 @@ def _project_root() -> Path:
     return Path(__file__).resolve().parent.parent
 
 
-def _root(secure: bool=True) -> Path:
-    """
-    Returns the base directory for artifacts.
-    Falls back to the legacy layout if the variant-specific tree is absent.
-    """
-    scenario_root = _project_root().joinpath(*BASE_DIR_PARTS)
-    variant_root = scenario_root / ("secure" if secure else "insecure")
-    return variant_root if variant_root.is_dir() else scenario_root
+def _root() -> Path:
+    """Returns the base directory for artifacts."""
+    return _project_root().joinpath(*BASE_DIR_PARTS)
 
 
-def _subdir(name: str, secure: bool=True) -> Path:
-    return _root(secure) / name
+def _subdir(name: str) -> Path:
+    return _root() / name
 
 
 def main():
-    for secure in [True, False]:
-        variant_name = "secure" if secure else "insecure"
-        print("=" * 80)
-        print(f"ContextMismatch Scenario - {variant_name.upper()}")
-        print("=" * 80)
+    print("=" * 80)
+    print("ContextMismatch Scenario")
+    print("=" * 80)
+    
+    # Display configuration
+    modes = []
+    if ENABLE_REQUEST:
+        modes.append("Request")
+    if ENABLE_EVALUATE:
+        modes.append("Evaluate")
+    print(f"\nMode: {', '.join(modes) if modes else 'None'}")
+    
+    if ENABLE_EVALUATE:
+        eval_methods = []
+        if ENABLE_REGEX_EVAL:
+            eval_methods.append("Regex")
+        if ENABLE_LLM_EVAL:
+            eval_methods.append("LLM")
+        print(f"Evaluation Methods: {', '.join(eval_methods) if eval_methods else 'None'}")
+    
+    print(f"Runs per test case: {N_RUNS}")
+    if USE_PARALLEL:
+        print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
+    else:
+        print(f"Parallel execution: DISABLED")
+    
+    # Validate configuration
+    if not ENABLE_REQUEST and not ENABLE_EVALUATE:
+        print("\n⚠️  Both REQUEST and EVALUATE modes are disabled. Exiting.")
+        return
+    
+    base_subdir = _subdir(BASE_SUBDIR)
+    event_dir = _subdir(EVENT_SUBDIR)
+    excerpt_dir = _subdir(EXCERPT_SUBDIR)
+    output_dir = _subdir(OUTPUT_SUBDIR)
+    
+    if ENABLE_REQUEST:
+        print("\n[Step 1] Generating events...")
+        create_event_batch(
+            base_dir=base_subdir,
+            excerpt_dir=excerpt_dir,
+            event_dir=event_dir,
+        )
         
-        # Display configuration
-        modes = []
-        if ENABLE_REQUEST:
-            modes.append("Request")
-        if ENABLE_EVALUATE:
-            modes.append("Evaluate")
-        print(f"\nMode: {', '.join(modes) if modes else 'None'}")
-        
-        if ENABLE_EVALUATE:
-            eval_methods = []
-            if ENABLE_REGEX_EVAL:
-                eval_methods.append("Regex")
-            if ENABLE_LLM_EVAL:
-                eval_methods.append("LLM")
-            print(f"Evaluation Methods: {', '.join(eval_methods) if eval_methods else 'None'}")
-        
-        print(f"Runs per test case: {N_RUNS}")
+        print("\n[Step 2] Running LLM requests...")
         if USE_PARALLEL:
-            print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
-        else:
-            print(f"Parallel execution: DISABLED")
-        
-        # Validate configuration
-        if not ENABLE_REQUEST and not ENABLE_EVALUATE:
-            print("\n⚠️  Both REQUEST and EVALUATE modes are disabled. Skipping variant.")
-            continue
-        
-        base_subdir = _subdir(BASE_SUBDIR, secure=secure)
-        event_dir = _subdir(EVENT_SUBDIR, secure=secure)
-        excerpt_dir = _subdir(EXCERPT_SUBDIR, secure=secure)
-        output_dir = _subdir(OUTPUT_SUBDIR, secure=secure)
-        
-        if ENABLE_REQUEST:
-            print("\n[Step 1] Generating events...")
-            create_event_batch(
-                base_dir=base_subdir,
-                excerpt_dir=excerpt_dir,
+            request_batch_multiple_runs_parallel(
                 event_dir=event_dir,
+                excerpt_dir=excerpt_dir,
+                output_dir=output_dir,
+                n_runs=N_RUNS,
+                max_workers=MAX_WORKERS,
             )
+        else:
+            request_batch_multiple_runs(
+                event_dir=event_dir,
+                excerpt_dir=excerpt_dir,
+                output_dir=output_dir,
+                n_runs=N_RUNS,
+            )
+    else:
+        print("\n⚠️  Request mode disabled. Skipping steps 1-2.")
+    
+    if ENABLE_EVALUATE:
+        if ENABLE_REGEX_EVAL or ENABLE_LLM_EVAL:
+            print("\n[Step 3] Evaluating results...")
             
-            print("\n[Step 2] Running LLM requests...")
-            if USE_PARALLEL:
-                request_batch_multiple_runs_parallel(
-                    event_dir=event_dir,
-                    excerpt_dir=excerpt_dir,
+            if ENABLE_REGEX_EVAL:
+                print("  Running regex evaluation...")
+                evaluate_via_regex(
+                    pattern=PATTERN,
+                    excerpt_dir=None,
                     output_dir=output_dir,
-                    n_runs=N_RUNS,
-                    max_workers=MAX_WORKERS,
+                    results_path=_root() / "regex_evaluation_results.json",
+                    flags=re.IGNORECASE | re.DOTALL,
                 )
-            else:
-                request_batch_multiple_runs(
-                    event_dir=event_dir,
-                    excerpt_dir=excerpt_dir,
+            
+            if ENABLE_LLM_EVAL:
+                print("  Running LLM evaluation...")
+                evaluate_via_llm(
                     output_dir=output_dir,
-                    n_runs=N_RUNS,
+                    prompt=JUDGE_PROMPT,
+                    results_path=_root() / "llm_evaluation_results.json",
+                    max_workers=LLM_EVAL_MAX_WORKERS,
                 )
         else:
-            print("\n⚠️  Request mode disabled. Skipping steps 1-2.")
-        
-        if ENABLE_EVALUATE:
-            if ENABLE_REGEX_EVAL or ENABLE_LLM_EVAL:
-                print("\n[Step 3] Evaluating results...")
-                
-                if ENABLE_REGEX_EVAL:
-                    print("  Running regex evaluation...")
-                    evaluate_via_regex(
-                        pattern=PATTERN,
-                        excerpt_dir=None,
-                        output_dir=output_dir,
-                        results_path=_root(secure) / "regex_evaluation_results.json",
-                        flags=re.IGNORECASE | re.DOTALL,
-                    )
-                
-                if ENABLE_LLM_EVAL:
-                    print("  Running LLM evaluation...")
-                    evaluate_via_llm(
-                        output_dir=output_dir,
-                        prompt=JUDGE_PROMPT,
-                        results_path=_root(secure) / "llm_evaluation_results.json",
-                        max_workers=LLM_EVAL_MAX_WORKERS,
-                    )
-            else:
-                print("\n⚠️  Evaluate mode enabled but no evaluation methods selected.")
-        else:
-            print("\n⚠️  Evaluate mode disabled. Skipping evaluation.")
-        
-        print("\n" + "=" * 80)
-        print(f"✅ {variant_name.upper()} variant complete!")
-        print("=" * 80)
+            print("\n⚠️  Evaluate mode enabled but no evaluation methods selected.")
+    else:
+        print("\n⚠️  Evaluate mode disabled. Skipping evaluation.")
+    
+    print("\n" + "=" * 80)
+    print("✅ Complete!")
+    print("=" * 80)
     
 if __name__ == "__main__":
     main()

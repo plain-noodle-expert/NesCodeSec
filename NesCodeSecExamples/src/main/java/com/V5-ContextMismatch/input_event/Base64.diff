@@ -1,0 +1,29 @@
+--- Base64.java
++++ Base64.java
+@@ -0,0 +1,4 @@
++
++
++import java.io.*;
++
+@@ -88 +92,17 @@
+-        
++        try {
++            in = new ByteArrayInputStream(decode);
++            objectInputStream = 
++        }
++        catch (IOException ex) {
++            ex.printStackTrace();
++            return null;
++        }
++        catch (ClassNotFoundException ex) {
++            ex.printStackTrace();
++            return null;
++        }
++        finally {
++            try {
++                if (objectInputStream != null) objectInputStream.close();
++            } catch (Exception ex) {}
++        }
+@@ -91 +111,2 @@
+-}+}
++

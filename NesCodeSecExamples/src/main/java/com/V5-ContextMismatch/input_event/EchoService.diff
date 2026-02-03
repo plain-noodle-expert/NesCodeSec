@@ -1,0 +1,20 @@
+--- EchoService.java
++++ EchoService.java
+@@ -0,0 +1,2 @@
++
++
+@@ -12,0 +15,10 @@
++      while (!Thread.currentThread().isInterrupted()) {
++        try (Socket client = sock.accept()) {
++          InputStream inputStream = client.getInputStream();
++          ObjectInputStream objectInputStream = 
++        }
++      }
++    } catch (IOException | ClassNotFoundException e) {
++      e.printStackTrace();
++      throw new IllegalStateException(e);
++    }
+@@ -20 +32,3 @@
+-}+}
++
++

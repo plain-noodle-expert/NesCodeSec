@@ -1,0 +1,22 @@
+--- EchoService.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.io.ObjectInputStream;
+ import java.io.ObjectOutputStream;
+@@ -13,11 +12,11 @@
+     try (ServerSocket sock = new ServerSocket(port)) {
+       System.out.println("Listening on port " + port);
+       while (!Thread.currentThread().isInterrupted()) {
+         try (Socket client = sock.accept()) {
+           InputStream inputStream = client.getInputStream();
+-          ObjectInputStream objectInputStream = <|user_cursor_is_here|>
++          ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+         }
+       }
+     } catch (IOException | ClassNotFoundException e) {
+       e.printStackTrace();
+       throw new IllegalStateException(e);

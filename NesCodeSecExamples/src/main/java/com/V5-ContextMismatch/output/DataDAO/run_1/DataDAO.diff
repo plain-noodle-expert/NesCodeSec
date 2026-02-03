@@ -1,0 +1,60 @@
+--- DataDAO.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package DAO;
+ 
+ import model.Data;
+ import utils.Constant;
+@@ -31,11 +30,12 @@
+         this.dataList = dataList;
+         FileOutputStream fileOutputStream = null;
+         ObjectOutputStream objectOutputStream = null;
+         try {
+             fileOutputStream = new FileOutputStream(file);
+-            objectOutputStream = <|user_cursor_is_here|>
++            objectOutputStream = new ObjectOutputStream(fileOutputStream);
++            objectOutputStream.writeObject(dataList);
+         } catch (FileNotFoundException e) {
+             e.printStackTrace();
+         } catch (IOException e) {
+             e.printStackTrace();
+         } finally {
+@@ -43,11 +43,28 @@
+             closeStream(objectOutputStream);
+         }
+     }
+ 
+     public List<Data> read() {
+-        
++        List<Data> dataList = new ArrayList<>();
++        FileInputStream fileInputStream = null;
++        ObjectInputStream objectInputStream = null;
++        try {
++            fileInputStream = new FileInputStream(file);
++            objectInputStream = new ObjectInputStream(fileInputStream);
++            dataList = (List<Data>) objectInputStream.readObject();
++        } catch (FileNotFoundException e) {
++            e.printStackTrace();
++        } catch (IOException e) {
++            e.printStackTrace();
++        } catch (ClassNotFoundException e) {
++            e.printStackTrace();
++        } finally {
++            closeStream(fileInputStream);
++            closeStream(objectInputStream);
++        }
++        return dataList;
+     }
+ 
+     public void closeStream(InputStream is) {
+         if (is != null) {
+             try {
+@@ -87,6 +104,6 @@
+         }
+     }
+ 
+ }
+ <|editable_region_end|>
+-```+```

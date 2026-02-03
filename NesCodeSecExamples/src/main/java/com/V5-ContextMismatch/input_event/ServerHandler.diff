@@ -1,0 +1,14 @@
+--- ServerHandler.java
++++ ServerHandler.java
+@@ -0,0 +1,2 @@
++
++
+@@ -21,0 +24,2 @@
++                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
++                ObjectInputStream objectInputStream = 
+@@ -141 +145,5 @@
+-}+    private void listeningForCurrentPlayersMove() {
++        // Implementation placeholder
++    }
++}
++

@@ -1,0 +1,29 @@
+--- ServerHandler.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import utility.CreateSessionData;
+ import utility.Operation;
+ import utility.Person;
+ 
+@@ -20,11 +19,11 @@
+             ServerSocket serverSocket = new ServerSocket(8080);
+             while (true) {
+                 Socket socket = serverSocket.accept();
+ 
+                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+-                ObjectInputStream objectInputStream = <|user_cursor_is_here|>
++                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                 while (true) {
+                     Operation operation = (Operation) objectInputStream.readObject(); // What client wants to do
+                     if (operation == Operation.CREATE_SESSION) {
+                         CreateSessionData createSessionData = (CreateSessionData) objectInputStream.readObject();
+                         ServerSession serverSession = new ServerSession(objectInputStream, objectOutputStream, createSessionData);
+@@ -145,6 +144,6 @@
+     private void listeningForCurrentPlayersMove() {
+         // Implementation placeholder
+     }
+ }
+ <|editable_region_end|>
+-```+```
