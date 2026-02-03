@@ -58,10 +58,7 @@ public class FileUtils implements Runnable{
 
             if (file.getName().contains(".bin")) {
                 try (FileInputStream fileInputStream = new FileInputStream(file);
-                     ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-                    Object request = objectInputStream.readObject();
-                    System.out.println("Loaded request from: " + file.getName());
-                    folders.add(file);
+                     ObjectInputStream objectInputStream = <|user_cursor_is_here|>
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }

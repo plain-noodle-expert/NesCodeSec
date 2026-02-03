@@ -19,9 +19,6 @@ public class ServerHandler {
             while (true) {
                 Socket socket = serverSocket.accept();
 
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-
                 while (true) {
                     Operation operation = (Operation) objectInputStream.readObject(); // What client wants to do
                     if (operation == Operation.CREATE_SESSION) {

@@ -91,8 +91,7 @@ public class Base64
         ObjectInputStream objectInputStream = null;
         try {
             in = new ByteArrayInputStream(decode);
-            objectInputStream = new ObjectInputStream(in);
-            return objectInputStream.readObject();
+            objectInputStream = <|user_cursor_is_here|>
         }
         catch (IOException ex) {
             ex.printStackTrace();

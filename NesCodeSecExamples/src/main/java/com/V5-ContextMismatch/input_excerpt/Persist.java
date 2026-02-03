@@ -59,10 +59,7 @@ public class Persist implements Serializable
         try
         {
             FileInputStream streamIn = new FileInputStream(file);
-            ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
-            Persist persist = (Persist) objectinputstream.readObject();
-            objectinputstream.close();
-            return persist;
+            ObjectInputStream objectinputstream = <|user_cursor_is_here|>
         }
         catch(FileNotFoundException ignored)
         {

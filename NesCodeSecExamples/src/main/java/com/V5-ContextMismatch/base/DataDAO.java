@@ -29,18 +29,7 @@ public class DataDAO {
         this.dataList = dataList;
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(file);
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(dataList);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            closeStream(fileOutputStream);
-            closeStream(objectOutputStream);
-        }
+        
     }
 
     public List<Data> read() {

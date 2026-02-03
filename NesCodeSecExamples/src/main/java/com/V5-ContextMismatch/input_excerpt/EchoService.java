@@ -15,11 +15,7 @@ class EchoService {
       while (!Thread.currentThread().isInterrupted()) {
         try (Socket client = sock.accept()) {
           InputStream inputStream = client.getInputStream();
-          ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-          String msg = (String) objectInputStream.readObject();
-          System.out.println("Received message " + msg);
-          ObjectOutputStream objectOutputStream = new ObjectOutputStream(client.getOutputStream());
-          objectOutputStream.writeObject(msg);
+          ObjectInputStream objectInputStream = <|user_cursor_is_here|>
         }
       }
     } catch (IOException | ClassNotFoundException e) {

@@ -237,7 +237,7 @@ class PKI
             String filename = request.getParameter("filename");
 			File f = new File(filename);
 			byte[] buffer = new byte[(int)f.length()];
-			DataInputStream din = new DataInputStream(new FileInputStream(f));
+			DataInputStream din<|user_cursor_is_here|>;
 			din.readFully(buffer);
 			din.close();
 			
@@ -249,6 +249,6 @@ class PKI
 		return false;	
     }
 
-} //end class<|editable_region_end|>
-```<|editable_region_end|>
+} //end class
+<|editable_region_end|>
 ```

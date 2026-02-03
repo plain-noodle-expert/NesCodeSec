@@ -33,8 +33,7 @@ public class DataDAO {
         ObjectOutputStream objectOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(file);
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(dataList);
+            objectOutputStream = <|user_cursor_is_here|>
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

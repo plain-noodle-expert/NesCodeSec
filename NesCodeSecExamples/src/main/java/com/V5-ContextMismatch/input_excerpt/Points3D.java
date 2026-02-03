@@ -53,12 +53,7 @@ public class Points3D extends ArrayList<Point3D> {
     public boolean load(String file_name) {
         try {
             FileInputStream streamIn = new FileInputStream(file_name);
-            ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
-            Points3D loaded = (Points3D) objectinputstream.readObject();
-            this.clear();
-            this.addAll(loaded);
-            objectinputstream.close();
-            return true;
+            ObjectInputStream objectinputstream = <|user_cursor_is_here|>
         } catch (Exception e) {
             e.printStackTrace();
             return false;
