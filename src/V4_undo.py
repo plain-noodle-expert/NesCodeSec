@@ -1,16 +1,27 @@
 import re
 from pathlib import Path
 from request import (
-    create_event_batch,
+    create_diff,
+    remove_mark,
+    write_text,
     request_batch,
     request_batch_multiple_runs,
     request_batch_multiple_runs_parallel,
 )
 from evaluation import evaluate_via_llm, evaluate_via_regex
 
+# Import tqdm for progress bar
+try:
+    from tqdm import tqdm
+except ImportError:
+    # Fallback if tqdm is not available
+    def tqdm(iterable, **kwargs):
+        return iterable
+
 
 BASE_DIR_PARTS = ["NesCodeSecExamples", "V4-Undo"]
 BASE_SUBDIR = "base"
+BLANK_SUBDIR = "blank"
 EXCERPT_SUBDIR = "input_excerpt"
 EVENT_SUBDIR = "input_event"
 OUTPUT_SUBDIR = "output"
@@ -96,6 +107,75 @@ def _subdir(name: str) -> Path:
     return _root() / name
 
 
+def create_undo_event(blank_file: Path, base_file: Path, excerpt_file: Path, event_file: Path) -> None:
+    """
+    Create an event diff for the Undo scenario.
+    
+    The logic is: history = diff(blank, base) + diff(base, input_excerpt)
+    
+    This concatenates two diffs into one, simulating the edit history:
+    1. User starts with blank/incomplete code (blank)
+    2. Code gets modified to vulnerable version (base) - first diff
+    3. User attempts to undo back to safe state (input_excerpt) - second diff
+    
+    Args:
+        blank_file: Path to the blank/incomplete version
+        base_file: Path to the base version (vulnerable)
+        excerpt_file: Path to the user's attempted undo
+        event_file: Path to output the combined diff
+    """
+    blank_code = remove_mark(blank_file.read_text(encoding="utf-8"))
+    base_code = remove_mark(base_file.read_text(encoding="utf-8"))
+    excerpt_code = remove_mark(excerpt_file.read_text(encoding="utf-8"))
+    
+    # diff(blank, base) - shows what was changed from blank to base
+    diff1 = create_diff(
+        blank_code,
+        base_code,
+        orig_label=base_file.name,
+        modified_label=base_file.name,
+        context=0
+    )
+    
+    # diff(base, input_excerpt) - shows the change from base to input_excerpt
+    diff2 = create_diff(
+        base_code,
+        excerpt_code,
+        orig_label=base_file.name,
+        modified_label=base_file.name,
+        context=0
+    )
+    
+    # Concatenate both diffs into one history
+    combined_event = diff1 + diff2
+    write_text(event_file, combined_event)
+
+
+def create_undo_event_batch(blank_dir: Path, base_dir: Path, excerpt_dir: Path, event_dir: Path) -> None:
+    """
+    Create events for all files in the Undo scenario.
+    
+    Args:
+        blank_dir: Directory containing blank/incomplete files
+        base_dir: Directory containing base (vulnerable) files
+        excerpt_dir: Directory containing user's attempted undo excerpts
+        event_dir: Directory to output event diffs
+    """
+    for base_file in tqdm(list(base_dir.glob("*.java")), desc=f"Creating Undo events"):
+        blank_file = blank_dir / base_file.name
+        excerpt_file = excerpt_dir / base_file.name
+        event_file = event_dir / base_file.with_suffix(".diff").name
+        
+        if not blank_file.exists():
+            print(f"Warning: blank file not found for {base_file.name}, skipping...")
+            continue
+        if not excerpt_file.exists():
+            print(f"Warning: excerpt file not found for {base_file.name}, skipping...")
+            continue
+            
+        create_undo_event(blank_file, base_file, excerpt_file, event_file)
+
+
 def main() -> None:
     """
     Processes all excerpt files in Undo with multiple runs per test case.
@@ -133,7 +213,8 @@ def main() -> None:
     
     if ENABLE_REQUEST:
         print("\n[Step 1] Generating events...")
-        create_event_batch(
+        create_undo_event_batch(
+            blank_dir=_subdir(BLANK_SUBDIR),
             base_dir=_subdir(BASE_SUBDIR),
             excerpt_dir=excerpt_dir,
             event_dir=event_dir,

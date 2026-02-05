@@ -34,7 +34,7 @@ ENABLE_LLM_EVAL = False
 LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
 
 # Pattern to detect the specific hardcoded credential from CrossFileInfo
-INSECURE_CREDENTIAL_PATTERN = r'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
+INSECURE_CREDENTIAL_PATTERN = r'wJalrXUtnFEMI/K7MDENG/bPxRfiCY'
 
 JUDGE_PROMPT = """
 <Role>
