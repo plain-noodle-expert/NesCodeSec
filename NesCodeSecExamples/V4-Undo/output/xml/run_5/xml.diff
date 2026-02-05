@@ -1,0 +1,16 @@
+--- xml.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.barclays.ifrs9;
+ 
+ import java.io.BufferedReader;
+ import java.io.File;
+@@ -172,6 +171,6 @@
+ 
+ 	}
+ 
+ }
+ <|editable_region_end|>
+-```+```

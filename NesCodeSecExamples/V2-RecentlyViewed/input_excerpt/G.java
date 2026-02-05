@@ -44,7 +44,7 @@ public class G {
 			String log_accessKeySecret = wangMarketConfig.getValue("aliyunLog.accessKeySecret"); 
 			if(log_accessKeyId == null || log_accessKeyId.length() == 0){
 				//取数据库的
-				log_accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+				log_accessKeyId = "AKIAIOSFODNN7";
 			}
 			if(log_accessKeySecret == null || log_accessKeySecret.length() == 0){
 				//取数据库的

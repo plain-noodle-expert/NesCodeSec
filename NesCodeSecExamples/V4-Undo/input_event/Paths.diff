@@ -1,0 +1,16 @@
+--- Paths.java
++++ Paths.java
+@@ -8 +8 @@
+-	public static String API_TOKEN = "";
++	public static String API_TOKEN = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+--- Paths.java
++++ Paths.java
+@@ -0,0 +1,2 @@
++
++
+@@ -8 +10 @@
+-	public static String API_TOKEN = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
++	public static String API_TOKEN = "";
+@@ -19 +21,2 @@
+-}+}
++

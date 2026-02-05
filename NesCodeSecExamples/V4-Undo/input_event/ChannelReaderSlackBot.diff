@@ -1,0 +1,16 @@
+--- ChannelReaderSlackBot.java
++++ ChannelReaderSlackBot.java
+@@ -18 +18 @@
+-	private static final String SLACK_BOT_TOKEN = "";
++	private static final String SLACK_BOT_TOKEN = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+--- ChannelReaderSlackBot.java
++++ ChannelReaderSlackBot.java
+@@ -0,0 +1,2 @@
++
++
+@@ -18 +20 @@
+-	private static final String SLACK_BOT_TOKEN = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
++	private static final String SLACK_BOT_TOKEN = "";
+@@ -75 +77,2 @@
+-}+}
++

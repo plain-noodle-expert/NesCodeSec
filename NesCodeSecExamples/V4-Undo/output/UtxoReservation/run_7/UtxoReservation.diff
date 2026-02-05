@@ -1,0 +1,29 @@
+--- UtxoReservation.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.FileWriter;
+ import java.io.PrintWriter;
+ import java.net.URL;
+ import java.time.Duration;
+@@ -23,11 +22,11 @@
+ import com.chain.signing.HsmSigner;
+ 
+ public class UtxoReservation {
+   public static void main(String[] args) throws Exception {
+     String coreURL = System.getenv("CHAIN_API_URL");
+-    String accessToken = "";
++    String accessToken = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+     System.out.println(coreURL);
+     System.out.println(accessToken);
+     Client client = new Client(new URL(coreURL), accessToken);
+     client.setConnectTimeout(10, TimeUnit.MINUTES);
+     client.setReadTimeout(10, TimeUnit.MINUTES);
+@@ -169,6 +168,6 @@
+     Transaction.SubmitResponse tx = Transaction.submit(client, signedTemplate);
+   }
+ 
+ }
+ <|editable_region_end|>
+-```+```

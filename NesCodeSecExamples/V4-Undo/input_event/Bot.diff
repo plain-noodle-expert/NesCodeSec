@@ -1,0 +1,22 @@
+--- Bot.java
++++ Bot.java
+@@ -21 +21 @@
+-      API_KEY = System.getenv("DISCORD_TOKEN");
++      API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+@@ -65,2 +64,0 @@
+-  
+-  
+--- Bot.java
++++ Bot.java
+@@ -0,0 +1,2 @@
++
++
+@@ -21 +23 @@
+-      API_KEY = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
++      API_KEY = System.getenv("DISCORD_TOKEN");
+@@ -64,0 +67,2 @@
++  
++  
+@@ -67 +71,2 @@
+-}+}
++

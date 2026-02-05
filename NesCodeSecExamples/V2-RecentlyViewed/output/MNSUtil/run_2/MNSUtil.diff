@@ -1,18 +1,6 @@
 --- MNSUtil.java
 +++ NES
-@@ -1,20 +1,5 @@
--# Cloud Storage Configuration
--ENDPOINT=http://oss-cn-hangzhou.aliyuncs.com
--ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
--ACCESS_KEY_SECRET=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
--BUCKET_NAME=my-storage-bucket
--DOWNLOAD_KEY=documents/sample-file.pdf
--DOWNLOAD_FILE=/tmp/downloaded-file.pdf
--
--# Additional Configuration
--REGION=cn-hangzhou
--MAX_RETRIES=3
--TIMEOUT=30000
+@@ -1,8 +1,5 @@
 -
 -
 -```<|start_of_file|>
@@ -21,12 +9,12 @@
  
  import java.util.ArrayList;
  import java.util.List;
-@@ -39,11 +24,11 @@
+@@ -27,11 +24,11 @@
      String endpoint;
      private MNSClient mnsClient = null;
  
      public MNSUtil() {
-         accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+         accessKeyId = "AKIAIOSFODNN7";
 -        accessKeySecret = <|user_cursor_is_here|>
 +        accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
          endpoint = "https://1234567890123456.mns.cn-hangzhou.aliyuncs.com";
@@ -34,7 +22,7 @@
  
      /**
       * 不需要单独创建 用户目录下的.aliyun-mns.properties文件，直接将值传入即可
-@@ -67,12 +52,11 @@
+@@ -55,12 +52,11 @@
       * 
       * @return
       */
@@ -48,7 +36,7 @@
          }
          return mnsClient;
      }
-@@ -181,6 +165,6 @@
+@@ -169,6 +165,6 @@
          message.setMessageBody(messageBody);
          return putMessage(queueName, message);
      }

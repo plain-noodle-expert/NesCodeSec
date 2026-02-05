@@ -24,7 +24,7 @@ public class Lucian {
 
     private static String path = "/";
 
-    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+    private static String accessKeyId = "AKIAIOSFODNN7";
 
     private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
 

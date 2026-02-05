@@ -1,0 +1,16 @@
+--- Example.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ SDK Version: 6.x 7.x
+ // Install the Java helper library from twilio.com/docs/java/install
+ import com.twilio.Twilio;
+ import com.twilio.rest.api.v2010.account.Message;
+@@ -19,6 +18,6 @@
+ 
+     System.out.println(message.getSid());
+   }
+ }
+ <|editable_region_end|>
+-```+```

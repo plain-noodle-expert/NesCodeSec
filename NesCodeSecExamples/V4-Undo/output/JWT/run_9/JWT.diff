@@ -1,0 +1,29 @@
+--- JWT.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import java.io.BufferedInputStream;
+ import java.io.File;
+ import java.io.FileInputStream;
+ import java.io.IOException;
+@@ -24,11 +23,11 @@
+ import javax.print.attribute.standard.PageRanges;
+ /**
+  * JWT
+  */
+ public class JWT {
+-    String token;
++    String token = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+     String certLoc = "cert.pem";
+     public JWT (byte[] token) {
+         this.token = new String(token);
+     }
+ 
+@@ -95,6 +94,6 @@
+         Base64.Decoder d = Base64.getUrlDecoder();
+         return d.decode(token.split("\\.")[2].getBytes());
+     }
+ }
+ <|editable_region_end|>
+-```+```

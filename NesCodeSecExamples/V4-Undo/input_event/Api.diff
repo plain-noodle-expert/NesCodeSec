@@ -1,0 +1,16 @@
+--- Api.java
++++ Api.java
+@@ -110 +110 @@
+-    private @Nullable String accessToken;
++    private @Nullable String accessToken = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+--- Api.java
++++ Api.java
+@@ -0,0 +1,2 @@
++
++
+@@ -110 +112 @@
+-    private @Nullable String accessToken = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
++    private @Nullable String accessToken;
+@@ -142 +144,2 @@
+-}+}
++

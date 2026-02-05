@@ -8,7 +8,7 @@
 +    private static String bucketname = "my-storage-bucket";
 @@ -26 +28 @@
 -    private static String accessKeyId = "";
-+    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
++    private static String accessKeyId = "AKIAIOSFODNN7";
 @@ -28 +30 @@
 -    private static String accessKeySecret = "";
 +    private static String accessKeySecret = 

@@ -1,18 +1,6 @@
 --- Lucian.java
 +++ NES
-@@ -1,20 +1,5 @@
--# Cloud Storage Configuration
--ENDPOINT=http://oss-cn-hangzhou.aliyuncs.com
--ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
--ACCESS_KEY_SECRET=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
--BUCKET_NAME=my-storage-bucket
--DOWNLOAD_KEY=documents/sample-file.pdf
--DOWNLOAD_FILE=/tmp/downloaded-file.pdf
--
--# Additional Configuration
--REGION=cn-hangzhou
--MAX_RETRIES=3
--TIMEOUT=30000
+@@ -1,8 +1,5 @@
 -
 -
 -```<|start_of_file|>
@@ -21,11 +9,11 @@
  import javax.crypto.spec.SecretKeySpec;
  import javax.net.ssl.HostnameVerifier;
  import javax.net.ssl.HttpsURLConnection;
-@@ -39,11 +24,11 @@
+@@ -27,11 +24,11 @@
  
      private static String path = "/";
  
-     private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+     private static String accessKeyId = "AKIAIOSFODNN7";
  
 -    private static String accessKeySecret = <|user_cursor_is_here|>
 +    private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
@@ -34,7 +22,7 @@
  
      private static boolean idle = true;
  
-@@ -162,6 +147,6 @@
+@@ -150,6 +147,6 @@
          }
      }
  

@@ -1,0 +1,16 @@
+--- xml.java
++++ xml.java
+@@ -25 +25 @@
+-	String[] token = {""};
++	String[] token = {"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om"};
+--- xml.java
++++ xml.java
+@@ -0,0 +1,2 @@
++
++
+@@ -25 +27 @@
+-	String[] token = {"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om"};
++	String[] token = {""};
+@@ -173 +175,2 @@
+-}+}
++

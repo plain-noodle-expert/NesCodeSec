@@ -24,7 +24,7 @@ public class OSSUtil {
 	private final static Logger log = LoggerFactory.getLogger(OSSUtil.class);
 	private static String endpoint = "http://oss-cn-qingdao.aliyuncs.com";
 	private static String accessKeyId = "JnnEksdsd2P28jwZ";
-	private static String accessKeySecret = "your_access_key_secret";
+	private static String accessKeySecret = "JnnEksdsd2P28jwZ";
 	private static String bucketName = "cubic-vanke";
 	private static String img_suffix = ".jpg";
 	private static String head = "https://cubic-vanke.oss-cn-qingdao.aliyuncs.com/";

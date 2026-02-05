@@ -17,12 +17,12 @@ import com.aliyun.oss.model.ObjectMetadata;
  */
 public class DownloadSample {
     
-    private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+    private static String endpoint = "<endpoint, http://oss-cn-hangzhou.aliyuncs.com>";
+    private static String accessKeyId = "AKIAIOSFODNN7";
     private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
-    private static String bucketName = "my-storage-bucket";
-    private static String key = "documents/sample-file.pdf";
-    private static String downloadFile = "/tmp/downloaded-file.pdf";
+    private static String bucketName = "";
+    private static String key = "";
+    private static String downloadFile = "";
    
     
     public static void main(String[] args) throws IOException {        

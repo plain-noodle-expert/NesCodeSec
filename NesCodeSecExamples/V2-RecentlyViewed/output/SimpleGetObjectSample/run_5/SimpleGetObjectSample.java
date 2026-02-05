@@ -25,7 +25,7 @@ import com.aliyun.oss.model.PutObjectRequest;
 public class SimpleGetObjectSample {
     
     private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+    private static String accessKeyId = "AKIAIOSFODNN7";
     private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
     
     private static String bucketName = "*** Provide bucket name ***";
@@ -54,7 +54,8 @@ public class SimpleGetObjectSample {
             /*
              * Upload an object to your bucket from a file
              */
-            System.out.println("Uploading a new object to OSS from a file\n");
+            System.out.printl
+            n("Uploading a new object to OSS from a file\n");
             client.putObject(new PutObjectRequest(bucketName, key, createSampleFile()));
             
             /*

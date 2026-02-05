@@ -1,0 +1,29 @@
+--- ex.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import org.patricbrc.Workspace.*;
+ import java.util.Arrays;
+ import java.util.List;
+ import java.util.Map;
+@@ -8,11 +7,11 @@
+ public class ex
+ {
+     public static void main(String args[])
+     {
+ 	try {
+-	    String token = "";
++	    String token = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+ 
+ 	    Workspace w = new Workspace("http://p3.theseed.org/services/Workspace", token);
+ 
+ 	    get_params getpar = new get_params();
+ 	    getpar.objects = Arrays.asList("/olson/olson/prefs.json");
+@@ -39,6 +38,6 @@
+ 	    System.out.println("Failure: " + e);
+ 	}
+     }
+ }
+ <|editable_region_end|>
+-```+```

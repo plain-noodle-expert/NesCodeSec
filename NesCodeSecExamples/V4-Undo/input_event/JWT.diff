@@ -1,0 +1,19 @@
+--- JWT.java
++++ JWT.java
+@@ -27 +27 @@
+-    String token;
++    String token = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+--- JWT.java
++++ JWT.java
+@@ -0,0 +1,2 @@
++
++
+@@ -27 +29 @@
+-    String token = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
++    String token;
+@@ -33 +35 @@
+-    public JWT (byte[] token, String certLoc) {
++    public JWT (byte[] token, String certloc) {
+@@ -96 +98,2 @@
+-}+}
++

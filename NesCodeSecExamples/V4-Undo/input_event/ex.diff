@@ -1,0 +1,16 @@
+--- ex.java
++++ ex.java
+@@ -11 +11 @@
+-	    String token = "";
++	    String token = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+--- ex.java
++++ ex.java
+@@ -0,0 +1,2 @@
++
++
+@@ -11 +13 @@
+-	    String token = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
++	    String token = "";
+@@ -40 +42,2 @@
+-}+}
++

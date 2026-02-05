@@ -1,18 +1,6 @@
 --- SelectObjectSample.java
 +++ NES
-@@ -1,20 +1,5 @@
--# Cloud Storage Configuration
--ENDPOINT=http://oss-cn-hangzhou.aliyuncs.com
--ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
--ACCESS_KEY_SECRET=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
--BUCKET_NAME=my-storage-bucket
--DOWNLOAD_KEY=documents/sample-file.pdf
--DOWNLOAD_FILE=/tmp/downloaded-file.pdf
--
--# Additional Configuration
--REGION=cn-hangzhou
--MAX_RETRIES=3
--TIMEOUT=30000
+@@ -1,8 +1,5 @@
 -
 -
 -```<|start_of_file|>
@@ -21,27 +9,28 @@
   * Licensed to the Apache Software Foundation (ASF) under one
   * or more contributor license agreements.  See the NOTICE file
   * distributed with this work for additional information
-@@ -48,15 +33,15 @@
+@@ -36,15 +33,15 @@
  /**
   * Examples of create select object metadata and select object.
   *
   */
  public class SelectObjectSample {
 -    private static String endpoint = "<endpoint, http://oss-cn-hangzhou.aliyuncs.com>";
-+    private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-     private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+-    private static String accessKeyId = "AKIAIOSFODNN7";
 -    private static String accessKeySecret = <|user_cursor_is_here|>
 -    private static String bucketName = "<bucketName>";
 -    private static String key = "<objectKey>";
++    private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
++    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
 +    private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
-+    private static String bucketName = "my-storage-bucket";
-+    private static String key = "documents/sample-file.pdf";
++    private static String bucketName = "my-bucket";
++    private static String key = "my-object";
  
      public static void main(String[] args) throws Exception {
          OSS client = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
          String content = "name,school,company,age\r\n" +
                  "Lora Francis,School A,Staples Inc,27\r\n" +
-@@ -91,6 +76,6 @@
+@@ -79,6 +76,6 @@
          }
          outputStream.close();
      }

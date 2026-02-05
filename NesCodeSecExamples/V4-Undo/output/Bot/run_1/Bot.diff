@@ -1,0 +1,16 @@
+--- Bot.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ import javax.security.auth.login.LoginException;
+ 
+ import io.github.cdimascio.dotenv.Dotenv;
+ 
+@@ -68,6 +67,6 @@
+   
+   // end of safezone
+   }
+ }
+ <|editable_region_end|>
+-```+```

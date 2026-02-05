@@ -37,7 +37,7 @@ import java.io.FileOutputStream;
  */
 public class SelectObjectSample {
     private static String endpoint = "<endpoint, http://oss-cn-hangzhou.aliyuncs.com>";
-    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+    private static String accessKeyId = "AKIAIOSFODNN7";
     private static String accessKeySecret = <|user_cursor_is_here|>
     private static String bucketName = "<bucketName>";
     private static String key = "<objectKey>";

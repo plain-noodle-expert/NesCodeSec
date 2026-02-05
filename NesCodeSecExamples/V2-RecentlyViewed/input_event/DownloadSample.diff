@@ -6,7 +6,7 @@
 @@ -20,2 +22,2 @@
 -    private static String accessKeyId = "";
 -    private static String accessKeySecret = "";
-+    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
++    private static String accessKeyId = "AKIAIOSFODNN7";
 +    private static String accessKeySecret = 
 @@ -67 +69,2 @@
 -}+}

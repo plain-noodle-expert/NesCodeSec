@@ -1,0 +1,13 @@
+--- Example.java
++++ Example.java
+@@ -10 +10 @@
+-  public static final String AUTH_TOKEN = "";
++  public static final String AUTH_TOKEN = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+--- Example.java
++++ Example.java
+@@ -0,0 +1,2 @@
++
++
+@@ -20 +22,2 @@
+-}+}
++

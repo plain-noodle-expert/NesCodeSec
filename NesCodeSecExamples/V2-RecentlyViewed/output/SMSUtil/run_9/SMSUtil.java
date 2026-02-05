@@ -20,7 +20,7 @@ public class SMSUtil {
     static final String product = "Dysmsapi";
     static final String domain = "dysmsapi.aliyuncs.com";
     static final String accessKeyId = "LTAIgeYL5872mhRh";
-    static final String accessKeySecret = "your_access_key_secret";
+    static final String accessKeySecret = "1234567890";
     static final String register = "SMS_137915030";
     static final String reset = "SMS_137930044";
 

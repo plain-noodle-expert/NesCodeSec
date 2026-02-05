@@ -1,0 +1,29 @@
+--- ChannelReaderSlackBot.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ 
+ import com.slack.api.Slack;
+ import com.slack.api.methods.MethodsClient;
+ import com.slack.api.methods.request.conversations.ConversationsHistoryRequest;
+@@ -15,11 +14,11 @@
+ import java.util.Collections;
+ import java.util.List;
+ 
+ public class ChannelReaderSlackBot {
+ 
+-	private static final String SLACK_BOT_TOKEN = "";
++	private static final String SLACK_BOT_TOKEN = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+ 
+ 	public static void main(String[] args) {
+     	Slack slack = Slack.getInstance();
+     	MethodsClient methods = slack.methods(SLACK_BOT_TOKEN);
+ 
+@@ -74,6 +73,6 @@
+     	LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+     	return dateTime.toString();
+ 	}
+ }
+ <|editable_region_end|>
+-```+```

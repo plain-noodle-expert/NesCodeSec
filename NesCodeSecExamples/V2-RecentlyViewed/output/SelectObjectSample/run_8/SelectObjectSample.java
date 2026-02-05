@@ -38,8 +38,8 @@ public class SelectObjectSample {
     private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
     private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
     private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
-    private static String bucketName = "my-storage-bucket";
-    private static String key = "documents/sample-file.pdf";
+    private static String bucketName = "my-bucket";
+    private static String key = "my-object";
 
     public static void main(String[] args) throws Exception {
         OSS client = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);

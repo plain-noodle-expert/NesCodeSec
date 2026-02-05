@@ -12,7 +12,7 @@ import io.kubernetes.client.models.V1SecretKeySelector;
 public class S3Bucket   {
   private V1SecretKeySelector accessKeySecret = <|user_cursor_is_here|>
 
-  private String bucket = "AKIAIOSFODNN7EXAMPLE";
+  private String bucket = "AKIAIOSFODNN7";
 
   private String endpoint;
 

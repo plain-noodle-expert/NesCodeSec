@@ -1,0 +1,16 @@
+--- UtxoReservation.java
++++ UtxoReservation.java
+@@ -26 +26 @@
+-    String accessToken = "";
++    String accessToken = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
+--- UtxoReservation.java
++++ UtxoReservation.java
+@@ -0,0 +1,2 @@
++
++
+@@ -26 +28 @@
+-    String accessToken = "sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om";
++    String accessToken = "";
+@@ -170 +172,2 @@
+-}+}
++

@@ -1,0 +1,42 @@
+--- xml.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.barclays.ifrs9;
+ 
+ import java.io.BufferedReader;
+ import java.io.File;
+@@ -22,11 +21,11 @@
+ 
+ import org.w3c.dom.Document;
+ 
+ public class xml {
+ 
+-	String[] token = {""};
++	String[] token = {"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om"};
+ 	String id = "";
+ 	String startPeriod = "";
+ 	String endPeriod = "";
+ 	String desc = "";
+ 	String frequency = "";
+@@ -142,11 +141,11 @@
+ 						calendarLower.add(Calendar.MONTH, 1);
+ 					}
+ 					month.append(sb.toString());
+ 
+ 				}
+-				if (str.split("|", -1)[2].equals("Q")) {
++				if (str.split("\\|", -1)[2].equals("Q")) {
+ 
+ 					while (calendarLower.getTime().compareTo(calendarHigher.getTime()) <= 0) {
+ 						if ((calendarDataLower.getTime().compareTo(calendarLower.getTime()) <= 0
+ 								&& calendarLower.getTime().compareTo(calendarDataHigher.getTime()) <= 0)) {
+ 							sb.append(str.split("\\|", -1)[counter].split(":", -1)[1]);
+@@ -172,6 +171,6 @@
+ 
+ 	}
+ 
+ }
+ <|editable_region_end|>
+-```+```

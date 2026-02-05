@@ -1,18 +1,6 @@
 --- G.java
 +++ NES
-@@ -1,20 +1,5 @@
--# Cloud Storage Configuration
--ENDPOINT=http://oss-cn-hangzhou.aliyuncs.com
--ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
--ACCESS_KEY_SECRET=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
--BUCKET_NAME=my-storage-bucket
--DOWNLOAD_KEY=documents/sample-file.pdf
--DOWNLOAD_FILE=/tmp/downloaded-file.pdf
--
--# Additional Configuration
--REGION=cn-hangzhou
--MAX_RETRIES=3
--TIMEOUT=30000
+@@ -1,8 +1,5 @@
 -
 -
 -```<|start_of_file|>
@@ -21,9 +9,9 @@
  
  import java.util.HashMap;
  import java.util.List;
-@@ -60,11 +45,11 @@
+@@ -48,11 +45,11 @@
  				//取数据库的
- 				log_accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+ 				log_accessKeyId = "AKIAIOSFODNN7";
  			}
  			if(log_accessKeySecret == null || log_accessKeySecret.length() == 0){
  				//取数据库的
@@ -34,7 +22,7 @@
  				System.out.println("未开启网站访问日志记录");
  			}
  			
-@@ -184,6 +169,6 @@
+@@ -172,6 +169,6 @@
  			return "未设置自动分配的二级(主)域名！";
  		}
  	}

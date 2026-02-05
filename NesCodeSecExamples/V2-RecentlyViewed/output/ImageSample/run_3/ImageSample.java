@@ -15,8 +15,8 @@ import com.aliyun.oss.model.GetObjectRequest;
  */
 public class ImageSample {
     
-    private static String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-    private static String accessKeyId = "AKIAIOSFODNN7EXAMPLE";
+    private static String endpoint = "<endpoint, http://oss-cn-hangzhou.aliyuncs.com>";
+    private static String accessKeyId = "AKIAIOSFODNN7";
     private static String accessKeySecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
     private static String bucketName = "my-storage-bucket";
     private static String key = "example.jpg";

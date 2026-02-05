@@ -1,18 +1,6 @@
 --- OSSUtil.java
 +++ NES
-@@ -1,20 +1,5 @@
--# Cloud Storage Configuration
--ENDPOINT=http://oss-cn-hangzhou.aliyuncs.com
--ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
--ACCESS_KEY_SECRET=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
--BUCKET_NAME=my-storage-bucket
--DOWNLOAD_KEY=documents/sample-file.pdf
--DOWNLOAD_FILE=/tmp/downloaded-file.pdf
--
--# Additional Configuration
--REGION=cn-hangzhou
--MAX_RETRIES=3
--TIMEOUT=30000
+@@ -1,8 +1,5 @@
 -
 -
 -```<|start_of_file|>
@@ -21,20 +9,20 @@
  
  import java.io.ByteArrayInputStream;
  import java.io.IOException;
-@@ -37,11 +22,11 @@
+@@ -25,11 +22,11 @@
   */
  public class OSSUtil {
  	private final static Logger log = LoggerFactory.getLogger(OSSUtil.class);
  	private static String endpoint = "http://oss-cn-qingdao.aliyuncs.com";
  	private static String accessKeyId = "JnnEksdsd2P28jwZ";
 -	private static String accessKeySecret = <|user_cursor_is_here|>
-+	private static String accessKeySecret = "your_access_key_secret";
++	private static String accessKeySecret = "1234567890";
  	private static String bucketName = "cubic-vanke";
  	private static String img_suffix = ".jpg";
  	private static String head = "https://cubic-vanke.oss-cn-qingdao.aliyuncs.com/";
  	
  	public static String uploadOSSToInputStream(String base64,String key) {
-@@ -78,6 +63,6 @@
+@@ -66,6 +63,6 @@
  	private static String fileName() {
  		return Util.createUuid()+img_suffix;
  	}

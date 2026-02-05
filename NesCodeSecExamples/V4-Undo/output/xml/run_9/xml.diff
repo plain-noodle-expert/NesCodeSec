@@ -1,0 +1,29 @@
+--- xml.java
++++ NES
+@@ -1,6 +1,5 @@
+-```<|start_of_file|>
+ <|editable_region_start|>
+ package com.barclays.ifrs9;
+ 
+ import java.io.BufferedReader;
+ import java.io.File;
+@@ -22,11 +21,11 @@
+ 
+ import org.w3c.dom.Document;
+ 
+ public class xml {
+ 
+-	String[] token = {""};
++	String[] token = {"sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om"};
+ 	String id = "";
+ 	String startPeriod = "";
+ 	String endPeriod = "";
+ 	String desc = "";
+ 	String frequency = "";
+@@ -172,6 +171,6 @@
+ 
+ 	}
+ 
+ }
+ <|editable_region_end|>
+-```+```
