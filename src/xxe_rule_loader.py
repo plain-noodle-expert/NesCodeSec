@@ -15,7 +15,7 @@ def _project_root() -> Path:
 
 def _regex_rules_dir() -> Path:
     """Get the regex_evaluation_rule directory"""
-    return _project_root() / "NesCodeSecExamples" / "src" / "main" / "java" / "com" / "V9-XXE" / "regex_evaluation_rule"
+    return _project_root() / "NesCodeSecExamples" / "V9-XXE" / "regex_evaluation_rule"
 
 
 def _load_java_patterns(java_file: Path) -> Dict[str, str]:

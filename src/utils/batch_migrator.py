@@ -21,14 +21,14 @@ except Exception:
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger('batch_migrator')
 
-# 依赖你的迁移引擎（需要 xml_any2any_migrator.py 与之同目录或在 PYTHONPATH 中）
+
 try:
-    from utils.xml_any2any_migrator import run_recipe  # 只用这个函数
+    from utils.xml_any2any_migrator import run_recipe
 except Exception as e:
-    print("[ERR] 请确保 xml_any2any_migrator.py 在 PYTHONPATH 中，并包含 run_recipe()", file=sys.stderr)
+    print("[ERR] Please ensure xml_any2any_migrator.py is on PYTHONPATH and exposes run_recipe()", file=sys.stderr)
     raise
 
-# 顶层目录名 <-> 规则 key
+# Top-level directory name <-> recipe key
 DIR_TO_KEY: Dict[str, str] = {
     "Digester": "digester",
     "DocumentBuilder": "jaxp_dom",
@@ -48,16 +48,17 @@ def run_batch_migrate(
     base_root: str | Path,
     output_root: str | Path,
     dry_run: bool = False,
-    only_src_dirs: Optional[List[str]] = None,   # 例如 ["SAXReader","SAXParser"]
-    dst_keys: Optional[List[str]] = None,        # 例如 ["sax","stax"]
-    env: Optional[Dict[str, str]] = None,        # 模板变量（默认包含 root_tag/list_tag）
-    pair_dirs: bool = True,                      # True: 输出到 <Src>__TO__<Dst> 目录；False: 输出到 <Dst> 目录
+    only_src_dirs: Optional[List[str]] = None,   # Example: ["SAXReader","SAXParser"]
+    dst_keys: Optional[List[str]] = None,        # Example: ["sax","stax"]
+    env: Optional[Dict[str, str]] = None,        # Template vars (defaults include root_tag/list_tag)
+    pair_dirs: bool = True,                      # True -> `<Src>__TO__<Dst>` directories; False -> `<Dst>`
 ) -> Tuple[int, int]:
     logger.info("===== Start Batch Migration =====")
     """
-    可导入调用的批量迁移函数。
+    Importable convenience wrapper around the migration pipeline.
 
-    返回: (processed_total, changed_total)
+    Returns:
+        (processed_total, changed_total)
     """
     config_path = Path(config_path)
     base_root = Path(base_root)
@@ -89,7 +90,7 @@ def run_batch_migrate(
             logger.warning(f"missing dir: {src_dir}")
             continue
 
-        # 目标 key 集合：默认五个（排除自身）
+        # Target keys (default: every alternative parser except itself)
         targets = dst_keys or [k for k in KEY_TO_DIR.keys() if k != src_key]
         for dst_key in targets:
             if dst_key == src_key:
@@ -100,7 +101,7 @@ def run_batch_migrate(
                 logger.warning(f"No recipe for {src_key}->{dst_key}, skip {src_dir_name} -> {KEY_TO_DIR[dst_key]}")
                 continue
 
-            # 输出目录
+            # Determine output location
             if pair_dirs:
                 pair_name = f"{src_dir_name}__TO__{KEY_TO_DIR[dst_key]}"
                 out_root = output_root / pair_name
@@ -195,8 +196,8 @@ def run_one_pair(
     pair_dirs: bool = True,
 ) -> Tuple[int, int]:
     """
-    只跑一个 pair：<src_top_dir> -> <dst_key>
-    等价于 run_batch_migrate 的子集封装。
+    Run a single `<src_top_dir> -> <dst_key>` migration pair.
+    Convenience wrapper around `run_batch_migrate`.
     """
     if src_top_dir not in DIR_TO_KEY:
         raise ValueError(f"Unknown src_top_dir: {src_top_dir} (must be one of {list(DIR_TO_KEY)})")
@@ -211,7 +212,7 @@ def run_one_pair(
         pair_dirs=pair_dirs,
     )
 
-# ---------------- Marker 工具 ----------------
+# ---------------- Marker utilities ----------------
 
 def strip_marker(code: str) -> str:
     code = "\n".join(code.split("\n")[1:])
@@ -229,7 +230,7 @@ def hide_marker(code: str) -> str:
                 .replace("```", "").strip()
 
 def find_cursor_line(text: str) -> Optional[int]:
-    """找到 <|user_cursor_is_here|> 的行号 (0-based)"""
+    """Return the 0-based line that contains <|user_cursor_is_here|>."""
     for idx, line in enumerate(text.splitlines(), start=0):
         if "<|user_cursor_is_here|>" in line:
             return idx
@@ -239,7 +240,7 @@ def find_cursor_line(text: str) -> Optional[int]:
 # ---------------- Diff ----------------
 
 def _udiff(a: str, b: str, src_path: str, dst_path: str, context: int = 0) -> str:
-    """生成统一 diff 字符串，默认只保留修改行"""
+    """Return a unified diff string, keeping only the requested context (default 0)."""
     return "".join(
         difflib.unified_diff(
             a.splitlines(True),
@@ -259,7 +260,8 @@ def generate_event(
     context_lines: int = 3
 ) -> Dict[str, Dict[str, int]]:
     """
-    对比 input_excerpt (去 marker) 和 base (完整)，生成精简 diff 到 input_event
+    Compare `input_excerpt` (with markers stripped) against the original base files
+    and emit compact unified diffs into `input_event`.
     """
     base_root = Path(base_root)
     migrate_root = Path(migrate_root)
@@ -303,7 +305,7 @@ def generate_event(
     return stats_all
 
 
-# === Tree-sitter 初始化（免编译） ===
+# === Tree-sitter initialization (no local compile needed) ===
 ts_parser = None
 if get_parser is not None:
     try:
@@ -315,15 +317,15 @@ if get_parser is not None:
 BYTES_PER_TOKEN_GUESS = 3
 
 def guess_token_count(code: str, encoding="utf-8") -> int:
-    """粗略估算 token 数：字节数 / 3"""
+    """Rough token estimator: bytes / 3."""
     byte_len = len(code.encode(encoding))
     return byte_len // BYTES_PER_TOKEN_GUESS
 
-# ---------------- Snippet 截取 ----------------
+# ---------------- Snippet extraction ----------------
 def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int = 1000) -> Optional[str]:
     """
-    使用 Tree-sitter AST 截取 cursor 所在的最大语法作用域。
-    返回包含 (start_line, end_line) 的截取文本 (考虑marker)，行号 0-based。
+    Use the Tree-sitter AST to capture the largest syntax scope that contains the cursor.
+    Returns snippet text tagged with (start_line, end_line), both 0-based (markers respected).
     """
     if ts_parser is None:
         return None
@@ -334,7 +336,7 @@ def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int
         logger.error("⚠️ Parse contains syntax errors (ERROR nodes exist).")
         
     def find_node(node, line):
-        """深度优先，找到包含 cursor 的最小节点"""
+        """Depth-first search for the smallest node that still contains the cursor line."""
         if not (node.start_point[0] <= line <= node.end_point[0]):
             return None
         for child in node.children:
@@ -343,11 +345,11 @@ def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int
                 return found
         return node
 
-    node = find_node(root, cursor_line)  # cursor_line 是 0-based
+    node = find_node(root, cursor_line)  # cursor_line is 0-based
     if not node:
         return None
 
-    # 遍历父节点链，找符合 token_limit 的最大 scope
+    # Walk up the parent chain and pick the largest scope within the token limit.
     lines = java_code.splitlines()
     best_scope = None
     while node:
@@ -357,7 +359,7 @@ def _extract_treesitter_scope(java_code: str, cursor_line: int, token_limit: int
         if tokens <= token_limit:
             best_scope = (node.start_point[0], node.end_point[0]) # 0-based
         else:
-            break  # 超过了就不用再往上
+            break  # Exceeded token cap, stop walking upward
         # logger.debug(f"[SNIPPET TOKEN: {tokens}, BEST SCOPE: {best_scope}] {java_code[best_scope[0]:best_scope[1]+1]}")
         node = node.parent
         
@@ -379,8 +381,8 @@ def _extract_brace_block(java_code: str, cursor_line: int) -> Optional[str]:
     lines = java_code.splitlines()
     head_marker = lines[:3]
     end_marker = lines[-2:]
-    pos = cursor_line  # cursor_line 是 0-based
-    # 向上找最近的 '{'
+    pos = cursor_line  # cursor_line is 0-based
+    # Walk upward to find the nearest '{'
     start = pos
     brace_count = 0
     while start >= 0:
@@ -389,7 +391,7 @@ def _extract_brace_block(java_code: str, cursor_line: int) -> Optional[str]:
         if brace_count > 0:
             break
         start -= 1
-    # 向下找匹配 '}'
+    # Walk downward to find the matching '}'
     end = pos
     brace_count = 0
     while end < len(lines):
@@ -409,8 +411,8 @@ def _extract_window(java_code: str, cursor_line: int, window: int = 50) -> str:
     lines = java_code.splitlines()
     head_marker = lines[:3]
     end_marker = lines[-2:]
-    start = max(0, cursor_line - window)  # cursor_line 是 0-based，向前扩展 window 行
-    end = min(len(lines) - 1, cursor_line + window)  # 向后扩展 window 行
+    start = max(0, cursor_line - window)  # Expand backwards by `window` lines
+    end = min(len(lines) - 1, cursor_line + window)  # Expand forward by `window` lines
     if start > 0:
         head_marker[1] = "```"
     return f"{start}:{end}:{cursor_line}:" + "\n".join(head_marker + lines[start:end + 1] + end_marker)
@@ -418,9 +420,10 @@ def _extract_window(java_code: str, cursor_line: int, window: int = 50) -> str:
 
 def extract_snippet_by_cursor(java_code: str, cursor_line: int, count_board: list[int]) -> str:
     """
-    截取包含 cursor_line 的代码片段，并将行数范围放入文本首行(inclusive)。
-    优先使用 Tree-sitter AST（带 token 限制），失败则回退到 brace block 或 window。
-    count_board: 记录使用了哪种策略
+    Extract the portion of code containing `cursor_line` and encode the inclusive
+    line range at the beginning of the snippet.
+    Preference order: Tree-sitter (token-limited) -> brace block -> sliding window.
+    `count_board` records which strategy was used:
         [0] = AST
         [1] = Brace
         [2] = Window
@@ -428,14 +431,14 @@ def extract_snippet_by_cursor(java_code: str, cursor_line: int, count_board: lis
     """
     lines = java_code.splitlines()
 
-    # case 1: 文件很小，直接返回
+    # case 1: very small file, return the entire content
     if len(lines) <= 100:
         count_board[3] += 1
         logger.debug("[FULL TEXT]")
         # take into account 3 head lines: file name, <start_of_file> and <editable_region_start>
         return f"3:{len(lines)-1}:{cursor_line}:" + java_code
 
-    # case 2: Tree-sitter AST 截取
+    # case 2: Tree-sitter AST snippet
     snippet = _extract_treesitter_scope(java_code, cursor_line, token_limit=350)
     if snippet:
         count_board[0] += 1
@@ -455,7 +458,7 @@ def extract_snippet_by_cursor(java_code: str, cursor_line: int, count_board: lis
     return _extract_window(java_code, cursor_line, window=50)
 
 
-# ---------------- 全流程 ----------------
+# ---------------- Full pipeline ----------------
 
 def full_pipeline(
     config_path: str | Path,
@@ -535,7 +538,7 @@ def full_pipeline(
     - Writes diffs to `event_root`.
     - Writes extracted snippets to `excerpt_root`.
     """
-    # Step 1. 迁移 (直接使用原始 base_root，不预处理)
+    # Step 1. Migration (use the raw base_root without preprocessing)
     run_batch_migrate(
         config_path=config_path,
         base_root=base_root,
@@ -548,14 +551,18 @@ def full_pipeline(
     )
     # Step 2. diff
     # Choose the correct base directory for comparison. The generator expects a folder
-    # where top-level library dirs (Digester, SAXParser, ...) live. Prefer original
-    # base's Maven layout -> src/main/java/com/Scenario1/base if present, otherwise fallback to base_root.
-    orig_candidate = Path(base_root) / 'src' / 'main' / 'java' / 'com' / 'Scenario1' / 'base'
+    # where top-level library dirs (Digester, SAXParser, ...) live. Support both the new
+    # `NesCodeSecExamples/V9-XXE/base` layout and the legacy Maven-style tree.
+    base_root_path = Path(base_root)
+    nested_candidate = base_root_path / "base"
+    legacy_candidate = base_root_path / "src" / "main" / "java" / "com" / "Scenario1" / "base"
 
-    if orig_candidate.exists():
-        base_for_event = orig_candidate
+    if nested_candidate.is_dir():
+        base_for_event = nested_candidate
+    elif legacy_candidate.is_dir():
+        base_for_event = legacy_candidate
     else:
-        base_for_event = Path(base_root)
+        base_for_event = base_root_path
 
     stats = generate_event(
         base_root=base_for_event,
@@ -563,7 +570,7 @@ def full_pipeline(
         diff_output_root=event_root,
         context_lines=context_lines
     )
-    # Step 3. snippet（基于 marker）
+    # Step 3. Snippet extraction (marker-based)
     count_board = [0, 0, 0, 0]  # ast, brace, window, all
     migrate_root = Path(migrate_root)
     excerpt_root = Path(excerpt_root)
@@ -580,7 +587,7 @@ def full_pipeline(
             # logger.debug(f"[CURSOR LINE] {gen_file}: {cursor_line}")
             if not cursor_line:
                 continue
-            # 传入完整migrate file(包括markers)
+            # Pass the entire migrated file (markers included)
             snippet = extract_snippet_by_cursor(gen_text, cursor_line, count_board)
             out_snip_path.parent.mkdir(parents=True, exist_ok=True)
             out_snip_path.write_text(snippet, encoding="utf-8")
@@ -599,55 +606,54 @@ def debug_rebuild_from_migrate_full(
     only_pairs: Optional[List[str]] = None,
 ) -> Dict[str, Dict[str, int]]:
     """
-    **Debug Helper Function**: 直接从已生成的 migrate_full 目录重新构建 input_event 和 input_excerpt。
-    
-    使用场景：
-    - 已经运行过完整的 full_pipeline，生成了 migrate_full 目录
-    - 想要调整 diff 或 snippet 的生成逻辑，无需重新运行耗时的迁移步骤
-    - 快速测试 diff context_lines 或 snippet 提取策略的变化
-    
+    **Debug Helper**: Reconstruct `input_event` and `input_excerpt` directly from an
+    existing `migrate_full` directory—no need to rerun the expensive migration step.
+
+    Useful when:
+    - You already completed the full pipeline and just want to tweak diff/snippet logic.
+    - You need to iterate on `context_lines` or snippet heuristics quickly.
+
     Parameters
     ----------
     migrate_root : str | Path
-        已存在的 migrate_full 目录路径，包含迁移后的完整代码
-        (例如: `NesCodeSecExamples/target/classes/migrate_full`)
+        Existing `migrate_full` directory containing migrated code
+        (e.g., `NesCodeSecExamples/V9-XXE/migrate_full`)
         
     base_root : str | Path
-        原始 base 代码目录路径，用于生成 diff
-        (例如: `NesCodeSecExamples/src/main/java/com/Scenario1/base`)
+        Base code directory used for diffing
+        (e.g., `NesCodeSecExamples/V9-XXE/base`)
         
     event_root : str | Path
-        输出的 input_event 目录，将生成 diff 文件
+        Destination directory for the regenerated diff files (`input_event`)
         
     excerpt_root : str | Path
-        输出的 input_excerpt 目录，将生成 snippet 文件
+        Destination directory for the regenerated snippets (`input_excerpt`)
         
     context_lines : int, default=3
-        Diff 上下文行数 (0 表示只显示变更行)
+        Number of context lines to include in the unified diff (0 = only changes)
         
     only_pairs : list[str], optional
-        仅处理指定的迁移对，例如 ["SAXReader__TO__sax", "DocumentBuilder__TO__dom4j"]
-        如果为 None，处理所有迁移对
+        Process only the specified migration pairs, e.g., ["SAXReader__TO__sax"].
+        When None, rebuild all pairs.
         
     Returns
     -------
     stats : dict[str, dict[str, int]]
-        Diff 生成的统计信息，按迁移对分组：
-            - "total": 处理的文件总数
-            - "changed": 有差异的文件数
-            - "nochange": 无变化的文件数
-            - "missing_base": 缺少对应 base 文件的数量
+        Diff statistics per migration pair:
+            - "total": files processed
+            - "changed": files with differences
+            - "nochange": identical files
+            - "missing_base": files lacking a base counterpart
             
     Example
     -------
-    >>> # 快速重新生成 input_event 和 input_excerpt
     >>> stats = debug_rebuild_from_migrate_full(
-    ...     migrate_root="NesCodeSecExamples/target/classes/migrate_full",
-    ...     base_root="NesCodeSecExamples/src/main/java/com/Scenario1/base",
-    ...     event_root="NesCodeSecExamples/target/classes/input_event_debug",
-    ...     excerpt_root="NesCodeSecExamples/target/classes/input_excerpt_debug",
-    ...     context_lines=0,  # 仅显示变更行
-    ...     only_pairs=["SAXReader__TO__sax"]  # 只处理这一个迁移对
+    ...     migrate_root="NesCodeSecExamples/V9-XXE/migrate_full",
+    ...     base_root="NesCodeSecExamples/V9-XXE/base",
+    ...     event_root="NesCodeSecExamples/V9-XXE/input_event_debug",
+    ...     excerpt_root="NesCodeSecExamples/V9-XXE/input_excerpt_debug",
+    ...     context_lines=0,
+    ...     only_pairs=["SAXReader__TO__sax"]
     ... )
     """
     migrate_root = Path(migrate_root)
@@ -656,20 +662,20 @@ def debug_rebuild_from_migrate_full(
     excerpt_root = Path(excerpt_root)
     
     if not migrate_root.exists():
-        raise FileNotFoundError(f"migrate_root 不存在: {migrate_root}")
+        raise FileNotFoundError(f"migrate_root does not exist: {migrate_root}")
     if not base_root.exists():
-        raise FileNotFoundError(f"base_root 不存在: {base_root}")
+        raise FileNotFoundError(f"base_root does not exist: {base_root}")
     
     logger.info("=" * 60)
-    logger.info("🔧 DEBUG: 从 migrate_full 重新构建 input_event 和 input_excerpt")
+    logger.info("🔧 DEBUG: rebuilding input_event/input_excerpt from migrate_full")
     logger.info(f"  migrate_root: {migrate_root}")
     logger.info(f"  base_root: {base_root}")
     logger.info(f"  event_root: {event_root}")
     logger.info(f"  excerpt_root: {excerpt_root}")
     logger.info("=" * 60)
     
-    # Step 1: 生成 input_event (diffs)
-    logger.info("\n📝 Step 1: 生成 input_event (diffs)...")
+    # Step 1: regenerate input_event (diffs)
+    logger.info("\n📝 Step 1: rebuilding input_event (diffs)...")
     event_root.mkdir(parents=True, exist_ok=True)
     
     stats_all = {}
@@ -677,9 +683,9 @@ def debug_rebuild_from_migrate_full(
         if not pair.is_dir() or "__TO__" not in pair.name:
             continue
         
-        # 如果指定了只处理特定的 pairs
+        # Respect only_pairs filter if provided
         if only_pairs and pair.name not in only_pairs:
-            logger.debug(f"  跳过 {pair.name} (不在 only_pairs 中)")
+            logger.debug(f"  Skipping {pair.name} (not in only_pairs)")
             continue
             
         src_top, _ = pair.name.split("__TO__", 1)
@@ -689,7 +695,7 @@ def debug_rebuild_from_migrate_full(
         stats = {"total": 0, "changed": 0, "nochange": 0, "missing_base": 0}
         stats_all[pair.name] = stats
         
-        logger.info(f"  处理 {pair.name}...")
+        logger.info(f"  Processing {pair.name}...")
         
         for gen_file in pair.rglob("*.java"):
             rel = gen_file.relative_to(pair)
@@ -698,7 +704,7 @@ def debug_rebuild_from_migrate_full(
             
             stats["total"] += 1
             if not base_file.exists():
-                logger.warning(f"    ⚠️  Base 文件缺失: {base_file}")
+                logger.warning(f"    ⚠️  Missing base file: {base_file}")
                 stats["missing_base"] += 1
                 continue
             
@@ -714,11 +720,11 @@ def debug_rebuild_from_migrate_full(
             out_diff_path.parent.mkdir(parents=True, exist_ok=True)
             out_diff_path.write_text(diff_str, encoding="utf-8")
         
-        logger.info(f"    ✓ 完成: total={stats['total']}, changed={stats['changed']}, "
+        logger.info(f"    ✓ Finished: total={stats['total']}, changed={stats['changed']}, "
                    f"nochange={stats['nochange']}, missing_base={stats['missing_base']}")
     
-    # Step 2: 生成 input_excerpt (snippets)
-    logger.info("\n✂️  Step 2: 生成 input_excerpt (snippets)...")
+    # Step 2: regenerate input_excerpt (snippets)
+    logger.info("\n✂️  Step 2: rebuilding input_excerpt (snippets)...")
     excerpt_root.mkdir(parents=True, exist_ok=True)
     
     count_board = [0, 0, 0, 0]  # ast, brace, window, full
@@ -729,14 +735,14 @@ def debug_rebuild_from_migrate_full(
         if not pair.is_dir() or "__TO__" not in pair.name:
             continue
         
-        # 如果指定了只处理特定的 pairs
+        # Respect only_pairs filter if provided
         if only_pairs and pair.name not in only_pairs:
             continue
             
         out_snip_dir = excerpt_root / pair.name
         out_snip_dir.mkdir(parents=True, exist_ok=True)
         
-        logger.info(f"  处理 {pair.name}...")
+        logger.info(f"  Processing {pair.name}...")
         pair_files = 0
         pair_snippets = 0
         
@@ -749,31 +755,31 @@ def debug_rebuild_from_migrate_full(
             cursor_line = find_cursor_line(gen_text)
             
             if cursor_line is None:
-                logger.debug(f"    ⚠️  未找到 cursor: {gen_file.name}")
+                logger.debug(f"    ⚠️  Cursor marker not found: {gen_file.name}")
                 continue
             
             pair_snippets += 1
             total_snippets += 1
             
-            # 传入完整 migrate file (包括 markers)
+            # Pass the entire migrated file (markers included)
             snippet = extract_snippet_by_cursor(gen_text, cursor_line, count_board)
             out_snip_path.parent.mkdir(parents=True, exist_ok=True)
             out_snip_path.write_text(snippet, encoding="utf-8")
         
-        logger.info(f"    ✓ 完成: {pair_snippets}/{pair_files} 个文件提取了 snippet")
+        logger.info(f"    ✓ Finished: {pair_snippets}/{pair_files} files produced snippets")
     
     # Summary
     logger.info("\n" + "=" * 60)
     logger.info("📊 SUMMARY")
     logger.info("=" * 60)
-    logger.info(f"总文件数: {total_files}")
-    logger.info(f"提取的 snippet 数: {total_snippets}")
-    logger.info(f"\nSnippet 提取策略分布:")
+    logger.info(f"Total files: {total_files}")
+    logger.info(f"Snippets extracted: {total_snippets}")
+    logger.info(f"\nSnippet strategy distribution:")
     logger.info(f"  • AST (Tree-sitter):  {count_board[0]:4d} ({count_board[0]/max(total_snippets,1)*100:.1f}%)")
     logger.info(f"  • Brace Block:        {count_board[1]:4d} ({count_board[1]/max(total_snippets,1)*100:.1f}%)")
     logger.info(f"  • Window (±50 lines): {count_board[2]:4d} ({count_board[2]/max(total_snippets,1)*100:.1f}%)")
     logger.info(f"  • Full File:          {count_board[3]:4d} ({count_board[3]/max(total_snippets,1)*100:.1f}%)")
-    logger.info("\nDiff 生成统计:")
+    logger.info("\nDiff statistics:")
     for pair, s in stats_all.items():
         logger.info(f"  {pair}: total={s['total']}, changed={s['changed']}, "
                    f"nochange={s['nochange']}, missing_base={s['missing_base']}")
@@ -796,10 +802,10 @@ def main():
     ap.add_argument("--migrate-root", required=True, help=".../migrate_full")
     ap.add_argument("--event-root", required=True, help=".../input_event")
     ap.add_argument("--excerpt-root", required=True, help=".../input_excerpt")
-    ap.add_argument("--only-src-dirs", help="仅处理指定源目录，逗号分隔")
-    ap.add_argument("--dst-keys", help="仅迁移到指定库 key，逗号分隔")
-    ap.add_argument("--env", action="append", default=[], help="额外模板变量，key=value，可多次")
-    ap.add_argument("--context-lines", type=int, default=3, help="diff 上下文行数")
+    ap.add_argument("--only-src-dirs", help="Comma-separated source directories to include")
+    ap.add_argument("--dst-keys", help="Comma-separated destination keys to include")
+    ap.add_argument("--env", action="append", default=[], help="Extra template vars as key=value (repeatable)")
+    ap.add_argument("--context-lines", type=int, default=3, help="Number of context lines in diffs")
     args = ap.parse_args()
 
     only_src_dirs = _split_csv(args.only_src_dirs)
@@ -829,7 +835,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-    # p = Path("/Users/tt/Documents/NesCodeSec/NesCodeSecExamples/src/main/java/com/Scenario1/migrate_full/DocumentBuilder__TO__Digester/EarthquakeUpdateJobService.java")
+    # p = Path("NesCodeSecExamples/V9-XXE/migrate_full/DocumentBuilder__TO__Digester/EarthquakeUpdateJobService.java")
     # _extract_treesitter_scope(
     #     p.read_text(encoding="utf-8", errors="ignore"),
     #     109

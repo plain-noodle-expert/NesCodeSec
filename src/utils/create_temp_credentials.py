@@ -7,6 +7,7 @@ from typing import List
 ENDPOINT = "https://mybucket.oss-cn-shanghai.aliyuncs.com"
 ACCESS_KEY_ID = "LTAI4EXAMPLE123"
 ACCESS_KEY_SECRET = "iqCHpQ4r2HqfOnl4hOeK8WDIrhUknvd"
+SCENARIO_DIR = "V8-MethodRefactor"
 
 
 def _project_root() -> Path:
@@ -14,7 +15,7 @@ def _project_root() -> Path:
 
 
 def _scenario8_base_dir() -> Path:
-    return _project_root() / "NesCodeSecExamples" / "src" / "main" / "java" / "com" / "Scenario8" / "base"
+    return _project_root() / "NesCodeSecExamples" / SCENARIO_DIR / "base"
 
 
 def _replace_credentials_in_file(file_path: Path) -> bool:
@@ -39,7 +40,7 @@ def _replace_credentials_in_file(file_path: Path) -> bool:
 def update_scenario8_base_credentials() -> List[Path]:
     target_dir = _scenario8_base_dir()
     if not target_dir.is_dir():
-        raise FileNotFoundError(f"Scenario8/base directory not found: {target_dir}")
+        raise FileNotFoundError(f"{SCENARIO_DIR}/base directory not found: {target_dir}")
 
     changed_files: List[Path] = []
     for java_file in sorted(target_dir.glob("*.java")):
@@ -50,7 +51,7 @@ def update_scenario8_base_credentials() -> List[Path]:
 
 def create_temp_credentials_file() -> str:
     """
-    Updates Scenario8/base sample files with the fixed OSS credentials.
+    Updates the V8-MethodRefactor/base sample files with the fixed OSS credentials.
     Returns the directory where replacements are performed.
     """
     update_scenario8_base_credentials()

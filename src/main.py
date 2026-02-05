@@ -15,73 +15,63 @@ from typing import Dict, Any
 SCENARIOS = {
     "v1": {
         "name": "V1-InsecureAlgorithmRecommendation",
-        "module": "zeta_algorithm",
+        "module": "V1_algorithm",
         "description": "Test insecure algorithm recommendations",
     },
     "v2": {
         "name": "V2-RecentlyViewed",
-        "module": "zeta_recent_viewed",
+        "module": "V2_recently_viewed",
         "description": "Test recently viewed code influence",
     },
     "v3": {
         "name": "V3-VulnerabilityPropagation",
-        "module": "zeta_vulnerability_propagation",
+        "module": "V3_vulnerability_propagation",
         "description": "Test vulnerability propagation",
     },
     "v4": {
         "name": "V4-Undo",
-        "module": "zeta_undo",
+        "module": "V4_undo",
         "description": "Test undo operation vulnerabilities",
     },
     "v5": {
         "name": "V5-ContextMismatch",
-        "module": "zeta_context_mismatch",
+        "module": "V5_context_mismatch",
         "description": "Test context mismatch vulnerabilities",
     },
     "v6": {
         "name": "V6-CrossFile",
-        "module": "zeta_v6",
+        "module": "V6_cross_file",
         "description": "Test cross-file path traversal",
     },
     "v7": {
         "name": "V7-TransactionRefactor",
-        "module": "zeta_transaction",
+        "module": "V7_transaction",
         "description": "Test transaction refactoring issues",
     },
     "v8": {
         "name": "V8-MethodRefactor",
-        "module": "zeta_method_refactor",
+        "module": "V8_method_refactor",
         "description": "Test method refactoring security issues",
     },
     "v9": {
         "name": "V9-XXE",
-        "module": "zeta_xxe",
+        "module": "V9_xxe",
         "description": "Test XML external entity vulnerabilities",
     },
     "v10": {
         "name": "V10-PartialRemediationFallacy",
-        "module": "zeta_partial_remediation_fallacy",
+        "module": "V10_partial_remediation_fallacy",
         "description": "Test partial remediation fallacy",
     },
     "v11": {
-        "name": "V11-TrustDrift",
-        "module": "zeta_trust_drift",
-        "description": "Test trust drift over iterations",
+        "name": "V11-NoOp",
+        "module": "V11_no_op",
+        "description": "Test trust drift / no-op iterations",
     },
     "v12": {
         "name": "V12-SequentialEdits",
-        "module": "zeta_sequential_edits",
+        "module": "V12_sequential_edits",
         "description": "Test sequential edits",
-    },
-    "bac": {
-        "name": "BrokenAccessControl",
-        "module": "zeta_bac",
-        "description": "Test broken access control vulnerabilities",
-    },
-    "cred": {
-        "name": "CredentialRegeneration",
-        "module": "zeta_temp_cred",
-        "description": "Test credential regeneration issues",
     },
 }
 
@@ -91,7 +81,7 @@ def run_scenario(scenario_module: str, config: Dict[str, Any]) -> None:
     Dynamically import and run a scenario module with given configuration.
     
     Args:
-        scenario_module: Module name (e.g., 'zeta_algorithm')
+        scenario_module: Module name (e.g., 'V1_algorithm')
         config: Configuration dictionary with parameters
     """
     try:
@@ -151,7 +141,7 @@ Examples:
   python main.py --all --parallel --workers 6
   
   # Run with custom configuration
-  python main.py --scenario bac --no-request --enable-llm
+  python main.py --scenario v9 --no-request --enable-llm
   
   # Run only evaluation (skip requests)
   python main.py --scenario v6 --no-request

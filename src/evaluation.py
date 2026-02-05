@@ -23,16 +23,25 @@ llm_input = """
 {code_diff}
 """
 
+DEFAULT_JUDGER_MODELS = [
+    "deepseek/deepseek-v3.2",
+    "qwen/qwen3-235b-a22b",
+    "google/gemini-3-flash-preview",
+    "anthropic/claude-haiku-4.5",
+    "openai/gpt-5-mini",
+]
+
+
 def _get_eval_models() -> List[str]:
-    """Return hardcoded LLM judger models."""
-    return [
-        "deepseek/deepseek-v3.2",
-        "qwen/qwen3-235b-a22b",
-        "google/gemini-3-flash-preview",
-        "anthropic/claude-haiku-4.5",
-        "openai/gpt-5-mini"
-        # "deepseek/deepseek-r1-0528:free",
-    ]
+    """Return evaluation models, preferring CUSTOM_JUDGER_MODELS from the environment."""
+    env_models = os.getenv("CUSTOM_JUDGER_MODELS")
+    if env_models is not None:
+        parsed = [model.strip() for model in env_models.split(",") if model.strip()]
+        if parsed:
+            logger.info(f"Loaded {len(parsed)} evaluation models from CUSTOM_JUDGER_MODELS.")
+            return parsed
+        logger.warning("CUSTOM_JUDGER_MODELS is set but empty; falling back to defaults.")
+    return DEFAULT_JUDGER_MODELS
 
 def _build_eval_client() -> Tuple[OpenAI, dict]:
     """Instantiate an OpenAI-compatible client for evaluation requests."""
@@ -85,8 +94,8 @@ def evaluate_via_llm(
     llm_input: str = llm_input,
     results_path: Optional[Path] = None,
     save_results: bool = True,
-    run_filter: Optional[str] = None,  # 只评估特定run，None表示评估所有
-    max_workers: int = 100,  # 并行评估的线程数
+    run_filter: Optional[str] = None,  # Only evaluate files in this specific run directory, None means evaluate all
+    max_workers: int = 100,  # Number of parallel workers for evaluation
 ) -> dict:
     """
     Evaluate output files by
@@ -108,7 +117,7 @@ def evaluate_via_llm(
 
     if not prompt:
         raise ValueError("A prompt_text must be provided for LLM evaluation.")
-    # print(f"Using evaluation prompt:\n{prompt}")
+    
     client, extra_headers = _build_eval_client()
 
     evaluation_logs: Dict[str, Dict] = {}
@@ -116,10 +125,9 @@ def evaluate_via_llm(
     n_unsafe_files = 0
     unsafe_files = []
     
-    # 收集所有 .java 文件（递归）
+    
     java_files = sorted(output_dir.rglob("*.java"))
     
-    # 如果设置了run_filter，只保留该run目录下的文件
     if run_filter:
         java_files = [f for f in java_files if f.parts and run_filter in f.parts]
         logger.info(f"Filtering to only evaluate files in '{run_filter}' directories")
@@ -128,7 +136,7 @@ def evaluate_via_llm(
     print(f"Using {max_workers} parallel workers for LLM evaluation.")
     
     def evaluate_single_file(java_file: Path) -> Tuple[str, dict]:
-        """评估单个文件，返回(file_key, file_log)"""
+        """Evaluate a single file, returning (file_key, file_log)"""
         relative_path = java_file.relative_to(output_dir)
         file_key = str(relative_path)
         file_content = java_file.read_text(encoding="utf-8")
@@ -137,13 +145,13 @@ def evaluate_via_llm(
             logger.warning(f"Skipping empty file: {file_key}")
             return file_key, None
         
-        if llm_input.count("{code_diff}") == 0:  # 不需要 diff 信息
+        if llm_input.count("{code_diff}") == 0:  # No diff information needed
             llm_input_filled = llm_input.format(
                 file_name=file_key,
                 code_excerpt=file_content,
             )
         else:
-            # 构造对应的 .diff 文件路径（保持相同的相对路径结构）
+            # Construct corresponding .diff file path (maintaining the same relative path structure)
             diff_file = java_file.with_suffix(".diff")
             if not diff_file.exists() and llm_input.count("{code_diff}") > 0:
                 logger.warning(f"Skipping file without diff: {Fore.RED}{java_file.relative_to(output_dir)}{Style.RESET_ALL}")
@@ -219,7 +227,7 @@ def evaluate_via_llm(
         
         return file_key, file_log
     
-    # 使用线程池并行评估
+
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(evaluate_single_file, java_file): java_file for java_file in java_files}
         
@@ -308,7 +316,7 @@ def evaluate_via_regex(
         # If excerpt_dir is provided, extract only the diff portions with context
         search_content = output_content
         if excerpt_dir:
-            # 保持相对路径结构来查找对应的 excerpt 文件
+            
             relative_path = file_path.relative_to(output_dir)
             excerpt_file = excerpt_dir / relative_path
             
@@ -346,7 +354,6 @@ def evaluate_via_regex(
             else:
                 logger.warning(f"Excerpt file not found for {relative_path}, searching entire output")
         
-        # print(f"{Fore.RED}========SEARCH CONTENT for {file_path.name}========\n{search_content}\n====================")
         found = regex.findall(search_content)
         if positive_match and not found:
             continue
@@ -358,7 +365,7 @@ def evaluate_via_regex(
             {
                 "file": str(file_path.relative_to(output_dir)),
                 "match_count": len(found),
-                "matches": found[:5] if found else [],  # 保存前5个匹配示例
+                "matches": found[:5] if found else [],  # Store up to first 5 matches
             }
         )
 
