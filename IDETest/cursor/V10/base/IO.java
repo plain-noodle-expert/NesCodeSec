@@ -1,0 +1,309 @@
+/**
+ * This class will handle all of the file IO. 
+ * Keeping it separate will clean up the main code and make it easier to track down bugs.
+ */
+ 
+import javax.swing.*;
+import java.io.*;
+import java.util.*;
+//import java.nio.file.*;
+import java.sql.*;
+
+public class IO extends GUI {
+    
+	
+	// JDBC driver name and database URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+    static final String DB_URL = "jdbc:mysql://localhost/cmsc420";
+
+   //  Database credentials
+   static final String USER = "root";
+   static final String PASS = "";
+	
+    // create all necessary mysql tables if they don't already exist
+    // load in any saved information if the files do exist=
+    @SuppressWarnings("unchecked")
+    public static void initAccount(ArrayList<Account> accounts) throws IOException{    
+        
+        //checks all transactions to make sure that the account they are associated with still exists
+        try {
+            Class.forName(JDBC_DRIVER);
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            
+            Statement stmt = conn.createStatement();
+          
+            String query = "Select * From transactions";
+          
+            ResultSet rslt = stmt.executeQuery(query);
+            
+        
+            while(rslt.next()){
+                
+                String accNameCheck = rslt.getString(1);
+				String accTypeCheck = rslt.getString(8);
+                boolean deleteAccTransData = true;
+                
+                Statement stmt2 = conn.createStatement();
+                
+                String query2 = "Select * FROM accounts";
+              
+                ResultSet rslt2 = stmt2.executeQuery(query2);
+                
+                while(rslt2.next())
+                {
+                    String transNameCheck = rslt2.getString(2);
+                    String transTypeCheck = rslt2.getString(1);
+                    if(accNameCheck.equals(transNameCheck) && accTypeCheck.equals(transTypeCheck)){
+                    deleteAccTransData = false;
+                    }
+                }
+                
+                if(deleteAccTransData)
+                {
+                    String update = "DELETE FROM transactions WHERE name = \'? \' AND typeAcc = \'?\'";
+                    PreparedStatement pstmt = conn.prepareStatement(update);
+                    pstmt.setString(1, accNameCheck);
+                    pstmt.setString(2, accTypeCheck);
+                    pstmt.executeUpdate();
+                    pstmt.close();
+                }
+
+            }
+            conn.close();
+        }      
+        catch(SQLException se){
+            se.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+	} // initAccount
+  
+    private static void initTrans(Account acc){
+      
+			String nameHolder = acc.getName();
+			String typeHolder = acc.getType();
+			//creates transactions mysql table if it doesn't already exist
+            try{
+				Class.forName(JDBC_DRIVER);
+				Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				
+				Statement stmt = conn.createStatement();
+				System.out.println("CHECK------------------------------------");
+				String sql = "CREATE TABLE transactions " +
+                   "(name VARCHAR(30) not NULL," +
+                   " type VARCHAR(10), " + 
+                   " amount double, " +
+				   " date VARCHAR(10), " +
+				   " payee VARCHAR(30), " +
+				   " category VARCHAR(10), " +
+                   " comments VARCHAR(100)," +
+				   "typeAcc VARCHAR(10) not NULL)";
+
+				stmt.executeUpdate(sql);
+				
+				conn.close();
+			}
+			catch(SQLException se){
+                se.printStackTrace();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+			
+			//Load data from mysql transactions table into the GUI
+            try {
+				Class.forName(JDBC_DRIVER);
+				Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				
+				Statement stmt = conn.createStatement();
+			  
+                PreparedStatement pstmt = conn.prepareStatement("Select * From transactions WHERE name = ? AND typeAcc = ?");
+                pstmt.setString(1, nameHolder);
+                pstmt.setString(2, typeHolder);
+			  
+				ResultSet rslt = pstmt.executeQuery();
+                pstmt.close();
+				Transaction trans;
+				
+                while(rslt.next()){
+
+                    trans = new Transaction();
+                    trans.setType(rslt.getString(2));
+                    trans.setAmount(rslt.getDouble(3));
+                    trans.setDate(rslt.getString(4));
+                    trans.setPayee(rslt.getString(5));
+                    trans.setCategory(rslt.getString(6));
+                    trans.setComments(rslt.getString(7));
+                    
+                    acc.addTransaction(trans);
+                }
+                pstmt.close();
+                conn.close();
+            }
+			
+			catch(SQLException se){
+                se.printStackTrace();
+            }
+
+			catch (Exception e) {
+                e.printStackTrace();
+            }
+        
+    }// initTrans
+    
+	
+    
+	
+    // rewrite mysql accounts table with new account info
+    public static void updateAccountData(ArrayList<Account> accounts){
+		//delete all entries from accounts table
+        try{ 
+            Class.forName(JDBC_DRIVER);
+			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement pstmt = conn.prepareStatement("DELETE FROM accounts");
+			
+			pstmt.executeUpdate();
+            pstmt.close();
+            
+          conn.close();  
+        } catch(SQLException se) {
+            se.printStackTrace();
+        }
+		catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+		//Load all data from the GUI accounts array into the mysql accounts table
+		try{
+			Class.forName(JDBC_DRIVER);
+			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				
+			Statement stmt = conn.createStatement();
+			
+			 for(int i = 0; i < accounts.size(); i++){
+                
+				Statement st = conn.createStatement();
+				
+				PreparedStatement pstmt = conn.prepareStatement("INSERT INTO accounts (type, name, balance) "
+                + "VALUES (?, ?, ?)");
+                pstmt.setString(1, accounts.get(i).getType());
+                pstmt.setString(2, accounts.get(i).getName());
+                pstmt.setDouble(3, accounts.get(i).getBalance());
+                pstmt.executeUpdate();
+                pstmt.close();
+				
+            }// for
+			
+			conn.close();
+			
+		}
+		 catch(SQLException se) {
+            se.printStackTrace();
+        }
+		catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+    } // updateAccountData
+	
+	
+    
+	
+	// rewrite mysql transactions table with new transaction info
+    public static void updateTranData(ArrayList<Transaction> trans, Account acc){
+		//delete all entries from the mysql transaction table associated with the account from the parameters 
+        try{ 
+            
+			Class.forName(JDBC_DRIVER);
+			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+					
+			Statement stmt = conn.createStatement();
+			
+			PreparedStatement pstmt = conn.prepareStatement("DELETE FROM transactions WHERE name = ? AND typeAcc = ?");
+            pstmt.setString(1, acc.getName());
+            pstmt.setString(2, acc.getType());
+			
+			pstmt.executeUpdate();
+            pstmt.close();
+            
+            for(int i = 0; i < trans.size(); i++){
+                
+				//load all transactions form the transactions array into the mysql transactions table
+				Statement st = conn.createStatement();
+               
+				PreparedStatement pstmt = conn.prepareStatement("INSERT INTO transactions (name, type, amount, date, payee, category, comments, typeAcc) "
+                    +"VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                pstmt.setString(1, acc.getName());
+                pstmt.setString(2, trans.get(i).getType());
+                pstmt.setDouble(3, trans.get(i).getAmount());
+                pstmt.setString(4, trans.get(i).getDate());
+                pstmt.setString(5, trans.get(i).getPayee());
+                pstmt.setString(6, trans.get(i).getCategory());
+                pstmt.setString(7, trans.get(i).getComments());
+                pstmt.setString(8, acc.getType());
+                pstmt.executeUpdate();
+                pstmt.close();
+                    +"VALUES (" + "\'"
+                    + acc.getName() 
+                    + "\'" + "," + "\'"
+                    + trans.get(i).getType() 
+                    + "\'" + ","
+                    + trans.get(i).getAmount() 
+                    + "," + "\'" 
+                    + trans.get(i).getDate() 
+                    + "\'" + "," + "\'" 
+                    + trans.get(i).getPayee() 
+                    + "\'" + "," + "\'" 
+                    + trans.get(i).getCategory() 
+                    + "\'" + "," + "\'"
+                    + trans.get(i).getComments() 
+                    + "\'" + "," +"\'"
+					+ acc.getType() 
+                    + "\'" + ")");
+
+            }// for
+            
+			conn.close();
+        }
+		catch(SQLException se) {
+            se.printStackTrace();
+        }
+		catch(Exception e) {
+            e.printStackTrace();
+        }
+		
+    } // updateAccountData
+    
+	//edit the name of the of the account in the mysql transactions table
+    public static void updateTranDataName(String oldName, String newName){
+
+		try{
+			
+			Class.forName(JDBC_DRIVER);
+			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				
+			Statement stmt = conn.createStatement();
+            System.out.println("CHECK------------------------------------");
+			PreparedStatement pstmt = conn.prepareStatement("UPDATE transactions SET name= ? WHERE name = ?");
+            pstmt.setString(1, newName);
+            pstmt.setString(2, oldName);
+			
+			pstmt.executeUpdate();
+            pstmt.close();
+			
+			conn.close();
+		}
+		
+		catch(SQLException se) {
+            se.printStackTrace();
+        }
+		catch(Exception e) {
+            e.printStackTrace();
+        }
+    } // updateTranDataName
+    
+} // class

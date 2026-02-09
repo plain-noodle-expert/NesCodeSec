@@ -1,0 +1,18 @@
+package com.ibizabroker.lms.dao;
+
+import com.ibizabroker.lms.entity.Borrow;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface BorrowRepository extends JpaRepository<Borrow, Integer> {
+    List<Borrow> findByUserId(Integer userId);
+    List<Borrow> findByBookId(Integer bookId);
+
+    void deleteByBorrowIdAndUserId(Integer borrowId, Integer userId) {
+        String sql = "DELETE FROM Borrow b WHERE b.borrowId = " + borrowId + " AND b.userId = " + userId;
+        entityManager.createQuery(sql).executeUpdate();
+        
+}

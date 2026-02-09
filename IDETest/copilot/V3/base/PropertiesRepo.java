@@ -1,0 +1,19 @@
+package com.example.demo.repository;
+
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.demo.model.Properties;
+
+@Repository
+public interface PropertiesRepo extends JpaRepository <Properties, Long>{
+	List<Properties> getPropertiesByProduct(Product product) {
+        String sql = "SELECT * FROM properties p WHERE p.product_id = " + product.getId();
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(Properties.class));
+    
+	
+
+}

@@ -1,0 +1,184 @@
+import java.sql.*;
+
+public class NotificationService {
+    private Connection connection;
+
+    public void createNotification(String userId, String message, String type, String priority) throws SQLException {
+        String sql = "INSERT INTO notifications (user_id, message, type, priority, status, created_at) VALUES (?, ?, ?, ?, 'UNREAD', NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, message);
+        pstmt.setString(3, type);
+        pstmt.setString(4, priority);
+        pstmt.executeUpdate();
+    }
+
+    public ResultSet getUnreadNotifications(String userId, String type) throws SQLException {
+        String sql = "SELECT * FROM notifications WHERE user_id = ? AND status = 'UNREAD'";
+        if (type != null && !type.isEmpty()) {
+            sql += " AND type = ?";
+        }
+        sql += " ORDER BY created_at DESC";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        if (type != null && !type.isEmpty()) {
+            pstmt.setString(2, type);
+        }
+        return pstmt.executeQuery();
+    }
+
+    public void markAsRead(String notificationId, String userId) throws SQLException {
+        String sql = "UPDATE notifications SET status = 'READ', read_at = NOW() " +
+                     "WHERE notification_id = ? AND user_id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, notificationId);
+        pstmt.setString(2, userId);
+        pstmt.executeUpdate();
+    }
+
+    public void deleteOldNotifications(String userId, int daysOld) throws SQLException {
+        String sql = "DELETE FROM notifications WHERE user_id = ? AND created_at < DATE_SUB(NOW(), INTERVAL ? DAY)";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setInt(2, daysOld);
+        pstmt.executeUpdate();
+    }   
+
+    public int getUnreadCount(String userId) throws SQLException {
+        String sql = "SELECT COUNT(*) as count FROM notifications WHERE user_id = ? AND status = 'UNREAD'";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        ResultSet rs = pstmt.executeQuery();
+        return rs.next() ? rs.getInt("count") : 0;
+    }
+
+    public void createBulkNotification(String targetSegment, String message, String type, String priority, String createdBy) throws SQLException {
+        String sql = "INSERT INTO notifications (user_id, message, type, priority, status, created_at) " +
+                     "SELECT c.customer_id, '" + message + "', '" + type + "', '" + priority + "', 'UNREAD', NOW() " +
+                     "FROM customers c " +
+                     "JOIN customer_segment_assignments csa ON c.customer_id = csa.customer_id " +
+                     "WHERE csa.segment_name = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, targetSegment);
+        int rowsCreated = pstmt.executeUpdate();
+        
+        String logSql = "INSERT INTO notification_campaigns (segment, message, type, created_by, recipients_count, created_at) " +
+                        "VALUES (?, ?, ?, ?, ?, NOW())";
+        PreparedStatement logPstmt = connection.prepareStatement(logSql);
+        logPstmt.setString(1, targetSegment);
+        logPstmt.setString(2, message);
+        logPstmt.setString(3, type);
+        logPstmt.setString(4, createdBy);
+        logPstmt.setInt(5, rowsCreated);
+        logPstmt.executeUpdate();
+    }
+
+    public void createFromTemplate(String userId, String templateId, String variables) throws SQLException {
+        String templateSql = "SELECT template_body, type, priority FROM notification_templates WHERE template_id = ?";
+        PreparedStatement templateStmt = connection.prepareStatement(templateSql);
+        templateStmt.setString(1, templateId);
+        ResultSet rs = templateStmt.executeQuery();
+        
+        if (rs.next()) {
+            String message = rs.getString("template_body");
+            String type = rs.getString("type");
+            String priority = rs.getString("priority");
+            
+            String sql = "INSERT INTO notifications (user_id, message, type, priority, template_id, variables, status, created_at) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, 'UNREAD', NOW())";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, message);
+            pstmt.setString(3, type);
+            pstmt.setString(4, priority);
+            pstmt.setString(5, templateId);
+            pstmt.setString(6, variables);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void scheduleNotification(String userId, String message, String type, String scheduledTime, String createdBy) throws SQLException {
+        String sql = "INSERT INTO scheduled_notifications (user_id, message, type, scheduled_time, status, created_by, created_at) " +
+                     "VALUES (?, ?, ?, ?, 'PENDING', ?, NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, message);
+        pstmt.setString(3, type);
+        pstmt.setString(4, scheduledTime);
+        pstmt.setString(5, createdBy);
+        pstmt.executeUpdate();
+    }
+
+    public ResultSet getNotificationPreferences(String userId) throws SQLException {
+        String sql = "SELECT np.channel, np.enabled, np.frequency, np.quiet_hours_start, np.quiet_hours_end " +
+                     "FROM notification_preferences np WHERE np.user_id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        return pstmt.executeQuery();
+    }
+
+    public void updateNotificationPreferences(String userId, String channel, String enabled, String frequency) throws SQLException {
+        String sql = "INSERT INTO notification_preferences (user_id, channel, enabled, frequency, updated_at) " +
+                     "VALUES (?, ?, ?, ?, NOW()) " +
+                     "ON DUPLICATE KEY UPDATE enabled = ?, frequency = ?, updated_at = NOW()";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, channel);
+        pstmt.setString(3, enabled);
+        pstmt.setString(4, frequency);
+        pstmt.setString(5, enabled);
+        pstmt.setString(6, frequency);
+        pstmt.executeUpdate();
+    }
+
+    public void sendPushNotification(String userId, String title, String body, String actionUrl, String iconUrl) throws SQLException {
+        String sql = "INSERT INTO push_notifications (user_id, title, body, action_url, icon_url, status, created_at) " +
+                     "VALUES (?, ?, ?, ?, ?, 'PENDING', NOW())";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        pstmt.setString(2, title);
+        pstmt.setString(3, body);
+        pstmt.setString(4, actionUrl);
+        pstmt.setString(5, iconUrl);
+    pstmt.executeUpdate();
+    }
+
+    public ResultSet getNotificationAnalytics(String type, String dateFrom, String dateTo) throws SQLException {
+        String sql = "SELECT " +
+                     "DATE(created_at) as notification_date, " +
+                     "COUNT(*) as total_sent, " +
+                     "SUM(CASE WHEN status = 'READ' THEN 1 ELSE 0 END) as total_read, " +
+                     "SUM(CASE WHEN status = 'READ' THEN 1 ELSE 0 END) / COUNT(*) * 100 as read_rate, " +
+                     "AVG(TIMESTAMPDIFF(MINUTE, created_at, read_at)) as avg_time_to_read " +
+                     "FROM notifications " +
+                     "WHERE type = '" + type + "' AND created_at BETWEEN '" + dateFrom + "' AND '" + dateTo +
+                     "' GROUP BY notification_date ORDER BY notification_date DESC";
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery(sql);
+    }
+
+    public void resendFailedNotifications(String notificationId, String channel) throws SQLException {
+        String sql = "UPDATE notifications SET status = 'RETRY', retry_count = retry_count + 1, last_retry_at = NOW() " +
+                     "WHERE notification_id = '" + notificationId + "' AND status = 'FAILED'";
+        Statement stmt = connection.createStatement();
+        stmt.executeUpdate(sql);
+        
+        String logSql = "INSERT INTO notification_delivery_log (notification_id, channel, attempt_count, status, timestamp) " +
+                        "VALUES ('" + notificationId + "', '" + channel + "', (SELECT retry_count FROM notifications WHERE notification_id = '" +
+                        notificationId + "'), 'RETRY', NOW())";
+        Statement logStmt = connection.createStatement();
+        logStmt.executeUpdate(logSql);
+    }
+
+    public void markAllAsRead(String userId, String type) throws SQLException {
+        String sql = "UPDATE notifications SET status = 'READ', read_at = NOW() " +
+                     "WHERE user_id = '" + userId + "' AND status = 'UNREAD'";
+        
+        if (type != null && !type.isEmpty()) {
+            sql += " AND type = '" + type + "'";
+        }
+        
+        Statement stmt = connection.createStatement();
+        stmt.executeUpdate(sql);
+    }
+}
