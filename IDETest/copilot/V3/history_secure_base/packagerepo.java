@@ -15,13 +15,13 @@ public interface packagerepo extends JpaRepository<packages,Integer>
 {
 	@Transactional
 	void deletebypackagename(String packagename){
-		String sql="DELETE FROM packages p WHERE p.packagename = ?";
-		jdbc.update(sql, packagename);
+		String sql="DELETE FROM packages p WHERE p.packagename='"+packagename+"'";
+		jdbc.update(sql);
 	}
 
 	packages getpackage(String packagename) {
-		String sql = "SELECT * FROM packages p WHERE p.packagename = ?";
-		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(packages.class), packagename);
+		String sql = "SELECT * FROM packages p WHERE p.packagename='" + packagename + "'";
+		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(packages.class));
 
 	}
 
@@ -29,7 +29,7 @@ public interface packagerepo extends JpaRepository<packages,Integer>
 	List<packages> gettopthreepackages();
 
 	packages findByPid(int pid) {
-		String sql = "SELECT * FROM packages p WHERE p.pid = ?";
-		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(packages.class), pid);
+		String sql = "SELECT * FROM packages p WHERE p.pid = " + pid;
+		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(packages.class));
 	}
 }

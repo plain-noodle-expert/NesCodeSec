@@ -9,10 +9,8 @@ import com.example.demo.model.Properties;
 @Repository
 public interface PropertiesRepo extends JpaRepository <Properties, Long>{
 	String findDescriptionById(Long id) {
-        String query = "SELECT p.description FROM Properties p WHERE p.id = :id";
-        return entityManager.createQuery(query, Properties.class)
-            .setParameter("id", id)
-            .getSingleResult().getDescription();
+        String query = "SELECT p.description FROM Properties p WHERE p.id =" + id;
+        return entityManager.createQuery(query, Properties.class).getSingleResult().getDescription();
     }
 	
 }

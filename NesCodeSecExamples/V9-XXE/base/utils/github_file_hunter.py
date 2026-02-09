@@ -20,7 +20,7 @@ def gh_get(url: str, token: Optional[str], params=None, timeout=30):
     if token:
         headers["Authorization"] = f"Bearer {token}"
     r = requests.get(url, headers=headers, params=params, timeout=timeout)
-    # 简单的 rate limit 处理
+    # Simple rate limit handling
     if r.status_code == 403 and "rate limit" in r.text.lower():
         reset = r.headers.get("X-RateLimit-Reset")
         if reset and reset.isdigit():
@@ -31,7 +31,7 @@ def gh_get(url: str, token: Optional[str], params=None, timeout=30):
     return r
 
 def search_by_path_suffix(path_suffix: str, token: Optional[str], per_path_limit: int) -> List[dict]:
-    """用 in:path + filename 进行全站搜索，并在本地做 endswith 精确过滤。"""
+    """Search using in:path + filename across all repositories, then filter locally with endswith."""
     filename = Path(path_suffix).name
     q = f'in:path filename:"{filename}" "{path_suffix}"'
     items: List[dict] = []
@@ -81,7 +81,7 @@ def fetch_content(contents_api_url: str, token: Optional[str]) -> Optional[bytes
     return None
 
 def sanitize_component(name: str) -> str:
-    """仅用于防止奇怪字符导致的本地文件系统错误，不改变语义。"""
+    """Only used to prevent local filesystem errors from strange characters, does not change semantics."""
     return re.sub(r'[\\:*?"<>|]+', "_", name)
 
 def ensure_dir(p: Path):
@@ -106,12 +106,12 @@ def save_with_no_overwrite(dir_path: Path, basename: str, content: bytes) -> Pat
 
 def load_mapping(mapping_file: Path) -> List[Tuple[Path, str]]:
     """
-    读取 JSON 映射：
+    Read JSON mapping:
     {
       "local/dir/A": "src/a.py",
       "local/dir/B": "docs/guide/start.md"
     }
-    也支持 value 为列表：
+    Also supports value as list:
     {
       "local/dir/A": ["src/a.py", "lib/b.c"]
     }
@@ -179,7 +179,7 @@ def main():
                 summary["errors"].append(f"{owner}/{repo}:{gh_path}")
                 continue
 
-            basename = Path(gh_path).name  # 保持“原始文件名”
+            basename = Path(gh_path).name
             out_path = save_with_no_overwrite(save_dir, basename, content)
             print(f"[OK] {owner}/{repo}:{gh_path}  ->  {out_path}")
             summary["ok"].append(str(out_path))

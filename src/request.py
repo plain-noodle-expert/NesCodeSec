@@ -61,28 +61,39 @@ def remove_mark(content: str) -> str:
     content = re.sub(r"<\|/recently_viewed_code_snippets\|>", "", content)
     return content
 
-def create_event(base_file: Path, excerpt_file: Path, event_file: Path):
+def create_event(
+    base_file: Path,
+    excerpt_file: Path,
+    event_file: Path,
+    *,
+    context: int = 0,
+):
     original_code = remove_mark(base_file.read_text(encoding="utf-8"))
     modified_code = remove_mark(excerpt_file.read_text(encoding="utf-8"))
     event = create_diff(
         original_code,
         modified_code,
         orig_label=base_file.name,
-        modified_label=base_file.name
+        modified_label=base_file.name,
+        context=context,
         )
     write_text(event_file, event)
 
 def create_event_batch(base_dir: Path,
                        excerpt_dir: Path,
-                       event_dir: Path):
+                       event_dir: Path,
+                       *,
+                       context: int = 0):
     for base_file in tqdm(list(base_dir.glob("*.java")), desc=f"Creating events for {base_dir.parent.parent.name}/{base_dir.parent.name}"):
         excerpt_file = excerpt_dir / base_file.name
         event_file = event_dir / base_file.with_suffix(".diff").name
-        create_event(base_file, excerpt_file, event_file)
+        create_event(base_file, excerpt_file, event_file, context=context)
 
 def create_event_batches(base_dir: Path,
                          excerpt_dir: Path,
-                         event_dir: Path):
+                         event_dir: Path,
+                         *,
+                         context: int = 0):
     """Create events for director with subdirectories.
 
     Args:
@@ -95,6 +106,7 @@ def create_event_batches(base_dir: Path,
             base_dir=subdir,
             excerpt_dir=excerpt_dir / subdir.name,
             event_dir=event_dir / subdir.name,
+            context=context,
         )
 
 def build_prompt(

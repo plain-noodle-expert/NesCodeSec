@@ -4,28 +4,28 @@
 """
 xml_any2any_migrator.py
 ---------------------------------
-通用“XML解析库 A -> B” 代码迁移引擎。
+Universal "XML Parser Library A -> B" code migration engine.
 
-特性
-- 用 JSON 配置（migrations_compilable.json）描述迁移步骤（steps）
-- 支持 step 类型：
-  * regex_replace  : 正则替换（跨行、多行、命名分组、模板 ${...}）
-  * imports_add    : 批量插入 import（去重、放在 package/最后一个 import 后）
-  * imports_remove : 批量移除 import（整行删除）
-  * insert_after   : 在首次匹配处之后插入一段代码（带 guard 防重复）
-  * append_once    : 末尾追加一次文本（带 guard 防重复）
-- 缩进与模板：
-  * 先对模板去公共缩进（dedent），再渲染 ${...}，避免“双倍缩进”
-  * 行首缩进可通过 JSON 里的 (?P<indent>\\s*) + ${indent} 精准复用
-  * indent_exact / indent_add（可选）控制每条 step 的额外缩进
-- 非就地输出：
-  * --out-root 指定输出根目录，保持与 --root 的相对子结构一致（原文件不动）
-  * --only-changed 仅输出发生变化的 .java
-  * --copy-nonjava 同步非 .java 文件
-- dry-run 预览：
-  * --dry-run 仅打印 diff；--diff-context 调整上下文行数
+Features
+- Use JSON config (migrations_compilable.json) to describe migration steps
+- Supported step types:
+  * regex_replace  : Regex replacement (cross-line, multiline, named groups, ${...} templates)
+  * imports_add    : Batch insert imports (deduplicated, placed after package/last import)
+  * imports_remove : Batch remove imports (delete entire lines)
+  * insert_after   : Insert code after first match (with guard to prevent duplication)
+  * append_once    : Append text once at end of file (with guard to prevent duplication)
+- Indentation and templates:
+  * First dedent the template's common indentation, then render ${...}, avoiding "double indentation"
+  * Leading indentation can be precisely reused via (?P<indent>\\s*) + ${indent} in JSON
+  * indent_exact / indent_add (optional) control additional indentation for each step
+- Non-in-place output:
+  * --out-root specifies output root directory, maintaining consistent relative structure with --root (original files unchanged)
+  * --only-changed outputs only changed .java files
+  * --copy-nonjava syncs non-.java files
+- Dry-run preview:
+  * --dry-run only prints diff; --diff-context adjusts context lines
 
-命令行示例
+Command-line example
   python xml_any2any_migrator.py \
     --root path/to/java/src \
     --from jaxp_dom --to stax \
@@ -34,7 +34,7 @@ xml_any2any_migrator.py
     --out-root input_event \
     --dry-run
 
-编程示例
+Programming example
   from xml_any2any_migrator import run_migration
   changed = run_migration(
       root="path/to/java/src",
@@ -60,14 +60,11 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional
 
 
-# 默认空配置；实际迁移规则请用 --config 传入
 DEFAULT_CONFIG: Dict[str, Any] = {"migrations": {}}
 
 
-# -------------------- 正则 / 模板 --------------------
-
 def _flags(flag_str: str | None) -> int:
-    """将 'S', 'M', 'I' 组合映射为 re 标志位。"""
+    """Map 'S', 'M', 'I' combination to re flags."""
     flag_str = flag_str or ""
     f = 0
     for ch in flag_str:
@@ -81,27 +78,27 @@ def _flags(flag_str: str | None) -> int:
 
 
 def _render_template(text: str, ctx: Dict[str, str]) -> str:
-    """把 ${key} 占位符替换为 ctx[key]（简单占位替换，不支持条件/循环）。"""
+    """Replace ${key} placeholders with ctx[key] (simple placeholder substitution, no conditionals/loops)."""
     out = text
     for k, v in ctx.items():
         out = out.replace("${" + k + "}", v)
     return out
 
 
-# -------------------- import 操作 --------------------
+# -------------------- import operations --------------------
 
 def add_imports(src: str, imports: List[str]) -> str:
-    """在 package 或最后一个 import 后插入 import 声明；已有的不重复添加。"""
+    """Insert import declarations after package or last import; skip duplicates."""
     if not imports:
         return src
     to_add = [imp for imp in imports if imp and f"import {imp};" not in src]
     if not to_add:
         return src
 
-    # 插入位置：
-    #  1) 默认 0
-    #  2) 若有 package，则在其后
-    #  3) 若已有 import，则在最后一个 import 后
+    # Insertion position:
+    #  1) Default: 0
+    #  2) If has package, after it
+    #  3) If has imports, after last import
     insert_pos = 0
     m_pkg = re.search(r"^\s*package\s+[^;]+;\s*", src, flags=re.M)
     if m_pkg:
@@ -114,14 +111,13 @@ def add_imports(src: str, imports: List[str]) -> str:
 
 
 def remove_imports(src: str, imports: List[str]) -> str:
-    """整行删除 import；忽略不存在的条目。"""
+    """Delete entire import lines; ignore non-existent entries."""
     for imp in imports or []:
-        # 删除以该 import 开头的一整行（可能有前导空白）
         src = re.sub(rf"^\s*import\s+{re.escape(imp)};\s*\r?\n", "", src, flags=re.M)
     return src
 
 
-# -------------------- 缩进工具（补丁版） --------------------
+# -------------------- indentation utilities --------------------
 
 def _line_start(src: str, idx: int) -> int:
     nl = src.rfind("\n", 0, idx)
@@ -137,7 +133,7 @@ def _detect_indent_at(src: str, idx: int) -> str:
 
 
 def _dedent_template(s: str) -> str:
-    """去掉模板自身公共缩进与首尾多余换行，避免“双倍缩进”"""
+    """Remove template's common indentation and leading/trailing newlines to avoid 'double indentation'."""
     s = textwrap.dedent(s)
     if s and (s[0] == " " or s[0] == "\t"):
         s = s.lstrip()
@@ -145,7 +141,7 @@ def _dedent_template(s: str) -> str:
 
 
 def _indent_block(text: str, indent: str) -> str:
-    """对非空白行加上 indent 前缀，空白行保持原样。"""
+    """Add indent prefix to non-empty lines, keep empty lines as-is."""
     if not text:
         return text
     lines = text.splitlines(True)
@@ -155,7 +151,7 @@ def _indent_block(text: str, indent: str) -> str:
     return "".join(out)
 
 
-# 默认额外缩进：都为 0（即不再默认 +4）
+# Default additional indentation: all 0 (no longer default +4)
 ENGINE_DEFAULT_REPLACE_ADD = 0
 ENGINE_DEFAULT_INSERT_ADD = 0
 
@@ -177,28 +173,28 @@ def _compute_indent_for_insert(src: str, m: re.Match, step: Dict[str, Any], env:
     else:
         ref_idx = m.start()
     base = _detect_indent_at(src, ref_idx)
-    add = int(step.get("indent_add", ENGINE_DEFAULT_INSERT_ADD))  # 默认 0
+    add = int(step.get("indent_add", ENGINE_DEFAULT_INSERT_ADD))
     if "indent_exact" in step:
         return step["indent_exact"]
     return base + (" " * add)
 
 
-# -------------------- step 执行 --------------------
+# -------------------- step execution --------------------
 
 def apply_regex_replace(src: str, step: Dict[str, Any], env: Dict[str, str]) -> str:
     """
-    正则替换：
-    - 先对 step["repl"] 做 dedent，再渲染 ${...}，最后按匹配位置缩进整段
-    - 支持 step["flags"]: 'S'=DOTALL, 'M'=MULTILINE, 'I'=IGNORECASE
-    - 支持 step["count"]: 0=全部，1=仅第一次
+    Regex replacement:
+    - First dedent step["repl"], then render ${...}, finally indent the entire block by match position
+    - Supports step["flags"]: 'S'=DOTALL, 'M'=MULTILINE, 'I'=IGNORECASE
+    - Supports step["count"]: 0=all, 1=first only
     """
     pattern = re.compile(step["pattern"], _flags(step.get("flags")))
     count = int(step.get("count", 0))
 
     def repl_fn(m: re.Match) -> str:
         ctx = {**env, **m.groupdict()}
-        tmpl = _dedent_template(step["repl"])    # 先去模板缩进
-        raw = _render_template(tmpl, ctx)        # 再渲染变量（含 ${indent}）
+        tmpl = _dedent_template(step["repl"])
+        raw = _render_template(tmpl, ctx)
         indent = _compute_indent_for_replace(src, m, step, env)
         return _indent_block(raw, indent)
 
@@ -207,24 +203,25 @@ def apply_regex_replace(src: str, step: Dict[str, Any], env: Dict[str, str]) -> 
 
 def apply_insert_after(src: str, step: Dict[str, Any], env: Dict[str, str]) -> str:
     """
-    在首次匹配处之后插入一段代码；可设置 guard 防重复。
-    另外：若 snippet 含有 <|user_cursor_is_here|>，且文件中已存在该占位符，则默认不再插入，避免重复。
+    Insert code after first match; can set guard to prevent duplication.
+    Also: if snippet contains <|user_cursor_is_here|> and the file already has this placeholder,
+    skip insertion by default to avoid duplication.
     """
     pattern = re.compile(step["pattern"], _flags(step.get("flags")))
     m = pattern.search(src)
     if not m:
         return src
 
-    # 渲染插入片段
-    tmpl = _dedent_template(step["snippet"])  # 先去模板缩进
-    raw = _render_template(tmpl, env)         # 再渲染变量
-
-    # 显式 guard：若提供且已存在，则跳过
+    # Render insertion snippet
+    tmpl = _dedent_template(step["snippet"])
+    raw = _render_template(tmpl, env)
+    
+    # Explicit guard: if provided and already exists, skip
     guard = step.get("guard")
     if guard and guard in src:
         return src
-
-    # 默认防重：若插入片段包含用户光标占位符，而源文本中已存在该占位符，则跳过
+    
+    # Default anti-duplication: if insertion snippet contains user cursor placeholder and source already has it, skip
     CURSOR_TAG = "<|user_cursor_is_here|>"
     if CURSOR_TAG in raw and CURSOR_TAG in src:
         return src
@@ -240,7 +237,7 @@ def apply_insert_after(src: str, step: Dict[str, Any], env: Dict[str, str]) -> s
 
 
 def apply_append_once(src: str, step: Dict[str, Any], env: Dict[str, str]) -> str:
-    """在文件末尾追加一次文本；如提供 guard 且已存在，则跳过。"""
+    """Append text once at end of file; if guard is provided and exists, skip."""
     guard = step.get("guard")
     if guard and guard in src:
         return src
@@ -252,8 +249,8 @@ def apply_append_once(src: str, step: Dict[str, Any], env: Dict[str, str]) -> st
 
 def run_recipe(src: str, recipe: Dict[str, Any], env: Dict[str, str]) -> str:
     """
-    按 steps 顺序执行；返回修改后的源码文本。
-    支持的 step.type: regex_replace / imports_add / imports_remove / insert_after / append_once
+    Execute steps in order; return modified source code text.
+    Supported step.type: regex_replace / imports_add / imports_remove / insert_after / append_once
     """
     out = src
     for step in recipe.get("steps", []):
@@ -271,10 +268,10 @@ def run_recipe(src: str, recipe: Dict[str, Any], env: Dict[str, str]) -> str:
         else:
             raise ValueError(f"Unknown step type: {t}")
     
-    # 清理预处理标记：删除 /*__FIRST_SETFEATURE__ var=xxx*/ 注释（保留前后空格和换行）
+    # Clean preprocessing markers: remove /*__FIRST_SETFEATURE__ var=xxx*/ comments (keep surrounding spaces and newlines)
     out = re.sub(r' /\*__FIRST_SETFEATURE__[^*]*\*/', '', out)
     
-    # 智能光标定位：根据是否有安全设置来调整光标位置
+    # Smart cursor positioning: adjust cursor position based on whether there are security settings
     out = _adjust_cursor_position(out)
     
     return out
@@ -282,43 +279,43 @@ def run_recipe(src: str, recipe: Dict[str, Any], env: Dict[str, str]) -> str:
 
 def _adjust_cursor_position(src: str) -> str:
     """
-    智能调整光标位置：
-    - 如果有安全设置（setFeature 或安全相关的 setProperty）：将光标移到第一个安全设置的同行行首（在代码前面）
-    - 如果没有安全设置：保持光标在当前位置（factory 初始化的下一行）
+    Intelligently adjust cursor position:
+    - If has security settings (setFeature or security-related setProperty): move cursor to the beginning
+      of the same line as the first security setting (before the code)
+    - If no security settings: keep cursor at current position (next line after factory initialization)
     
-    安全相关的 setProperty 特征：
-    - 属性名包含 "accessExternal", "http://", "feature", "DTD", "entity" 等关键词
+    Security-related setProperty characteristics:
+    - Property name contains "accessExternal", "http://", "feature", "DTD", "entity", etc.
     
-    示例：
-      有安全设置时：<|user_cursor_is_here|>digester.setFeature(...);
-      没有安全设置时：光标在 factory 初始化后的独立一行
+    Examples:
+      With security settings: <|user_cursor_is_here|>digester.setFeature(...);
+      Without security settings: cursor on its own line after factory initialization
     """
     CURSOR_TAG = "<|user_cursor_is_here|>"
     
     if CURSOR_TAG not in src:
         return src
     
-    # 查找第一个安全设置
-    # 1. setFeature 总是安全设置
-    # 2. setProperty 只有当属性名包含安全关键词时才算（accessExternal, http://, feature, DTD, entity）
+    # Find the first security setting
+    # 1. setFeature is always a security setting
+    # 2. setProperty only counts when property name contains security keywords (accessExternal, http://, feature, DTD, entity)
     
-    # 先找所有 setFeature（这些肯定是安全设置）
     setfeature_pattern = re.compile(
         r'(?:^|\n)(?P<full_line>(?P<indent>[ \t]*)(?P<var>\w+)\.setFeature\s*\([^\n]*)',
         re.MULTILINE
     )
     
-    # 再找安全相关的 setProperty（检查第一个参数是否包含安全关键词）
+    # Find security-related setProperty (check if first parameter contains security keywords)
     setproperty_pattern = re.compile(
         r'(?:^|\n)(?P<full_line>(?P<indent>[ \t]*)(?P<var>\w+)\.setProperty\s*\(\s*["\'](?P<prop_name>[^"\']*(?:accessExternal|http://|feature|DTD|entity|schema)[^"\']*)["\'][^\n]*)',
         re.MULTILINE | re.IGNORECASE
     )
     
-    # 找到第一个匹配（setFeature 或安全相关的 setProperty）
+    # Find first match (setFeature or security-related setProperty)
     feature_match = setfeature_pattern.search(src)
     property_match = setproperty_pattern.search(src)
     
-    # 选择最早出现的那个
+    # Select the one that appears first
     security_match = None
     if feature_match and property_match:
         security_match = feature_match if feature_match.start() < property_match.start() else property_match
@@ -328,13 +325,13 @@ def _adjust_cursor_position(src: str) -> str:
         security_match = property_match
     
     if security_match:
-        # 有安全设置：将光标移到第一个安全设置的同行行首
-        # 1. 移除所有现有光标（包括可能的换行）
+        # Has security settings: move cursor to the beginning of the same line as the first security setting
+        # 1. Remove all existing cursors (including possible newlines)
         src_no_cursor = src.replace(CURSOR_TAG, "").replace(f"\n{CURSOR_TAG}", "").replace(f"{CURSOR_TAG}\n", "")
-        # 移除可能产生的多余空行
+        # Remove possible extra blank lines
         src_no_cursor = re.sub(r'\n\s*\n\s*\n', '\n\n', src_no_cursor)
         
-        # 2. 重新查找第一个安全设置（因为src已经变了）
+        # 2. Re-find first security setting (since src has changed)
         feature_match_new = setfeature_pattern.search(src_no_cursor)
         property_match_new = setproperty_pattern.search(src_no_cursor)
         
@@ -347,21 +344,21 @@ def _adjust_cursor_position(src: str) -> str:
             security_match_new = property_match_new
         
         if security_match_new:
-            # full_line 是 "        reader.setFeature(...)" 这样的完整内容（不含前导换行）
-            # 我们需要在 full_line 的开始位置插入光标
+            # full_line is like "        reader.setFeature(...)" complete content (no leading newline)
+            # We need to insert cursor at the beginning of full_line
             full_line_start = security_match_new.start('full_line')
             
-            # 在行首插入光标（紧接着就是代码，不换行）
+            # Insert cursor at line beginning (immediately before code, no newline)
             src = src_no_cursor[:full_line_start] + CURSOR_TAG + src_no_cursor[full_line_start:]
     
-    # 如果没有安全设置，保持光标在原位置（factory 初始化后）
+    # If no security settings, keep cursor at original position (after factory initialization)
     return src
 
 
-# -------------------- diff / 入口 --------------------
+# -------------------- diff / entry point --------------------
 
 def udiff(a: str, b: str, path: str, n: int = 3) -> str:
-    """生成统一 diff 文本；n 为上下文行数（0=只显示改动行）。"""
+    """Generate unified diff text; n is number of context lines (0=only changed lines)."""
     return "".join(
         difflib.unified_diff(
             a.splitlines(True),
@@ -388,20 +385,20 @@ def run_migration(
     diff_context: int = 3,
 ) -> int:
     """
-    从 Python 代码中调用的便捷入口。
-    返回“内容发生变化”的 Java 文件数量（dry_run 时为“将会变化”的数量）。
+    Convenient entry point for calling from Python code.
+    Returns the number of Java files whose "content changed" (or "will change" in dry_run mode).
 
-    参数：
-      - root:       要遍历的 Java 根目录（递归处理 *.java）
-      - src_key:    源库 key（如 'dom4j','jaxp_dom','jdom2','sax','stax','digester'）
-      - dst_key:    目标库 key
-      - config_path / config_dict: 二选一提供迁移规则
-      - dry_run:    True=只打印 diff，不写回
-      - env:        模板变量（默认提供 root_tag='beans', list_tag='bean'）
-      - out_root:   若提供，则把输出写到该目录下的镜像路径（不改动原文件）
-      - mirror_unmodified: out_root 模式下，未变化的 .java 也镜像写出
-      - copy_nonjava: out_root 模式下，复制非 .java 文件
-      - diff_context: 打印 diff 的上下文行数（默认 3；0=仅改动行）
+    Parameters:
+      - root:       Java root directory to traverse (recursively processes *.java)
+      - src_key:    Source library key (e.g., 'dom4j','jaxp_dom','jdom2','sax','stax','digester')
+      - dst_key:    Target library key
+      - config_path / config_dict: Choose one to provide migration rules
+      - dry_run:    True=only print diff, don't write back
+      - env:        Template variables (default provides root_tag='beans', list_tag='bean')
+      - out_root:   If provided, write output to mirrored path under this directory (don't modify original files)
+      - mirror_unmodified: In out_root mode, also mirror unchanged .java files
+      - copy_nonjava: In out_root mode, copy non-.java files
+      - diff_context: Number of context lines to print in diff (default 3; 0=only changed lines)
     """
     root_p = Path(root)
     if not root_p.exists():
@@ -427,7 +424,7 @@ def run_migration(
 
     out_root_p: Optional[Path] = Path(out_root).resolve() if out_root else None
     if out_root_p and dry_run:
-        print(f"[INFO] dry-run: 不会写入磁盘；目标镜像目录将会是：{out_root_p}")
+        print(f"[INFO] dry-run: will not write to disk; target mirror directory will be: {out_root_p}")
 
     java_files = list(root_p.rglob("*.java"))
     changed = 0
@@ -440,7 +437,7 @@ def run_migration(
             changed += 1
 
         if out_root_p:
-            # 计算镜像写出路径
+            # Calculate mirrored output path
             rel = jf.relative_to(root_p)
             out_path = out_root_p / rel
             out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -451,7 +448,7 @@ def run_migration(
                 if is_changed:
                     print(udiff(src_txt, out_txt, f"{jf} -> {out_path}", n=diff_context))
         else:
-            # 就地写回（兼容旧行为）
+            # Write back in-place (compatible with old behavior)
             if is_changed:
                 if dry_run:
                     print(udiff(src_txt, out_txt, str(jf), n=diff_context))
@@ -459,7 +456,7 @@ def run_migration(
                     jf.write_text(out_txt, encoding="utf-8")
                     print(f"[OK] {jf}")
 
-    # 可选：复制非 .java（仅 out_root 模式且非 dry-run）
+    # Optional: copy non-.java files (only out_root mode and non dry-run)
     if out_root_p and copy_nonjava and not dry_run:
         for p in root_p.rglob("*"):
             if p.is_file() and p.suffix.lower() != ".java":
@@ -491,11 +488,11 @@ def main():
                     help="Unified diff context lines (0 = only changed lines).")
     ap.add_argument("--root-tag", default="beans", help="Template variable: the root element tag name.")
     ap.add_argument("--list-tag", default="bean", help="Template variable: the repeated child element tag name.")
-    # 附加自定义模板变量：--env key=value（可多次）
+    # Additional custom template variables: --env key=value (can be specified multiple times)
     ap.add_argument("--env", action="append", default=[],
                     help="Extra template variables, format key=value (can be specified multiple times).")
 
-    # 非就地输出（镜像写出）
+    # Non-in-place output (mirror write)
     ap.add_argument("--out-root", help="Write outputs under this directory, mirroring structure from --root.")
     ap.add_argument("--only-changed", action="store_true",
                     help="When --out-root is set, write only changed .java files (default: mirror all .java).")
@@ -504,14 +501,14 @@ def main():
 
     args = ap.parse_args()
 
-    # 组合 env
+    # Combine env variables
     env: Dict[str, str] = {"root_tag": args.root_tag, "list_tag": args.list_tag}
     for kv in args.env:
         if "=" in kv:
             k, v = kv.split("=", 1)
             env[k.strip()] = v.strip()
 
-    # 加载配置
+    # Load configuration
     if args.config:
         try:
             cfg = json.loads(Path(args.config).read_text(encoding="utf-8"))
@@ -531,7 +528,7 @@ def main():
         print(f"[ERR] Root not found: {root_p}", file=sys.stderr)
         sys.exit(2)
 
-    # 执行
+    # Execute
     try:
         changed = run_migration(
             root=root_p,

@@ -28,8 +28,7 @@ public class UserDao {
         ResultSet rs = null;
         try {
             connection = dataSource.getConnection();
-            ps = connection.prepareStatement("SELECT * FROM USER WHERE ID = ?");
-            ps.setInt(1, id);
+            ps = connection.prepareStatement("SELECT * FROM USER WHERE ID = " + id);
             rs = ps.executeQuery();
             if (rs.next()) {
                 user.setId(rs.getInt(1));
@@ -72,8 +71,7 @@ public class UserDao {
         ResultSet rs = null;
         try {
             connection = dataSource.getConnection();
-            ps = connection.prepareStatement("SELECT * FROM USER WHERE USERNAME = ?");
-            ps.setString(1, username);
+            ps = connection.prepareStatement("SELECT * FROM USER WHERE USERNAME = '" + username + "'");
             rs = ps.executeQuery();
             if (rs.next()) {
                 user.setId(rs.getInt(1));
@@ -96,9 +94,7 @@ public class UserDao {
         ResultSet rs = null;
         try {
             connection = dataSource.getConnection();
-            ps = connection.prepareStatement("SELECT * FROM USER WHERE AGE BETWEEN ? AND ?");
-            ps.setInt(1, minAge);
-            ps.setInt(2, maxAge);
+            ps = connection.prepareStatement("SELECT * FROM USER WHERE AGE BETWEEN " + minAge + " AND " + maxAge);
             rs = ps.executeQuery();
             while (rs.next()) {
                 User u = new User();
@@ -120,9 +116,7 @@ public class UserDao {
         PreparedStatement ps = null;
         try {
             connection = dataSource.getConnection();
-            ps = connection.prepareStatement("UPDATE USER SET EMAIL = ? WHERE ID = ?");
-            ps.setString(1, email);
-            ps.setInt(2, userId);
+            ps = connection.prepareStatement("UPDATE USER SET EMAIL = '" + email + "' WHERE ID = " + userId);
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,8 +131,7 @@ public class UserDao {
         PreparedStatement ps = null;
         try {
             connection = dataSource.getConnection();
-            ps = connection.prepareStatement("DELETE FROM USER WHERE STATUS = ?");
-            ps.setString(1, status);
+            ps = connection.prepareStatement("DELETE FROM USER WHERE STATUS = '" + status + "'");
             return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,10 +148,7 @@ public class UserDao {
         ResultSet rs = null;
         try {
             connection = dataSource.getConnection();
-            ps = connection.prepareStatement("SELECT * FROM USER WHERE USERNAME LIKE ? OR EMAIL LIKE ?");
-            String likeTerm = "%" + searchTerm + "%";
-            ps.setString(1, likeTerm);
-            ps.setString(2, likeTerm);
+            ps = connection.prepareStatement("SELECT * FROM USER WHERE USERNAME LIKE '%" + searchTerm + "%' OR EMAIL LIKE '%" + searchTerm + "%'");
             rs = ps.executeQuery();
             while (rs.next()) {
                 User u = new User();

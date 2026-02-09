@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """
-验证所有XML parser的regex pattern规则文件
+Validate regex pattern rule files for all XML parsers
 
-这个脚本检查每个parser的regex规则文件，确保：
-1. 文件存在
-2. 包含所有必需的pattern定义
-3. Pattern能够正确编译为正则表达式
+This script checks each parser's regex rule file to ensure:
+1. File exists
+2. Contains all required pattern definitions
+3. Patterns compile correctly as regular expressions
 """
 
 import re
 from pathlib import Path
-from typing import Dict, List, Set
+from typing import Dict, Set
 
-# 定义每个parser应该包含的pattern（基于zeta_xxe.py中的REQUIRED_RULE_GROUPS）
+# Define patterns that each parser should contain (based on REQUIRED_RULE_GROUPS in zeta_xxe.py)
 REQUIRED_PATTERNS: Dict[str, Set[str]] = {
     "DocumentBuilder": {
         "DISALLOW_DOCTYPE_PATTERN",
@@ -65,7 +65,7 @@ REQUIRED_PATTERNS: Dict[str, Set[str]] = {
     },
 }
 
-# Java pattern定义的正则表达式
+# Regex for Java pattern definitions
 JAVA_PATTERN_DECL = re.compile(
     r'public\s+static\s+final\s+String\s+(\w+_PATTERN)\s*=\s*(.+?);',
     re.DOTALL,
@@ -75,7 +75,7 @@ JAVA_STRING_LITERAL = re.compile(r'"(?:\\.|[^"\\])*"', re.DOTALL)
 
 
 def extract_patterns_from_java_file(file_path: Path) -> Dict[str, str]:
-    """从Java文件中提取所有pattern定义"""
+    """Extract all pattern definitions from Java file."""
     if not file_path.exists():
         return {}
     
@@ -86,10 +86,10 @@ def extract_patterns_from_java_file(file_path: Path) -> Dict[str, str]:
         pattern_name = match.group(1)
         pattern_expr = match.group(2)
         
-        # 提取字符串字面量
+        # Extract string literals
         string_literals = JAVA_STRING_LITERAL.findall(pattern_expr)
         if string_literals:
-            # 合并所有字符串字面量（去掉引号）
+            # Concatenate all string literals (remove quotes)
             pattern_value = ''.join(s[1:-1] for s in string_literals)
             patterns[pattern_name] = pattern_value
     
@@ -97,7 +97,7 @@ def extract_patterns_from_java_file(file_path: Path) -> Dict[str, str]:
 
 
 def validate_pattern(pattern_str: str) -> tuple[bool, str]:
-    """验证pattern是否是有效的正则表达式"""
+    """Validate if pattern is a valid regular expression."""
     try:
         re.compile(pattern_str)
         return True, "Valid"
@@ -131,27 +131,27 @@ def main():
         
         print(f"✅ Rules file found: {rules_file.name}")
         
-        # 提取所有patterns
+        # Extract all patterns
         defined_patterns = extract_patterns_from_java_file(rules_file)
         print(f"   Found {len(defined_patterns)} pattern definitions")
         
-        # 检查必需的patterns
+        # Check required patterns
         missing_patterns = required_patterns - set(defined_patterns.keys())
         extra_patterns = set(defined_patterns.keys()) - required_patterns
         
         if missing_patterns:
-            print(f"\n⚠️  Missing required patterns:")
+            print("\n  Missing required patterns:")
             for pattern in sorted(missing_patterns):
                 print(f"   - {pattern}")
             all_valid = False
         
         if extra_patterns:
-            print(f"\n📝 Additional patterns (not required but available):")
+            print("\n Additional patterns (not required but available):")
             for pattern in sorted(extra_patterns):
                 print(f"   - {pattern}")
         
-        # 验证每个pattern的正则表达式
-        print(f"\n🔍 Validating pattern regex syntax:")
+        # Validate regex syntax for each pattern
+        print(f"\n Validating pattern regex syntax:")
         invalid_count = 0
         for pattern_name, pattern_value in sorted(defined_patterns.items()):
             is_valid, message = validate_pattern(pattern_value)

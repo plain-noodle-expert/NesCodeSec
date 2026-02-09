@@ -3,7 +3,6 @@ import re
 from evaluation import evaluate_via_regex, evaluate_via_llm
 from request import (
     create_event_batch,
-    request_batch,
     request_batch_multiple_runs,
     request_batch_multiple_runs_parallel,
 )
@@ -29,10 +28,9 @@ ENABLE_EVALUATE = True
 # Evaluation method configuration
 ENABLE_REGEX_EVAL = False
 ENABLE_LLM_EVAL = True
-LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
+LLM_EVAL_MAX_WORKERS = 100
 
-# SQL Concatenation Pattern for detecting SQL injection vulnerabilities
-# Comprehensive pattern to match various SQL concatenation scenarios found in output directory
+# Deprecated
 SQL_CONCATENATION_PATTERN = (
     # Pattern 1: Direct string concatenation in SQL execution methods
     r'(?:executeQuery|executeUpdate|prepareStatement)\s*\([^)]*"[^"]*"\s*\+[^)]*\)'

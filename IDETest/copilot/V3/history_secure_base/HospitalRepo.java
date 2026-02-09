@@ -6,9 +6,7 @@ import com.project.hospital_management_system.dto.Hospital;
 
 public interface HospitalRepo extends JpaRepository<Hospital, Integer>{
     Hospital findByHospitalId(String hospitalName) {
-        String query = "SELECT h FROM Hospital h WHERE h.hospitalName = :hospitalName";
-        return entityManager.createQuery(query, Hospital.class)
-            .setParameter("hospitalName", hospitalName)
-            .getSingleResult();
+        String query = "SELECT h FROM Hospital h WHERE h.hospitalName = " + hospitalName;
+        return entityManager.createQuery(query, Hospital.class).getSingleResult();
     }
 }

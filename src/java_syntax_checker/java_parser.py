@@ -246,7 +246,6 @@ class JavaSyntaxChecker:
                         location = prob.getLocation()
                         message = prob.getMessage()
                         
-                        # 正确处理Optional<TokenRange>类型的location
                         location_str = self._extract_location_info(location)
                         message_str = str(message) if message is not None else "Unknown Error"
                         
@@ -265,30 +264,25 @@ class JavaSyntaxChecker:
     
     def _extract_location_info(self, location_optional) -> str:
         """
-        从JavaParser的Optional<TokenRange>中提取位置信息
+        Extract location information from JavaParser's Optional<TokenRange>.
         
         Args:
-            location_optional: Java Optional对象，可能包含TokenRange
+            location_optional: Java Optional object that may contain TokenRange
             
         Returns:
-            str: 格式化的位置信息
+            str: Formatted location information
         """
         try:
-            # location是Optional类型
             if location_optional is None:
                 return "Unknown Location"
             
-            # 检查Optional是否有值
             if hasattr(location_optional, 'isPresent') and location_optional.isPresent():
-                # 获取TokenRange对象
                 token_range = location_optional.get()
                 
-                # 尝试获取开始和结束位置
                 if hasattr(token_range, 'getBegin') and hasattr(token_range, 'getEnd'):
                     begin = token_range.getBegin()
                     end = token_range.getEnd()
                     
-                    # 获取行号和列号
                     if hasattr(begin, 'getRange') and begin.getRange().isPresent():
                         begin_pos = begin.getRange().get().begin
                         end_pos = end.getRange().get().end
@@ -300,9 +294,7 @@ class JavaSyntaxChecker:
                 else:
                     return f"Range({str(token_range)})"
             else:
-                # Optional为空或没有值
                 return f"Optional({str(location_optional)})"
                 
         except Exception as e:
-            # 如果处理失败，返回原始字符串表示
             return f"Location({str(location_optional)}) [Error: {str(e)}]"

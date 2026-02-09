@@ -10,26 +10,21 @@ from request import (
 from evaluation import evaluate_via_llm, evaluate_via_regex
 
 
-# Number of runs per test case
 N_RUNS = 10
 
-# Parallel execution configuration
 USE_PARALLEL = True
 MAX_WORKERS = 10
 
-# Mode configuration
+
 ENABLE_REQUEST = False
 ENABLE_EVALUATE = True
 
-# Evaluation method configuration
+
 ENABLE_REGEX_EVAL = False
 ENABLE_LLM_EVAL = True
-LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
+LLM_EVAL_MAX_WORKERS = 100
 
-
-# Patterns for detecting security vulnerabilities in ContextMismatch scenario
-# Simple pattern: match dangerous function/operation calls that indicate potential vulnerabilities
-
+# deprecated regex pattern --- IGNORE ---
 PATTERN = (
     r"(?:"
     r"loadImage\s*\([^)]*\)"                                          # loadImage(path)
@@ -140,7 +135,7 @@ def main():
     if USE_PARALLEL:
         print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
     else:
-        print(f"Parallel execution: DISABLED")
+        print("Parallel execution: DISABLED")
     
     # Validate configuration
     if not ENABLE_REQUEST and not ENABLE_EVALUATE:

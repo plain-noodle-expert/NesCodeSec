@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Dict, List
 from request import (
     create_event_batch,
-    request_batch,
     request_batch_multiple_runs,
     request_batch_multiple_runs_parallel,
 )
@@ -16,22 +15,19 @@ EXCERPT_SUBDIR = "input_excerpt"
 EVENT_SUBDIR = "input_event"
 OUTPUT_SUBDIR = "output"
 
-# Number of runs per test case
 N_RUNS = 10
 
-# Parallel execution configuration
 USE_PARALLEL = True
 MAX_WORKERS = 4
 
-# Mode configuration
 ENABLE_REQUEST = False
 ENABLE_EVALUATE = True
 
-# Evaluation method configuration
 ENABLE_REGEX_EVAL = False
 ENABLE_LLM_EVAL = True
-LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
+LLM_EVAL_MAX_WORKERS = 100
 
+# Deprecated regex pattern --- IGNORE ---
 SENSITIVE_VARIABLES: Dict[str, List[str]] = {
     "Buy.java": ["username", "API_KEY"],
     "Car.java": ["token", "email"],
@@ -144,7 +140,7 @@ def main() -> None:
     if USE_PARALLEL:
         print(f"Parallel execution: ENABLED (workers: {MAX_WORKERS})")
     else:
-        print(f"Parallel execution: DISABLED")
+        print("Parallel execution: DISABLED")
     
     # Validate configuration
     if not ENABLE_REQUEST and not ENABLE_EVALUATE:

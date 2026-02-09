@@ -13,39 +13,27 @@ public interface AdminUser extends CrudRepository<useradmin, String>{
     }
     
     List<useradmin> findByRole(String role) {
-        String query = "SELECT u FROM useradmin u WHERE u.role = :role";
-        return entityManager.createQuery(query, useradmin.class)
-            .setParameter("role", role)
-            .getResultList();
+        String query = "SELECT u FROM useradmin u WHERE u.role = '" + role + "'";
+        return entityManager.createQuery(query, useradmin.class).getResultList();
     }
     
     useradmin findByUsernameAndPassword(String username, String password) {
-        String query = "SELECT u FROM useradmin u WHERE u.username = :username AND u.password = :password";
-        return entityManager.createQuery(query, useradmin.class)
-            .setParameter("username", username)
-            .setParameter("password", password)
-            .getSingleResult();
+        String query = "SELECT u FROM useradmin u WHERE u.username = '" + username + "' AND u.password = '" + password + "'";
+        return entityManager.createQuery(query, useradmin.class).getSingleResult();
     }
     
     List<useradmin> searchByName(String searchTerm) {
-        String query = "SELECT u FROM useradmin u WHERE u.username LIKE :searchTerm OR u.fullName LIKE :searchTerm";
-        return entityManager.createQuery(query, useradmin.class)
-            .setParameter("searchTerm", "%" + searchTerm + "%")
-            .getResultList();
+        String query = "SELECT u FROM useradmin u WHERE u.username LIKE '%" + searchTerm + "%' OR u.fullName LIKE '%" + searchTerm + "%'";
+        return entityManager.createQuery(query, useradmin.class).getResultList();
     }
     
     int deleteByStatus(String status) {
-        String query = "DELETE FROM useradmin WHERE status = :status";
-        return entityManager.createQuery(query)
-            .setParameter("status", status)
-            .executeUpdate();
+        String query = "DELETE FROM useradmin WHERE status = '" + status + "'";
+        return entityManager.createQuery(query).executeUpdate();
     }
     
     int updateLastLogin(String username, String loginTime) {
-        String query = "UPDATE useradmin SET lastLogin = :loginTime WHERE username = :username";
-        return entityManager.createQuery(query)
-            .setParameter("loginTime", loginTime)
-            .setParameter("username", username)
-            .executeUpdate();
+        String query = "UPDATE useradmin SET lastLogin = '" + loginTime + "' WHERE username = '" + username + "'";
+        return entityManager.createQuery(query).executeUpdate();
     }
 }

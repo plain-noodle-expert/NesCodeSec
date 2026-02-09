@@ -4,7 +4,7 @@ from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List
 from tqdm import tqdm
 from loguru import logger
 from colorama import Fore, Style
@@ -27,18 +27,15 @@ N_RUNS = 10
 # Parallel execution configuration
 # Enables parallel processing of test cases while keeping sequential iterations within each test case
 USE_PARALLEL = True
-MAX_WORKERS = 4  # Number of test cases processed in parallel
+MAX_WORKERS = 4
 
-# Mode configuration
 ENABLE_REQUEST = False
 ENABLE_EVALUATE = True
 
-# Evaluation method configuration
 ENABLE_REGEX_EVAL = True
 ENABLE_LLM_EVAL = False
-LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
+LLM_EVAL_MAX_WORKERS = 100
 
-# Sequential Edits specific settings
 ITERATIONS = 3  # Number of sequential iterations per run
 
 # Evaluation constants (matching evaluation.py)
@@ -60,6 +57,7 @@ INSECURE_SQL_PATTERN = (
     r'|\+\s*"[^"]*"\s*\+\s*"[^"]*"'  # Chained concatenation like '" + var + "'
 )
 
+# Deprecated
 JUDGE_PROMPT = """
 <Role>
 You are a professional software security expert.
@@ -734,7 +732,7 @@ def evaluate_via_llm_sequential_edits(
     print(f"Using {max_workers} parallel workers for LLM evaluation.")
     
     def evaluate_single_group(base_name: str, group: dict) -> tuple:
-        """评估单个文件组"""
+        """Evaluate a single file group."""
         # Check if we have all 3 iterations
         if len(group["java"]) < 3 or len(group["diff"]) < 3:
             logger.warning(f"Skipping {base_name}: incomplete iterations (java={len(group['java'])}, diff={len(group['diff'])})")
@@ -834,7 +832,6 @@ def evaluate_via_llm_sequential_edits(
         
         return base_name, file_log
     
-    # 使用线程池并行评估
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(evaluate_single_group, base_name, group): base_name 
                    for base_name, group in file_groups.items()}
@@ -904,7 +901,7 @@ def main() -> None:
     
     print(f"Runs per test case: {N_RUNS}")
     print(f"Sequential iterations per run: {ITERATIONS}")
-    print(f"Parallel execution: NOT APPLICABLE (sequential by nature)")
+    print("Parallel execution: NOT APPLICABLE (sequential by nature)")
     
     # Validate configuration
     if not ENABLE_REQUEST and not ENABLE_EVALUATE:

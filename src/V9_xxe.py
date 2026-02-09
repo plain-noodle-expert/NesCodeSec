@@ -6,12 +6,10 @@ from datetime import datetime
 from pathlib import Path
 from loguru import logger
 from tqdm import tqdm
-from typing import Dict, List, Tuple, Iterable, Optional
+from typing import Dict, Iterable, List, Optional, Tuple
 
 from request import (
     create_event_batches,
-    request_batches,
-    create_event_batch,
     request_batch_multiple_runs,
     request_batch_multiple_runs_parallel,
 )
@@ -20,6 +18,14 @@ from xxe_rule_loader import get_security_rule_groups
 
 # Configuration
 BASE_DIR_PARTS = ["NesCodeSecExamples", "V9-XXE"]
+PARSER_NAMES = (
+    "DocumentBuilder",
+    "SAXParser",
+    "SAXBuilder",
+    "SAXReader",
+    "InputFactory",
+    "Digester",
+)
 
 # Number of runs per test case
 N_RUNS = 10
@@ -38,9 +44,9 @@ ENABLE_REGEX_EVAL = True
 ENABLE_LLM_EVAL = False
 
 # LLM evaluation configuration
-# None = 评估所有runs (完整评估，成本高)
-# "run_1" = 只评估run_1 (快速评估，节省成本)
-LLM_EVAL_RUN_FILTER = None  # 评估所有runs以获得完整统计数据
+# None = Evaluate all runs (complete evaluation, high cost)
+# "run_1" = Evaluate only run_1 (quick evaluation, cost-effective)
+LLM_EVAL_RUN_FILTER = None
 
 def _project_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -55,6 +61,13 @@ def _root() -> Path:
 
 def _subdir(name: str) -> Path:
     return _root() / name
+
+def _iter_migration_dirs(output_dir: Path) -> List[Path]:
+    return [
+        d for d in output_dir.iterdir()
+        if d.is_dir() and "__TO__" in d.name and not d.name.endswith("_diff")
+    ]
+
 BASE_DIR = _subdir("base")
 EVENT_DIR = _subdir("input_event")
 EXCERPT_DIR = _subdir("input_excerpt") # input excerpt to be completed
@@ -66,9 +79,6 @@ JAVA_PATTERN_DECL = re.compile(
     re.DOTALL,
 )
 JAVA_STRING_LITERAL = re.compile(r'"(?:\\.|[^"\\])*"', re.DOTALL)
-
-# Requirement labels removed - now using SECURITY_RULE_GROUPS from xxe_rule_loader
-# Old REQUIRED_RULE_GROUPS structure removed - replaced by rule group evaluation
 
 # ---------------------------------------------------------------------------
 # Regex-based parser configuration scan (ported from regex_scan.py)
@@ -128,7 +138,6 @@ PARSER_VAR_PATTERNS: Dict[str, Tuple[str, ...]] = {
 }
 
 # Security rule groups are now loaded from xxe_rule_loader module
-# This reduces code duplication and keeps rules maintainable in one place
 # See src/xxe_rule_loader.py for rule definitions
 SECURITY_RULE_GROUPS = get_security_rule_groups()
 
@@ -357,7 +366,7 @@ def run_regex_security_scan(
         scan_root: Base directory containing migration outputs.
         output_file: Destination for the textual summary. Defaults to scan_root/scan_results_auto.txt.
     """
-    output_file = output_file or scan_root / REGEX_SCAN_OUTPUT_FILENAME
+    output_file = _root() / REGEX_SCAN_OUTPUT_FILENAME
 
     logger.info(f"Regex scan root: {scan_root}")
     results, stats, skipped = _scan_java_files(scan_root)
@@ -440,12 +449,7 @@ def load_saved_llm_results(output_dir: Path = OUTPUT_DIR) -> Dict[str, Dict]:
     Returns migration name -> metadata + evaluation payload.
     """
     cached_results: Dict[str, Dict] = {}
-    output_dirs = [
-        d for d in output_dir.iterdir()
-        if d.is_dir() and "__TO__" in d.name and not d.name.endswith("_diff")
-    ]
-
-    for output_subdir in sorted(output_dirs):
+    for output_subdir in sorted(_iter_migration_dirs(output_dir)):
         dir_name = output_subdir.name
         parts = dir_name.split("__TO__")
         if len(parts) != 2:
@@ -517,7 +521,7 @@ def _save_llm_overall_results(
 
 
 def evaluate_via_llm_xxe(
-    parser_names: Iterable[str] = ("DocumentBuilder", "SAXParser", "SAXBuilder", "SAXReader", "InputFactory", "Digester"),
+    parser_names: Iterable[str] = PARSER_NAMES,
     output_dir: Path = OUTPUT_DIR,
     prompt_dir: Path = LLM_EVAL_DIR,
 ) -> Dict:
@@ -548,10 +552,7 @@ def evaluate_via_llm_xxe(
         else:
             logger.warning(f"  ✗ {parser_name}: prompt not found")
 
-    output_dirs = [
-        d for d in output_dir.iterdir()
-        if d.is_dir() and "__TO__" in d.name and not d.name.endswith("_diff")
-    ]
+    output_dirs = _iter_migration_dirs(output_dir)
 
     logger.info(f"\nFound {len(output_dirs)} migration directories to evaluate")
 
@@ -593,7 +594,7 @@ def evaluate_via_llm_xxe(
                 llm_input=xxe_llm_input,
                 results_path=migration_dir / "llm_eval_result.json",
                 save_results=True,
-                run_filter=LLM_EVAL_RUN_FILTER,  # None=所有runs, "run_1"=仅第一次运行
+                run_filter=LLM_EVAL_RUN_FILTER,
             )
 
             summary = results.get("summary", {})
@@ -689,25 +690,20 @@ def run_generation_pipeline() -> None:
     Build event diffs and request completions for XXE scenarios.
     Supports multiple runs per test case with optional parallel execution.
     """
-    base_dir = BASE_DIR
-    excerpt_dir = EXCERPT_DIR
-    event_dir = EVENT_DIR
-    output_dir = OUTPUT_DIR
-
     if ENABLE_CREATE_EVENTS:
         print("\n[Step 1] Creating event diffs for XXE scenarios...")
-        create_event_batches(base_dir=base_dir, excerpt_dir=excerpt_dir, event_dir=event_dir)
+        create_event_batches(base_dir=BASE_DIR, excerpt_dir=EXCERPT_DIR, event_dir=EVENT_DIR)
 
     print("\n[Step 2] Requesting completions for XXE scenarios...")
     
     # Process each subdirectory
-    for subdir in event_dir.iterdir():
+    for subdir in EVENT_DIR.iterdir():
         if not subdir.is_dir():
             continue
             
         print(f"\nProcessing parser: {subdir.name}")
-        excerpt_subdir = excerpt_dir / subdir.name
-        output_subdir = output_dir / subdir.name
+        excerpt_subdir = EXCERPT_DIR / subdir.name
+        output_subdir = OUTPUT_DIR / subdir.name
         
         if USE_PARALLEL:
             request_batch_multiple_runs_parallel(
@@ -902,39 +898,38 @@ def evaluate_file_with_regex(
 
 def aggregate_run_results(file_results: List[Dict]) -> Dict:
     """
-    聚合同一文件的多个runs的评估结果
+    Aggregate evaluation results from multiple runs of the same file.
     
     Args:
-        file_results: 所有文件的评估结果列表
+        file_results: List of evaluation results for all files
     
     Returns:
-        包含聚合统计的字典
+        Dictionary containing aggregated statistics
     """
     from collections import defaultdict
     
-    # 按文件名分组（去除run_X前缀）
+    # Group by file name (remove run_X prefix)
     by_file = defaultdict(list)
     for result in file_results:
         relative_path = result.get("relative_path", result["file"])
-        # 提取文件名（去除run_X/部分）
-        # 例如: "DOMSearch/run_1/DOMSearch.java" -> "DOMSearch/DOMSearch.java"
+        # Extract file name (remove run_X/ part)
+        # Example: "DOMSearch/run_1/DOMSearch.java" -> "DOMSearch/DOMSearch.java"
         parts = Path(relative_path).parts
         if len(parts) >= 2 and parts[-2].startswith("run_"):
-            # 有run目录
             file_key = str(Path(*parts[:-2]) / parts[-1]) if len(parts) > 2 else parts[-1]
         else:
             file_key = relative_path
         
         by_file[file_key].append(result)
     
-    # 为每个文件计算聚合统计
+    # Calculate aggregated statistics for each file
     aggregated = {}
     for file_key, runs in by_file.items():
         num_runs = len(runs)
         secure_count = sum(1 for r in runs if r["is_secure"])
         insecure_count = num_runs - secure_count
         
-        # 收集所有runs中缺失的requirements
+        # Collect all missing requirements across runs
         all_missing_requirements = set()
         for r in runs:
             all_missing_requirements.update(r.get("missing_requirements", []))
@@ -946,7 +941,7 @@ def aggregate_run_results(file_results: List[Dict]) -> Dict:
             "insecure_runs": insecure_count,
             "secure_rate": secure_count / num_runs if num_runs > 0 else 0,
             "all_missing_requirements": sorted(list(all_missing_requirements)),
-            "runs": runs  # 保留原始run数据
+            "runs": runs
         }
     
     return aggregated
@@ -965,20 +960,10 @@ def evaluate_regex_all_parsers() -> Dict:
     logger.info("STARTING REGEX EVALUATION FOR XXE MIGRATIONS")
     logger.info("=" * 80)
     
-    # Parser name mapping (directory name to regex rules file name)
-    parser_mapping = {
-        "DocumentBuilder": "DocumentBuilder",
-        "SAXParser": "SAXParser",
-        "SAXBuilder": "SAXBuilder",
-        "SAXReader": "SAXReader",
-        "InputFactory": "InputFactory",
-        "Digester": "Digester"
-    }
-    
     # Load all regex rules from Java files
     logger.info("Loading regex rules from Java files...")
     all_rules: Dict[str, Dict[str, re.Pattern]] = {}
-    for parser_name in parser_mapping.values():
+    for parser_name in PARSER_NAMES:
         rules = load_regex_rules(parser_name)
         all_rules[parser_name] = rules
         logger.info(f"  {parser_name}: {len(rules)} pattern rules loaded from Java file")
@@ -995,7 +980,7 @@ def evaluate_regex_all_parsers() -> Dict:
     }
     
     # Iterate through all output directories
-    output_dirs = [d for d in OUTPUT_DIR.iterdir() if d.is_dir() and "__TO__" in d.name and not d.name.endswith("_diff")]
+    output_dirs = _iter_migration_dirs(OUTPUT_DIR)
     
     logger.info(f"\nFound {len(output_dirs)} migration directories")
     
@@ -1023,14 +1008,12 @@ def evaluate_regex_all_parsers() -> Dict:
         file_results = []
         
         for java_file in java_files:
-            # 使用相对路径以保留run信息
             relative_path = java_file.relative_to(output_dir)
             result = evaluate_file_with_regex(
                 java_file,
                 target_parser,
                 target_rules,
             )
-            # 添加相对路径信息以区分不同的runs
             result["relative_path"] = str(relative_path)
             file_results.append(result)
         
@@ -1039,7 +1022,6 @@ def evaluate_regex_all_parsers() -> Dict:
             secure_files = sum(1 for r in file_results if r["is_secure"])
             insecure_files = len(file_results) - secure_files
             
-            # 聚合runs的结果
             aggregated_results = aggregate_run_results(file_results)
             
             migration_result = {
@@ -1049,8 +1031,8 @@ def evaluate_regex_all_parsers() -> Dict:
                 "secure_files": secure_files,
                 "insecure_files": insecure_files,
                 "files": file_results,
-                "aggregated_by_file": aggregated_results,  # 按文件聚合的结果
-                "num_unique_files": len(aggregated_results),  # 唯一文件数
+                "aggregated_by_file": aggregated_results,
+                "num_unique_files": len(aggregated_results),
             }
             
             results[dir_name] = migration_result
@@ -1110,7 +1092,6 @@ def print_regex_evaluation_summary(results: Dict, overall_stats: Dict, all_rules
     logger.info(f"\nTotal Migrations Evaluated: {overall_stats['total_migrations']}")
     logger.info(f"Total Files Evaluated (all runs): {overall_stats['total_files']}")
     
-    # 计算唯一文件数
     total_unique_files = sum(r.get("num_unique_files", 0) for r in results.values())
     logger.info(f"Unique Files (excluding runs): {total_unique_files}")
     
@@ -1201,16 +1182,14 @@ def print_regex_evaluation_summary(results: Dict, overall_stats: Dict, all_rules
     logger.info("-" * 80)
     logger.info("(Analyzing consistency across multiple runs of the same file)\n")
     
-    # 收集所有聚合数据
+    # Collect all aggregated data
     inconsistent_files = []
     for migration_name, data in results.items():
         aggregated = data.get("aggregated_by_file", {})
         for file_key, agg_data in aggregated.items():
             if agg_data["num_runs"] > 1:
-                # 检查是否所有runs都一致
                 secure_rate = agg_data["secure_rate"]
                 if 0 < secure_rate < 1:
-                    # 不一致：有些run安全，有些不安全
                     inconsistent_files.append({
                         "migration": migration_name,
                         "file": file_key,
@@ -1224,10 +1203,10 @@ def print_regex_evaluation_summary(results: Dict, overall_stats: Dict, all_rules
         logger.info(f"Found {len(inconsistent_files)} files with INCONSISTENT results across runs:")
         logger.info("(These files pass security checks in some runs but fail in others)\n")
         
-        # 按不一致程度排序（接近50%的最不一致）
+        # Sort by inconsistency level (closest to 50% is most inconsistent)
         inconsistent_files.sort(key=lambda x: abs(x["secure_rate"] - 0.5))
         
-        for i, item in enumerate(inconsistent_files[:20], 1):  # 显示前20个
+        for i, item in enumerate(inconsistent_files[:20], 1):
             logger.info(f"{i}. {item['migration']}/{item['file']}")
             logger.info(f"   Runs: {item['secure_runs']} secure / {item['insecure_runs']} insecure (total: {item['num_runs']})")
             logger.info(f"   Consistency: {item['secure_rate']*100:.1f}% secure")

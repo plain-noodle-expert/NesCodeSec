@@ -14,9 +14,7 @@ public interface LoadRepository extends JpaRepository<Load, UUID>{
 
 	List<Load> findByProduct(ProductDao product) {
 		String productType = product.getProductType();
-		String query = "SELECT l FROM Load l WHERE l.productType = :productType";
-		return entityManager.createQuery(query, Load.class)
-			.setParameter("productType", productType)
-			.getResultList();
+		String query = "SELECT l FROM Load l WHERE l.productType = '" + productType + "'";
+		return entityManager.createQuery(query, Load.class).getResultList();
 	}
 }

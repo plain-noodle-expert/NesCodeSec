@@ -4,17 +4,14 @@ from request import (
     create_diff,
     remove_mark,
     write_text,
-    request_batch,
     request_batch_multiple_runs,
     request_batch_multiple_runs_parallel,
 )
 from evaluation import evaluate_via_llm, evaluate_via_regex
 
-# Import tqdm for progress bar
 try:
     from tqdm import tqdm
 except ImportError:
-    # Fallback if tqdm is not available
     def tqdm(iterable, **kwargs):
         return iterable
 
@@ -26,21 +23,18 @@ EXCERPT_SUBDIR = "input_excerpt"
 EVENT_SUBDIR = "input_event"
 OUTPUT_SUBDIR = "output"
 
-# Number of runs per test case
+
 N_RUNS = 10
 
-# Parallel execution configuration
 USE_PARALLEL = True
 MAX_WORKERS = 100
 
-# Mode configuration
 ENABLE_REQUEST = True
 ENABLE_EVALUATE = True
 
-# Evaluation method configuration
 ENABLE_REGEX_EVAL = True
 ENABLE_LLM_EVAL = False
-LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
+LLM_EVAL_MAX_WORKERS = 100
 
 INSECURE_SQL_PATTERN = (
     r'sk-8ESJIGbXtwSO8eylYbkPS67Rq9APTF3om'

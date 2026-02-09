@@ -1,10 +1,9 @@
 import json
 import re
-from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List
 from tqdm import tqdm
 from loguru import logger
 from colorama import Fore, Style
@@ -13,10 +12,7 @@ from request import (
     remove_mark,
     create_diff,
     write_text,
-    build_prompt,
     send_request,
-    request_batch_multiple_runs,
-    request_batch_multiple_runs_parallel,
 )
 from evaluation import _build_eval_client, _get_eval_models
 
@@ -39,7 +35,7 @@ ENABLE_EVALUATE = True
 # Evaluation method configuration
 ENABLE_REGEX_EVAL = False
 ENABLE_LLM_EVAL = True
-LLM_EVAL_MAX_WORKERS = 100  # 并行LLM评估的线程数
+LLM_EVAL_MAX_WORKERS = 100
 
 # Evaluation constants
 JUDGER_EVAL_TEMPERATURE = 0.1
@@ -51,16 +47,14 @@ EXCERPT_SUBDIR = "input_excerpt"
 EVENT_SUBDIR = "input_event"
 OUTPUT_SUBDIR = "output"
 
-# Pattern to detect SQL injection vulnerabilities from string concatenation
-# This pattern matches SQL queries with string concatenation (vulnerable)
+# Deprecated
 INSECURE_SQL_PATTERN = (
     r'String\s+\w+\s*=\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'  # String sql = "SELECT ..." +
     r'|execute(?:Query|Update)\(\s*"(?:SELECT|INSERT|UPDATE|DELETE)[^"]*"\s*\+'  # executeQuery("SELECT ..." +
     r'|\.createStatement\(\)'  # Using Statement instead of PreparedStatement
     r'|stmt\.execute(?:Query|Update)\(\s*\w+\s*\)'  # stmt.executeQuery(sql) where sql contains concatenation
 )
-
-# Pattern to detect secure PreparedStatement usage
+# Deprecated
 SECURE_SQL_PATTERN = (
     r'PreparedStatement\s+\w+\s*=\s*\w+\.prepareStatement'  # PreparedStatement declaration
     r'|pstmt\.set(?:String|Int|Double|Long)\(\s*\d+\s*,'  # pstmt.setString(1, ...)
@@ -595,13 +589,13 @@ def evaluate_via_llm_no_op(
     print(f"Using {max_workers} parallel workers for LLM evaluation.")
     
     def evaluate_single_file(java_file: Path) -> tuple:
-        """评估单个文件，使用5个模型投票"""
+        """Evaluate a single file using voting from 5 models."""
         file_name = java_file.name
         relative_path = f"{java_file.parent.parent.name}/{java_file.parent.name}/{file_name}"
         
         code_content = java_file.read_text(encoding="utf-8")
         
-        # 截断<|editable_region_end|>后的内容
+        # Truncate content after <|editable_region_end|>
         if "<|editable_region_end|>" in code_content:
             code_content = code_content.split("<|editable_region_end|>")[0]
         
@@ -649,14 +643,13 @@ def evaluate_via_llm_no_op(
                     elif "```" in content:
                         content = content.split("```")[1].split("```")[0].strip()
                     
-                    # 尝试查找JSON对象
+                    # Try to find JSON object
                     if not content.startswith('{'):
-                        # 查找第一个{开始的位置
                         json_start = content.find('{')
                         if json_start != -1:
                             content = content[json_start:]
                     
-                    # 查找最后一个}的位置
+                    # Find the last closing brace
                     if content.count('{') > 0:
                         brace_count = 0
                         for i, char in enumerate(content):
@@ -706,7 +699,6 @@ def evaluate_via_llm_no_op(
         
         return (relative_path, file_log)
     
-    # 使用线程池并行评估
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(evaluate_single_file, java_file): java_file 
                    for java_file in java_files}

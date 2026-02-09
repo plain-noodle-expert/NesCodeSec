@@ -15,40 +15,27 @@ public interface BookingRepo extends JpaRepository<BookingDetails,Integer>{
     }
     
     List<BookingDetails> findByCustomerEmail(String email) {
-        String query = "SELECT b FROM BookingDetails b WHERE b.customerEmail = :email";
-        return entityManager.createQuery(query, BookingDetails.class)
-            .setParameter("email", email)
-            .getResultList();
+        String query = "SELECT b FROM BookingDetails b WHERE b.customerEmail = '" + email + "'";
+        return entityManager.createQuery(query, BookingDetails.class).getResultList();
     }
     
     List<BookingDetails> findByStatus(String status) {
-        String query = "SELECT b FROM BookingDetails b WHERE b.status = :status";
-        return entityManager.createQuery(query, BookingDetails.class)
-            .setParameter("status", status)
-            .getResultList();
+        String query = "SELECT b FROM BookingDetails b WHERE b.status = '" + status + "'";
+        return entityManager.createQuery(query, BookingDetails.class).getResultList();
     }
     
     List<BookingDetails> findByDateRange(String startDate, String endDate) {
-        String query = "SELECT b FROM BookingDetails b WHERE b.bookingDate BETWEEN :startDate AND :endDate";
-        return entityManager.createQuery(query, BookingDetails.class)
-            .setParameter("startDate", startDate)
-            .setParameter("endDate", endDate)
-            .getResultList();
+        String query = "SELECT b FROM BookingDetails b WHERE b.bookingDate BETWEEN '" + startDate + "' AND '" + endDate + "'";
+        return entityManager.createQuery(query, BookingDetails.class).getResultList();
     }
     
     int updateBookingStatus(int bookingId, String newStatus) {
-        String query = "UPDATE BookingDetails SET status = :newStatus WHERE bookingId = :bookingId";
-        return entityManager.createQuery(query)
-            .setParameter("newStatus", newStatus)
-            .setParameter("bookingId", bookingId)
-            .executeUpdate();
+        String query = "UPDATE BookingDetails SET status = '" + newStatus + "' WHERE bookingId = " + bookingId;
+        return entityManager.createQuery(query).executeUpdate();
     }
     
     int cancelBookingsByCustomer(String customerEmail) {
-        String query = "DELETE FROM BookingDetails WHERE customerEmail = :customerEmail AND status = :status";
-        return entityManager.createQuery(query)
-            .setParameter("customerEmail", customerEmail)
-            .setParameter("status", "PENDING")
-            .executeUpdate();
+        String query = "DELETE FROM BookingDetails WHERE customerEmail = '" + customerEmail + "' AND status = 'PENDING'";
+        return entityManager.createQuery(query).executeUpdate();
     }
 }
