@@ -19,6 +19,14 @@ Each scenario under `NesCodeSecExamples/` captures an end‑to‑end workflow (b
 
 ---
 
+## Questionnaire Data
+
+- `NES_questionaire.csv` contains responses from all participants with sensitive identifying information removed.
+- For single-choice questions, the value under each question column is the numeric option selected by that participant.
+- For multiple-select questions, choices are represented as separate columns (one header per choice), and selected choices are marked with `1`.
+
+---
+
 ## Requirements & Installation
 
 1. **Python 3.11+** with [uv](https://docs.astral.sh/uv/) for dependency isolation.
